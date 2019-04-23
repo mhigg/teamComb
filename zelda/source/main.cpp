@@ -6,7 +6,7 @@ using namespace std;
 // ---------- WinMainŠÖ”
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-//	SceneMng::GetInstance().Run();
+	SceneMng::GetInstance().Run();
 
 	DxLib_End();	// DX×²ÌŞ×Ø‚ÌI—¹ˆ—
 	return 0;
