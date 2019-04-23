@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+/zelda/.vs/zelda/v15/.suo
+/zelda/.vs/zelda/v15/Browse.VC.db
+/zelda/.vs/zelda/v15/ipch/AutoPCH/3ec315caee07a72f/BASESCENE.ipch
+/zelda/.vs/zelda/v15/ipch/AutoPCH/691575bef790260e/SCENEMNG.ipch
+/zelda/.vs/zelda/v15/ipch/AutoPCH/bd2c7e51f43d8e3b/GAMECTRL.ipch
+/zelda/.vs/zelda/v15/ipch/AutoPCH/f85b78b41001099c/GAMESCENE.ipch
