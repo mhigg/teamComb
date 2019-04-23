@@ -2,6 +2,14 @@
 #include <memory>
 #include "GameCtrl.h"
 
+constexpr int GAME_SCREEN_X = 0;
+constexpr int GAME_SCREEN_Y = 0;
+
+constexpr int GAME_SCREEN_SIZE_X = 1200;
+constexpr int GAME_SCREEN_SIZE_Y = 900;
+
+constexpr int CHIP_SIZE = 20;
+
 class BaseScene;
 
 using uniqueBase = std::unique_ptr<BaseScene>;
