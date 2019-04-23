@@ -19,6 +19,7 @@ public:
 
 
 private:
+	SceneMng();
 	~SceneMng();
 	bool Init(void);
 
