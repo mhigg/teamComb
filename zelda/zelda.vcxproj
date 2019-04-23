@@ -24,12 +24,14 @@
     <ClCompile Include="source\GameScene.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\SceneMng.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseScene.h" />
     <ClInclude Include="source\GameCtrl.h" />
     <ClInclude Include="source\GameScene.h" />
     <ClInclude Include="source\SceneMng.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
