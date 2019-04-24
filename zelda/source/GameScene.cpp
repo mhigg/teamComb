@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "GameScene.h"
+#include "GameCtrl.h"
 #include "VECTOR2.h"
 
 
@@ -15,7 +16,11 @@ GameScene::~GameScene()
 
 uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
+	auto ctrl = controller.GetPadData(KEY_TYPE_NOW);
+	auto ctrlOld = controller.GetPadData(KEY_TYPE_OLD);
+
 	Draw();
+
 
 	return move(own);
 }
