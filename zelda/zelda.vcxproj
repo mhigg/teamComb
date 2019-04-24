@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="source\BaseScene.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\GameCtrl.cpp" />
@@ -28,11 +27,10 @@
     <ClCompile Include="source\Obj.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\SceneMng.cpp" />
+    <ClCompile Include="source\TitleScene.cpp" />
     <ClCompile Include="source\VECTOR2.cpp" />
-    <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="source\BaseScene.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\GameCtrl.h" />
@@ -40,8 +38,8 @@
     <ClInclude Include="source\Obj.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\SceneMng.h" />
+    <ClInclude Include="source\TitleScene.h" />
     <ClInclude Include="source\VECTOR2.h" />
-    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
