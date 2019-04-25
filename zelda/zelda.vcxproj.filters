@@ -25,12 +25,15 @@
     <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{1ba21aa7-905c-4b06-8d5c-886d336eb730}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{bc5ea452-7149-4d1b-83bf-5f633b78085c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Manager">
+      <UniqueIdentifier>{10cfad99-6223-49cb-a452-4388efded275}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="source\SceneMng.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="source\GameCtrl.cpp">
@@ -57,9 +60,6 @@
     <ClCompile Include="source\Player.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
-    <ClCompile Include="source\ImageMng.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="source\MapCtrl.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -69,15 +69,18 @@
     <ClCompile Include="source\ResultScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="source\ImageMng.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SceneMng.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
     <ClCompile Include="source\StageMng.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\GameCtrl.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="source\SceneMng.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\VECTOR2.h">
@@ -101,9 +104,6 @@
     <ClInclude Include="source\Player.h">
       <Filter>ヘッダー ファイル\Object</Filter>
     </ClInclude>
-    <ClInclude Include="source\ImageMng.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="source\MapCtrl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -113,8 +113,14 @@
     <ClInclude Include="source\ResultScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="source\ImageMng.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="source\SceneMng.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
     <ClInclude Include="source\StageMng.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
