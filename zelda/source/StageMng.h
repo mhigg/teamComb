@@ -2,6 +2,7 @@
 
 #pragma once
 #include <memory>
+#include "VECTOR2.h"
 
 #define lpStageMng StageMng::GetInstance()
 
@@ -17,8 +18,13 @@ public:
 	}
 
 	// Ï¯Ìß¾°ÌÞ
+	void MapSave(void);
 
 	// Ï¯ÌßÛ°ÄÞ
+	void MapLoad(void);
+
+	// Ï¯Ìß•`‰æ
+	void MapDraw(void);
 
 private:
 	StageMng();
@@ -27,5 +33,8 @@ private:
 	bool Init(void);
 
 	std::unique_ptr<MapCtrl> mapCtrl;
+
+	int lineColor;		// ×²Ý¶×°
+	VECTOR2 stageSize;	// ½Ã°¼Þ»²½Þ
 };
 
