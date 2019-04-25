@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseScene.cpp" />
+    <ClCompile Include="source\EditCursor.cpp" />
     <ClCompile Include="source\EditScene.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\GameCtrl.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="source\ImageMng.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\MapCtrl.cpp" />
+    <ClCompile Include="source\MAP_ID.cpp" />
     <ClCompile Include="source\Obj.cpp" />
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\ResultScene.cpp" />
@@ -37,12 +39,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseScene.h" />
+    <ClInclude Include="source\EditCursor.h" />
     <ClInclude Include="source\EditScene.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\GameCtrl.h" />
     <ClInclude Include="source\GameScene.h" />
     <ClInclude Include="source\ImageMng.h" />
     <ClInclude Include="source\MapCtrl.h" />
+    <ClInclude Include="source\MAP_ID.h" />
     <ClInclude Include="source\Obj.h" />
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\ResultScene.h" />
