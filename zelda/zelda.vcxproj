@@ -20,24 +20,34 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\BaseScene.cpp" />
+    <ClCompile Include="source\EditScene.cpp" />
     <ClCompile Include="source\Enemy.cpp" />
     <ClCompile Include="source\GameCtrl.cpp" />
     <ClCompile Include="source\GameScene.cpp" />
+    <ClCompile Include="source\ImageMng.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\MapCtrl.cpp" />
     <ClCompile Include="source\Obj.cpp" />
     <ClCompile Include="source\Player.cpp" />
+    <ClCompile Include="source\ResultScene.cpp" />
     <ClCompile Include="source\SceneMng.cpp" />
+    <ClCompile Include="source\StageMng.cpp" />
     <ClCompile Include="source\TitleScene.cpp" />
     <ClCompile Include="source\VECTOR2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseScene.h" />
+    <ClInclude Include="source\EditScene.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\GameCtrl.h" />
     <ClInclude Include="source\GameScene.h" />
+    <ClInclude Include="source\ImageMng.h" />
+    <ClInclude Include="source\MapCtrl.h" />
     <ClInclude Include="source\Obj.h" />
     <ClInclude Include="source\Player.h" />
+    <ClInclude Include="source\ResultScene.h" />
     <ClInclude Include="source\SceneMng.h" />
+    <ClInclude Include="source\StageMng.h" />
     <ClInclude Include="source\TitleScene.h" />
     <ClInclude Include="source\VECTOR2.h" />
   </ItemGroup>
