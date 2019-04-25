@@ -1,5 +1,6 @@
 #include <memory>
 #include "StageMng.h"
+#include "MapCtrl.h"
 
 
 
