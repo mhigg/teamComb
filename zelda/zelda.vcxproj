@@ -39,8 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\BaseScene.h" />
-    <ClInclude Include="source\EditCursor.h" />
-    <ClInclude Include="source\EditScene.h" />
+    <ClInclude Include="source\ClassObj.h" />
+    <ClInclude Include="source\EditCursor.h" />    <ClInclude Include="source\EditScene.h" />
     <ClInclude Include="source\Enemy.h" />
     <ClInclude Include="source\GameCtrl.h" />
     <ClInclude Include="source\GameScene.h" />

@@ -128,11 +128,12 @@
     <ClInclude Include="source\StageMng.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="source\MAP_ID.h">
+    <ClInclude Include="source\ClassObj.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>    <ClInclude Include="source\MAP_ID.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\EditCursor.h">
       <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>
-  </ItemGroup>
+    </ClInclude>  </ItemGroup>
 </Project>
