@@ -16,8 +16,15 @@ GameScene::~GameScene()
 
 uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
-	auto ctrl = controller.GetPadData(KEY_TYPE_NOW);
-	auto ctrlOld = controller.GetPadData(KEY_TYPE_OLD);
+#ifdef _DEBUG	// ÃÞÊÞ¯¸ÞŽž‚Ì‚ÝŽæ“¾
+	auto ctrl = controller.GetCtrl(KEY_TYPE_NOW);
+	auto ctrlOld = controller.GetCtrl(KEY_TYPE_OLD);
+#else
+#endif
+
+	auto pad = controller.GetPadData(KEY_TYPE_NOW);
+	auto padOld = controller.GetPadData(KEY_TYPE_OLD);
+
 
 	Draw();
 
