@@ -5,7 +5,7 @@
 #include "GameCtrl.h"
 
 constexpr int SCREEN_SIZE_X = 1200;
-constexpr int SCREEN_SIZE_Y = 900;
+constexpr int SCREEN_SIZE_Y = 880;
 
 SceneMng::SceneMng()
 {
