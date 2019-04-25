@@ -5,3 +5,4 @@ enum class MAP_ID
 	MAX
 };
 
+MAP_ID operator++(MAP_ID id);
