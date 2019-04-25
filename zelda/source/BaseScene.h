@@ -6,9 +6,9 @@ constexpr int GAME_SCREEN_X = 0;
 constexpr int GAME_SCREEN_Y = 0;
 
 constexpr int GAME_SCREEN_SIZE_X = 1200;
-constexpr int GAME_SCREEN_SIZE_Y = 900;
+constexpr int GAME_SCREEN_SIZE_Y = 880;
 
-constexpr int CHIP_SIZE = 20;
+constexpr int CHIP_SIZE = 40;
 
 class BaseScene;
 
