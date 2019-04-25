@@ -20,3 +20,8 @@ bool MapCtrl::SetMapData(VECTOR2 mapPos, MAP_ID id)
 {
 	return false;
 }
+
+const VECTOR2 & MapCtrl::GetChipSize(void)
+{
+	return chipSize;
+}

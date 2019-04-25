@@ -49,7 +49,7 @@ bool Player::initAnim(void)
 
 void Player::SetMove(const GameCtrl & controller, weekListObj objList)
 {
-	/*auto &chipSize = lpMapCtl.GetChipSize().x;
+	auto &chipSize = lpMapCtrl.GetChipSize().x;
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
@@ -71,7 +71,7 @@ void Player::SetMove(const GameCtrl & controller, weekListObj objList)
 			break;
 		}
 		return pos + side;
-	};*/
+	};
 }
 
 bool Player::DeathPrc(void)

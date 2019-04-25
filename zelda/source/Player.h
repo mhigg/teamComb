@@ -19,6 +19,12 @@ enum DIR_TBL_ID {
 	DIR_TBL_MAX
 };
 
+enum SIDE_CHECK {
+	OUT_SIDE,	// 0
+	IN_SIDE,	// 1
+	SIDE_MAX
+};
+
 #define PL_DEF_SPEED 2
 
 using DIR_TBL_ARRAY = std::array<int, DIR_MAX>;
