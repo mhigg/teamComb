@@ -1,5 +1,6 @@
-#include "DxLib.h"
+#include <DxLib.h>
 #include "Player.h"
+#include "StageMng.h"
 
 
 
@@ -49,7 +50,7 @@ bool Player::initAnim(void)
 
 void Player::SetMove(const GameCtrl & controller, weekListObj objList)
 {
-	auto &chipSize = lpMapCtrl.GetChipSize().x;
+	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;

@@ -2,6 +2,7 @@
 enum class MAP_ID
 {
 	NONE,	// ‰½‚à‚È‚µ
+	PLAYER,	// ÌßÚ²Ô°
 	MAX
 };
 
