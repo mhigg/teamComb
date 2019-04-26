@@ -23,8 +23,8 @@ private:
 	int keyGetRng;	// 基底ﾌﾚｰﾑ数　ｷｰを離したら初期化
 	int inputFlam;	// ｷｰを押しているﾌﾚｰﾑ数　押してないときｾﾞﾛｸﾘｱ
 
-	DIR_TBL_ARR dirTable;		// 入力したｷｰの方向　speedTableと方向を合わせる
-	DIR_TBL_ARR speedTable;		// ﾌﾞﾛｯｸの移動ｽﾋﾟｰﾄﾞ dirTableと方向を合わせる
+	DIR_TBL_ARY dirTable;		// 入力したｷｰの方向　speedTableと方向を合わせる
+	DIR_TBL_ARY speedTable;		// ﾌﾞﾛｯｸの移動ｽﾋﾟｰﾄﾞ dirTableと方向を合わせる
 
 	// ｷｰを押したときの処理
 	/*
