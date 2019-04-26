@@ -16,7 +16,6 @@ public:
 		static MapCtrl s_Instance;
 		return s_Instance;
 	}
-	bool SetUp(VECTOR2 stageSize, VECTOR2 chipSize, VECTOR2 drawOffset);	// ﾏｯﾌﾟﾃﾞｰﾀのﾘｻｲｽﾞ・初期化
 	bool SetMapData(VECTOR2 mapPos, MAP_ID id);			// ﾏｯﾌﾟIDの設定(大体ｴﾃﾞｨｯﾄ用？)
 	MAP_ID GetMapData(VECTOR2 mapPos);					// 指定したﾏｽのﾏｯﾌﾟIDを取得
 
@@ -25,7 +24,7 @@ public:
 	bool SetUpGameObj(sharedListObj objList, bool modeFlag);
 
 	// ﾏｯﾌﾟ描画
-	void MapDraw(void);
+	void Draw(bool flag);
 
 private:
 	MapCtrl();

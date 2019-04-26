@@ -9,6 +9,8 @@
 
 #define lpStageMng StageMng::GetInstance()
 
+constexpr int GAME_AREA_SIZE_X = 800;
+constexpr int GAME_AREA_SIZE_Y = 600;
 
 class StageMng
 {
@@ -19,15 +21,17 @@ public:
 		return s_instance;
 	}
 
+	// ﾏｯﾌﾟﾃﾞｰﾀのﾘｻｲｽﾞ・初期化
+	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);	
+
 	// ﾏｯﾌﾟｾｰﾌﾞ←ｴﾃﾞｨｯﾄ
 	void MapSave(void);
 
 	// ﾏｯﾌﾟﾛｰﾄﾞ
-	void MapLoad(void);
+	void MapLoad(sharedListObj objList, bool editFlag);
 
 	const VECTOR2& GetChipSize(void);		// ChipSizeの取得
 	const VECTOR2& GetStageSize(void);		// StageSizeの取得
-	std::vector<MAP_ID> GetMap(void);
 
 private:
 	StageMng();
@@ -35,9 +39,9 @@ private:
 
 	bool Init(void);
 
-//	std::unique_ptr<MapCtrl> mapCtrl;
 
-	std::vector<MAP_ID> mapData;  // ｽﾃｰｼﾞﾏｯﾌﾟﾃﾞｰﾀ
+	std::vector<MAP_ID*> mapData;  // ｽﾃｰｼﾞﾏｯﾌﾟﾃﾞｰﾀ
+	std::vector<MAP_ID> mapData_Base;
 	VECTOR2 stageSize;	// ｽﾃｰｼﾞｻｲｽﾞ
 	VECTOR2 chipSize;	// ゲームサイズ
 };
