@@ -1,5 +1,3 @@
-// ‰æ‘œ‚Ì“Ç‚İ‚İ
-
 #pragma once
 #include <mutex>
 #include <vector>
@@ -33,4 +31,3 @@ private:
 
 	std::map<std::string, VEC_INT> imageMap;
 };
-

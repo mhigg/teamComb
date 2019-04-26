@@ -40,7 +40,8 @@ int & VECTOR2::operator[](int i)
 	}
 	else
 	{
-
+		// 返す値はありません。
+		// 警告出ても無視してください。
 	}
 }
 

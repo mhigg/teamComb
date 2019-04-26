@@ -48,7 +48,7 @@ bool Player::initAnim(void)
 	return false;
 }
 
-void Player::SetMove(const GameCtrl & controller, weekListObj objList)
+void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
@@ -89,6 +89,12 @@ void Player::SetMove(const GameCtrl & controller, weekListObj objList)
 		}
 		return false;
 	};
+
+}
+
+bool Player::CheckObjType(OBJ_TYPE type)
+{
+	return (type == OBJ_PLAYER);
 
 }
 

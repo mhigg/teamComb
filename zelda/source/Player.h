@@ -27,7 +27,7 @@ enum SIDE_CHECK {
 
 #define PL_DEF_SPEED 2
 
-using DIR_TBL_ARRAY = std::array<int, DIR_MAX>;
+using DIR_TBL_ARR = std::array<int, DIR_MAX>;
 using DIR_TBL_PTR = std::array<int*[TBL_MAX], DIR_MAX>;
 using DIR_TBL_DIR = std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
 // using MAP_MOVE_TBL = std::array<bool, static_cast<int>(MAP_ID::MAX)>; ←アイテムや障害物を追加したときに使う
@@ -42,14 +42,14 @@ public:
 	~Player();
 	bool initAnim(void);		// ｱﾆﾒｰｼｮﾝ管理
 private:
-	void SetMove(const GameCtrl &controller, weekListObj objList);
-
+	void SetMove(const GameCtrl &controller, weakListObj objList);
+	bool CheckObjType(OBJ_TYPE type);
 	bool DeathPrc(void);			// 関数化
 	int speed;
 	DIR dir;
-	DIR_TBL_ARRAY keyIdTbl;		// 移動方向
+	DIR_TBL_ARR keyIdTbl;		// 移動方向
 	DIR_TBL_PTR PosTbl;			// ポインタを直接格納
-	DIR_TBL_ARRAY SpeedTbl;		// 移動速度
+	DIR_TBL_ARR SpeedTbl;		// 移動速度
 	DIR_TBL_DIR DirTbl;			// 移動制御
 	// MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能オブジェクトならtrueを返す←アイテムや障害物を追加したときに使う
 };

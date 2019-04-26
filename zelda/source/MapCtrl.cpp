@@ -46,7 +46,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 		for (int x = 0; x < stageSize.x; x++)
 		{
 			MAP_ID id = mapData[y][x];
-			ListObj_itr obj;
 			switch (id)
 			{
 			case MAP_ID::PLAYER:
@@ -56,7 +55,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				}
 				// ÌßÚ²Ô°‚ð²Ý½ÀÝ½
 				{
-					obj = AddObjList()(objList, std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
+					auto obj = AddObjList()(objList, std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
 					makePlayerFlag = true;
 				}
 				break;

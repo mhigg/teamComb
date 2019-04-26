@@ -69,7 +69,7 @@ uniqueBase EditScene::Update(uniqueBase own, const GameCtrl & controler)
 	}
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
-		(*itr)->Update(controler, objList);
+		(*itr)->UpDate(controler, objList);
 	}
 	EditDraw();
 	return std::move(own);
@@ -135,12 +135,9 @@ int EditScene::Init(void)
 {
 	if (!objList)
 	{
-		objList = std::make_shared<sharedListObj>();
+		objList = std::make_shared<sharedList>();
 	}
-	else
-	{
-		objList->clear();
-	}
+	objList->clear();
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
 	lpStageMng.SetUp(VECTOR2(GAME_SCREEN_SIZE_X, GAME_SCREEN_SIZE_Y), VECTOR2(CHIP_SIZE, CHIP_SIZE));
 	auto obj = AddObjList()(objList, std::make_unique<EditCursor>(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y)));
