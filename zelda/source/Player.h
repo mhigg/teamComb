@@ -46,6 +46,7 @@ private:
 
 	bool DeathPrc(void);			// 関数化
 	int speed;
+	DIR dir;
 	DIR_TBL_ARRAY keyIdTbl;		// 移動方向
 	DIR_TBL_PTR PosTbl;			// ポインタを直接格納
 	DIR_TBL_ARRAY SpeedTbl;		// 移動速度

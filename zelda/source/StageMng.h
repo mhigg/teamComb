@@ -2,11 +2,13 @@
 
 #pragma once
 #include <memory>
+#include <vector>
+#include "MapCtrl.h"
+#include "MAP_ID.h"
 #include "VECTOR2.h"
 
 #define lpStageMng StageMng::GetInstance()
 
-class MapCtrl;
 
 class StageMng
 {
@@ -17,14 +19,14 @@ public:
 		return s_instance;
 	}
 
-	// ﾏｯﾌﾟｾｰﾌﾞ
+	// ﾏｯﾌﾟｾｰﾌﾞ←ｴﾃﾞｨｯﾄ
 	void MapSave(void);
 
 	// ﾏｯﾌﾟﾛｰﾄﾞ
 	void MapLoad(void);
 
-	// ﾏｯﾌﾟ描画
-	void MapDraw(void);
+	const VECTOR2& GetChipSize(void);		// ChipSizeの取得
+	const VECTOR2& GetStageSize(void);		// StageSizeの取得
 
 private:
 	StageMng();
@@ -34,7 +36,8 @@ private:
 
 	std::unique_ptr<MapCtrl> mapCtrl;
 
-	int lineColor;		// ﾗｲﾝｶﾗｰ
+	std::vector<MAP_ID> stageMap;  // ｽﾃｰｼﾞﾏｯﾌﾟﾃﾞｰﾀ
 	VECTOR2 stageSize;	// ｽﾃｰｼﾞｻｲｽﾞ
+	VECTOR2 chipSize;	// ゲームサイズ
 };
 
