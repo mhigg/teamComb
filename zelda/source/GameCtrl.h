@@ -1,23 +1,25 @@
 // ∫›ƒ€∞◊∞(∑∞Œﬁ∞ƒﬁ)ÇÃì¸óÕèÓïÒÇéÊìæÇ∑ÇÈ
 
 #pragma once
+#include <DxLib.h>
 #include <array>
+#include "VECTOR2.h"
 #include "INPUT_ID.h"
 
 //ï ñºíËã`
 using KEY_ARY = std::array<char, 256>;
 using INPUT_ARY = std::array<bool, static_cast<int>(INPUT_ID::MAX)>;
 
-#define INPUT_DOWN	static_cast<int>(INPUT_ID::DOWN)
-#define INPUT_LEFT	static_cast<int>(INPUT_ID::LEFT)
-#define INPUT_RIGHT static_cast<int>(INPUT_ID::RIGHT)
-#define INPUT_UP	static_cast<int>(INPUT_ID::UP)
-#define INPUT_ACT_B static_cast<int>(INPUT_ID::ACT_B)
-#define INPUT_ACT_X	static_cast<int>(INPUT_ID::ACT_X)
-#define INPUT_GET_LB static_cast<int>(INPUT_ID::GET_LB)
-#define INPUT_RUN_RB static_cast<int>(INPUT_ID::RUN_RB)
-#define INPUT_START static_cast<int>(INPUT_ID::START)
-#define INPUT_PAUSE static_cast<int>(INPUT_ID::PAUSE)
+#define XINPUT_DOWN	static_cast<int>(INPUT_ID::DOWN)
+#define XINPUT_LEFT	static_cast<int>(INPUT_ID::LEFT)
+#define XINPUT_RIGHT static_cast<int>(INPUT_ID::RIGHT)
+#define XINPUT_UP	static_cast<int>(INPUT_ID::UP)
+#define XINPUT_ACT_B static_cast<int>(INPUT_ID::ACT_B)
+#define XINPUT_ACT_X	static_cast<int>(INPUT_ID::ACT_X)
+#define XINPUT_GET_LB static_cast<int>(INPUT_ID::GET_LB)
+#define XINPUT_RUN_RB static_cast<int>(INPUT_ID::RUN_RB)
+#define XINPUT_START static_cast<int>(INPUT_ID::START)
+#define XINPUT_PAUSE static_cast<int>(INPUT_ID::PAUSE)
 
 
 enum KEY_TYPE

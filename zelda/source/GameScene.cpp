@@ -24,8 +24,8 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 #else
 #endif
 
-	auto pad = controller.GetPadData(KEY_TYPE_NOW);
-	auto padOld = controller.GetPadData(KEY_TYPE_OLD);
+	auto pad = controller.GetInputState(KEY_TYPE_NOW);
+	auto padOld = controller.GetInputState(KEY_TYPE_OLD);
 
 
 	Draw();
