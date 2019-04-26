@@ -2,50 +2,25 @@
 #include <memory>
 #include "MapCtrl.h"
 #include "Player.h"
+#include "SceneMng.h"
 #include "StageMng.h"
 #include "ClassObj.h"
 
 
 MapCtrl::MapCtrl()
 {
+	lineColor = RGB(255, 255, 255);
 }
 
+MapCtrl::MapCtrl(VECTOR2 stageSize, VECTOR2 chipSize, VECTOR2 drawOffset):drawOffset(drawOffset)
+{
+	lineColor = RGB(255, 255, 255);
+}
 
 MapCtrl::~MapCtrl()
 {
 }
 
-bool MapCtrl::SetUp(VECTOR2 stageSize, VECTOR2 chipSize, VECTOR2 drawOffset)
-{
-	this->stageSize = stageSize;
-	this->chipSize = chipSize;
-	this->drawOffset = drawOffset;
-
-	auto CreateMap = [=](auto& base, auto& front, auto initNum) {
-		base.resize(stageSize.x * stageSize.y);
-		front.resize(stageSize.y);
-
-		// mapData‚ÆmapData_Base‚Ì˜AŒ‹
-		for (int x = 0; x < front.size(); x++)
-		{
-			// mapSize.x•ª‚ª‰½‰ñ’Ê‚Á‚½‚©
-			front[x] = &base[stageSize.x * x];
-		}
-		// ˜AŒ‹‚Æ‰Šú‰»
-		for (int j = 0; j < base.size(); j++)
-		{
-			// ‘S‘Ì‚ÉNON‚ ‚é‚¢‚Í0(¾ÞÛ)‚ð“ü‚ê‚é
-			base[j] = initNum;
-		}
-	};
-
-	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
-
-//	mapData_Base = lpStageMng.GetMap();
-	lineColor = RGB(255, 255, 255);
-
-	return true;
-}
 
 bool MapCtrl::SetMapData(VECTOR2 mapPos, MAP_ID id)
 {

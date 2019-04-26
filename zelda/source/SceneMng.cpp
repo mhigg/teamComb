@@ -23,6 +23,16 @@ void SceneMng::Run(void)
 	}
 }
 
+VECTOR2 SceneMng::GetDrawOffset(void)
+{
+	return drawOffset;
+}
+
+void SceneMng::SetDrawOffset(VECTOR2 drawOffset)
+{
+	this->drawOffset = drawOffset;
+}
+
 SceneMng::~SceneMng()
 {
 }
