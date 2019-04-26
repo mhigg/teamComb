@@ -41,7 +41,7 @@ bool MapCtrl::SetUp(VECTOR2 stageSize, VECTOR2 chipSize, VECTOR2 drawOffset)
 
 	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
 
-	mapData_Base = lpStageMng.GetMap();
+//	mapData_Base = lpStageMng.GetMap();
 	lineColor = RGB(255, 255, 255);
 
 	return true;
@@ -54,7 +54,7 @@ bool MapCtrl::SetMapData(VECTOR2 mapPos, MAP_ID id)
 
 MAP_ID MapCtrl::GetMapData(VECTOR2 mapPos)
 {
-	return MAP_ID::NONE/*stageMap[mapPos.x][mapPos.y]*/;
+	return mapData[mapPos.x][mapPos.y];
 }
 
 bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
