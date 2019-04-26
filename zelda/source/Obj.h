@@ -23,7 +23,8 @@ private:
 	virtual void SetMove(const GameCtrl &controller, weekListObj objList) = 0;
 
 protected:
-	void SetPos(VECTOR2 pos);			// 座標セット
+	void SetPos(VECTOR2 pos);			// 座標ｾｯﾄ
 	VECTOR2 pos;						// 座標
+	DIR dir;							// 移動させた方向
 };
 

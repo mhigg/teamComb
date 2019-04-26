@@ -72,6 +72,23 @@ void Player::SetMove(const GameCtrl & controller, weekListObj objList)
 		}
 		return pos + side;
 	};
+
+	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
+		// if(ºİÄÛ°×°‚Ìî•ñ)
+		{
+			Player::dir = DirTbl[dir][id];		// •ûŒü‚Ì¾¯Ä
+
+			// if (/*mapMoveTbl*/)		// ˆÚ“®§Œä
+			{
+				Player::dir = DirTbl[dir][id];
+				return false;		// ˆÚ“®‚Å‚«‚È‚¢ê‡(Šâ‚â–Ø‚È‚Ç‚ÌµÌŞ¼Şª¸Ä‚ª‚ ‚é‚Æ‚«)
+			}
+
+			return true;
+		}
+		return false;
+	};
+
 }
 
 bool Player::DeathPrc(void)
