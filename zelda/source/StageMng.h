@@ -27,6 +27,7 @@ public:
 
 	const VECTOR2& GetChipSize(void);		// ChipSizeの取得
 	const VECTOR2& GetStageSize(void);		// StageSizeの取得
+	std::vector<MAP_ID> GetMap(void);
 
 private:
 	StageMng();
@@ -34,9 +35,9 @@ private:
 
 	bool Init(void);
 
-	std::unique_ptr<MapCtrl> mapCtrl;
+//	std::unique_ptr<MapCtrl> mapCtrl;
 
-	std::vector<MAP_ID> stageMap;  // ｽﾃｰｼﾞﾏｯﾌﾟﾃﾞｰﾀ
+	std::vector<MAP_ID> mapData;  // ｽﾃｰｼﾞﾏｯﾌﾟﾃﾞｰﾀ
 	VECTOR2 stageSize;	// ｽﾃｰｼﾞｻｲｽﾞ
 	VECTOR2 chipSize;	// ゲームサイズ
 };

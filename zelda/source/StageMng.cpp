@@ -33,6 +33,11 @@ const VECTOR2 & StageMng::GetStageSize(void)
 	return stageSize;
 }
 
+std::vector<MAP_ID> StageMng::GetMap(void)
+{
+	return mapData;
+}
+
 bool StageMng::Init(void)
 {
 	stageSize = { GAME_SCREEN_SIZE_X / 2 , GAME_SCREEN_SIZE_Y / 2 };
