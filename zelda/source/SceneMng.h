@@ -3,6 +3,7 @@
 #pragma once
 #include <memory>
 #include "BaseScene.h"
+#include "VECTOR2.h"
 
 #define lpSceneMng SceneMng::GetInstance()
 
@@ -18,12 +19,15 @@ public:
 	}
 
 	void Run(void);
-
+	VECTOR2 GetDrawOffset(void);
+	void SetDrawOffset(VECTOR2 drawOffset);
 
 private:
 	SceneMng();
 	~SceneMng();
 	bool Init(void);
+
+	VECTOR2 drawOffset;
 
 	uniqueBase activeScene;
 	std::unique_ptr<GameCtrl> gameCtrl;

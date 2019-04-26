@@ -1,5 +1,7 @@
 #include <DxLib.h>
 #include "GameScene.h"
+#include "SceneMng.h"
+#include "StageMng.h"
 #include "GameCtrl.h"
 #include "VECTOR2.h"
 
@@ -34,12 +36,17 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 
 int GameScene::Init(void)
 {
+	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
+	lpStageMng.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
 	return 0;
 }
 
 void GameScene::Draw(void)
 {
 	ClsDrawScreen();
+
+	lpMapCtrl.Draw(true);
+
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 	VECTOR2 offset(VECTOR2(0,0));
