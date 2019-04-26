@@ -5,6 +5,8 @@ enum class INPUT_ID
 	LEFT,	// 左
 	RIGHT,	// 右
 	UP,		// 上
+	ACT_B,	// Bｷｰ(攻撃)
+	ACT_X,	// Xｷｰ(ﾏｯﾌﾟを開く)
 	GET_LB,	// LBで物を掴む/置く
 	RUN_RB,	// RBで走る
 	START,	// ｽﾀｰﾄﾎﾞﾀﾝ(ｺｰｽ選択の時に使用する)
