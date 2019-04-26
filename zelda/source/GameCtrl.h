@@ -2,6 +2,7 @@
 
 #pragma once
 #include <array>
+#include "INPUT_ID.h"
 
 //•Ê–¼’è‹`
 using KEY_ARY = std::array<char, 256>;
@@ -28,5 +29,8 @@ private:
 
 	int padData;
 	int padDataOld;
+
+	int JoystickData;		// Œ»İ‚Ì¼Ş®²½Ã¯¸data
+	int JoystickDataOld;	// 1ÌÚ°Ñ‘O‚Ì¼Ş®²½Ã¯¸data
 };
 

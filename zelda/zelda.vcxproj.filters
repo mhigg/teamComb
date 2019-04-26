@@ -84,6 +84,9 @@
     <ClCompile Include="source\EditCursor.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
+    <ClCompile Include="source\INPUT_ID.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\GameCtrl.h">
@@ -130,10 +133,15 @@
     </ClInclude>
     <ClInclude Include="source\ClassObj.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>    <ClInclude Include="source\MAP_ID.h">
+    </ClInclude>
+    <ClInclude Include="source\MAP_ID.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="source\EditCursor.h">
       <Filter>ヘッダー ファイル\Object</Filter>
-    </ClInclude>  </ItemGroup>
+    </ClInclude>
+    <ClInclude Include="source\INPUT_ID.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
