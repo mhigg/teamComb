@@ -10,12 +10,11 @@
 MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
+	stageSize = lpStageMng.GetStageSize();
+	chipSize = lpStageMng.GetChipSize();
+	drawOffset = lpSceneMng.GetDrawOffset();
 }
 
-MapCtrl::MapCtrl(VECTOR2 stageSize, VECTOR2 chipSize, VECTOR2 drawOffset):drawOffset(drawOffset)
-{
-	lineColor = RGB(255, 255, 255);
-}
 
 MapCtrl::~MapCtrl()
 {
@@ -74,7 +73,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 
 void MapCtrl::MapDraw(void)
 {
-	ClsDrawScreen();
 	for (int i = 0; i < 2; i++)
 	{
 		for (int j = 0; j < 2; j++)
@@ -87,5 +85,4 @@ void MapCtrl::MapDraw(void)
 				lineColor, true);
 		}
 	}
-	ScreenFlip();
 }

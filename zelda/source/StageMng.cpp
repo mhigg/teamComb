@@ -38,7 +38,6 @@ bool StageMng::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 
 	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
 
-	mapCtrl = std::make_unique<MapCtrl>(stageSize, chipSize, drawOffset);
 	return true;
 }
 

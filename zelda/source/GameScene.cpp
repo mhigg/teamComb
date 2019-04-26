@@ -44,6 +44,9 @@ int GameScene::Init(void)
 void GameScene::Draw(void)
 {
 	ClsDrawScreen();
+
+	lpMapCtrl.MapDraw();
+
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 	VECTOR2 offset(VECTOR2(0,0));

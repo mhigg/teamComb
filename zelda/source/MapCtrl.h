@@ -11,14 +11,11 @@
 class MapCtrl
 {
 public:
-	//static MapCtrl &GetInstance(void)
-	//{
-	//	static MapCtrl s_Instance;
-	//	return s_Instance;
-	//}
-	MapCtrl();
-	MapCtrl(VECTOR2 stageSize, VECTOR2 chipSize, VECTOR2 drawOffset);
-	~MapCtrl();
+	static MapCtrl &GetInstance(void)
+	{
+		static MapCtrl s_Instance;
+		return s_Instance;
+	}
 	bool SetMapData(VECTOR2 mapPos, MAP_ID id);			// Ï¯ÌßID‚Ìİ’è(‘å‘Ì´ÃŞ¨¯Ä—pH)
 	MAP_ID GetMapData(VECTOR2 mapPos);					// w’è‚µ‚½Ï½‚ÌÏ¯ÌßID‚ğæ“¾
 
@@ -30,6 +27,8 @@ public:
 	void MapDraw(void);
 
 private:
+	MapCtrl();
+	~MapCtrl();
 
 	int lineColor;		// ×²İ¶×°
 

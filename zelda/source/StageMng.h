@@ -39,7 +39,6 @@ private:
 
 	bool Init(void);
 
-	std::unique_ptr<MapCtrl> mapCtrl;
 
 	std::vector<MAP_ID*> mapData;  // ½Ã°¼ÞÏ¯ÌßÃÞ°À
 	std::vector<MAP_ID> mapData_Base;
