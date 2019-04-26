@@ -47,7 +47,7 @@ void StageMng::MapSave(void)
 
 }
 
-void StageMng::MapLoad(void)
+void StageMng::MapLoad(sharedListObj objList, bool editFlag)
 {
 
 }

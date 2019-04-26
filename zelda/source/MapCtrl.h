@@ -24,7 +24,7 @@ public:
 	bool SetUpGameObj(sharedListObj objList, bool modeFlag);
 
 	// Ï¯Ìß•`‰æ
-	void MapDraw(void);
+	void Draw(bool flag);
 
 private:
 	MapCtrl();

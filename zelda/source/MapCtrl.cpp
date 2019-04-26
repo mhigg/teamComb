@@ -71,8 +71,12 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 	return true;
 }
 
-void MapCtrl::MapDraw(void)
+void MapCtrl::Draw(bool flag)
 {
+	if (!flag)
+	{
+		return;
+	}
 	for (int i = 0; i < 2; i++)
 	{
 		for (int j = 0; j < 2; j++)

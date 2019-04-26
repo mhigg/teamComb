@@ -28,7 +28,7 @@ public:
 	void MapSave(void);
 
 	// Ï¯ÌßÛ°ÄÞ
-	void MapLoad(void);
+	void MapLoad(sharedListObj objList, bool editFlag);
 
 	const VECTOR2& GetChipSize(void);		// ChipSize‚ÌŽæ“¾
 	const VECTOR2& GetStageSize(void);		// StageSize‚ÌŽæ“¾
