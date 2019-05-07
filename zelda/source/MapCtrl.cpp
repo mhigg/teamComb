@@ -103,7 +103,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				}
 				// ÌßÚ²Ô°‚ð²Ý½ÀÝ½
 				{
-					auto obj = AddObjList()(objList, std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
+					auto obj = AddObjList()(objList, 
+						std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
 					makePlayerFlag = true;
 				}
 				break;
@@ -147,7 +148,7 @@ void MapCtrl::Draw(bool flag)
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
-					IMAGE_ID("image/map.png")[static_cast<int>(mapID)], true);
+					IMAGE_ID("image/mapImage.png")[static_cast<int>(mapID)], true);
 			}
 		}
 	}
@@ -175,18 +176,10 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL6:
 			case MAP_ID::WALL7:
 			case MAP_ID::WALL8:
-			case MAP_ID::WALL9:
-			case MAP_ID::WALL10:
-			case MAP_ID::WALL11:
-			case MAP_ID::WALL12:
-			case MAP_ID::WALL13:
-			case MAP_ID::WALL14:
-			case MAP_ID::WALL15:
-			case MAP_ID::WALL16:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
-					IMAGE_ID("image/map.png")[static_cast<const unsigned int>(id)],
+					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
 					true);
 				break;
 			default:
@@ -197,7 +190,7 @@ void MapCtrl::Draw(bool flag)
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
-					IMAGE_ID("image/map.png")[static_cast<int>(MAP_ID::NONE)],
+					IMAGE_ID("image/mapImage.png")[static_cast<int>(MAP_ID::NONE)],
 					true);
 #endif
 				break;
