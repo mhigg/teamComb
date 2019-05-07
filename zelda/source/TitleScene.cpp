@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "TitleScene.h"
 #include "GameScene.h"
-
+#include "MenuScene.h"
 
 TitleScene::TitleScene()
 {
@@ -19,7 +19,7 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
 	if ((cnt[KEY_INPUT_SPACE]) & (!cntOld[KEY_INPUT_SPACE]))
 	{
-		return std::make_unique<GameScene>();
+		return std::make_unique<MenuScene>();
 	}
 	TitleDraw();
 	return std::move(own);
@@ -28,6 +28,7 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void TitleScene::TitleDraw(void)
 {
 	ClsDrawScreen();
+
 
 	DrawString(0, 0, "TitleScene", 0x0000ff00);
 
