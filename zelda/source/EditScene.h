@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include <array>
+#include "BaseScene.h"
 #include "Obj.h"
 #include "ClassObj.h"
 
@@ -10,9 +11,9 @@ class EditScene :
 public:
 	EditScene();
 	~EditScene();
-	uniqueBase Update(						// 更新
+	uniqueBase UpDate(						// 更新
 		uniqueBase own,					// 現在のｼｰﾝ
-		const GameCtrl &controler		// ｷｰ取得
+		const GameCtrl &controller		// ｷｰ取得
 	);
 	bool menuFlag;							// ﾒﾆｭｰ画面の真偽
 private:

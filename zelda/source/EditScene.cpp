@@ -19,10 +19,10 @@ EditScene::~EditScene()
 {
 }
 
-uniqueBase EditScene::Update(uniqueBase own, const GameCtrl & controler)
+uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
-	auto cnt = controler.GetCtrl(KEY_TYPE_NOW);
-	auto cntOld = controler.GetCtrl(KEY_TYPE_OLD);
+	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
+	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
 	if (cnt[KEY_INPUT_M] & (!cntOld[KEY_INPUT_M]))
 	{
 		if (menuFlag)
@@ -69,7 +69,7 @@ uniqueBase EditScene::Update(uniqueBase own, const GameCtrl & controler)
 	}
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
-		(*itr)->UpDate(controler, objList);
+		(*itr)->UpDate(controller, objList);
 	}
 	EditDraw();
 	return std::move(own);
