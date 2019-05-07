@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include <memory>
+#include "ImageMng.h"
 #include "MapCtrl.h"
 #include "Player.h"
 #include "SceneMng.h"
@@ -124,5 +125,83 @@ void MapCtrl::Draw(bool flag)
 		return;
 	}
 	// Ï¯Ìß•`‰æ
+	MAP_ID mapID;
+	VECTOR2 offset(lpSceneMng.GetDrawOffset());
+	VECTOR2 tmpPos;
+	if (!flag)
+	{
+		for (int y = 0; y < stageSize.y; y++)
+		{
+			for (int x = 0; x < stageSize.x; x++)
+			{
+				if ((x % 2) + (y % 2) == 1
+					&& (x % 2) * (y % 2) == 0)
+				{
+					mapID = MAP_ID::FLOOR1;
+				}
+				else
+				{
+					mapID = MAP_ID::FLOOR2;
+				}
+				tmpPos = { (x * chipSize.x),(y * chipSize.y) };
+				DrawGraph(
+					tmpPos.x + offset.x,
+					tmpPos.y + offset.y,
+					IMAGE_ID("image/map.png")[static_cast<int>(mapID)], true);
+			}
+		}
+	}
+	for (int y = 0; y < stageSize.y; y++)
+	{
+		for (int x = 0; x < stageSize.x; x++)
+		{
+			MAP_ID id = mapData[y][x];
 
+			tmpPos = { (x * chipSize.x),(y * chipSize.y) };
+			switch (id)
+			{
+			case MAP_ID::NONE:
+				break;
+			case MAP_ID::PLAYER:
+				if (!flag)
+				{
+					break;
+				}
+			case MAP_ID::WALL1:
+			case MAP_ID::WALL2:
+			case MAP_ID::WALL3:
+			case MAP_ID::WALL4:
+			case MAP_ID::WALL5:
+			case MAP_ID::WALL6:
+			case MAP_ID::WALL7:
+			case MAP_ID::WALL8:
+			case MAP_ID::WALL9:
+			case MAP_ID::WALL10:
+			case MAP_ID::WALL11:
+			case MAP_ID::WALL12:
+			case MAP_ID::WALL13:
+			case MAP_ID::WALL14:
+			case MAP_ID::WALL15:
+			case MAP_ID::WALL16:
+				DrawGraph(
+					tmpPos.x + offset.x,
+					tmpPos.y + offset.y,
+					IMAGE_ID("image/map.png")[static_cast<const unsigned int>(id)],
+					true);
+				break;
+			default:
+			case MAP_ID::FLOOR1:
+			case MAP_ID::FLOOR2:
+#ifdef _DEBUG
+				// ´×°•\Ž¦
+				DrawGraph(
+					tmpPos.x + offset.x,
+					tmpPos.y + offset.y,
+					IMAGE_ID("image/map.png")[static_cast<int>(MAP_ID::PLAYER)],
+					true);
+#endif
+				break;
+			}
+		}
+	}
 }
