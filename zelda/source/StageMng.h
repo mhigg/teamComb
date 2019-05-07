@@ -9,7 +9,7 @@
 
 #define lpStageMng StageMng::GetInstance()
 
-constexpr int GAME_AREA_SIZE_X = 800;
+constexpr int GAME_AREA_SIZE_X = 800;		// ﾏｯﾌﾟ全体のｻｲｽﾞ
 constexpr int GAME_AREA_SIZE_Y = 600;
 
 class StageMng
@@ -32,6 +32,7 @@ public:
 
 	const VECTOR2& GetChipSize(void);		// ChipSizeの取得
 	const VECTOR2& GetStageSize(void);		// StageSizeの取得
+	const VECTOR2& GetDrawOffset(void);		// drawOffsetの取得
 
 private:
 	StageMng();
@@ -43,6 +44,7 @@ private:
 	std::vector<MAP_ID*> mapData;  // ｽﾃｰｼﾞﾏｯﾌﾟﾃﾞｰﾀ
 	std::vector<MAP_ID> mapData_Base;
 	VECTOR2 stageSize;	// ｽﾃｰｼﾞｻｲｽﾞ
-	VECTOR2 chipSize;	// ゲームサイズ
+	VECTOR2 chipSize;	// 1ﾏｽのｻｲｽﾞ
+	VECTOR2 drawOffset;
 };
 

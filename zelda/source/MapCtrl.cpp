@@ -20,9 +20,28 @@ MapCtrl::~MapCtrl()
 {
 }
 
-
-bool MapCtrl::SetMapData(VECTOR2 mapPos, MAP_ID id)
+struct CheckSize
 {
+	// îÕàÕ¡™Ø∏
+	bool operator()(const VECTOR2 &mapPos, const VECTOR2 &mapSize) {
+		if ((mapPos.x < 0) || (mapPos.y < 0)
+			|| (mapPos.x >= mapSize.x) || (mapPos.y >= mapSize.y))
+		{
+			return false;
+		}
+		return true;
+	}
+};
+
+bool MapCtrl::SetMapData(VECTOR2 pos, MAP_ID id)
+{
+	VECTOR2 mapPos(pos / chipSize);		// é©ï™é©êg
+	if (!CheckSize()(mapPos, stageSize))
+	{
+		return false;
+	}
+
+	mapData[mapPos.x][mapPos.y] = id;
 	return true;
 }
 
