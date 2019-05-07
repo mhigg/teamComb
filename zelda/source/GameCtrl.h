@@ -10,16 +10,16 @@
 using KEY_ARY = std::array<char, 256>;
 using INPUT_ARY = std::array<bool, static_cast<int>(INPUT_ID::MAX)>;
 
-#define XINPUT_DOWN	static_cast<int>(INPUT_ID::DOWN)
-#define XINPUT_LEFT	static_cast<int>(INPUT_ID::LEFT)
-#define XINPUT_RIGHT static_cast<int>(INPUT_ID::RIGHT)
-#define XINPUT_UP	static_cast<int>(INPUT_ID::UP)
-#define XINPUT_ACT_B static_cast<int>(INPUT_ID::ACT_B)
-#define XINPUT_ACT_X	static_cast<int>(INPUT_ID::ACT_X)
-#define XINPUT_GET_LB static_cast<int>(INPUT_ID::GET_LB)
-#define XINPUT_RUN_RB static_cast<int>(INPUT_ID::RUN_RB)
-#define XINPUT_START static_cast<int>(INPUT_ID::START)
-#define XINPUT_PAUSE static_cast<int>(INPUT_ID::PAUSE)
+#define XINPUT_DOWN	static_cast<int>(INPUT_ID::DOWN)		// â∫
+#define XINPUT_LEFT	static_cast<int>(INPUT_ID::LEFT)		// ç∂
+#define XINPUT_RIGHT static_cast<int>(INPUT_ID::RIGHT)		// âE
+#define XINPUT_UP	static_cast<int>(INPUT_ID::UP)			// è„
+#define XINPUT_ATT static_cast<int>(INPUT_ID::ATT)			// çUåÇ
+#define XINPUT_MAP	static_cast<int>(INPUT_ID::MAP)			// œØÃﬂï\é¶
+#define XINPUT_GET_LB static_cast<int>(INPUT_ID::GET_LB)	// ï®ÇíÕÇﬁ,ï®ÇíuÇ≠,à⁄ìÆkey + ï®ÇíÕÇÒÇ≈ÇÈèÛë‘Ç≈LBkeyÇâüÇ∑ = ï®ÇìäÇ∞ÇÈ
+#define XINPUT_RUN_RB static_cast<int>(INPUT_ID::RUN_RB)	// ¿ﬁØº≠
+#define XINPUT_START static_cast<int>(INPUT_ID::START)		// åàíË
+#define XINPUT_PAUSE static_cast<int>(INPUT_ID::PAUSE)		// Œﬂ∞Ωﬁ
 
 
 enum KEY_TYPE

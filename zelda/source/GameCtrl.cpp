@@ -46,15 +46,16 @@ bool GameCtrl::UpDate(void)
 	inputState[XINPUT_UP] = (padData.ThumbLY < -20000) | padData.Buttons[XINPUT_BUTTON_DPAD_UP];
 
 	// ±¸¼®ÝŠÖ˜A
-	inputState[XINPUT_ACT_B] = 0;
-	inputState[XINPUT_ACT_X] = 0;
+	inputState[XINPUT_ATT] = padData.Buttons[XINPUT_BUTTON_B];
+	inputState[XINPUT_MAP] = padData.Buttons[XINPUT_BUTTON_X];
+
 	// •¨’Í‚Ý/ÀÞ¯¼­(LB/RB)
-	inputState[XINPUT_GET_LB] = 0;
-	inputState[XINPUT_RUN_RB] = 0;
+	inputState[XINPUT_GET_LB] = padData.Buttons[XINPUT_BUTTON_LEFT_SHOULDER];
+	inputState[XINPUT_RUN_RB] = padData.Buttons[XINPUT_BUTTON_RIGHT_SHOULDER];
 
 	// ‚»‚Ì‘¼(ÒÆ­°,Îß°½Þ‚È‚Ç)
-	inputState[XINPUT_START] = 0;
-	inputState[XINPUT_PAUSE] = 0;
+	inputState[XINPUT_START] = padData.Buttons[XINPUT_BUTTON_START];
+	inputState[XINPUT_PAUSE] = padData.Buttons[XINPUT_BUTTON_BACK];
 
 	return true;
 }
