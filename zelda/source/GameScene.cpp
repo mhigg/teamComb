@@ -34,6 +34,11 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<EditScene>();
 	}
 
+	for (auto& obj : (*objList))
+	{
+		obj->UpDate(controller, objList);
+	}
+
 	Draw();
 
 	return move(own);
@@ -48,7 +53,9 @@ int GameScene::Init(void)
 	objList->clear();
 
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
-	lpStageMng.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
+	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
+	lpMapCtrl.SetMapData(VECTOR2(0, 0), MAP_ID::PLAYER);
+	lpStageMng.MapLoad(objList, false);
 	return 0;
 }
 
@@ -73,6 +80,11 @@ void GameScene::Draw(void)
 	{
 		tmp2.y = tmp1.y;
 		DrawLine(offset + tmp1, offset + tmp2, 0x00ffffff, true);
+	}
+
+	for (auto& obj : (*objList))
+	{
+		obj->Draw();
 	}
 
 	DrawString(0, 0, "GameScene", 0x00ff0000);

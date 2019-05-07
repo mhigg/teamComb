@@ -19,6 +19,9 @@ public:
 	bool SetMapData(VECTOR2 mapPos, MAP_ID id);			// ﾏｯﾌﾟIDの設定(大体ｴﾃﾞｨｯﾄ用？)
 	MAP_ID GetMapData(VECTOR2 mapPos);					// 指定したﾏｽのﾏｯﾌﾟIDを取得
 
+	// ﾏｯﾌﾟﾃﾞｰﾀのﾘｻｲｽﾞ・初期化
+	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);
+
 	// GameModeのみ、ﾌﾟﾚｲﾔｰをｲﾝｽﾀﾝｽする関数 1体ｲﾝｽﾀﾝｽしたら2体目以降はｲﾝｽﾀﾝｽされない
 	// modeFlag:true→EditMode false→GameMode
 	bool SetUpGameObj(sharedListObj objList, bool modeFlag);

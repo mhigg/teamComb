@@ -21,9 +21,6 @@ public:
 		return s_instance;
 	}
 
-	// Ï¯ÌßÃŞ°À‚ÌØ»²½ŞE‰Šú‰»
-	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);	
-
 	// Ï¯Ìß¾°ÌŞ©´ÃŞ¨¯Ä
 	void MapSave(void);
 
@@ -33,6 +30,7 @@ public:
 	const VECTOR2& GetChipSize(void);		// ChipSize‚Ìæ“¾
 	const VECTOR2& GetStageSize(void);		// StageSize‚Ìæ“¾
 	const VECTOR2& GetDrawOffset(void);		// drawOffset‚Ìæ“¾
+
 
 private:
 	StageMng();

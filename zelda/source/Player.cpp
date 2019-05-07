@@ -34,8 +34,7 @@ Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// è„(REV:â∫)(ç∂ÅEâE)
 			  };
 
-	
-
+	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
 }
 
 Player::Player()
