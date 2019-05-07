@@ -70,7 +70,7 @@ bool MapCtrl::SetMapData(VECTOR2 pos, MAP_ID id)
 		return false;
 	}
 
-	mapData[mapPos.x][mapPos.y] = id;
+	mapData[mapPos.y][mapPos.x] = id;
 	return true;
 }
 
@@ -197,7 +197,7 @@ void MapCtrl::Draw(bool flag)
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
-					IMAGE_ID("image/map.png")[static_cast<int>(MAP_ID::PLAYER)],
+					IMAGE_ID("image/map.png")[static_cast<int>(MAP_ID::NONE)],
 					true);
 #endif
 				break;
