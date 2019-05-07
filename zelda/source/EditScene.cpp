@@ -23,7 +23,7 @@ uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
 	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
-	if (cnt[KEY_INPUT_M] & (!cntOld[KEY_INPUT_M]))
+	/*if (cnt[KEY_INPUT_M] & (!cntOld[KEY_INPUT_M]))
 	{
 		if (menuFlag)
 		{
@@ -33,7 +33,7 @@ uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		{
 			menuFlag = true;
 		}
-	}
+	}*/
 	if (!menuFlag)
 	{
 		if (cnt[KEY_INPUT_F5])
@@ -93,8 +93,21 @@ bool EditScene::EditDraw(void)
 	}
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
-	VECTOR2 offset(lpSceneMng.GetDrawOffset());
-	if (menuFlag)
+	VECTOR2 offset(VECTOR2(0, 0));
+
+	for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += CHIP_SIZE)
+	{
+		tmp2.x = tmp1.x;
+		DrawLine(offset + tmp1, offset + tmp2, 0x00ffffff, true);
+	}
+	tmp1 = VECTOR2(0, 0);
+	tmp2.x = GAME_SCREEN_SIZE_X;
+	for (; tmp1.y <= GAME_SCREEN_SIZE_Y; tmp1.y += CHIP_SIZE)
+	{
+		tmp2.y = tmp1.y;
+		DrawLine(offset + tmp1, offset + tmp2, 0x00ffffff, true);
+	}
+	/*if (menuFlag)
 	{
 		SetDrawBright(255, 255, 255);
 		DrawBox(130, 130, GAME_SCREEN_SIZE_X + 20, GAME_SCREEN_SIZE_Y + 20, RGB(0, 255, 255), true);
@@ -126,7 +139,8 @@ bool EditScene::EditDraw(void)
 		DrawString(75, 30, "M", RGB(255, 255, 255));
 		SetFontSize(16);
 		DrawString(115, 50, "キーガイドを開く", RGB(255, 255, 255));
-	}
+	}*/
+	DrawString(0, 0, "EditScene", 0x00ff0000);
 	ScreenFlip();
 	return true;
 }
