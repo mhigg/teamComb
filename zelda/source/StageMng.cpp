@@ -6,17 +6,17 @@
 
 struct DataHeader
 {
-	char fileID[13];	// Ì§²Ù‚ÌIDî•ñ
+	char fileID[15];	// Ì§²Ù‚ÌIDî•ñ
 	char verID;			// ÊŞ°¼Ş®İ”Ô†
 	char reserve1[2];	// —\–ñ—Ìˆæ
 	int sizeX;			// Ï¯Ìß‚ÌÏ½Ò”X
 	int sizeY;			// Ï¯Ìß‚ÌÏ½Ò”Y
-	char reserve2[3];	// —\–ñ—Ìˆæ
+	char reserve2[1];	// —\–ñ—Ìˆæ
 	char sum;			// »Ñ’l
 };
 
-#define BBM_VER_ID 0x01						// Ì§²ÙÊŞ°¼Ş®İ”Ô†
-#define BBM_FILE_ID "BBM_MAP_DATA"			// Ì§²Ù‚ÌIDî•ñ	
+#define ZELDA_VER_ID 0x01						// Ì§²ÙÊŞ°¼Ş®İ”Ô†
+#define ZELDA_FILE_ID "ZELDA_MAP_DATA"			// Ì§²Ù‚ÌIDî•ñ	
 
 StageMng::StageMng()
 {
@@ -33,13 +33,13 @@ StageMng::~StageMng()
 bool StageMng::MapSave(void)
 {
 	DataHeader expData = {
-		BBM_FILE_ID,
-		BBM_VER_ID,
-	{ 0,0 },
-	mapSize.x,
-	mapSize.y,
-	{ 0,0,0 },
-	(char)0xff
+		ZELDA_FILE_ID,
+		ZELDA_VER_ID,
+		{ 0,0 },
+		mapSize.x,
+		mapSize.y,
+		{ 0 },
+		(char)0xff
 	};
 	int sum = 0;
 	for (auto data : mapData_Base)
@@ -67,11 +67,11 @@ bool StageMng::MapLoad(sharedListObj objList, bool editFlag)
 	fread(mapData_Base.data(), sizeof(MAP_ID) * mapData_Base.size(), 1, file);
 	fclose(file);
 	bool flag = true;
-	if ((std::string)expData.fileID != BBM_FILE_ID)
+	if ((std::string)expData.fileID != ZELDA_FILE_ID)
 	{
 		flag = false;
 	}
-	if (expData.verID != BBM_VER_ID)
+	if (expData.verID != ZELDA_VER_ID)
 	{
 		flag = false;
 	}
