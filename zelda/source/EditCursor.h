@@ -5,7 +5,7 @@
 #include "MapCtrl.h"
 #include "Player.h"
 
-#define MOVE_SPEED (20)
+#define MOVE_SPEED (40)
 
 //class SceneMng;
 class EditCursor :
