@@ -40,10 +40,10 @@ bool GameCtrl::UpDate(void)
 
 	inputStateOld = inputState;
 	// ˆÚ“®ŠÖ˜A
-	inputState[XINPUT_DOWN] = (padData.ThumbLY > 20000) | padData.Buttons[XINPUT_BUTTON_DPAD_DOWN] | keyData[KEY_INPUT_DOWN];
-	inputState[XINPUT_LEFT] = (padData.ThumbLX < -20000) | padData.Buttons[XINPUT_BUTTON_DPAD_LEFT];
-	inputState[XINPUT_RIGHT] = (padData.ThumbLX > 20000) | padData.Buttons[XINPUT_BUTTON_DPAD_RIGHT];
-	inputState[XINPUT_UP] = (padData.ThumbLY < -20000) | padData.Buttons[XINPUT_BUTTON_DPAD_UP];
+	inputState[XINPUT_DOWN] = (padData.ThumbLY < -20000) | padData.Buttons[XINPUT_BUTTON_DPAD_DOWN] | keyData[KEY_INPUT_DOWN];
+	inputState[XINPUT_LEFT] = (padData.ThumbLX < -20000) | padData.Buttons[XINPUT_BUTTON_DPAD_LEFT] | keyData[KEY_INPUT_LEFT];
+	inputState[XINPUT_RIGHT] = (padData.ThumbLX > 20000) | padData.Buttons[XINPUT_BUTTON_DPAD_RIGHT] | keyData[KEY_INPUT_RIGHT];
+	inputState[XINPUT_UP] = (padData.ThumbLY > 20000) | padData.Buttons[XINPUT_BUTTON_DPAD_UP] | keyData[KEY_INPUT_UP];
 
 	// ±¸¼®ÝŠÖ˜A
 	inputState[XINPUT_ATT] = padData.Buttons[XINPUT_BUTTON_B];

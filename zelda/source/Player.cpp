@@ -3,7 +3,6 @@
 #include "StageMng.h"
 
 
-
 Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
 {
 	pos = { 0,0 };
@@ -35,6 +34,9 @@ Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
 			  };
 
 	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
+	initAnim();
+
+	afterKeyFlag = false;
 }
 
 Player::Player()
@@ -48,13 +50,16 @@ Player::~Player()
 
 bool Player::initAnim(void)
 {
-	return false;
+	AddAnim("’â~", 0, 0, 1, 6, true);
+	AddAnim("ˆÚ“®", 0, 1, 1, 8, true);
+	AddAnim("€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
+	return true;
 }
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
-	auto &keyTbl = controller.GetCtrl(KEY_TYPE_NOW);
-	auto &keyTblOld = controller.GetCtrl(KEY_TYPE_OLD);
+	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
@@ -80,20 +85,43 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	};
 
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
-		if (keyTbl[keyIdTbl[DirTbl[dir][id]]])
+		if (inputTbl[keyIdTbl[DirTbl[dir][id]]])
 		{
 			Player::dir = DirTbl[dir][id];		// •ûŒü‚Ì¾¯Ä
 
 			// if (/*mapMoveTbl*/)		// ˆÚ“®§Œä
-			{
-				Player::dir = DirTbl[dir][id];
-				return false;		// ˆÚ“®‚Å‚«‚È‚¢ê‡(Šâ‚â–Ø‚È‚Ç‚ÌµÌŞ¼Şª¸Ä‚ª‚ ‚é‚Æ‚«)
-			}
-
+			//{
+				// Player::dir = DirTbl[dir][id];
+				// return false;		// ˆÚ“®‚Å‚«‚È‚¢ê‡(Šâ‚â–Ø‚È‚Ç‚ÌµÌŞ¼Şª¸Ä‚ª‚ ‚é‚Æ‚«)
+			//}
+			// ˆÚ“®ˆ—-----------------------------
+			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir];	// •ÏX‚µ‚½‚¢À•W‚Ì•Ï”ƒAƒhƒŒƒX += ˆÚ“®—Ê
 			return true;
 		}
+
 		return false;
 	};
+
+	// Œãkeyˆ—------------------------------------
+	if (!(Move((DIR_TBL_ID)(DIR_TBL_OPP1 - (afterKeyFlag << 1)))		// OPP1,OPP2‚ÉˆÚ“®‚µ‚È‚©‚Á‚½ê‡
+		|| Move((DIR_TBL_ID)(DIR_TBL_OPP2 - (afterKeyFlag << 1)))))	// (key“ü—Í‚ª‚È‚©‚Á‚½ê‡)
+	{
+		afterKeyFlag = false;
+		if (!(Move((DIR_TBL_ID)(DIR_TBL_MAIN + (afterKeyFlag << 1)))	// MAIN,REV‚ÉˆÚ“®‚µ‚È‚©‚Á‚½ê‡
+			|| Move((DIR_TBL_ID)(DIR_TBL_REV + (afterKeyFlag << 1)))))// (key“ü—Í‚ª‚È‚©‚Á‚½ê‡)
+		{
+			SetAnim("’â~");
+			return;
+		}
+	}
+	else
+	{
+		// OPP1‚à‚µ‚­‚ÍOPP2‚Ékey“ü—Í‚ª‚ ‚Á‚½ê‡‚Ìî•ñ
+		afterKeyFlag = (bool)inputTbl[keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]];
+		afterKeyFlag |= (bool)inputTbl[keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]];
+		afterKeyFlag ^= (int)(GetAnim() == "’â~");
+	}
+	SetAnim("ˆÚ“®");
 
 }
 
