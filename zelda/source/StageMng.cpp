@@ -16,7 +16,8 @@ StageMng::~StageMng()
 
 bool StageMng::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 {
-	this->chipSize = chipSize;
+	StageMng::chipSize = chipSize;
+	StageMng::drawOffset = drawOffset;
 
 	auto CreateMap = [=](auto& base, auto& front, auto initNum) {
 		base.resize(stageSize.x * stageSize.y);
