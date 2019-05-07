@@ -1,5 +1,7 @@
 #include <DxLib.h>
+#include <memory>
 #include "GameScene.h"
+#include "EditScene.h"
 #include "SceneMng.h"
 #include "StageMng.h"
 #include "GameCtrl.h"
@@ -27,9 +29,12 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto pad = controller.GetInputState(KEY_TYPE_NOW);
 	auto padOld = controller.GetInputState(KEY_TYPE_OLD);
 
+	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
+	{
+		return std::make_unique<EditScene>();
+	}
 
 	Draw();
-
 
 	return move(own);
 }
@@ -69,6 +74,8 @@ void GameScene::Draw(void)
 		tmp2.y = tmp1.y;
 		DrawLine(offset + tmp1, offset + tmp2, 0x00ffffff, true);
 	}
+
+	DrawString(0, 0, "GameScene", 0x00ff0000);
 
 	ScreenFlip();
 }
