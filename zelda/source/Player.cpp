@@ -9,9 +9,13 @@ Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
 	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
 
-	keyIdTbl = {};
+	keyIdTbl = { XINPUT_DOWN,	// â∫
+				 XINPUT_LEFT,	// ç∂
+				 XINPUT_RIGHT,	// âE
+				 XINPUT_UP		// è„
+				};
 
-	PosTbl = { &pos.y,&pos.x,	// â∫
+	PosTbl = {  &pos.y,&pos.x,	// â∫
 				&pos.x,&pos.y,	// ç∂
 				&pos.x,&pos.y,	// âE
 				&pos.y,&pos.x	// è„
@@ -50,6 +54,8 @@ bool Player::initAnim(void)
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	auto &keyTbl = controller.GetCtrl(KEY_TYPE_NOW);
+	auto &keyTblOld = controller.GetCtrl(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
@@ -75,7 +81,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	};
 
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
-		// if(∫›ƒ€∞◊∞ÇÃèÓïÒ)
+		if (keyTbl[keyIdTbl[DirTbl[dir][id]]])
 		{
 			Player::dir = DirTbl[dir][id];		// ï˚å¸ÇÃæØƒ
 
