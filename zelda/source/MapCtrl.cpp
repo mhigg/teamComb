@@ -121,15 +121,11 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 
 void MapCtrl::Draw(bool flag)
 {
-	if (!flag)
-	{
-		return;
-	}
 	// Ï¯Ìß•`‰æ
 	MAP_ID mapID;
 	VECTOR2 offset(lpSceneMng.GetDrawOffset());
 	VECTOR2 tmpPos;
-	if (!flag)
+	/*if (!flag)
 	{
 		for (int y = 0; y < stageSize.y; y++)
 		{
@@ -151,7 +147,7 @@ void MapCtrl::Draw(bool flag)
 					IMAGE_ID("image/mapImage.png")[static_cast<int>(mapID)], true);
 			}
 		}
-	}
+	}*/
 	for (int y = 0; y < stageSize.y; y++)
 	{
 		for (int x = 0; x < stageSize.x; x++)
@@ -176,6 +172,26 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL6:
 			case MAP_ID::WALL7:
 			case MAP_ID::WALL8:
+			case MAP_ID::DOOR1:
+			case MAP_ID::DOOR2:
+			case MAP_ID::DOOR3:
+			case MAP_ID::DOOR4:
+			case MAP_ID::KEY:
+			case MAP_ID::PANEL:
+			case MAP_ID::LADDER:
+			case MAP_ID::FLAG:
+			case MAP_ID::FIRE1:
+			case MAP_ID::FIRE2:
+			case MAP_ID::SILL:
+			case MAP_ID::RAMP1:
+			case MAP_ID::RAMP2:
+			case MAP_ID::POTION1:
+			case MAP_ID::POTION2:
+			case MAP_ID::BARREL1:
+			case MAP_ID::BARREL2:
+			case MAP_ID::BONE1:
+			case MAP_ID::BONE2:
+			case MAP_ID::BONE3:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
