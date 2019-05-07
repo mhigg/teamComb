@@ -74,7 +74,7 @@ bool MapCtrl::SetMapData(VECTOR2 pos, MAP_ID id)
 	return true;
 }
 
-MAP_ID MapCtrl::GetMapData(VECTOR2 pos,MAP_ID defID)
+MAP_ID MapCtrl::GetMapData(VECTOR2 pos, MAP_ID defID)
 {
 	VECTOR2 selPos(pos / chipSize);
 	if (!CheckSize()(selPos, stageSize))
