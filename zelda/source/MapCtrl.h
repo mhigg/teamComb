@@ -17,7 +17,7 @@ public:
 		return s_Instance;
 	}
 	bool SetMapData(VECTOR2 mapPos, MAP_ID id);			// ﾏｯﾌﾟIDの設定(大体ｴﾃﾞｨｯﾄ用？)
-	MAP_ID GetMapData(VECTOR2 mapPos);					// 指定したﾏｽのﾏｯﾌﾟIDを取得
+	MAP_ID GetMapData(VECTOR2 pos,MAP_ID defID);		// 指定したﾏｽのﾏｯﾌﾟIDを取得
 
 	// ﾏｯﾌﾟﾃﾞｰﾀのﾘｻｲｽﾞ・初期化
 	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);

@@ -22,10 +22,10 @@ public:
 	}
 
 	// Ï¯Ìß¾°ÌŞ©´ÃŞ¨¯Ä
-	void MapSave(void);
+	bool MapSave(void);
 
 	// Ï¯ÌßÛ°ÄŞ
-	void MapLoad(sharedListObj objList, bool editFlag);
+	bool MapLoad(sharedListObj objList, bool editFlag);
 
 	const VECTOR2& GetChipSize(void);		// ChipSize‚Ìæ“¾
 	const VECTOR2& GetStageSize(void);		// StageSize‚Ìæ“¾
@@ -42,6 +42,7 @@ private:
 	std::vector<MAP_ID*> mapData;  // ½Ã°¼ŞÏ¯ÌßÃŞ°À
 	std::vector<MAP_ID> mapData_Base;
 	VECTOR2 stageSize;	// ½Ã°¼Ş»²½Ş
+	VECTOR2 mapSize;	// ƒ}ƒX‚Ì”
 	VECTOR2 chipSize;	// 1Ï½‚Ì»²½Ş
 	VECTOR2 drawOffset;
 };

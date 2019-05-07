@@ -21,6 +21,20 @@ MapCtrl::~MapCtrl()
 {
 }
 
+struct CheckSize
+{
+	bool operator()(const VECTOR2 &selPos, const VECTOR2 &mapSize) {
+		if ((selPos.x < 0 || selPos.y < 0)
+			|| (mapSize.x <= selPos.x)
+			|| (mapSize.y <= selPos.y))
+		{
+			return false;
+		}
+		return true;
+	}
+};
+
+
 bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 {
 	MapCtrl::chipSize = chipSize;
@@ -49,19 +63,6 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 	return true;
 }
 
-struct CheckSize
-{
-	// îÕàÕ¡™Ø∏
-	bool operator()(const VECTOR2 &mapPos, const VECTOR2 &mapSize) {
-		if ((mapPos.x < 0) || (mapPos.y < 0)
-			|| (mapPos.x >= mapSize.x) || (mapPos.y >= mapSize.y))
-		{
-			return false;
-		}
-		return true;
-	}
-};
-
 bool MapCtrl::SetMapData(VECTOR2 pos, MAP_ID id)
 {
 	VECTOR2 mapPos(pos / chipSize);		// é©ï™é©êg
@@ -69,14 +70,19 @@ bool MapCtrl::SetMapData(VECTOR2 pos, MAP_ID id)
 	{
 		return false;
 	}
-
 	mapData[mapPos.y][mapPos.x] = id;
 	return true;
 }
 
-MAP_ID MapCtrl::GetMapData(VECTOR2 mapPos)
+MAP_ID MapCtrl::GetMapData(VECTOR2 pos,MAP_ID defID)
 {
-	return mapData[mapPos.x][mapPos.y];
+	VECTOR2 selPos(pos / chipSize);
+	if (!CheckSize()(selPos, stageSize))
+	{
+		// îÕàÕäOÇÃéûÇÕå≈íËÇÃIDÇï‘Ç∑
+		return defID;
+	}
+	return mapData[selPos.y][selPos.x];
 }
 
 bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
@@ -89,11 +95,12 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 	// GameModeÇ»ÇÁÇ±Ç±Ç©ÇÁêÊÇ÷
 
 	bool makePlayerFlag = false;
-	for (int y = 0; y < stageSize.y; y++)
+	for (int y = 0; y < stageSize.y / chipSize.y; y++)
 	{
-		for (int x = 0; x < stageSize.x; x++)
+		for (int x = 0; x < stageSize.x / chipSize.x; x++)
 		{
 			MAP_ID id = mapData[y][x];
+			ListObj_itr obj;
 			switch (id)
 			{
 			case MAP_ID::PLAYER:
@@ -109,13 +116,40 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				}
 				break;
 			case MAP_ID::NONE:
-
+			case MAP_ID::WALL1:
+			case MAP_ID::WALL2:
+			case MAP_ID::WALL3:
+			case MAP_ID::WALL4:
+			case MAP_ID::WALL5:
+			case MAP_ID::WALL6:
+			case MAP_ID::WALL7:
+			case MAP_ID::WALL8:
+			case MAP_ID::WALL9:
+			case MAP_ID::DOOR1:
+			case MAP_ID::DOOR2:
+			case MAP_ID::DOOR3:
+			case MAP_ID::DOOR4:
+			case MAP_ID::KEY:
+			case MAP_ID::PANEL:
+			case MAP_ID::LADDER:
+			case MAP_ID::FLAG:
+			case MAP_ID::FIRE1:
+			case MAP_ID::FIRE2:
+			case MAP_ID::RAMP1:
+			case MAP_ID::RAMP2:
+			case MAP_ID::POTION1:
+			case MAP_ID::POTION2:
+			case MAP_ID::BARREL1:
+			case MAP_ID::BARREL2:
+			case MAP_ID::BONE1:
+			case MAP_ID::BONE2:
+			case MAP_ID::BONE3:
+				SetMapData(VECTOR2(x * chipSize.x, y * chipSize.y),id);
 			default:
 				break;
 			}
 		}
 	}
-
 	return true;
 }
 
@@ -125,29 +159,6 @@ void MapCtrl::Draw(bool flag)
 	MAP_ID mapID;
 	VECTOR2 offset(lpSceneMng.GetDrawOffset());
 	VECTOR2 tmpPos;
-	/*if (!flag)
-	{
-		for (int y = 0; y < stageSize.y; y++)
-		{
-			for (int x = 0; x < stageSize.x; x++)
-			{
-				if ((x % 2) + (y % 2) == 1
-					&& (x % 2) * (y % 2) == 0)
-				{
-					mapID = MAP_ID::FLOOR1;
-				}
-				else
-				{
-					mapID = MAP_ID::FLOOR2;
-				}
-				tmpPos = { (x * chipSize.x),(y * chipSize.y) };
-				DrawGraph(
-					tmpPos.x + offset.x,
-					tmpPos.y + offset.y,
-					IMAGE_ID("image/mapImage.png")[static_cast<int>(mapID)], true);
-			}
-		}
-	}*/
 	for (int y = 0; y < stageSize.y; y++)
 	{
 		for (int x = 0; x < stageSize.x; x++)
