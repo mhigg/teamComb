@@ -123,16 +123,6 @@ void MapCtrl::Draw(bool flag)
 	{
 		return;
 	}
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 2; j++)
-		{
-			DrawLine(
-				i * stageSize.x,
-				j * stageSize.y,
-				i * stageSize.x,
-				j * stageSize.y,
-				lineColor, true);
-		}
-	}
+	// Ï¯Ìß•`‰æ
+
 }
