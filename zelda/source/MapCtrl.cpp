@@ -172,6 +172,7 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL6:
 			case MAP_ID::WALL7:
 			case MAP_ID::WALL8:
+			case MAP_ID::WALL9:
 			case MAP_ID::DOOR1:
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
@@ -182,7 +183,6 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::FLAG:
 			case MAP_ID::FIRE1:
 			case MAP_ID::FIRE2:
-			case MAP_ID::SILL:
 			case MAP_ID::RAMP1:
 			case MAP_ID::RAMP2:
 			case MAP_ID::POTION1:
