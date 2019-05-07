@@ -63,7 +63,7 @@ void GameScene::Draw(void)
 {
 	ClsDrawScreen();
 
-	lpMapCtrl.Draw(true);
+	lpMapCtrl.Draw(false);
 
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);

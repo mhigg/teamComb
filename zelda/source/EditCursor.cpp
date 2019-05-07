@@ -13,7 +13,7 @@
 
 EditCursor::EditCursor()
 {
-	id = MAP_ID::PLAYER;
+	id = MAP_ID::NONE;
 	inputFlam = EDIT_KEY_GET_DEF_RNG;
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 
@@ -23,7 +23,7 @@ EditCursor::EditCursor()
 
 EditCursor::EditCursor(VECTOR2 drawOffset) :Obj(drawOffset)
 {
-	id = MAP_ID::PLAYER;
+	id = MAP_ID::NONE;
 	inputFlam = EDIT_KEY_GET_DEF_RNG;
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
 

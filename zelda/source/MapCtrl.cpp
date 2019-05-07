@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include <memory>
+#include "ImageMng.h"
 #include "MapCtrl.h"
 #include "Player.h"
 #include "SceneMng.h"
@@ -69,7 +70,7 @@ bool MapCtrl::SetMapData(VECTOR2 pos, MAP_ID id)
 		return false;
 	}
 
-	mapData[mapPos.x][mapPos.y] = id;
+	mapData[mapPos.y][mapPos.x] = id;
 	return true;
 }
 
@@ -102,7 +103,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				}
 				// ÌßÚ²Ô°‚ð²Ý½ÀÝ½
 				{
-					auto obj = AddObjList()(objList, std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
+					auto obj = AddObjList()(objList, 
+						std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
 					makePlayerFlag = true;
 				}
 				break;
@@ -119,10 +121,96 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 
 void MapCtrl::Draw(bool flag)
 {
-	if (!flag)
-	{
-		return;
-	}
 	// Ï¯Ìß•`‰æ
+	MAP_ID mapID;
+	VECTOR2 offset(lpSceneMng.GetDrawOffset());
+	VECTOR2 tmpPos;
+	/*if (!flag)
+	{
+		for (int y = 0; y < stageSize.y; y++)
+		{
+			for (int x = 0; x < stageSize.x; x++)
+			{
+				if ((x % 2) + (y % 2) == 1
+					&& (x % 2) * (y % 2) == 0)
+				{
+					mapID = MAP_ID::FLOOR1;
+				}
+				else
+				{
+					mapID = MAP_ID::FLOOR2;
+				}
+				tmpPos = { (x * chipSize.x),(y * chipSize.y) };
+				DrawGraph(
+					tmpPos.x + offset.x,
+					tmpPos.y + offset.y,
+					IMAGE_ID("image/mapImage.png")[static_cast<int>(mapID)], true);
+			}
+		}
+	}*/
+	for (int y = 0; y < stageSize.y; y++)
+	{
+		for (int x = 0; x < stageSize.x; x++)
+		{
+			MAP_ID id = mapData[y][x];
 
+			tmpPos = { (x * chipSize.x),(y * chipSize.y) };
+			switch (id)
+			{
+			case MAP_ID::NONE:
+				break;
+			case MAP_ID::PLAYER:
+				if (!flag)
+				{
+					break;
+				}
+			case MAP_ID::WALL1:
+			case MAP_ID::WALL2:
+			case MAP_ID::WALL3:
+			case MAP_ID::WALL4:
+			case MAP_ID::WALL5:
+			case MAP_ID::WALL6:
+			case MAP_ID::WALL7:
+			case MAP_ID::WALL8:
+			case MAP_ID::DOOR1:
+			case MAP_ID::DOOR2:
+			case MAP_ID::DOOR3:
+			case MAP_ID::DOOR4:
+			case MAP_ID::KEY:
+			case MAP_ID::PANEL:
+			case MAP_ID::LADDER:
+			case MAP_ID::FLAG:
+			case MAP_ID::FIRE1:
+			case MAP_ID::FIRE2:
+			case MAP_ID::SILL:
+			case MAP_ID::RAMP1:
+			case MAP_ID::RAMP2:
+			case MAP_ID::POTION1:
+			case MAP_ID::POTION2:
+			case MAP_ID::BARREL1:
+			case MAP_ID::BARREL2:
+			case MAP_ID::BONE1:
+			case MAP_ID::BONE2:
+			case MAP_ID::BONE3:
+				DrawGraph(
+					tmpPos.x + offset.x,
+					tmpPos.y + offset.y,
+					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+					true);
+				break;
+			default:
+			case MAP_ID::FLOOR1:
+			case MAP_ID::FLOOR2:
+#ifdef _DEBUG
+				// ´×°•\Ž¦
+				DrawGraph(
+					tmpPos.x + offset.x,
+					tmpPos.y + offset.y,
+					IMAGE_ID("image/mapImage.png")[static_cast<int>(MAP_ID::NONE)],
+					true);
+#endif
+				break;
+			}
+		}
+	}
 }

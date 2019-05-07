@@ -4,6 +4,7 @@
 #include "GameScene.h"
 #include "GameCtrl.h"
 #include "TitleScene.h"
+#include "EditScene.h"
 
 constexpr int SCREEN_SIZE_X = 1200;
 constexpr int SCREEN_SIZE_Y = 880;
@@ -15,7 +16,7 @@ SceneMng::SceneMng()
 
 void SceneMng::Run(void)
 {
-	activeScene = std::make_unique<GameScene>();
+	activeScene = std::make_unique<EditScene>();
 
 	while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
