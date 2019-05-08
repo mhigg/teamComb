@@ -34,7 +34,7 @@ Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
 			  };
 
 //	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
-	Init("image/player.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
+	Init("image/playerWalk.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
 	initAnim();
 
 	afterKeyFlag = false;
@@ -52,7 +52,8 @@ Player::~Player()
 bool Player::initAnim(void)
 {
 	AddAnim("’âŽ~", 0, 0, 1, 6, true);
-	AddAnim("ˆÚ“®", 0, 0, 7, 1, true);
+	AddAnim("ˆÚ“®", 0, 0, 7, 2, true);
+	AddAnim("Ž¾‘–", 0, 0, 7, 1, true);
 	AddAnim("Ž€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®Ý‚ðÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }

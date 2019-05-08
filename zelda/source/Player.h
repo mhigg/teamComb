@@ -25,7 +25,7 @@ enum SIDE_CHECK {
 	SIDE_MAX
 };
 
-#define PL_DEF_SPEED 10
+#define PL_DEF_SPEED 5
 
 using DIR_TBL_ARY = std::array<int, DIR_MAX>;
 using DIR_TBL_PTR = std::array<int*[TBL_MAX], DIR_MAX>;
