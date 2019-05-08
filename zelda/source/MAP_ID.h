@@ -1,4 +1,6 @@
 #pragma once
+// Ï¯Ìßî•ñ
+
 enum class MAP_ID
 {
 	NONE,	// ‰½‚à‚È‚µ

@@ -36,7 +36,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	this->plNum = plNum;
 
 	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
-	Init("image/playerWalk.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
+	Init("image/player.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
 	initAnim();
 
 	afterKeyFlag = false;
@@ -54,8 +54,8 @@ Player::~Player()
 bool Player::initAnim(void)
 {
 	AddAnim("’â~", 0, 0, 1, 6, true);
-	AddAnim("ˆÚ“®", 0, 0, 7, 2, true);
-	AddAnim("¾‘–", 0, 0, 7, 1, true);
+	AddAnim("ˆÚ“®", 0, 1, 6, 2, true);
+	AddAnim("¾‘–", 0, 1, 6, 1, true);
 	AddAnim("€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
@@ -125,7 +125,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		afterKeyFlag |= (bool)inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]];		// ¦
 		afterKeyFlag ^= (int)(GetAnim() == "’â~");
 	}
-	SetAnim("ˆÚ“®");
+	SetAnim("¾‘–");
 
 }
 
