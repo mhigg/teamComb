@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ITEM_ID.cpp" />
     <ClCompile Include="source\BaseScene.cpp" />
     <ClCompile Include="source\EditCursor.cpp" />
     <ClCompile Include="source\EditScene.cpp" />
@@ -40,6 +41,7 @@
     <ClCompile Include="source\VECTOR2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ITEM_ID.h" />
     <ClInclude Include="source\BaseScene.h" />
     <ClInclude Include="source\ClassObj.h" />
     <ClInclude Include="source\EditCursor.h" />
