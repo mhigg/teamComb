@@ -33,7 +33,8 @@ Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// ã(REV:‰º)(¶E‰E)
 			  };
 
-	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
+//	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
+	Init("image/player.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
 	initAnim();
 
 	afterKeyFlag = false;
@@ -51,7 +52,7 @@ Player::~Player()
 bool Player::initAnim(void)
 {
 	AddAnim("’â~", 0, 0, 1, 6, true);
-	AddAnim("ˆÚ“®", 0, 1, 1, 8, true);
+	AddAnim("ˆÚ“®", 0, 0, 7, 1, true);
 	AddAnim("€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
@@ -85,7 +86,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	};
 
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
-		if (inputTbl[keyIdTbl[DirTbl[dir][id]]])
+		if (inputTbl[0][keyIdTbl[DirTbl[dir][id]]])			// ¦ ’¼’l‚Ì0‚ğÌßÚ²Ô°ID‚É‚·‚é
 		{
 			Player::dir = DirTbl[dir][id];		// •ûŒü‚Ì¾¯Ä
 
@@ -117,8 +118,8 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	else
 	{
 		// OPP1‚à‚µ‚­‚ÍOPP2‚Ékey“ü—Í‚ª‚ ‚Á‚½ê‡‚Ìî•ñ
-		afterKeyFlag = (bool)inputTbl[keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]];
-		afterKeyFlag |= (bool)inputTbl[keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]];
+		afterKeyFlag = (bool)inputTbl[0][keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]];		// ¦
+		afterKeyFlag |= (bool)inputTbl[0][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]];		// ¦
 		afterKeyFlag ^= (int)(GetAnim() == "’â~");
 	}
 	SetAnim("ˆÚ“®");
