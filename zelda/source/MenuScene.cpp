@@ -1,9 +1,12 @@
+#include <DxLib.h>
 #include "MenuScene.h"
 #include "GameScene.h"
+#include "EditScene.h"
 
 
 MenuScene::MenuScene()
 {
+	MenuScene::Init();
 }
 
 
@@ -15,9 +18,9 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
 	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
-	if ((cnt[KEY_INPUT_RETURN]) & (!cntOld[KEY_INPUT_RETURN]))
+	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 	{
-		return std::make_unique<GameScene>();
+		return std::make_unique<EditScene>();
 	}
 	MenuDraw();
 	return std::move(own);

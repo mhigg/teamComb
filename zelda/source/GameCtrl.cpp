@@ -48,7 +48,6 @@ bool GameCtrl::UpDate(void)
 	GetHitKeyStateAll(&keyData[0]);
 	
 	int j_Num = GetJoypadNum();
-
 	for (int p = 0; p < j_Num; p++)
 	{
 		GetJoypadXInputState(padTbl[p], &padData[p]);
