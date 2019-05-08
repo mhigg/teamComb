@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ITEM_ID.cpp" />
     <ClCompile Include="source\BaseScene.cpp" />
     <ClCompile Include="source\EditCursor.cpp" />
     <ClCompile Include="source\EditScene.cpp" />
@@ -28,6 +27,7 @@
     <ClCompile Include="source\GameScene.cpp" />
     <ClCompile Include="source\ImageMng.cpp" />
     <ClCompile Include="source\INPUT_ID.cpp" />
+    <ClCompile Include="source\ITEM_ID.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\MapCtrl.cpp" />
     <ClCompile Include="source\MAP_ID.cpp" />
@@ -41,7 +41,6 @@
     <ClCompile Include="source\VECTOR2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ITEM_ID.h" />
     <ClInclude Include="source\BaseScene.h" />
     <ClInclude Include="source\ClassObj.h" />
     <ClInclude Include="source\EditCursor.h" />
@@ -51,6 +50,7 @@
     <ClInclude Include="source\GameScene.h" />
     <ClInclude Include="source\ImageMng.h" />
     <ClInclude Include="source\INPUT_ID.h" />
+    <ClInclude Include="source\ITEM_ID.h" />
     <ClInclude Include="source\MapCtrl.h" />
     <ClInclude Include="source\MAP_ID.h" />
     <ClInclude Include="source\MenuScene.h" />
