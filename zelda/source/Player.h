@@ -38,7 +38,7 @@ constexpr int PL_DEF_SPEED = 10;
 using DIR_TBL_ARY = std::array<int, DIR_MAX>;
 using DIR_TBL_PTR = std::array<int*[TBL_MAX], DIR_MAX>;
 using DIR_TBL_DIR = std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
-// using MAP_MOVE_TBL = std::array<bool, static_cast<int>(MAP_ID::MAX)>; ←ｱｲﾃﾑや障害物を追加したときに使う
+using MAP_MOVE_TBL = std::array<bool, static_cast<int>(MAP_ID::MAX)>; // ←ｱｲﾃﾑや障害物を追加したときに使う
 
 
 class Player :
@@ -59,7 +59,7 @@ private:
 	DIR_TBL_PTR PosTbl;			// ﾎﾟｲﾝﾀを直接格納
 	DIR_TBL_ARY SpeedTbl;		// 移動速度
 	DIR_TBL_DIR DirTbl;			// 移動制御
-	// MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
+	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
 
 	bool afterKeyFlag;			// keyの後入力を優先させるﾌﾗｸﾞ
 	PL_NUMBER plNum;
