@@ -4,19 +4,6 @@
 #include "BaseScene.h"
 #include "MapCtrl.h"
 
-struct DataHeader
-{
-	char fileID[15];	// Ì§²Ù‚ÌIDî•ñ
-	char verID;			// ÊŞ°¼Ş®İ”Ô†
-	char reserve1[2];	// —\–ñ—Ìˆæ
-	int sizeX;			// Ï¯Ìß‚ÌÏ½Ò”X
-	int sizeY;			// Ï¯Ìß‚ÌÏ½Ò”Y
-	char reserve2[1];	// —\–ñ—Ìˆæ
-	char sum;			// »Ñ’l
-};
-
-#define ZELDA_VER_ID 0x01						// Ì§²ÙÊŞ°¼Ş®İ”Ô†
-#define ZELDA_FILE_ID "ZELDA_MAP_DATA"			// Ì§²Ù‚ÌIDî•ñ	
 
 StageMng::StageMng()
 {
@@ -30,74 +17,6 @@ StageMng::~StageMng()
 
 
 
-bool StageMng::MapSave(void)
-{
-	DataHeader expData = {
-		ZELDA_FILE_ID,
-		ZELDA_VER_ID,
-		{ 0,0 },
-		mapSize.x,
-		mapSize.y,
-		{ 0 },
-		(char)0xff
-	};
-	int sum = 0;
-	for (auto data : mapData_Base)
-	{
-		sum += (int)data;
-	}
-	expData.sum = (char)sum;
-
-	FILE *file;
-	fopen_s(&file, "data/mapdata.map", "wb");
-	fwrite(&expData, sizeof(expData), 1, file);
-	fwrite(mapData_Base.data(), sizeof(MAP_ID) * mapData_Base.size(), 1, file);
-	fclose(file);
-	return false;
-}
-
-bool StageMng::MapLoad(sharedListObj objList, bool editFlag)
-{
-	// Ï¯ÌßÃŞ°À‚ÌÛ°ÄŞ
-	FILE *file;
-	DataHeader expData;
-	fopen_s(&file, "data/mapdata.map", "rb");
-	fread(&expData, sizeof(expData), 1, file);
-	mapData_Base.resize(expData.sizeX * expData.sizeY);
-	fread(mapData_Base.data(), sizeof(MAP_ID) * mapData_Base.size(), 1, file);
-	fclose(file);
-	bool flag = true;
-	if ((std::string)expData.fileID != ZELDA_FILE_ID)
-	{
-		flag = false;
-	}
-	if (expData.verID != ZELDA_VER_ID)
-	{
-		flag = false;
-	}
-	int sum = 0;
-	for (auto data : mapData_Base)
-	{
-		sum += static_cast<int>(data);
-	}
-	if ((char)sum != expData.sum)
-	{
-		flag = false;
-	}
-	if (!flag)
-	{
-		for (auto &data : mapData_Base)
-		{
-			data = MAP_ID::NONE;
-		}
-	}
-	if (flag)
-	{
-		lpMapCtrl.SetUpGameObj(objList, editFlag);
-	}
-	return flag;
-	
-}
 
 const VECTOR2 & StageMng::GetChipSize(void)
 {

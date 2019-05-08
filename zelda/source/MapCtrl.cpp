@@ -7,6 +7,20 @@
 #include "StageMng.h"
 #include "ClassObj.h"
 
+struct DataHeader
+{
+	char fileID[15];	// Ì§²Ù‚ÌIDî•ñ
+	char verID;			// ÊŞ°¼Ş®İ”Ô†
+	char reserve1[2];	// —\–ñ—Ìˆæ
+	int sizeX;			// Ï¯Ìß‚ÌÏ½Ò”X
+	int sizeY;			// Ï¯Ìß‚ÌÏ½Ò”Y
+	char reserve2[1];	// —\–ñ—Ìˆæ
+	char sum;			// »Ñ’l
+};
+
+#define ZELDA_VER_ID 0x01						// Ì§²ÙÊŞ°¼Ş®İ”Ô†
+#define ZELDA_FILE_ID "ZELDA_MAP_DATA"			// Ì§²Ù‚ÌIDî•ñ	
+
 
 MapCtrl::MapCtrl()
 {
@@ -85,6 +99,76 @@ MAP_ID MapCtrl::GetMapData(VECTOR2 pos, MAP_ID defID)
 	return mapData[selPos.y][selPos.x];
 }
 
+bool MapCtrl::MapSave(void)
+{
+	DataHeader expData = {
+		ZELDA_FILE_ID,
+		ZELDA_VER_ID,
+		{ 0,0 },
+		stageSize.x,
+		stageSize.y,
+		{ 0 },
+		(char)0xff
+	};
+	int sum = 0;
+	for (auto data : mapData_Base)
+	{
+		sum += (int)data;
+	}
+	expData.sum = (char)sum;
+
+	FILE *file;
+	fopen_s(&file, "data/mapdata.map", "wb");
+	fwrite(&expData, sizeof(expData), 1, file);
+	fwrite(mapData_Base.data(), sizeof(MAP_ID) * mapData_Base.size(), 1, file);
+	fclose(file);
+	return false;
+}
+
+bool MapCtrl::MapLoad(sharedListObj objList, bool editFlag)
+{
+	// Ï¯ÌßÃŞ°À‚ÌÛ°ÄŞ
+	FILE *file;
+	DataHeader expData;
+	fopen_s(&file, "data/mapdata.map", "rb");
+	fread(&expData, sizeof(expData), 1, file);
+	mapData_Base.resize(expData.sizeX * expData.sizeY);
+	fread(mapData_Base.data(), sizeof(MAP_ID) * mapData_Base.size(), 1, file);
+	fclose(file);
+	bool flag = true;
+	if ((std::string)expData.fileID != ZELDA_FILE_ID)
+	{
+		flag = false;
+	}
+	if (expData.verID != ZELDA_VER_ID)
+	{
+		flag = false;
+	}
+	int sum = 0;
+	for (auto data : mapData_Base)
+	{
+		sum += static_cast<int>(data);
+	}
+	if ((char)sum != expData.sum)
+	{
+		flag = false;
+	}
+	if (!flag)
+	{
+		for (auto &data : mapData_Base)
+		{
+			data = MAP_ID::NONE;
+		}
+	}
+	if (flag)
+	{
+		lpMapCtrl.SetUpGameObj(objList, editFlag);
+	}
+	return flag;
+
+}
+
+
 bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 {
 	if (modeFlag)
@@ -94,25 +178,28 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 	}
 	// GameMode‚È‚ç‚±‚±‚©‚çæ‚Ö
 
-	bool makePlayerFlag = false;
+	int playerNum = GetJoypadNum();		// Ú‘±‚µ‚Ä‚éÌßÚ²Ô°‚Ì”
+	int plCnt = 0;	// ²İ½Àİ½‚µ‚½ÌßÚ²Ô°‚Ì”
 	for (int y = 0; y < stageSize.y / chipSize.y; y++)
 	{
 		for (int x = 0; x < stageSize.x / chipSize.x; x++)
 		{
 			MAP_ID id = mapData[y][x];
+
 			ListObj_itr obj;
 			switch (id)
 			{
 			case MAP_ID::PLAYER:
-				if (makePlayerFlag)
+				if ((plCnt >= playerNum) || (playerNum >= 4))
 				{
 					break;
 				}
 				// ÌßÚ²Ô°‚ğ²İ½Àİ½
+				else
 				{
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
-					makePlayerFlag = true;
+					plCnt++;
 				}
 				break;
 			case MAP_ID::NONE:
@@ -156,7 +243,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 void MapCtrl::Draw(bool flag)
 {
 	// Ï¯Ìß•`‰æ
-	MAP_ID mapID;
 	VECTOR2 offset(lpSceneMng.GetDrawOffset());
 	VECTOR2 tmpPos;
 	for (int y = 0; y < stageSize.y; y++)

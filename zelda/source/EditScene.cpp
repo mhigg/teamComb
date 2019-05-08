@@ -46,7 +46,7 @@ uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 				MB_OKCANCEL
 			) == IDOK)
 			{
-				lpStageMng.MapLoad(objList, true);
+				lpMapCtrl.MapLoad(objList, true);
 			}
 		}
 		if (cnt[KEY_INPUT_F6])
@@ -59,7 +59,7 @@ uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 				MB_OKCANCEL
 			) == IDOK)
 			{
-				lpStageMng.MapSave();
+				lpMapCtrl.MapSave();
 			}
 		}
 		if (cnt[KEY_INPUT_F1] & (!cntOld[KEY_INPUT_F1]))
