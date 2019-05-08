@@ -36,7 +36,7 @@ bool GameCtrl::UpDate(void)
 	keyDataOld = keyData;
 	GetHitKeyStateAll(&keyData[0]);
 	
-	GetJoypadXInputState(DX_INPUT_PAD1, &padData);
+	GetJoypadXInputState(DX_INPUT_PAD1,&padData);
 
 	inputStateOld = inputState;
 	// ˆÚ“®ŠÖ˜A
