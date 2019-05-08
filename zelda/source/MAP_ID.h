@@ -11,8 +11,8 @@ enum class MAP_ID
 	WALL7,
 	WALL8,
 	WALL9,
-	FLOOR1,
-	FLOOR2,
+	WALL10,
+	RESERVE,	// –³–³–³
 	DOOR1,
 	DOOR2,
 	DOOR3,

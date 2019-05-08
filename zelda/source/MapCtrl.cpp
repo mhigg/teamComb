@@ -270,6 +270,7 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL7:
 			case MAP_ID::WALL8:
 			case MAP_ID::WALL9:
+			case MAP_ID::WALL10:
 			case MAP_ID::DOOR1:
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
@@ -296,8 +297,7 @@ void MapCtrl::Draw(bool flag)
 					true);
 				break;
 			default:
-			case MAP_ID::FLOOR1:
-			case MAP_ID::FLOOR2:
+			case MAP_ID::RESERVE:
 #ifdef _DEBUG
 				// ´×°•\Ž¦
 				DrawGraph(
