@@ -28,14 +28,24 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 
 void MenuScene::MenuDraw(void)
 {
+	auto move = [&]() {};
 	ClsDrawScreen();
 
 	DrawString(0, 0, "MenuScene", 0x0000ff00);
+
+	DrawBox(100, 40, 300, 120, 0x00ff0000, true);
 
 	ScreenFlip();
 }
 
 int MenuScene::Init(void)
 {
+	movePos = {
+		VECTOR2(0,0),
+		VECTOR2(0,0),
+		VECTOR2(0,0),
+		VECTOR2(0,0)
+	};
+	moveFlag = { true,false,false,false };
 	return 0;
 }
