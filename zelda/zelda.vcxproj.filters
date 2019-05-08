@@ -99,6 +99,9 @@
     <ClCompile Include="source\MAP_ID.cpp">
       <Filter>ソース ファイル\ID</Filter>
     </ClCompile>
+    <ClCompile Include="source\ITEM_ID.cpp">
+      <Filter>ソース ファイル\ID</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\GameCtrl.h">
@@ -159,6 +162,9 @@
       <Filter>ヘッダー ファイル\ID</Filter>
     </ClInclude>
     <ClInclude Include="source\MAP_ID.h">
+      <Filter>ヘッダー ファイル\ID</Filter>
+    </ClInclude>
+    <ClInclude Include="source\ITEM_ID.h">
       <Filter>ヘッダー ファイル\ID</Filter>
     </ClInclude>
   </ItemGroup>
