@@ -33,6 +33,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// 上(REV:下)(左・右)
 			  };
 
+	this->plNum = plNum;
+
 	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
 	Init("image/playerWalk.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
 	initAnim();
@@ -87,7 +89,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	};
 
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
-		if (inputTbl[0][keyIdTbl[DirTbl[dir][id]]])			// ※ 直値の0をﾌﾟﾚｲﾔｰIDにする
+		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])			// ※ 直値の0をﾌﾟﾚｲﾔｰIDにする
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
@@ -119,8 +121,8 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	else
 	{
 		// OPP1もしくはOPP2にkey入力があった場合の情報
-		afterKeyFlag = (bool)inputTbl[0][keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]];		// ※
-		afterKeyFlag |= (bool)inputTbl[0][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]];		// ※
+		afterKeyFlag = (bool)inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]];		// ※
+		afterKeyFlag |= (bool)inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]];		// ※
 		afterKeyFlag ^= (int)(GetAnim() == "停止");
 	}
 	SetAnim("移動");

@@ -62,5 +62,6 @@ private:
 	// MAP_MOVE_TBL mapMoveTbl;	// ˆÚ“®§Œä,ˆÚ“®‰Â”\µÌŞ¼Şª¸Ä‚È‚çtrue‚ğ•Ô‚·©±²ÃÑ‚âáŠQ•¨‚ğ’Ç‰Á‚µ‚½‚Æ‚«‚Ég‚¤
 
 	bool afterKeyFlag;			// key‚ÌŒã“ü—Í‚ğ—Dæ‚³‚¹‚éÌ×¸Ş
+	PL_NUMBER plNum;
 };
 
