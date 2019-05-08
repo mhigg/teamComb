@@ -198,7 +198,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				else
 				{
 					auto obj = AddObjList()(objList, 
-						std::make_unique<Player>(chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
+						std::make_unique<Player>(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
 					plCnt++;
 				}
 				break;

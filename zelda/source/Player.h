@@ -25,7 +25,15 @@ enum SIDE_CHECK {
 	SIDE_MAX
 };
 
-#define PL_DEF_SPEED 5
+enum PL_NUMBER {
+	PL_1,
+	PL_2,
+	PL_3,
+	PL_4,
+	PL_MAX
+};
+
+constexpr int PL_DEF_SPEED = 10;
 
 using DIR_TBL_ARY = std::array<int, DIR_MAX>;
 using DIR_TBL_PTR = std::array<int*[TBL_MAX], DIR_MAX>;
@@ -37,7 +45,7 @@ class Player :
 	public Obj
 {
 public:
-	Player(VECTOR2 setUpPos, VECTOR2 drawOffset);	// ˆø”•t‚«ºİ½Ä×¸À°
+	Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset);	// ˆø”•t‚«ºİ½Ä×¸À°
 	Player();
 	~Player();
 	bool initAnim(void);		// ±ÆÒ°¼®İŠÇ—

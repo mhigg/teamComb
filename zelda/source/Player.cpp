@@ -3,7 +3,7 @@
 #include "StageMng.h"
 
 
-Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
+Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOffset)
 {
 	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
@@ -33,7 +33,7 @@ Player::Player(VECTOR2 setUpPos, VECTOR2 drawOffset)
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// è„(REV:â∫)(ç∂ÅEâE)
 			  };
 
-//	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
+	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
 	Init("image/playerWalk.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
 	initAnim();
 
