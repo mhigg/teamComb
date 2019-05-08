@@ -4,6 +4,17 @@
 
 GameCtrl::GameCtrl()
 {
+	padTbl = {
+		DX_INPUT_PAD1,
+		DX_INPUT_PAD2,
+		DX_INPUT_PAD3,
+		DX_INPUT_PAD4
+	};
+
+	int j_Num = GetJoypadNum();
+	inputState.resize(j_Num);
+	inputStateOld.resize(j_Num);
+	padData.resize(j_Num);
 }
 
 
@@ -21,7 +32,7 @@ const KEY_ARY & GameCtrl::GetCtrl(KEY_TYPE type) const
 	return keyDataOld;
 }
 
-const INPUT_ARY & GameCtrl::GetInputState(KEY_TYPE type) const
+const std::vector<INPUT_ARY> & GameCtrl::GetInputState(KEY_TYPE type) const
 {
 	if (type == KEY_TYPE_NOW)
 	{
@@ -36,26 +47,35 @@ bool GameCtrl::UpDate(void)
 	keyDataOld = keyData;
 	GetHitKeyStateAll(&keyData[0]);
 	
-	GetJoypadXInputState(DX_INPUT_PAD1, &padData);
+	int j_Num = GetJoypadNum();
+
+	for (int p = 0; p < j_Num; p++)
+	{
+		GetJoypadXInputState(padTbl[p], &padData[p]);
+	}
 
 	inputStateOld = inputState;
-	// 移動関連
-	inputState[XINPUT_DOWN] = (padData.ThumbLY < -20000) | padData.Buttons[XINPUT_BUTTON_DPAD_DOWN] | keyData[KEY_INPUT_DOWN];
-	inputState[XINPUT_LEFT] = (padData.ThumbLX < -20000) | padData.Buttons[XINPUT_BUTTON_DPAD_LEFT] | keyData[KEY_INPUT_LEFT];
-	inputState[XINPUT_RIGHT] = (padData.ThumbLX > 20000) | padData.Buttons[XINPUT_BUTTON_DPAD_RIGHT] | keyData[KEY_INPUT_RIGHT];
-	inputState[XINPUT_UP] = (padData.ThumbLY > 20000) | padData.Buttons[XINPUT_BUTTON_DPAD_UP] | keyData[KEY_INPUT_UP];
+	for (int p = 0; p < j_Num; p++)
+	{
+		// 移動関連
+		inputState[p][XINPUT_DOWN] = (padData[p].ThumbLY < -20000) | padData[p].Buttons[XINPUT_BUTTON_DPAD_DOWN] | keyData[KEY_INPUT_DOWN];
+		inputState[p][XINPUT_LEFT] = (padData[p].ThumbLX < -20000) | padData[p].Buttons[XINPUT_BUTTON_DPAD_LEFT] | keyData[KEY_INPUT_LEFT];
+		inputState[p][XINPUT_RIGHT] = (padData[p].ThumbLX > 20000) | padData[p].Buttons[XINPUT_BUTTON_DPAD_RIGHT] | keyData[KEY_INPUT_RIGHT];
+		inputState[p][XINPUT_UP] = (padData[p].ThumbLY > 20000) | padData[p].Buttons[XINPUT_BUTTON_DPAD_UP] | keyData[KEY_INPUT_UP];
 
-	// ｱｸｼｮﾝ関連
-	inputState[XINPUT_ATT] = padData.Buttons[XINPUT_BUTTON_B];
-	inputState[XINPUT_MAP] = padData.Buttons[XINPUT_BUTTON_X];
+		// ｱｸｼｮﾝ関連
+		inputState[p][XINPUT_ATT] = padData[p].Buttons[XINPUT_BUTTON_B];
+		inputState[p][XINPUT_MAP] = padData[p].Buttons[XINPUT_BUTTON_X];
 
-	// 物掴み/ﾀﾞｯｼｭ(LB/RB)
-	inputState[XINPUT_GET_LB] = padData.Buttons[XINPUT_BUTTON_LEFT_SHOULDER];
-	inputState[XINPUT_RUN_RB] = padData.Buttons[XINPUT_BUTTON_RIGHT_SHOULDER];
+		// 物掴み/ﾀﾞｯｼｭ(LB/RB)
+		inputState[p][XINPUT_GET_LB] = padData[p].Buttons[XINPUT_BUTTON_LEFT_SHOULDER];
+		inputState[p][XINPUT_RUN_RB] = padData[p].Buttons[XINPUT_BUTTON_RIGHT_SHOULDER];
 
-	// その他(ﾒﾆｭｰ,ﾎﾟｰｽﾞなど)
-	inputState[XINPUT_START] = padData.Buttons[XINPUT_BUTTON_START];
-	inputState[XINPUT_PAUSE] = padData.Buttons[XINPUT_BUTTON_BACK];
+		// その他(ﾒﾆｭｰ,ﾎﾟｰｽﾞなど)
+		inputState[p][XINPUT_START] = padData[p].Buttons[XINPUT_BUTTON_START];
+		inputState[p][XINPUT_PAUSE] = padData[p].Buttons[XINPUT_BUTTON_BACK];
+	}
+
 
 	return true;
 }
