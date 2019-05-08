@@ -17,7 +17,7 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
 	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
-	if ((cnt[KEY_INPUT_SPACE]) & (!cntOld[KEY_INPUT_SPACE]))
+	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 	{
 		return std::make_unique<MenuScene>();
 	}
