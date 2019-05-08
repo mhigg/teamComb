@@ -33,6 +33,27 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// ã(REV:‰º)(¶E‰E)
 			  };
 
+	mapMoveTbl = {	false,	// NONE
+					true,	// WALL1
+					true,	// WALL2
+					true,	// WALL3
+					true,	// WALL4
+					true,	// WALL5
+					true,	// WALL6
+					true,	// WALL7
+					true,	// WALL8
+					true,	// WALL9
+					false,	// FLOOR1
+					false,	// FLOOR2
+					false,	// DOOR1
+					false,	// DOOR2
+					false,	// DOOR3
+					false,	// DOOR4
+					
+					
+					
+	};
+
 	this->plNum = plNum;
 
 	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
