@@ -93,9 +93,6 @@
     <ClCompile Include="source\INPUT_ID.cpp">
       <Filter>ソース ファイル\ID</Filter>
     </ClCompile>
-    <ClCompile Include="ITEM_ID.cpp">
-      <Filter>ソース ファイル\ID</Filter>
-    </ClCompile>
     <ClCompile Include="source\MAP_ID.cpp">
       <Filter>ソース ファイル\ID</Filter>
     </ClCompile>
@@ -156,9 +153,6 @@
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="source\INPUT_ID.h">
-      <Filter>ヘッダー ファイル\ID</Filter>
-    </ClInclude>
-    <ClInclude Include="ITEM_ID.h">
       <Filter>ヘッダー ファイル\ID</Filter>
     </ClInclude>
     <ClInclude Include="source\MAP_ID.h">
