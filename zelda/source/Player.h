@@ -58,6 +58,8 @@ private:
 
 	int speed;
 	DIR dir;
+	int life;
+	VECTOR2 startPos;				// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
 	DIR_TBL_ARY keyIdTbl;		// 移動方向
