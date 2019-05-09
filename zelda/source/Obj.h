@@ -95,6 +95,8 @@ protected:
 	VECTOR2 divSize;		// ┴Ф▒°┌л∙╙┼└╩╡╫ч
 	VECTOR2 divCnt;			// ┴Ф▒°┌л∙╙┼└░■
 
+	OBJ_TYPE objType;		// ╣лч╪ч╙╦д┌л▌М≈ч
+
 	DIR dir;				// ╣лч╪ч╙╦д┌л▄Э┌╒┌д┌╒┌И∙Ш▄Э
 
 	unsigned int animCnt;	// ╠фр╟╪╝щ┌л╤Ёщд
