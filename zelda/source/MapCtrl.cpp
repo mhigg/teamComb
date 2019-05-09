@@ -250,20 +250,20 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::MOTH_2:
 			case MAP_ID::MOTH_3:
 			case MAP_ID::MOTH_4:
-				SetMapData(VECTOR2(x * chipSize.x, y * chipSize.y),id);
+			case MAP_ID::TREE_1:
+			case MAP_ID::TREE_2:
+			case MAP_ID::TREE_3:
+			case MAP_ID::TREE_4:
+			case MAP_ID::HOLL_1:
+			case MAP_ID::HOLL_2:
+			case MAP_ID::HOLL_3:
+			case MAP_ID::HOLL_4:
+			case MAP_ID::STONE_1:
+			case MAP_ID::STONE_2:
+			case MAP_ID::STONE_3:
+			case MAP_ID::STONE_4:
 				break;
-			case MAP_ID::TREE:
-			case MAP_ID::HOLL:
-			case MAP_ID::STONE:
-
 			case MAP_ID::NONE:
-			case MAP_ID::NON_1:
-			case MAP_ID::NON_2:
-			case MAP_ID::NON_3:
-			case MAP_ID::NON_4:
-			case MAP_ID::NON_5:
-			case MAP_ID::NON_6:
-			case MAP_ID::NON_7:
 			default:
 				break;
 			}
@@ -287,13 +287,6 @@ void MapCtrl::Draw(bool flag)
 			switch (id)
 			{
 			case MAP_ID::NONE:
-			case MAP_ID::NON_1:
-			case MAP_ID::NON_2:
-			case MAP_ID::NON_3:
-			case MAP_ID::NON_4:
-			case MAP_ID::NON_5:
-			case MAP_ID::NON_6:
-			case MAP_ID::NON_7:
 				break;
 			case MAP_ID::PLAYER:
 			case MAP_ID::ENEMY:
@@ -347,6 +340,18 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::MOTH_2:
 			case MAP_ID::MOTH_3:
 			case MAP_ID::MOTH_4:
+			case MAP_ID::TREE_1:
+			case MAP_ID::TREE_2:
+			case MAP_ID::TREE_3:
+			case MAP_ID::TREE_4:
+			case MAP_ID::HOLL_1:
+			case MAP_ID::HOLL_2:
+			case MAP_ID::HOLL_3:
+			case MAP_ID::HOLL_4:
+			case MAP_ID::STONE_1:
+			case MAP_ID::STONE_2:
+			case MAP_ID::STONE_3:
+			case MAP_ID::STONE_4:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
