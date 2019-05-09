@@ -1,11 +1,13 @@
 #include "DxLib.h"
 #include "TitleScene.h"
+#include "ImageMng.h"
 #include "GameScene.h"
 #include "MenuScene.h"
 
+
 TitleScene::TitleScene()
 {
-
+	TitleScene::Init();
 }
 
 TitleScene::~TitleScene()
@@ -28,10 +30,8 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void TitleScene::TitleDraw(void)
 {
 	ClsDrawScreen();
-
-
+	DrawGraph(0, 0, IMAGE_ID("image/title.png")[0], true);
 	DrawString(0, 0, "TitleScene", 0x0000ff00);
-
 	ScreenFlip();
 }
 
