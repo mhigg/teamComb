@@ -212,25 +212,13 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::WALL7:
 			case MAP_ID::WALL8:
 			case MAP_ID::WALL9:
+			case MAP_ID::WALL10:
+			case MAP_ID::WALL11:
+			case MAP_ID::WALL12:
 			case MAP_ID::DOOR1:
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
 			case MAP_ID::DOOR4:
-			case MAP_ID::KEY:
-			case MAP_ID::PANEL:
-			case MAP_ID::LADDER:
-			case MAP_ID::FLAG:
-			case MAP_ID::FIRE1:
-			case MAP_ID::FIRE2:
-			case MAP_ID::RAMP1:
-			case MAP_ID::RAMP2:
-			case MAP_ID::POTION1:
-			case MAP_ID::POTION2:
-			case MAP_ID::BARREL1:
-			case MAP_ID::BARREL2:
-			case MAP_ID::BONE1:
-			case MAP_ID::BONE2:
-			case MAP_ID::BONE3:
 				SetMapData(VECTOR2(x * chipSize.x, y * chipSize.y),id);
 			default:
 				break;
@@ -271,25 +259,12 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL8:
 			case MAP_ID::WALL9:
 			case MAP_ID::WALL10:
+			case MAP_ID::WALL11:
+			case MAP_ID::WALL12:
 			case MAP_ID::DOOR1:
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
 			case MAP_ID::DOOR4:
-			case MAP_ID::KEY:
-			case MAP_ID::PANEL:
-			case MAP_ID::LADDER:
-			case MAP_ID::FLAG:
-			case MAP_ID::FIRE1:
-			case MAP_ID::FIRE2:
-			case MAP_ID::RAMP1:
-			case MAP_ID::RAMP2:
-			case MAP_ID::POTION1:
-			case MAP_ID::POTION2:
-			case MAP_ID::BARREL1:
-			case MAP_ID::BARREL2:
-			case MAP_ID::BONE1:
-			case MAP_ID::BONE2:
-			case MAP_ID::BONE3:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
@@ -297,7 +272,6 @@ void MapCtrl::Draw(bool flag)
 					true);
 				break;
 			default:
-			case MAP_ID::RESERVE:
 #ifdef _DEBUG
 				// ´×°•\Ž¦
 				DrawGraph(
