@@ -20,10 +20,10 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 				&pos.y,&pos.x	// 上
 			 };
 	
-	SpeedTbl = { PL_DEF_SPEED,	// 下
-				-PL_DEF_SPEED,	// 左
-				 PL_DEF_SPEED,	// 右
-				-PL_DEF_SPEED	// 上
+	SpeedTbl = { PL_DEF_SPEED,  PL_DASH_SPEED,	// 下
+				-PL_DEF_SPEED, -PL_DASH_SPEED,	// 左
+				 PL_DEF_SPEED,  PL_DASH_SPEED,	// 右
+				-PL_DEF_SPEED, -PL_DASH_SPEED	// 上
 			   };
 
 	//			MAIN		REV		OPP1	  OPP2
@@ -45,10 +45,10 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					true,	// WALL9
 					true,	// WALL10
 					false,	// RESERVE
-					false,	// DOOR1
-					false,	// DOOR2
-					false,	// DOOR3
-					false,	// DOOR4
+					true,	// DOOR1
+					true,	// DOOR2
+					true,	// DOOR3
+					true,	// DOOR4
 					
 					
 					
@@ -110,7 +110,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	};
 
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
-		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])			// ※ 直値の0をﾌﾟﾚｲﾔｰIDにする
+		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
@@ -120,7 +120,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 				// return false;		// 移動できない場合(岩や木などのｵﾌﾞｼﾞｪｸﾄがあるとき)
 			//}
 			// 移動処理-----------------------------
-			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir];	// 変更したい座標の変数アドレス += 移動量
+			// 変更したい座標の変数アドレス += 移動量
+			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
+//			scrollOffset += 
 			return true;
 		}
 
@@ -128,12 +130,12 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	};
 
 	// 後key処理------------------------------------
-	if (!(Move((DIR_TBL_ID)(DIR_TBL_OPP1 - (afterKeyFlag << 1)))		// OPP1,OPP2に移動しなかった場合
-		|| Move((DIR_TBL_ID)(DIR_TBL_OPP2 - (afterKeyFlag << 1)))))	// (key入力がなかった場合)
+	if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP1 - (afterKeyFlag << 1)))		// OPP1,OPP2に移動しなかった場合
+	 ||   Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP2 - (afterKeyFlag << 1)))))	// (key入力がなかった場合)
 	{
 		afterKeyFlag = false;
-		if (!(Move((DIR_TBL_ID)(DIR_TBL_MAIN + (afterKeyFlag << 1)))	// MAIN,REVに移動しなかった場合
-			|| Move((DIR_TBL_ID)(DIR_TBL_REV + (afterKeyFlag << 1)))))// (key入力がなかった場合)
+		if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_MAIN + (afterKeyFlag << 1)))	// MAIN,REVに移動しなかった場合
+		 ||   Move(static_cast<DIR_TBL_ID>(DIR_TBL_REV  + (afterKeyFlag << 1)))))// (key入力がなかった場合)
 		{
 			SetAnim("停止");
 			return;
@@ -142,12 +144,19 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	else
 	{
 		// OPP1もしくはOPP2にkey入力があった場合の情報
-		afterKeyFlag = (bool)inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]];		// ※
-		afterKeyFlag |= (bool)inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]];		// ※
-		afterKeyFlag ^= (int)(GetAnim() == "停止");
+		afterKeyFlag = static_cast<bool>(inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]]);
+		afterKeyFlag |= static_cast<bool>(inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]]);
+		afterKeyFlag ^= static_cast<int>(GetAnim() == "停止");
 	}
-	SetAnim("疾走");
-
+	// ﾌﾟﾚｲﾔｰが走っているときは疾走ｱﾆﾒｰｼｮﾝにする
+	if (inputTbl[plNum][XINPUT_RUN_RB])
+	{
+		SetAnim("疾走");
+	}
+	else
+	{
+		SetAnim("移動");
+	}
 }
 
 bool Player::CheckObjType(OBJ_TYPE type)

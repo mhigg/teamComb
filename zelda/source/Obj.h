@@ -89,6 +89,7 @@ protected:
 
 	VECTOR2 pos;				// ∙\▌╕┌╥┌И█ю∙W
 	const VECTOR2 drawOffset;	// ∙`┴Ф╣л╬╞д
+	VECTOR2 scrollOffset;		// ╫╦ш╟ы┌и┌Ф┌И╣л╬╞д
 
 	std::string imageName;	// ∙\▌╕┌╥┌И┴Ф▒°┌лл╖╡ы√╪
 	VECTOR2 divSize;		// ┴Ф▒°┌л∙╙┼└╩╡╫ч

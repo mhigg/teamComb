@@ -14,27 +14,13 @@ enum class MAP_ID
 	WALL8,
 	WALL9,
 	WALL10,
-	RESERVE,	// –³–³–³
+	WALL11,
+	WALL12,
+	PLAYER,	// ÌßÚ²Ô°
 	DOOR1,
 	DOOR2,
 	DOOR3,
 	DOOR4,
-	KEY,
-	PANEL,
-	LADDER,
-	FLAG,
-	FIRE1,
-	FIRE2,
-	RAMP1,
-	RAMP2,
-	POTION1,
-	POTION2,
-	BARREL1,
-	BARREL2,
-	BONE1,
-	BONE2,
-	BONE3,
-	PLAYER,	// ÌßÚ²Ô°
 	MAX
 };
 
