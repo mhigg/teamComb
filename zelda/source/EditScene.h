@@ -15,7 +15,6 @@ public:
 		uniqueBase own,					// Œ»İ‚Ì¼°İ
 		const GameCtrl &controller		// ·°æ“¾
 	);
-	bool menuFlag;							// ÒÆ­°‰æ–Ê‚Ì^‹U
 private:
 	sharedListObj objList;					// ¼ª±ÄŞÎß²İÀ°
 	int Init(void);							// ºİ½Ä×¸À‚Æ‚È‚é
