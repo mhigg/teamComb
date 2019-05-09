@@ -45,10 +45,10 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					true,	// WALL9
 					true,	// WALL10
 					false,	// RESERVE
-					false,	// DOOR1
-					false,	// DOOR2
-					false,	// DOOR3
-					false,	// DOOR4
+					true,	// DOOR1
+					true,	// DOOR2
+					true,	// DOOR3
+					true,	// DOOR4
 					
 					
 					
