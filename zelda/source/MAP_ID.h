@@ -27,6 +27,31 @@ enum class MAP_ID
 	WALL16,
 	WALL17,
 	WALL18,
+	// ‹¤’Ê
+	POTION_1,	// Îß°¼®Ý
+	POTION_2,
+	POTION_3,
+	POTION_4,
+	COIN_1,		// º²Ý
+	COIN_2,
+	COIN_3,
+	COIN_4,
+	KEY_1,		// Œ®
+	KEY_2,
+	MEAT,		// “÷
+	NON_1,		// —\”õ
+	NON_2,
+	NON_3,
+	NON_4,
+	// ½Ã°¼Þ•Ê
+	// ½Ã°¼Þ1
+	SWORD,		
+	SHIELD,
+	BOOK,
+	GOLD,
+	DIA,
+	// ½Ã°¼Þ2
+
 	MAX
 };
 

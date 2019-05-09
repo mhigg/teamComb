@@ -225,6 +225,26 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::WALL16:
 			case MAP_ID::WALL17:
 			case MAP_ID::WALL18:
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::NON_1:
+			case MAP_ID::NON_2:
+			case MAP_ID::NON_3:
+			case MAP_ID::NON_4:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
 				SetMapData(VECTOR2(x * chipSize.x, y * chipSize.y),id);
 			default:
 				break;
@@ -277,6 +297,26 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL16:
 			case MAP_ID::WALL17:
 			case MAP_ID::WALL18:
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::NON_1:
+			case MAP_ID::NON_2:
+			case MAP_ID::NON_3:
+			case MAP_ID::NON_4:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
