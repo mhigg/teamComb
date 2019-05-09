@@ -68,7 +68,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	}
 
 	if ((tmpPos.x < lpStageMng.GetStageSize().x) & (tmpPos.x >= 0)
-		&  (tmpPos.y < lpStageMng.GetStageSize().y) & (tmpPos.y >= 0))
+	 &  (tmpPos.y < lpStageMng.GetStageSize().y) & (tmpPos.y >= 0))
 	{
 		if (tmpPos != pos)
 		{
@@ -77,6 +77,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 			{
 				// 1‰ñ‰Ÿ‚µ‚½
 				// ‚±‚±‚É—ˆ‚é‚½‚Ñ‚É¾ŞÛ¸Ø±‚ÆŠî’ê”‚Ì”¼Œ¸
+
 				pos = tmpPos;
 				inputFlam = 0;
 				keyGetRng /= 2;
