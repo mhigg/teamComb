@@ -29,7 +29,7 @@ private:
 	MOVE_FLAG moveFlag;		// Box‚ÌˆÚ“®§Œä—p”z—ñ
 
 	unsigned int count;		// MenuScene’†‚Ì¶³İÄ
-	int add;
+	double add;
 	VECTOR2		 size;		// Box‚Ì»²½Ş
 };
 

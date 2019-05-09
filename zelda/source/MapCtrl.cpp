@@ -219,6 +219,12 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
 			case MAP_ID::DOOR4:
+			case MAP_ID::WALL13:
+			case MAP_ID::WALL14:
+			case MAP_ID::WALL15:
+			case MAP_ID::WALL16:
+			case MAP_ID::WALL17:
+			case MAP_ID::WALL18:
 				SetMapData(VECTOR2(x * chipSize.x, y * chipSize.y),id);
 			default:
 				break;
@@ -265,6 +271,12 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
 			case MAP_ID::DOOR4:
+			case MAP_ID::WALL13:
+			case MAP_ID::WALL14:
+			case MAP_ID::WALL15:
+			case MAP_ID::WALL16:
+			case MAP_ID::WALL17:
+			case MAP_ID::WALL18:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
