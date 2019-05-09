@@ -54,13 +54,15 @@ int GameScene::Init(void)
 
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
 	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
-	lpMapCtrl.SetMapData(VECTOR2(0, 0), MAP_ID::PLAYER);
 	lpMapCtrl.MapLoad(objList, false);
 	return 0;
 }
 
 void GameScene::Draw(void)
 {
+// Å¶ ï`âÊÇÃø∞ƒèàóù
+//	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj1).GetPos().y; });
+
 	ClsDrawScreen();
 
 	lpMapCtrl.Draw(false);

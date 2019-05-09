@@ -68,7 +68,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	}
 
 	if ((tmpPos.x < lpStageMng.GetStageSize().x) & (tmpPos.x >= 0)
-		&  (tmpPos.y < lpStageMng.GetStageSize().y) & (tmpPos.y >= 0))
+	 &  (tmpPos.y < lpStageMng.GetStageSize().y) & (tmpPos.y >= 0))
 	{
 		if (tmpPos != pos)
 		{
@@ -77,6 +77,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 			{
 				// 1âÒâüÇµÇΩ
 				// Ç±Ç±Ç…óàÇÈÇΩÇ—Ç…æﬁ€∏ÿ±Ç∆äÓíÍêîÇÃîºå∏
+
 				pos = tmpPos;
 				inputFlam = 0;
 				keyGetRng /= 2;
@@ -98,11 +99,22 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	if (ctrl[KEY_INPUT_LCONTROL] & ~(ctrlOld[KEY_INPUT_LCONTROL]))
 	{
 		id = static_cast<MAP_ID>(static_cast<int>(id) + 1 >= static_cast<int>(MAP_ID::MAX) ? static_cast<int>(MAP_ID::NONE) : static_cast<int>(id) + 1);
-		// id = (MAP_ID)(id + 1 >= MAP_ID_MAX ? MAP_ID_NON : (id + 1));
 	}
 	if (ctrl[KEY_INPUT_RCONTROL] & ~(ctrlOld[KEY_INPUT_RCONTROL]))
 	{
 		id = static_cast<MAP_ID>(id <= MAP_ID::NONE ? (static_cast<int>(MAP_ID::MAX) - 1) : (static_cast<int>(id) - 1));
+	}
+	if (ctrl[KEY_INPUT_I] & ~(ctrlOld[KEY_INPUT_I]))
+	{
+		id = MAP_ID::POTION_1;
+	}
+	if (ctrl[KEY_INPUT_M] & ~(ctrlOld[KEY_INPUT_M]))
+	{
+		id = MAP_ID::WALL1;
+	}
+	if (ctrl[KEY_INPUT_P] & ~(ctrlOld[KEY_INPUT_P]))
+	{
+		id = MAP_ID::PLAYER;
 	}
 
 	// SPACEâüâ∫Ç≈SetMapDataåƒÇ—èoÇµ

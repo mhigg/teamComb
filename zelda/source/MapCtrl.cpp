@@ -202,7 +202,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					plCnt++;
 				}
 				break;
-			case MAP_ID::NONE:
+			case MAP_ID::ENEMY:
+				break;
 			case MAP_ID::WALL1:
 			case MAP_ID::WALL2:
 			case MAP_ID::WALL3:
@@ -215,17 +216,54 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::WALL10:
 			case MAP_ID::WALL11:
 			case MAP_ID::WALL12:
-			case MAP_ID::DOOR1:
-			case MAP_ID::DOOR2:
-			case MAP_ID::DOOR3:
-			case MAP_ID::DOOR4:
 			case MAP_ID::WALL13:
 			case MAP_ID::WALL14:
 			case MAP_ID::WALL15:
 			case MAP_ID::WALL16:
 			case MAP_ID::WALL17:
 			case MAP_ID::WALL18:
+			case MAP_ID::WALL19:
+			case MAP_ID::WALL20:
+			case MAP_ID::DOOR1:
+			case MAP_ID::DOOR2:
+			case MAP_ID::DOOR3:
+			case MAP_ID::DOOR4:
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
+			case MAP_ID::BOX_1:
+			case MAP_ID::BOX_2:
+			case MAP_ID::MOTH_1:
+			case MAP_ID::MOTH_2:
+			case MAP_ID::MOTH_3:
+			case MAP_ID::MOTH_4:
 				SetMapData(VECTOR2(x * chipSize.x, y * chipSize.y),id);
+				break;
+			case MAP_ID::TREE:
+			case MAP_ID::HOLL:
+			case MAP_ID::STONE:
+
+			case MAP_ID::NONE:
+			case MAP_ID::NON_1:
+			case MAP_ID::NON_2:
+			case MAP_ID::NON_3:
+			case MAP_ID::NON_4:
+			case MAP_ID::NON_5:
+			case MAP_ID::NON_6:
+			case MAP_ID::NON_7:
 			default:
 				break;
 			}
@@ -249,8 +287,16 @@ void MapCtrl::Draw(bool flag)
 			switch (id)
 			{
 			case MAP_ID::NONE:
+			case MAP_ID::NON_1:
+			case MAP_ID::NON_2:
+			case MAP_ID::NON_3:
+			case MAP_ID::NON_4:
+			case MAP_ID::NON_5:
+			case MAP_ID::NON_6:
+			case MAP_ID::NON_7:
 				break;
 			case MAP_ID::PLAYER:
+			case MAP_ID::ENEMY:
 				if (!flag)
 				{
 					break;
@@ -267,16 +313,40 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL10:
 			case MAP_ID::WALL11:
 			case MAP_ID::WALL12:
-			case MAP_ID::DOOR1:
-			case MAP_ID::DOOR2:
-			case MAP_ID::DOOR3:
-			case MAP_ID::DOOR4:
 			case MAP_ID::WALL13:
 			case MAP_ID::WALL14:
 			case MAP_ID::WALL15:
 			case MAP_ID::WALL16:
 			case MAP_ID::WALL17:
 			case MAP_ID::WALL18:
+			case MAP_ID::WALL19:
+			case MAP_ID::WALL20:
+			case MAP_ID::DOOR1:
+			case MAP_ID::DOOR2:
+			case MAP_ID::DOOR3:
+			case MAP_ID::DOOR4:
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
+			case MAP_ID::BOX_1:
+			case MAP_ID::BOX_2:
+			case MAP_ID::MOTH_1:
+			case MAP_ID::MOTH_2:
+			case MAP_ID::MOTH_3:
+			case MAP_ID::MOTH_4:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,

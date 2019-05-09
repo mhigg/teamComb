@@ -3,8 +3,9 @@
 
 enum class MAP_ID
 {
-	NONE,	// ‰½‚à‚È‚µ
-	WALL1,
+	NONE,			// ‰½‚à‚È‚µ
+	// Ï¯Ìß—p
+	WALL1,			// •Ç
 	WALL2,
 	WALL3,
 	WALL4,
@@ -16,17 +17,58 @@ enum class MAP_ID
 	WALL10,
 	WALL11,
 	WALL12,
-	PLAYER,	// ÌßÚ²Ô°
-	DOOR1,
-	DOOR2,
-	DOOR3,
-	DOOR4,
 	WALL13,
 	WALL14,
 	WALL15,
 	WALL16,
 	WALL17,
 	WALL18,
+	WALL19,
+	WALL20,
+	DOOR1,			// ”à
+	DOOR2,
+	DOOR3,
+	DOOR4,
+	// ‹¤’Ê
+	POTION_1,	// Îß°¼®Ý
+	POTION_2,
+	POTION_3,
+	POTION_4,
+	COIN_1,		// º²Ý
+	COIN_2,
+	COIN_3,
+	COIN_4,
+	KEY_1,			// Œ®
+	KEY_2,
+	MEAT,			// “÷
+	NON_1,			// —\”õ
+	NON_2,
+	NON_3,
+	NON_4,
+	// ½Ã°¼Þ•Ê
+	SWORD,		
+	SHIELD,
+	BOOK,
+	GOLD,
+	DIA,
+	NON_5,			// —\”õ
+	NON_6,
+	NON_7,
+	BOX_1,
+	BOX_2,
+	MOTH_1,
+	MOTH_2,
+	MOTH_3,
+	MOTH_4,
+
+	// ‘åŒ^µÌÞ¼Þª1
+	TREE,
+	HOLL,
+	STONE,
+
+	// “®“IµÌÞ¼Þª
+	PLAYER,				// ÌßÚ²Ô°
+	ENEMY,				// ´ÈÐ°
 	MAX
 };
 
