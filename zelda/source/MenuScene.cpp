@@ -36,8 +36,6 @@ void MenuScene::MenuDraw(void)
 {
 	ClsDrawScreen();
 
-//	DrawFormatString(0, 0, 0x0000ff00,"%d",add);
-
 	for (int i = 0; i < MENU_NUM; i++)
 	{
 		DrawBox(movePos[i].x - size.x, movePos[i].y, movePos[i].x, movePos[i].y + size.y, 0x00ff0000, true);
