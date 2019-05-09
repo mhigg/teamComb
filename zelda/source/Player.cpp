@@ -7,6 +7,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 {
 	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
+	life = 5;
 
 	keyIdTbl = { XINPUT_DOWN,	// â∫
 				 XINPUT_LEFT,	// ç∂
@@ -58,6 +59,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
 	Init("image/player.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
+	startPos = pos;
 	initAnim();
 
 	afterKeyFlag = false;
@@ -86,6 +88,18 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
+
+	// Ãﬂ⁄≤‘∞ÇÃ¿ﬁ“∞ºﬁéÛÇØ(√ﬁ ﬁØ∏óp)
+	if (controller.GetCtrl(KEY_TYPE_NOW)[KEY_INPUT_F] & (~controller.GetCtrl(KEY_TYPE_OLD)[KEY_INPUT_F]))
+	{
+		life -= 1;
+	}
+	if (DeathPrc())
+	{
+		pos = startPos;
+		life = 5;
+	}
+
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
@@ -167,5 +181,10 @@ bool Player::CheckObjType(OBJ_TYPE type)
 
 bool Player::DeathPrc(void)
 {
+	if (life < 0)
+	{
+		/*SetAnim("éÄñS");*/
+		return true;
+	}
 	return false;
 }
