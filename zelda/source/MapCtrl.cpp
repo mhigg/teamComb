@@ -203,6 +203,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				}
 				break;
 			case MAP_ID::ENEMY:
+				// ´ÈÐ°‚Ì²Ý½ÀÝ½
 				break;
 			case MAP_ID::WALL1:
 			case MAP_ID::WALL2:
