@@ -9,8 +9,8 @@
 
 #define lpStageMng StageMng::GetInstance()
 
-constexpr int GAME_AREA_SIZE_X = 1200;		// Ï¯Ìß‘S‘Ì‚Ì»²½Þ
-constexpr int GAME_AREA_SIZE_Y = 880;
+constexpr int GAME_AREA_SIZE_X = 800;		// Ï¯Ìß‘S‘Ì‚Ì»²½Þ
+constexpr int GAME_AREA_SIZE_Y = 600;
 
 class StageMng
 {

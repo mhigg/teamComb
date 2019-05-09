@@ -29,7 +29,6 @@ enum class MAP_ID
 	DOOR2,
 	DOOR3,
 	DOOR4,
-	// ±²ÃÑ
 	// ‹¤’Ê
 	POTION_1,	// Îß°¼®Ý
 	POTION_2,
@@ -52,9 +51,24 @@ enum class MAP_ID
 	BOOK,
 	GOLD,
 	DIA,
-	NON_5,
-	PLAYER,			// ÌßÚ²Ô°
-	ENEMY,			// ´ÈÐ°
+	NON_5,			// —\”õ
+	NON_6,
+	NON_7,
+	BOX_1,
+	BOX_2,
+	MOTH_1,
+	MOTH_2,
+	MOTH_3,
+	MOTH_4,
+
+	// ‘åŒ^µÌÞ¼Þª1
+	TREE,
+	HOLL,
+	STONE,
+
+	// “®“IµÌÞ¼Þª
+	PLAYER,				// ÌßÚ²Ô°
+	ENEMY,				// ´ÈÐ°
 	MAX
 };
 

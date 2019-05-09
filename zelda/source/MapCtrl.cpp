@@ -203,17 +203,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				}
 				break;
 			case MAP_ID::ENEMY:
-				//if ((plCnt >= playerNum) || (playerNum >= 4))
-				//{
-				//	break;
-				//}
-				//// ´ÈÐ°‚ð²Ý½ÀÝ½
-				//else
-				//{
-				//	auto obj = AddObjList()(objList,
-				//		std::make_unique<Player>(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
-				//	plCnt++;
-				//}
 				break;
 			case MAP_ID::WALL1:
 			case MAP_ID::WALL2:
@@ -255,14 +244,26 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::BOOK:
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
+			case MAP_ID::BOX_1:
+			case MAP_ID::BOX_2:
+			case MAP_ID::MOTH_1:
+			case MAP_ID::MOTH_2:
+			case MAP_ID::MOTH_3:
+			case MAP_ID::MOTH_4:
 				SetMapData(VECTOR2(x * chipSize.x, y * chipSize.y),id);
 				break;
+			case MAP_ID::TREE:
+			case MAP_ID::HOLL:
+			case MAP_ID::STONE:
+
 			case MAP_ID::NONE:
 			case MAP_ID::NON_1:
 			case MAP_ID::NON_2:
 			case MAP_ID::NON_3:
 			case MAP_ID::NON_4:
 			case MAP_ID::NON_5:
+			case MAP_ID::NON_6:
+			case MAP_ID::NON_7:
 			default:
 				break;
 			}
@@ -291,6 +292,8 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::NON_3:
 			case MAP_ID::NON_4:
 			case MAP_ID::NON_5:
+			case MAP_ID::NON_6:
+			case MAP_ID::NON_7:
 				break;
 			case MAP_ID::PLAYER:
 			case MAP_ID::ENEMY:
@@ -338,6 +341,12 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::BOOK:
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
+			case MAP_ID::BOX_1:
+			case MAP_ID::BOX_2:
+			case MAP_ID::MOTH_1:
+			case MAP_ID::MOTH_2:
+			case MAP_ID::MOTH_3:
+			case MAP_ID::MOTH_4:
 				DrawGraph(
 					tmpPos.x + offset.x,
 					tmpPos.y + offset.y,
