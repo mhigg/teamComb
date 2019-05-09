@@ -3,9 +3,9 @@
 
 enum class MAP_ID
 {
-	NONE,	// ‰½‚à‚È‚µ
+	NONE,			// ‰½‚à‚È‚µ
 	// Ï¯Ìß—p
-	WALL1,		// •Ç
+	WALL1,			// •Ç
 	WALL2,
 	WALL3,
 	WALL4,
@@ -25,7 +25,7 @@ enum class MAP_ID
 	WALL18,
 	WALL19,
 	WALL20,
-	DOOR1,		// ”à
+	DOOR1,			// ”à
 	DOOR2,
 	DOOR3,
 	DOOR4,
@@ -39,10 +39,10 @@ enum class MAP_ID
 	COIN_2,
 	COIN_3,
 	COIN_4,
-	KEY_1,		// Œ®
+	KEY_1,			// Œ®
 	KEY_2,
-	MEAT,		// “÷
-	NON_1,		// —\”õ
+	MEAT,			// “÷
+	NON_1,			// —\”õ
 	NON_2,
 	NON_3,
 	NON_4,
@@ -53,8 +53,8 @@ enum class MAP_ID
 	GOLD,
 	DIA,
 	NON_5,
-	PLAYER,		// ÌßÚ²Ô°
-	ENEMY,
+	PLAYER,			// ÌßÚ²Ô°
+	ENEMY,			// ´ÈÐ°
 	MAX
 };
 
