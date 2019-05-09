@@ -22,10 +22,10 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	add = -1 * ((count - 50)*(count - 50)) + 35;
 	for (int i = 0; i < MENU_NUM; i++)
 	{
-		add >= 0 ? movePos[i].x += add : movePos[i].x;
+		add = -1.25 * ((count - (i * 1)*(i * 1) - 50)*(count - (i * 1)*(i * 1) - 50)) + 40;
+		add >= -20 ? movePos[i].x += add : movePos[i].x;
 	}
 	count++;
 	MenuDraw();
@@ -52,10 +52,9 @@ int MenuScene::Init(void)
 		VECTOR2(0,40),
 		VECTOR2(0,160),
 		VECTOR2(0,280),
-		VECTOR2(0,400)
 	};
 	moveFlag = { 
-		true,false,false,false 
+		true,false,false
 	};
 	count = 0;
 	size = { BOX_SIZE_X,BOX_SIZE_Y };
