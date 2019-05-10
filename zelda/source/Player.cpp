@@ -220,11 +220,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	if (inputTbl[plNum][XINPUT_RUN_RB])
 	{
 		SetAnim("Ž¾‘–");
+		return;
 	}
-	else
-	{
-		SetAnim("ˆÚ“®");
-	}
+	SetAnim("ˆÚ“®");
 }
 
 bool Player::CheckObjType(OBJ_TYPE type)
