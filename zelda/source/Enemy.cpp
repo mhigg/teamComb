@@ -4,7 +4,6 @@
 
 Enemy::Enemy()
 {
-	Init("image/ghost.png", VECTOR2(40, 40), VECTOR2(1, 1), { 0,0 });
 }
 
 Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VECTOR2 setUpPos, VECTOR2 drawOffset)
@@ -13,6 +12,7 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	data.name = static_cast<ENEMY>(Enum);
 	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
 	speed = ENEMY_SPEED;
+	
 }
 
 Enemy::~Enemy()
