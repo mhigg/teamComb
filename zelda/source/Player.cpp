@@ -60,6 +60,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					true,	// WALL21				‚Æ‚¨‚é
 					false,	// WALL22
 					false,	// WALL23
+					false,	// WALL24
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
