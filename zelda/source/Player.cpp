@@ -57,8 +57,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL19	// GetMapData‚ÌŒÅ’èID
 					true,	// WALL20
 					true,	// WALL21
-					true,	// WALL22
-					true,	// WALL23
+					false,	// WALL22
+					false,	// WALL23
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
@@ -152,19 +152,19 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		life = 5;
 	}
 
-
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
+		offset = 20;
 		switch (dir)
 		{
 		case DIR_DOWN:
-			side = { 0,(chipSize - sideFlag) + speed };
+			side = { 0,(offset + chipSize - sideFlag) + speed };
 			break;
 		case DIR_LEFT:
-			side = { (speed + 20) - (sideFlag ^ 1) ,0 };
+			side = { speed - (sideFlag ^ 1) + offset,0 };
 			break;
 		case DIR_RIGHT:
-			side = { (20+chipSize - sideFlag) + speed,0 };
+			side = { (offset + chipSize - sideFlag) + speed,0 };
 			break;
 		case DIR_UP:
 			side = { 0,speed - (sideFlag ^ 1) };
