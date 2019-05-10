@@ -135,6 +135,8 @@ bool Player::initAnim(void)
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	GetItem();
+
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
@@ -159,10 +161,10 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 			side = { 0,(chipSize - sideFlag) + speed };
 			break;
 		case DIR_LEFT:
-			side = { speed - (sideFlag ^ 1) ,0 };
+			side = { (speed + 20) - (sideFlag ^ 1) ,0 };
 			break;
 		case DIR_RIGHT:
-			side = { (chipSize - sideFlag) + speed,0 };
+			side = { (20+chipSize - sideFlag) + speed,0 };
 			break;
 		case DIR_UP:
 			side = { 0,speed - (sideFlag ^ 1) };
@@ -239,4 +241,36 @@ bool Player::DeathPrc(void)
 		return true;
 	}
 	return false;
+}
+
+void Player::GetItem(void)
+{
+	//auto ItemID = [=] {
+	//	auto id = lpMapCtrl.GetMapData(pos, MAP_ID::WALL19);
+	//	return (id == MAP_ID::MEAT ? static_cast<MAP_ID>(ITEM_ID_START /*+ GetRand(ITEM_MAX - 1))*/ ): id);
+	//};
+
+	//auto paramUP = [=](auto& paramFlag, auto limNum) {
+	//	paramFlag += (paramFlag < limNum);
+	//	lpMapCtrl.SetMapData(pos, MAP_ID::NONE);
+	//};
+
+	//switch (ItemID())
+	//{
+	//	case MAP_ID::POTION_1:
+	//		paramUP(NotFlag, 1);
+	//		break;
+	//	case MAP_ID::POTION_2:
+	//		paramUP(NotFlag, 1);
+	//		break;
+	//	case MAP_ID::POTION_3:
+	//		paramUP(NotFlag, 1);
+	//		break;
+	//	case MAP_ID::POTION_4:
+	//		paramUP(NotFlag, 1);
+	//		break;
+
+	//default:
+	//	break;
+	//}
 }
