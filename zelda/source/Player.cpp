@@ -35,7 +35,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// ã(REV:‰º)(¶E‰E)
 			  };
 
-	mapMoveTbl = {	false,	// NONE
+	mapMoveTbl = {
+					true,	// NONE
 					false,	// WALL1
 					false,	// WALL2
 					false,	// WALL3
@@ -54,9 +55,9 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL16
 					false,	// WALL17
 					false,	// WALL18
-					false,	// WALL19	// GetMapData‚ÌŒÅ’èID
+					true,	// WALL19	// GetMapData‚ÌŒÅ’èID
 					true,	// WALL20
-					true,	// WALL21
+					true,	// WALL21				‚Æ‚¨‚é
 					false,	// WALL22
 					false,	// WALL23
 					false,	// DOOR1
@@ -98,11 +99,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// STONE_1	// Šâ
 					false,	// STONE_2
 					false,	// STONE_3
-					false,	// STONE_4
-
-
-
-					
+					false,	// STONE_4				
 	};
 
 	this->plNum = plNum;
@@ -193,7 +190,6 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 //			scrollOffset += 
 			return true;
 		}
-
 		return false;
 	};
 
