@@ -3,6 +3,7 @@
 #include "ImageMng.h"
 #include "GameScene.h"
 #include "MenuScene.h"
+#include"GameCtrl.h"
 
 
 TitleScene::TitleScene()
@@ -17,9 +18,15 @@ TitleScene::~TitleScene()
 
 uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
+	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
 	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+	{
+		return std::make_unique<MenuScene>();
+	}
+	if (inputState[0][static_cast<int>(INPUT_ID::START)] & ~inputStateOld[0][static_cast<int>(INPUT_ID::START)])
 	{
 		return std::make_unique<MenuScene>();
 	}

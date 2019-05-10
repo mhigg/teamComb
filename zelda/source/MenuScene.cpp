@@ -19,10 +19,17 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
 	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
+	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 	{
 		return std::make_unique<EditScene>();
 	}
+	if (inputState[0][static_cast<int>(INPUT_ID::START)] & ~inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	{
+		return std::make_unique<EditScene>();
+	}
+
 	for (int i = 0; i < MENU_NUM; i++)
 	{
 		add = -1.25 * ((count - (i * 1)*(i * 1) - 50)*(count - (i * 1)*(i * 1) - 50)) + 40;
