@@ -110,7 +110,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	}
 	if (ctrl[KEY_INPUT_M] & ~(ctrlOld[KEY_INPUT_M]))
 	{
-		id = MAP_ID::WALL1;
+		id = MAP_ID::WALL13;
 	}
 	if (ctrl[KEY_INPUT_P] & ~(ctrlOld[KEY_INPUT_P]))
 	{
