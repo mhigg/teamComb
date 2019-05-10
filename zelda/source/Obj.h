@@ -3,6 +3,7 @@
 #include <map>
 #include "VECTOR2.h"
 #include "classObj.h"
+#include "MAP_ID.h"
 
 enum ANIM_TBL {
 	ANIM_TBL_START_ID,		// ±ÆÒ°¼®Ý‚ÌŠJŽn

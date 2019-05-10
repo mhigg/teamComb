@@ -29,10 +29,10 @@ enum class MAP_ID
 	WALL22,			
 	WALL23,
 	WALL24,
-	WALL25,	// –³
-	WALL26,	// –³
-	WALL27,	// –³
-	WALL28,	// –³
+	WALL25,
+	WALL26,
+	WALL27,
+	WALL28,
 	WALL29,	// –³
 	WALL30,	// –³
 	WALL31,	// –³
