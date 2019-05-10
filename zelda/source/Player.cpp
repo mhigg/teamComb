@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "Player.h"
 #include "StageMng.h"
+#include "MapCtrl.h"
 
 
 Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOffset)
@@ -35,23 +36,72 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			  };
 
 	mapMoveTbl = {	false,	// NONE
-					true,	// WALL1
-					true,	// WALL2
-					true,	// WALL3
-					true,	// WALL4
-					true,	// WALL5
-					true,	// WALL6
-					true,	// WALL7
-					true,	// WALL8
-					true,	// WALL9
+					false,	// WALL1
+					false,	// WALL2
+					false,	// WALL3
+					false,	// WALL4
+					false,	// WALL5
+					false,	// WALL6
+					false,	// WALL7
+					false,	// WALL8
+					false,	// WALL9
 					true,	// WALL10
-					false,	// RESERVE
-					true,	// DOOR1
-					true,	// DOOR2
-					true,	// DOOR3
-					true,	// DOOR4
-					
-					
+					true,	// WALL11
+					false,	// WALL12
+					false,	// WALL13
+					false,	// WALL14
+					false,	// WALL15
+					false,	// WALL16
+					false,	// WALL17
+					false,	// WALL18
+					false,	// WALL19	// GetMapDataの固定ID
+					true,	// WALL20
+					true,	// WALL21
+					false,	// WALL22	// 現状何も入っていない
+					false,	// WALL23	// 現状何も入っていない
+					false,	// DOOR1
+					false,	// DOOR2
+					false,	// DOOR3
+					false,	// DOOR4
+					true,	// POTION_1
+					true,	// POTION_2
+					true,	// POTION_3
+					true,	// POTION_4
+					true,	// COIN_1
+					true,	// COIN_2
+					true,	// COIN_3
+					true,	// COIN_4
+					true,	// KEY_1
+					true,	// KEY_2
+					true,	// MEAT
+					true,	// PLAYER
+					false,	// ENEMY
+					true,	// SWORD
+					true,	// SHIELD
+					true,	// BOOK
+					true,	// GOLD
+					true,	// DIA
+					false,	// BOX_1	// 宝箱
+					false,	// BOX_2	// 空いている宝箱
+					true,	// MOTH_1	// ﾂﾎﾞ
+					false,	// MOTH_2	// 壊れたﾂﾎﾞ
+					true,	// MOTH_3	// 樽
+					false,	// MOTH_4	// 壊れた樽
+					false,	// TREE_1	// 木
+					false,	// TREE_2
+					false,	// TREE_3
+					false,	// TREE_4
+					false,	// HOLL_1	// 井戸
+					false,	// HOLL_2
+					false,	// HOLL_3
+					false,	// HOLL_4
+					false,	// STONE_1	// 岩
+					false,	// STONE_2
+					false,	// STONE_3
+					false,	// STONE_4
+
+
+
 					
 	};
 
@@ -128,11 +178,13 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			// if (/*mapMoveTbl*/)		// 移動制御
-			//{
-				// Player::dir = DirTbl[dir][id];
-				// return false;		// 移動できない場合(岩や木などのｵﾌﾞｼﾞｪｸﾄがあるとき)
-			//}
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE),MAP_ID::WALL19))])
+			{
+				Player::dir = DirTbl[dir][id];
+				// 移動不可のオブジェクトが隣にあった場合
+				return false;
+			}
+
 			// 移動処理-----------------------------
 			// 変更したい座標の変数アドレス += 移動量
 			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
