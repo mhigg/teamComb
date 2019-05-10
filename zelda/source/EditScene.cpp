@@ -22,6 +22,8 @@ uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
 	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
+	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 
 	if (cnt[KEY_INPUT_F5])
 	{
@@ -53,6 +55,11 @@ uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<GameScene>();
 	}
+	if (inputState[0][static_cast<int>(INPUT_ID::START)] & ~inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	{
+		return std::make_unique<GameScene>();
+	}
+
 	for (auto itr = objList->begin(); itr != objList->end(); itr++)
 	{
 		(*itr)->UpDate(controller, objList);
