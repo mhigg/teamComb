@@ -151,17 +151,16 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
-		offset = 20;
 		switch (dir)
 		{
 		case DIR_DOWN:
-			side = { 0,(offset + chipSize - sideFlag) + speed };
+			side = { 0,(chipSize - sideFlag) + speed };
 			break;
 		case DIR_LEFT:
-			side = { speed - (sideFlag ^ 1) + offset,0 };
+			side = { speed - (sideFlag ^ 1),0 };
 			break;
 		case DIR_RIGHT:
-			side = { (offset + chipSize - sideFlag) + speed,0 };
+			side = { (chipSize - sideFlag) + speed,0 };
 			break;
 		case DIR_UP:
 			side = { 0,speed - (sideFlag ^ 1) };
