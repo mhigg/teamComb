@@ -1,6 +1,6 @@
+#include <algorithm>
+#include <DxLib.h>
 #include "Enemy.h"
-
-
 
 Enemy::Enemy()
 {
@@ -12,6 +12,10 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
 	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
+	moveSpeed = ENEMY_SPEED;
+	MoveParam{
+		false,false,false,false
+	};
 }
 
 Enemy::~Enemy()
@@ -20,7 +24,24 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
-	CheckDeath();
+	switch (GetRand(6))
+	{
+	case 0:
+		pos.x += moveSpeed;
+		break;
+	case 1:
+		pos.x -= moveSpeed;
+		break;
+	case 2:
+		pos.y += moveSpeed;
+		break;
+	case 3:pos.y -= moveSpeed;
+		break;
+	case 4:
+	case 5:
+	default:
+		break;
+	}
 }
 
 bool Enemy::CheckDeath(void)
