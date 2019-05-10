@@ -3,6 +3,7 @@
 #include "ImageMng.h"
 #include "MapCtrl.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "SceneMng.h"
 #include "StageMng.h"
 #include "ClassObj.h"
@@ -198,12 +199,19 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				else
 				{
 					auto obj = AddObjList()(objList, 
-						std::make_unique<Player>(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
+						std::make_unique<Player>
+						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(0, -20)));
 					plCnt++;
 				}
 				break;
 			case MAP_ID::ENEMY:
-				// ´ÈÐ°‚Ì²Ý½ÀÝ½
+				if (1)
+				{
+					// ´ÈÐ°‚Ì²Ý½ÀÝ½
+				/* Ã½Ä*/	auto obj = AddObjList()(objList,
+						std::make_unique<Enemy>
+						("image/ghost.png", VECTOR2(0, 0), VECTOR2(0, 0),1, chipSize * VECTOR2(x, y), drawOffset));
+				}
 				break;
 			case MAP_ID::WALL1:
 			case MAP_ID::WALL2:
@@ -266,8 +274,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::STONE_2:
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
-				break;
 			case MAP_ID::NONE:
+				break;
 			default:
 				break;
 			}

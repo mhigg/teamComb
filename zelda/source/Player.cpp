@@ -127,8 +127,8 @@ Player::~Player()
 bool Player::initAnim(void)
 {
 	AddAnim("’â~", 0, 0, 1, 6, true);
-	AddAnim("ˆÚ“®", 0, 1, 6, 2, true);
-	AddAnim("¾‘–", 0, 1, 6, 1, true);
+	AddAnim("ˆÚ“®", 1, 1, 6, 2, true);
+	AddAnim("¾‘–", 1, 1, 6, 1, true);
 	AddAnim("€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
@@ -146,7 +146,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (DeathPrc())
 	{
-		pos = startPos;
+		pos = startPos;		// Ø½Îß°İˆ—
 		life = 5;
 	}
 

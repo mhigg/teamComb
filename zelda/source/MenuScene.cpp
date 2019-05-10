@@ -2,6 +2,7 @@
 #include "MenuScene.h"
 #include "GameScene.h"
 #include "EditScene.h"
+#include "ImageMng.h"
 
 
 MenuScene::MenuScene()
@@ -35,12 +36,11 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void MenuScene::MenuDraw(void)
 {
 	ClsDrawScreen();
-
+	DrawGraph(0, 0, IMAGE_ID("image/menu.png")[0], true);
 	for (int i = 0; i < MENU_NUM; i++)
 	{
 		DrawBox(movePos[i].x - size.x, movePos[i].y, movePos[i].x, movePos[i].y + size.y, 0x00ff0000, true);
 	}
-
 	ScreenFlip();
 }
 

@@ -15,10 +15,10 @@ enum class ENEMY
 enum class ENEMY_STATE
 {
 	NORMAL,		// ’Êí
-	FOUND,		// ”­Œ©
-	ATT,		// UŒ‚
-	RETREAT,	// ‹¯‚İ
-	DEATH,		// €–S
+	FOUND,			// ”­Œ©
+	ATT,				// UŒ‚
+	RETREAT,		// ‹¯‚İ
+	DEATH,			// €–S
 	MAX
 };
 
@@ -26,17 +26,17 @@ enum class ENEMY_STATE
 enum class ENEMY_BEHAVIOR
 {
 	DO_NOTHING,	// ‰½‚à‚µ‚È‚¢
-	MOVE,		// ˆÚ“®
-	ATT,		// UŒ‚
+	MOVE,				// ˆÚ“®
+	ATT,					// UŒ‚
 	MAX
 };
 
 // enemy‚ªplayer‚ğ’Tõ‚·‚é‚Æ‚«‚Ég‚¤
 struct SearchParam
 {
-	float ExploreDistance;	// ’Tõ‹——£
-	float ExploreAngle;		// ’TõŠp“x
-	float SignDistance;		// ‹C”z‚ğŠ´‚¶‚é‹——£
+	float ExploreDistance;		// ’Tõ‹——£
+	float ExploreAngle;			// ’TõŠp“x
+	float SignDistance;			// ‹C”z‚ğŠ´‚¶‚é‹——£
 };
 
 // ˆÚ“®‚Ì•ûŒü·°‘€ì
@@ -51,8 +51,8 @@ struct MoveParam
 struct EnemyData
 {
 	std::string fileName;
-	VECTOR2		divSize;
-	VECTOR2		divCnt;
+	VECTOR2	divSize;
+	VECTOR2	divCnt;
 	ENEMY		name;
 };
 
@@ -64,24 +64,30 @@ class Enemy :
 {
 public:
 	Enemy();
-	Enemy(EnemyData data, VECTOR2 setUpPos, VECTOR2 drawOffset);
+	Enemy(	std::string fileName, 
+				VECTOR2	divSize,
+				VECTOR2 divCnt,
+				int Enum, 
+				VECTOR2 setUpPos, 
+				VECTOR2 drawOffset	);
 	~Enemy();
 
-	bool CheckDeath(void);				// €–S”»’è,€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	bool CheckDeath(void);						// €–S”»’è,€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
 	bool CheckObjType(OBJ_TYPE type);	// w’è‚µ‚½’l‚Æ“¯‚¶Œ^‚ª—ˆ‚½‚çtrue‚ğ•Ô‚·
 	virtual const OBJ_TYPE& GetObjType(void)const;
 	void SetDeathFlag(bool deathFlag);
 private:
+	void SetMove(const GameCtrl &controller, weakListObj objList);
 
-
-
-	ENEMY_STATE state;				// ó‘Ô
+	ENEMY_STATE state;							// ó‘Ô
 	ENEMY_BEHAVIOR nowBehavior;		// Œ»İ‚Ìs“®
-	MoveParam moveParam;			// ˆÚ“®‚Ì•ûŒü·°‘€ì
-	int faintCnt;			// ‹¯‚İ¶³İÄ
-	int timeCnt;			// Œo‰ßŠÔ‚Ì¶³İÄ
-	bool oppFlag;			// ˆÚ“®”½“]Ì×¸Ş
-	int behaviorCnt;		// s“®‚Ì¶³İÄ
+	MoveParam moveParam;						// ˆÚ“®‚Ì•ûŒü·°‘€ì
+	EnemyData data;
+
+	int faintCnt;				// ‹¯‚İ¶³İÄ
+	int timeCnt;				// Œo‰ßŠÔ‚Ì¶³İÄ
+	bool oppFlag;				// ˆÚ“®”½“]Ì×¸Ş
+	int behaviorCnt;			// s“®‚Ì¶³İÄ
 
 protected:
 	bool deathFlag;			// €–SÌ×¸Ş
