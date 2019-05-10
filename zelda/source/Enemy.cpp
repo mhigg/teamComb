@@ -12,7 +12,7 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
 	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
-	moveSpeed = ENEMY_SPEED;
+	speed = ENEMY_SPEED;
 }
 
 Enemy::~Enemy()
@@ -24,15 +24,15 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	switch (GetRand(6))
 	{
 	case 0:
-		pos.x += moveSpeed;
+		pos.x += speed;
 		break;
 	case 1:
-		pos.x -= moveSpeed;
+		pos.x -= speed;
 		break;
 	case 2:
-		pos.y += moveSpeed;
+		pos.y += speed;
 		break;
-	case 3:pos.y -= moveSpeed;
+	case 3:pos.y -= speed;
 		break;
 	case 4:
 	case 5:
