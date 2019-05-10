@@ -57,7 +57,6 @@ private:
 	bool DeathPrc(void);			// ŠÖ”‰»
 	void GetItem(void);				// ±²ÃÑæ“¾
 
-	int offset;	// ’lw20x‚ğŠi”[‚·‚é
 	int speed;
 	DIR dir;
 	int life;
