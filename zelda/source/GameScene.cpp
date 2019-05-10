@@ -67,7 +67,7 @@ int GameScene::Init(void)
 void GameScene::Draw(void)
 {
 // ¦ •`‰æ‚Ì¿°Äˆ—
-//	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj1).GetPos().y; });
+	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj2).GetPos().y; });
 
 	ClsDrawScreen();
 
