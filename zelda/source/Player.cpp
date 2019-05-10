@@ -76,7 +76,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					true,	// KEY_2
 					true,	// MEAT
 					true,	// PLAYER
-					false,	// ENEMY
+					true,	// ENEMY
 					true,	// SWORD
 					true,	// SHIELD
 					true,	// BOOK
