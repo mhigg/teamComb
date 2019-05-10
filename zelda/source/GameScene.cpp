@@ -96,7 +96,7 @@ void GameScene::Draw(void)
 		obj->Draw();
 	}
 
-	DrawString(0, 0, "GameScene", 0x00ff0000);
+	DrawString(0, 800, "GameScene", 0x00ff0000);
 
 	ScreenFlip();
 }
