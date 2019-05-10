@@ -87,16 +87,16 @@ public:
 				VECTOR2 drawOffset	);
 	~Enemy();
 
-	bool CheckDeath(void);						// €–S”»’è,€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
-	bool CheckObjType(OBJ_TYPE type);	// w’è‚µ‚½’l‚Æ“¯‚¶Œ^‚ª—ˆ‚½‚çtrue‚ğ•Ô‚·
+	bool CheckDeath(void);							// €–S”»’è,€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	bool CheckObjType(OBJ_TYPE type);		// w’è‚µ‚½’l‚Æ“¯‚¶Œ^‚ª—ˆ‚½‚çtrue‚ğ•Ô‚·
 	virtual const OBJ_TYPE& GetObjType(void)const;
 	void SetDeathFlag(bool deathFlag);
 private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 
-	ENEMY_STATE state;							// ó‘Ô
-	ENEMY_BEHAVIOR nowBehavior;		// Œ»İ‚Ìs“®
-	EnemyData data;
+	ENEMY_STATE state;								// ó‘Ô
+	ENEMY_BEHAVIOR nowBehavior;			// Œ»İ‚Ìs“®
+	EnemyData data;									// “G‚Ìî•ñ
 
 	ENE_DIR_TBL_ARY keyIdTbl;		// ˆÚ“®•ûŒü
 	ENE_DIR_TBL_PTR PosTbl;			// Îß²İÀ‚ğ’¼ÚŠi”[
@@ -107,7 +107,7 @@ private:
 	int timeCnt;				// Œo‰ßŠÔ‚Ì¶³İÄ
 	bool oppFlag;				// ˆÚ“®”½“]Ì×¸Ş
 	int behaviorCnt;			// s“®‚Ì¶³İÄ
-	int moveSpeed;
+	int moveSpeed;			// “G‚ÌˆÚ“®‘¬“x
 
 protected:
 	bool deathFlag;			// €–SÌ×¸Ş
