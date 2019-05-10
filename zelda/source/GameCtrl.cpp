@@ -12,6 +12,7 @@ GameCtrl::GameCtrl()
 	};
 
 	int j_Num = GetJoypadNum();
+	if (j_Num <= 0) j_Num = 1;
 	inputState.resize(j_Num);
 	inputStateOld.resize(j_Num);
 	padData.resize(j_Num);
