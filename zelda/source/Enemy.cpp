@@ -13,9 +13,6 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	data.name = static_cast<ENEMY>(Enum);
 	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
 	moveSpeed = ENEMY_SPEED;
-	MoveParam{
-		false,false,false,false
-	};
 }
 
 Enemy::~Enemy()

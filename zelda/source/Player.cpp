@@ -108,7 +108,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	this->plNum = plNum;
 
 	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
-	Init("image/player.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
+	Init("image/playerRun.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
 	startPos = pos;
 	initAnim();
 
@@ -127,8 +127,8 @@ Player::~Player()
 bool Player::initAnim(void)
 {
 	AddAnim("’âŽ~", 0, 0, 1, 6, true);
-	AddAnim("ˆÚ“®", 1, 1, 6, 2, true);
-	AddAnim("Ž¾‘–", 1, 1, 6, 1, true);
+	AddAnim("ˆÚ“®", 0, 1, 6, 2, true);
+	AddAnim("Ž¾‘–", 0, 1, 6, 1, true);
 	AddAnim("Ž€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®Ý‚ðÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
