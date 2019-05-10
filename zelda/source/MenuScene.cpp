@@ -32,8 +32,8 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 
 	for (int i = 0; i < MENU_NUM; i++)
 	{
-		add = -1.25 * ((count - (i * 1)*(i * 1) - 50)*(count - (i * 1)*(i * 1) - 50)) + 40;
-		add >= -20 ? movePos[i].x += add : movePos[i].x;
+		add = -1.25 * ((count - (i * 1)*(i * 1) - 75)*(count - (i * 1)*(i * 1) - 75)) + 50;
+		add >= -20 ? movePos[i].x += static_cast<int>(add) : movePos[i].x;
 	}
 	count++;
 	MenuDraw();
@@ -46,7 +46,7 @@ void MenuScene::MenuDraw(void)
 	DrawGraph(0, 0, IMAGE_ID("image/menu.png")[0], true);
 	for (int i = 0; i < MENU_NUM; i++)
 	{
-		DrawBox(movePos[i].x - size.x, movePos[i].y, movePos[i].x, movePos[i].y + size.y, 0x00ff0000, true);
+		DrawGraph(movePos[i].x - size.x, movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu_bar.png", {320,120}, {1,3})[i], true);
 	}
 	ScreenFlip();
 }
