@@ -26,7 +26,7 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<MenuScene>();
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::START)] & ~inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
 	{
 		return std::make_unique<MenuScene>();
 	}

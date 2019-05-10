@@ -8,11 +8,11 @@ Enemy::Enemy()
 
 Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 {
+	Enemy::dir = DIR::DIR_DOWN;
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
 	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
 	speed = ENEMY_SPEED;
-	
 }
 
 Enemy::~Enemy()

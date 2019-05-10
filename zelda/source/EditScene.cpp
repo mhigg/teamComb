@@ -55,7 +55,7 @@ uniqueBase EditScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<GameScene>();
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::START)] & ~inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
 	{
 		return std::make_unique<GameScene>();
 	}
