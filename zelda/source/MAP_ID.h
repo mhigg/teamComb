@@ -26,7 +26,7 @@ enum class MAP_ID
 	WALL19,
 	WALL20,
 	WALL21,
-	WALL22,			// –³
+	WALL22,			
 	WALL23,			// –³
 	DOOR1,			// ”à
 	DOOR2,
