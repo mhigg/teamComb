@@ -55,11 +55,13 @@ private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 	bool CheckObjType(OBJ_TYPE type);
 	bool DeathPrc(void);			// 関数化
+	void GetItem(void);				// ｱｲﾃﾑ取得
 
 	int speed;
 	DIR dir;
 	int life;
 	VECTOR2 startPos;				// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
+	unsigned int NotFlag;
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
 	DIR_TBL_ARY keyIdTbl;		// 移動方向
