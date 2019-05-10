@@ -64,7 +64,12 @@ class Enemy :
 {
 public:
 	Enemy();
-	Enemy(EnemyData data, VECTOR2 setUpPos, VECTOR2 drawOffset);
+	Enemy(	std::string fileName, 
+				VECTOR2	divSize,
+				VECTOR2 divCnt,
+				int Enum, 
+				VECTOR2 setUpPos, 
+				VECTOR2 drawOffset	);
 	~Enemy();
 
 	bool CheckDeath(void);						// €–S”»’è,€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
@@ -72,12 +77,12 @@ public:
 	virtual const OBJ_TYPE& GetObjType(void)const;
 	void SetDeathFlag(bool deathFlag);
 private:
-
-
+	void SetMove(const GameCtrl &controller, weakListObj objList);
 
 	ENEMY_STATE state;							// ó‘Ô
 	ENEMY_BEHAVIOR nowBehavior;		// Œ»İ‚Ìs“®
 	MoveParam moveParam;						// ˆÚ“®‚Ì•ûŒü·°‘€ì
+	EnemyData data;
 
 	int faintCnt;				// ‹¯‚İ¶³İÄ
 	int timeCnt;				// Œo‰ßŠÔ‚Ì¶³İÄ
