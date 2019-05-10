@@ -3,6 +3,7 @@
 #include <map>
 #include "VECTOR2.h"
 #include "classObj.h"
+#include "MAP_ID.h"
 
 enum ANIM_TBL {
 	ANIM_TBL_START_ID,		// ±ÆÒ°¼®İ‚ÌŠJn
@@ -28,7 +29,27 @@ enum OBJ_TYPE {
 	OBJ_MAX
 };
 
+enum TBL_ID {
+	TBL_MAIN,		// ˆÚ“®•ûŒü
+	TBL_OPP,		// ˆÚ“®•ûŒü‚Ì‹t‚Ì²
+	TBL_MAX
+};
+
+enum DIR_TBL_ID {
+	DIR_TBL_MAIN,	// ˆÚ“®•ûŒü
+	DIR_TBL_REV,	// ˆÚ“®‚µ‚Ä‚¢‚é•ûŒü‚Ì‹t
+	DIR_TBL_OPP1,	// ˆÚ“®•ûŒü‚Ì‹t‚Ì²‡@
+	DIR_TBL_OPP2,	// ˆÚ“®•ûŒü‚Ì‹t‚Ì²‡A
+	DIR_TBL_MAX
+};
+
 class GameCtrl;
+
+using DIR_TBL_ARY = std::array<int, DIR_MAX>;
+using DIR_TBL_A2D = std::array<int[2], DIR_MAX>;
+using DIR_TBL_PTR = std::array<int*[TBL_MAX], DIR_MAX>;
+using DIR_TBL_DIR = std::array<DIR[DIR_TBL_MAX], DIR_MAX>;
+using MAP_MOVE_TBL = std::array<bool, static_cast<int>(MAP_ID::MAX)>; // ©±²ÃÑ‚âáŠQ•¨‚ğ’Ç‰Á‚µ‚½‚Æ‚«‚Ég‚¤
 
 class Obj
 {
