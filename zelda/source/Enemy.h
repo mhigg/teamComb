@@ -1,5 +1,7 @@
 #pragma once
+#include<array>
 #include "Obj.h"
+#include "MAP_ID.h"
 
 // enemy‚Ìí—Ş(–¼‘O‚È‚Ç)
 enum class ENEMY
@@ -31,21 +33,27 @@ enum class ENEMY_BEHAVIOR
 	MAX
 };
 
+enum class ENEMY_TBL_ID 
+{
+	MAIN,		// ˆÚ“®•ûŒü
+	OPP,			// ˆÚ“®•ûŒü‚Ì‹t‚Ì²
+	MAX
+};
+
+enum ENEMY_DIR_TBL_ID {
+	MAIN,		// ˆÚ“®•ûŒü
+	REV,			// ˆÚ“®‚µ‚Ä‚¢‚é•ûŒü‚Ì‹t
+	OPP1,		// ˆÚ“®•ûŒü‚Ì‹t‚Ì²‡@
+	OPP2,		// ˆÚ“®•ûŒü‚Ì‹t‚Ì²‡A
+	MAX
+};
+
 // enemy‚ªplayer‚ğ’Tõ‚·‚é‚Æ‚«‚Ég‚¤
 struct SearchParam
 {
 	float ExploreDistance;		// ’Tõ‹——£
 	float ExploreAngle;			// ’TõŠp“x
 	float SignDistance;			// ‹C”z‚ğŠ´‚¶‚é‹——£
-};
-
-// ˆÚ“®‚Ì•ûŒü·°‘€ì
-struct MoveParam
-{
-	bool down;
-	bool left;
-	bool right;
-	bool up;
 };
 
 struct EnemyData
@@ -60,6 +68,11 @@ constexpr auto ENEMY_SPEED = 5;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEMY_BEHAVIOR::MAX)>;
 using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
+
+using ENE_DIR_TBL_ARY = std::array<int, DIR_MAX>;
+using ENE_DIR_TBL_A2D = std::array<int[2], DIR_MAX>;
+using ENE_DIR_TBL_PTR = std::array<int*[static_cast<int>(ENEMY_TBL_ID::MAX)], DIR_MAX>;
+using ENE_DIR_TBL_DIR   = std::array < DIR[static_cast<int>(ENEMY_DIR_TBL_ID::MAX)], DIR_MAX >;
 
 class Enemy :
 	public Obj
@@ -83,8 +96,12 @@ private:
 
 	ENEMY_STATE state;							// ó‘Ô
 	ENEMY_BEHAVIOR nowBehavior;		// Œ»İ‚Ìs“®
-	MoveParam moveParam;						// ˆÚ“®‚Ì•ûŒü·°‘€ì
 	EnemyData data;
+
+	ENE_DIR_TBL_ARY keyIdTbl;		// ˆÚ“®•ûŒü
+	ENE_DIR_TBL_PTR PosTbl;			// Îß²İÀ‚ğ’¼ÚŠi”[
+	ENE_DIR_TBL_A2D SpeedTbl;		// ˆÚ“®‘¬“x
+	ENE_DIR_TBL_DIR DirTbl;			// ˆÚ“®§Œä
 
 	int faintCnt;				// ‹¯‚İ¶³İÄ
 	int timeCnt;				// Œo‰ßŠÔ‚Ì¶³İÄ
