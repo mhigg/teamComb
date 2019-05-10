@@ -57,8 +57,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL19	// GetMapData‚ÌŒÅ’èID
 					true,	// WALL20
 					true,	// WALL21
-					false,	// WALL22	// Œ»ó‰½‚à“ü‚Á‚Ä‚¢‚È‚¢
-					false,	// WALL23	// Œ»ó‰½‚à“ü‚Á‚Ä‚¢‚È‚¢
+					true,	// WALL22
+					true,	// WALL23
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
@@ -220,11 +220,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	if (inputTbl[plNum][XINPUT_RUN_RB])
 	{
 		SetAnim("¾‘–");
+		return;
 	}
-	else
-	{
-		SetAnim("ˆÚ“®");
-	}
+	SetAnim("ˆÚ“®");
 }
 
 bool Player::CheckObjType(OBJ_TYPE type)
