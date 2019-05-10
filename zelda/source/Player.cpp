@@ -55,7 +55,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL16
 					false,	// WALL17
 					false,	// WALL18
-					true,	// WALL19	// GetMapDataの固定ID
+					false,	// WALL19	// GetMapDataの固定ID
 					true,	// WALL20
 					true,	// WALL21				とおる
 					false,	// WALL22
@@ -76,7 +76,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					true,	// KEY_2
 					true,	// MEAT
 					true,	// PLAYER
-					false,	// ENEMY
+					true,	// ENEMY
 					true,	// SWORD
 					true,	// SHIELD
 					true,	// BOOK
@@ -176,7 +176,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE),MAP_ID::WALL19))])
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE),MAP_ID::NONE))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合
