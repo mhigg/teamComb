@@ -35,7 +35,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// 上(REV:下)(左・右)
 			  };
 
-	mapMoveTbl = {	false,	// NONE
+	mapMoveTbl = {
+					true,	// NONE
 					false,	// WALL1
 					false,	// WALL2
 					false,	// WALL3
@@ -56,9 +57,10 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL18
 					false,	// WALL19	// GetMapDataの固定ID
 					true,	// WALL20
-					true,	// WALL21
+					true,	// WALL21				とおる
 					false,	// WALL22
 					false,	// WALL23
+					false,	// WALL24
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
@@ -75,7 +77,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					true,	// KEY_2
 					true,	// MEAT
 					true,	// PLAYER
-					false,	// ENEMY
+					true,	// ENEMY
 					true,	// SWORD
 					true,	// SHIELD
 					true,	// BOOK
@@ -98,16 +100,11 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// STONE_1	// 岩
 					false,	// STONE_2
 					false,	// STONE_3
-					false,	// STONE_4
-
-
-
-					
+					false,	// STONE_4				
 	};
 
 	this->plNum = plNum;
 
-	Init("image/ghost.png", VECTOR2(40,40), VECTOR2(1,1), setUpPos);
 	Init("image/playerRun.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
 	startPos = pos;
 	initAnim();
@@ -154,17 +151,16 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
-		offset = 20;
 		switch (dir)
 		{
 		case DIR_DOWN:
-			side = { 0,(offset + chipSize - sideFlag) + speed };
+			side = { 0,(chipSize - sideFlag) + speed };
 			break;
 		case DIR_LEFT:
-			side = { speed - (sideFlag ^ 1) + offset,0 };
+			side = { speed - (sideFlag ^ 1),0 };
 			break;
 		case DIR_RIGHT:
-			side = { (offset + chipSize - sideFlag) + speed,0 };
+			side = { (chipSize - sideFlag) + speed,0 };
 			break;
 		case DIR_UP:
 			side = { 0,speed - (sideFlag ^ 1) };
@@ -180,7 +176,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE),MAP_ID::WALL19))])
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE),MAP_ID::NONE))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合
@@ -193,7 +189,6 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 //			scrollOffset += 
 			return true;
 		}
-
 		return false;
 	};
 
