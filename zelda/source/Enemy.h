@@ -25,7 +25,7 @@ enum class ENEMY_STATE
 };
 
 // enemyの行動
-enum class ENEMY_BEHAVIOR
+enum class ENEM_ACT
 {
 	DO_NOTHING,	// 何もしない
 	MOVE,				// 移動
@@ -50,9 +50,9 @@ struct EnemyData
 };
 
 constexpr auto ENEMY_SPEED = 3;
-constexpr auto ENEMY__DASH_SPEED = 6;
+constexpr auto ENEMY_DASH_SPEED = 6;
 
-using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEMY_BEHAVIOR::MAX)>;
+using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
 using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
 
 class Enemy :
@@ -76,8 +76,9 @@ private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 
 	ENEMY_STATE state;							// 状態
-	ENEMY_BEHAVIOR nowBehavior;		// 現在の行動
+	// ENEMY_BEHAVIOR nowBehavior;		// 現在の行動
 	EnemyData data;								// 敵の情報
+	ENEM_ACT action;								// 敵の行動
 
 	int faintCnt;				// 怯みｶｳﾝﾄ
 	int timeCnt;				// 経過時間のｶｳﾝﾄ
