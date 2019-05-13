@@ -17,7 +17,6 @@ enum class ENEMY
 enum class ENEMY_STATE
 {
 	NORMAL,		// í èÌ
-	FOUND,			// î≠å©
 	TRA,				// í«ê’
 	RETREAT,		// ãØÇ›
 	DEATH,			// éÄñS

@@ -164,7 +164,8 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 
-	if (!(timeCnt % 10))
+	int num = GetRand(10) + 5;
+	if (!(timeCnt % num))
 	{
 		switch (GetRand(4))
 		{
@@ -189,6 +190,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		default:
 			break;
 		}
+		timeCnt = 0;
 	}
 	if (!(action == ENEM_ACT::DO_NOTHING))
 	{

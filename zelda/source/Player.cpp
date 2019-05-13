@@ -140,7 +140,7 @@ bool Player::initAnim(void)
 {
 	AddAnim("’âŽ~", 0, 0, 1, 6, true);
 	AddAnim("ˆÚ“®", 0, 1, 6, 2, true);
-	AddAnim("Ž¾‘–", 4, 1, 6, 1, true);
+	AddAnim("Ž¾‘–", 4, 1, 6, 5, true);
 	AddAnim("Ž€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®Ý‚ðÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
