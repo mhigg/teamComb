@@ -279,7 +279,42 @@ void Player::GetItem(void)
 		case MAP_ID::POTION_4:
 			paramUP(NotFlag, num);
 			break;
-
+		case MAP_ID::COIN_1:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::COIN_2:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::COIN_3:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::COIN_4:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::KEY_1:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::KEY_2:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::MEAT:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::SWORD:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::SHIELD:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::BOOK:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::GOLD:
+			paramUP(NotFlag, num);
+			break;
+		case MAP_ID::DIA:
+			paramUP(NotFlag, num);
+			break;
 	default:
 		break;
 	}
