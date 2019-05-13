@@ -111,7 +111,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	this->plNum = plNum;
 
-	Init("image/playerAll.png", VECTOR2(80, 120), VECTOR2(8, 7), setUpPos);
+	Init("image/playerAll.png", VECTOR2(640 / 8, 840 / 7), VECTOR2(8, 7), setUpPos);
 	startPos = pos;
 	initAnim();
 
