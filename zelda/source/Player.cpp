@@ -8,7 +8,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 {
 	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
-	life = 5;
+	life = PL_LIFE_MAX;
 
 	keyIdTbl = { XINPUT_DOWN,	// â∫
 				 XINPUT_LEFT,	// ç∂
@@ -140,7 +140,7 @@ bool Player::initAnim(void)
 {
 	AddAnim("í‚é~", 0, 0, 1, 6, true);
 	AddAnim("à⁄ìÆ", 0, 1, 6, 2, true);
-	AddAnim("éæëñ", 4, 1, 6, 5, true);
+	AddAnim("éæëñ", 4, 1, 6, 1, true);
 	AddAnim("éÄñS", 4, 0, 4, 8, false);	// falseÇ≈±∆“∞ºÆ›ÇŸ∞ÃﬂÇ≥ÇπÇ»Ç¢
 	return true;
 }
@@ -156,12 +156,12 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	// Ãﬂ⁄≤‘∞ÇÃ¿ﬁ“∞ºﬁéÛÇØ(√ﬁ ﬁØ∏óp)
 	if (controller.GetCtrl(KEY_TYPE_NOW)[KEY_INPUT_F] & (~controller.GetCtrl(KEY_TYPE_OLD)[KEY_INPUT_F]))
 	{
-		life -= 1;
+		life--;
 	}
 	if (DeathPrc())
 	{
 		pos = startPos;		// ÿΩŒﬂ∞›èàóù
-		life = 5;
+		life = PL_LIFE_MAX;
 	}
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {

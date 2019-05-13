@@ -13,9 +13,9 @@ enum PL_NUMBER {
 	PL_MAX
 };
 
-constexpr int PL_DEF_SPEED = 5;
-constexpr int PL_DASH_SPEED = 10;
-
+constexpr int PL_DEF_SPEED = 7;
+constexpr int PL_DASH_SPEED = 15;
+constexpr int PL_LIFE_MAX = 5;
 
 
 class Player :
