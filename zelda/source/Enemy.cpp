@@ -121,7 +121,7 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	};
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
-	Init(fileName, VECTOR2(60, 60), VECTOR2(1, 2), setUpPos);
+	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 2), setUpPos);
 
 	// ｶｳﾝﾄ系
 	timeCnt = 0;
@@ -196,7 +196,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (!(action == ENEM_ACT::DO_NOTHING))
 	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[0][0]], IN_SIDE), MAP_ID::NONE))])
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
 		{
 			// 移動不可のオブジェクトが隣にあった場合
 			Enemy::dir = dir;
@@ -205,7 +205,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		}
 		// 移動処理-----------------------------
 		// 変更したい座標の変数アドレス += 移動量
-		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[0][0]];
+		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
 		SetAnim("索敵");
 		return;
 	}
