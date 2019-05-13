@@ -67,6 +67,14 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 					false,	// WALL26
 					false,	// WALL27
 					false,	// WALL28
+					false,	// WALL29
+					false,	// WALL30
+					false,  // WALL31
+					false,  // WALL32
+					false,  // WALL33
+					false,  // WALL34
+					false,  // WALL35
+					false,  // WALL36
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
@@ -145,40 +153,34 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 
-	auto Move = [&, dir = Enemy::dir](DIR_TBL_ID id){
-		if (inputTbl[static_cast<int>(data.name)][keyIdTbl[DirTbl[dir][id]]])
-		{
-			Enemy::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
-
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
-			{
-				Enemy::dir = DirTbl[dir][id];
-				// 移動不可のオブジェクトが隣にあった場合
-				return false;
-			}
-
-			// 移動処理-----------------------------
-			// 変更したい座標の変数アドレス += 移動量
-			(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]];
-			//			scrollOffset += 
-			return true;
+	auto Move = [&](DIR dir){
+		Enemy::dir = dir;		// 方向のｾｯﾄ
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir,SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
+		{		
+			// 移動不可のオブジェクトが隣にあった場合
+			Enemy::dir = dir;
+			return false;
 		}
-		return false;
+		// 移動処理-----------------------------
+		// 変更したい座標の変数アドレス += 移動量
+		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]];
+		return true;
 	};
-	switch (GetRand(5))
+	switch (GetRand(4))
 	{
 	case 0:
+		Move(DIR_DOWN);
 		break;
 	case 1:
-		pos.x -= speed;
+		Move(DIR_LEFT);
 		break;
 	case 2:
-		pos.y += speed;
+		Move(DIR_RIGHT);
 		break;
-	case 3:pos.y -= speed;
+	case 3:
+		Move(DIR_UP);
 		break;
 	case 4:
-	case 5:
 	default:
 		break;
 	}
