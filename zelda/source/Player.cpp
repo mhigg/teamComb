@@ -242,32 +242,32 @@ bool Player::DeathPrc(void)
 
 void Player::GetItem(void)
 {
-	//auto ItemID = [=] {
-	//	auto id = lpMapCtrl.GetMapData(pos, MAP_ID::WALL19);
-	//	return (id == MAP_ID::MEAT ? static_cast<MAP_ID>(ITEM_ID_START /*+ GetRand(ITEM_MAX - 1))*/ ): id);
-	//};
+	auto ItemID = [=] {
+		auto id = lpMapCtrl.GetMapData(pos, MAP_ID::WALL19);
+		return (id == MAP_ID::MEAT ? static_cast<MAP_ID>(ITEM_ID_START): id);
+	};
 
-	//auto paramUP = [=](auto& paramFlag, auto limNum) {
-	//	paramFlag += (paramFlag < limNum);
-	//	lpMapCtrl.SetMapData(pos, MAP_ID::NONE);
-	//};
+	auto paramUP = [=](auto& paramFlag, auto limNum) {
+		paramFlag += (paramFlag < limNum);
+		lpMapCtrl.SetMapData(pos, MAP_ID::NONE);
+	};
 
-	//switch (ItemID())
-	//{
-	//	case MAP_ID::POTION_1:
-	//		paramUP(NotFlag, 1);
-	//		break;
-	//	case MAP_ID::POTION_2:
-	//		paramUP(NotFlag, 1);
-	//		break;
-	//	case MAP_ID::POTION_3:
-	//		paramUP(NotFlag, 1);
-	//		break;
-	//	case MAP_ID::POTION_4:
-	//		paramUP(NotFlag, 1);
-	//		break;
+	switch (ItemID())
+	{
+		case MAP_ID::POTION_1:
+			paramUP(NotFlag, 1);
+			break;
+		case MAP_ID::POTION_2:
+			paramUP(NotFlag, 1);
+			break;
+		case MAP_ID::POTION_3:
+			paramUP(NotFlag, 1);
+			break;
+		case MAP_ID::POTION_4:
+			paramUP(NotFlag, 1);
+			break;
 
-	//default:
-	//	break;
-	//}
+	default:
+		break;
+	}
 }

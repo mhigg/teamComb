@@ -84,6 +84,6 @@ enum class MAP_ID
 };
 
 #define ITEM_ID_START MAP_ID::POTION_1
-#define ITEM_MAX (static_cast<int>(MAP_ID::MAX) - static_cast<int>(ITEM_ID_START))
+#define ITEM_MAX (static_cast<int>(MAP_ID::BOX_1) - static_cast<int>(ITEM_ID_START))
 
 MAP_ID operator++(MAP_ID id);
