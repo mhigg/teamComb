@@ -11,7 +11,7 @@ Enemy::Enemy()
 Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 {
 	speed = ENEMY_SPEED;
-	keyIdTbl = { 
+	keyIdTbl = {
 		XINPUT_DOWN,		// 下
 		XINPUT_LEFT,		// 左
 		XINPUT_RIGHT,		// 右
@@ -23,17 +23,17 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 		&pos.x,&pos.y,	// 右
 		&pos.y,&pos.x	// 上
 	};
-	SpeedTbl = { 
+	SpeedTbl = {
 		//		通常						ﾀﾞｯｼｭ
-		ENEMY_SPEED	,  ENEMY__DASH_SPEED,		// 下
-		-ENEMY_SPEED	, -ENEMY__DASH_SPEED,		// 左
-		 ENEMY_SPEED	,  ENEMY__DASH_SPEED,		// 右
-		-ENEMY_SPEED	, -ENEMY__DASH_SPEED		// 上
-	};	
-	DirTbl = { 
+		ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// 下
+		-ENEMY_SPEED	, -ENEMY_DASH_SPEED,		// 左
+		 ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// 右
+		-ENEMY_SPEED	, -ENEMY_DASH_SPEED		// 上
+	};
+	DirTbl = {
 		//	MAIN				REV				OPP1				 OPP2
 		DIR_DOWN	,DIR_UP		,DIR_LEFT		,DIR_RIGHT,		// 下(REV:上)(左・右)
-	    DIR_LEFT		,DIR_RIGHT	,DIR_DOWN	,DIR_UP,			// 左(REV:右)(上・下)
+		DIR_LEFT		,DIR_RIGHT	,DIR_DOWN	,DIR_UP,			// 左(REV:右)(上・下)
 		DIR_RIGHT	,DIR_LEFT		,DIR_DOWN	,DIR_UP,			// 右(REV:左)(上・下)
 		DIR_UP			,DIR_DOWN	,DIR_LEFT		,DIR_RIGHT		// 上(REV:下)(左・右)
 	};
@@ -75,6 +75,9 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 					false,  // WALL34
 					false,  // WALL35
 					false,  // WALL36
+					false,	// WALL37	
+					false,	// WALL38	
+					true,	// WALL39	
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
@@ -114,7 +117,7 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 					false,	// STONE_1	// 岩
 					false,	// STONE_2
 					false,	// STONE_3
-					false,	// STONE_4				
+					false,	// STONE_4					
 	};
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
@@ -125,6 +128,8 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	behaviorCnt = 0;
 	faintCnt = 0;
 	oppFlag = false;
+
+	action = ENEM_ACT::DO_NOTHING;
 }
 
 Enemy::~Enemy()
@@ -164,25 +169,28 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		switch (GetRand(4))
 		{
 		case 0:
-			Enemy::dir = (DIR_DOWN);
+			Enemy::dir = DIR_DOWN;
+			action = ENEM_ACT::MOVE;
 			break;
 		case 1:
-			Enemy::dir = (DIR_LEFT);
+			Enemy::dir = DIR_LEFT;
+			action = ENEM_ACT::MOVE;
 			break;
 		case 2:
-			Enemy::dir = (DIR_RIGHT);
+			Enemy::dir = DIR_RIGHT;
+			action = ENEM_ACT::MOVE;
 			break;
 		case 3:
-			Enemy::dir = (DIR_UP);
+			Enemy::dir = DIR_UP;
+			action = ENEM_ACT::MOVE;
 			break;
 		case 4:
-
+			action = ENEM_ACT::DO_NOTHING;
 		default:
 			break;
 		}
 	}
-
-	if (!(timeCnt % 2))
+	if (!(action == ENEM_ACT::DO_NOTHING))
 	{
 		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
 		{

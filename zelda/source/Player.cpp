@@ -56,8 +56,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL17
 					false,	// WALL18
 					false,	// WALL19	// GetMapData‚ÌŒÅ’èID
-					true,	// WALL20
-					true,	// WALL21				‚Æ‚¨‚é
+					false,	// WALL20
+					false,	// WALL21				
 					false,	// WALL22
 					false,	// WALL23
 					false,	// WALL24
