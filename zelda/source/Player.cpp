@@ -254,19 +254,21 @@ void Player::GetItem(void)
 		lpMapCtrl.SetMapData(pos, MAP_ID::NONE);
 	};
 
+	unsigned int num = 1;
+
 	switch (ItemID())
 	{
 		case MAP_ID::POTION_1:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 		case MAP_ID::POTION_2:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 		case MAP_ID::POTION_3:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 		case MAP_ID::POTION_4:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 
 	default:

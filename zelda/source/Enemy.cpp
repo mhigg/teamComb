@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <DxLib.h>
 #include "Enemy.h"
+#include "StageMng.h"
 #include "GameCtrl.h"
 
 Enemy::Enemy()
@@ -119,13 +120,54 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
-	auto Move = [&](int num) {
-
+	auto &chipSize = lpStageMng.GetChipSize().x;
+	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
+		VECTOR2 side;
+		switch (dir)
+		{
+		case DIR_DOWN:
+			side = { 0,(chipSize - sideFlag) + speed };
+			break;
+		case DIR_LEFT:
+			side = { speed - (sideFlag ^ 1),0 };
+			break;
+		case DIR_RIGHT:
+			side = { (chipSize - sideFlag) + speed,0 };
+			break;
+		case DIR_UP:
+			side = { 0,speed - (sideFlag ^ 1) };
+			break;
+		default:
+			break;
+		}
+		return pos + side;
 	};
-	switch (GetRand(6))
+
+	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+
+	auto Move = [&, dir = Enemy::dir](DIR_TBL_ID id){
+		if (inputTbl[static_cast<int>(data.name)][keyIdTbl[DirTbl[dir][id]]])
+		{
+			Enemy::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
+
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
+			{
+				Enemy::dir = DirTbl[dir][id];
+				// 移動不可のオブジェクトが隣にあった場合
+				return false;
+			}
+
+			// 移動処理-----------------------------
+			// 変更したい座標の変数アドレス += 移動量
+			(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]];
+			//			scrollOffset += 
+			return true;
+		}
+		return false;
+	};
+	switch (GetRand(5))
 	{
 	case 0:
-		pos.x += speed;
 		break;
 	case 1:
 		pos.x -= speed;
