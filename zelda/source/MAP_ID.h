@@ -34,9 +34,16 @@ enum class MAP_ID
 	WALL27,
 	WALL28,
 	WALL29,	
-	WALL30,
-	WALL31,	// –³
-	DOOR1,			// ”à
+	WALL30,	
+	WALL31,
+	WALL32,
+	WALL33,
+	WALL34,
+	WALL35,
+	WALL36,
+	WALL37,		// –³
+	WALL38,		// –³
+	WALL39,		// –³	DOOR1,			// ”à
 	DOOR2,
 	DOOR3,
 	DOOR4,
