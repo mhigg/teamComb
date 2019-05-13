@@ -146,26 +146,20 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 
 	auto Move = [&, dir = Enemy::dir](DIR_TBL_ID id){
-		if (inputTbl[static_cast<int>(data.name)][keyIdTbl[DirTbl[dir][id]]])
+		Enemy::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
 		{
-			Enemy::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
-
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
-			{
-				Enemy::dir = DirTbl[dir][id];
-				// 移動不可のオブジェクトが隣にあった場合
-				return false;
-			}
-
-			// 移動処理-----------------------------
-			// 変更したい座標の変数アドレス += 移動量
-			(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]];
-			//			scrollOffset += 
-			return true;
+			Enemy::dir = DirTbl[dir][id];
+			// 移動不可のオブジェクトが隣にあった場合
+			return false;
 		}
-		return false;
+		// 移動処理-----------------------------
+		// 変更したい座標の変数アドレス += 移動量
+		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]];
+		//			scrollOffset += 
+		return true;
 	};
-	switch (GetRand(5))
+	switch (GetRand(4))
 	{
 	case 0:
 		break;
@@ -178,7 +172,6 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	case 3:pos.y -= speed;
 		break;
 	case 4:
-	case 5:
 	default:
 		break;
 	}
