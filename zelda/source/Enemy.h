@@ -49,7 +49,8 @@ struct EnemyData
 	ENEMY		name;
 };
 
-constexpr auto ENEMY_SPEED = 5;
+constexpr auto ENEMY_SPEED = 3;
+constexpr auto ENEMY__DASH_SPEED = 6;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEMY_BEHAVIOR::MAX)>;
 using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
@@ -90,6 +91,7 @@ private:
 	DIR_TBL_A2D SpeedTbl;			// ˆÚ“®‘¬“x
 	DIR_TBL_DIR DirTbl;					// ˆÚ“®§Œä
 	MAP_MOVE_TBL mapMoveTbl;	// ˆÚ“®§Œä,ˆÚ“®‰Â”\µÌŞ¼Şª¸Ä‚È‚çtrue‚ğ•Ô‚·©±²ÃÑ‚âáŠQ•¨‚ğ’Ç‰Á‚µ‚½‚Æ‚«‚Ég‚¤
+
 protected:
 	bool deathFlag;			// €–SÌ×¸Ş
 };

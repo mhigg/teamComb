@@ -5,14 +5,6 @@
 #include "MapCtrl.h"
 #include "GameCtrl.h"
 
-
-
-enum SIDE_CHECK {
-	OUT_SIDE,	// 0
-	IN_SIDE,	// 1
-	SIDE_MAX
-};
-
 enum PL_NUMBER {
 	PL_1,
 	PL_2,
@@ -47,10 +39,10 @@ private:
 	unsigned int NotFlag;
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
-	DIR_TBL_ARY keyIdTbl;		// 移動方向
-	DIR_TBL_PTR PosTbl;			// ﾎﾟｲﾝﾀを直接格納
-	DIR_TBL_A2D SpeedTbl;		// 移動速度
-	DIR_TBL_DIR DirTbl;			// 移動制御
+	DIR_TBL_ARY keyIdTbl;				// 移動方向
+	DIR_TBL_PTR PosTbl;					// ﾎﾟｲﾝﾀを直接格納
+	DIR_TBL_A2D SpeedTbl;			// 移動速度
+	DIR_TBL_DIR DirTbl;					// 移動制御
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
 
 	bool afterKeyFlag;			// keyの後入力を優先させるﾌﾗｸﾞ
