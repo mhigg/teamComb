@@ -241,6 +241,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::WALL26:
 			case MAP_ID::WALL27:
 			case MAP_ID::WALL28:
+			case MAP_ID::WALL29:
+			case MAP_ID::WALL30:
 			case MAP_ID::DOOR1:
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
@@ -339,6 +341,8 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::WALL26:
 			case MAP_ID::WALL27:
 			case MAP_ID::WALL28:
+			case MAP_ID::WALL29:
+			case MAP_ID::WALL30:
 			case MAP_ID::DOOR1:
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
