@@ -43,6 +43,12 @@ enum DIR_TBL_ID {
 	DIR_TBL_MAX
 };
 
+enum SIDE_CHECK {
+	OUT_SIDE,	// 0
+	IN_SIDE,	// 1
+	SIDE_MAX
+};
+
 class GameCtrl;
 
 using DIR_TBL_ARY = std::array<int, DIR_MAX>;

@@ -5,14 +5,6 @@
 #include "MapCtrl.h"
 #include "GameCtrl.h"
 
-
-
-enum SIDE_CHECK {
-	OUT_SIDE,	// 0
-	IN_SIDE,	// 1
-	SIDE_MAX
-};
-
 enum PL_NUMBER {
 	PL_1,
 	PL_2,
