@@ -121,7 +121,7 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	};
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
-	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
+	Init(fileName, VECTOR2(60, 60), VECTOR2(1, 2), setUpPos);
 
 	// ｶｳﾝﾄ系
 	timeCnt = 0;
@@ -130,6 +130,8 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	oppFlag = false;
 
 	action = ENEM_ACT::DO_NOTHING;
+
+	initAnim();
 }
 
 Enemy::~Enemy()
@@ -194,17 +196,27 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (!(action == ENEM_ACT::DO_NOTHING))
 	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[0][0]], IN_SIDE), MAP_ID::NONE))])
 		{
 			// 移動不可のオブジェクトが隣にあった場合
 			Enemy::dir = dir;
+			SetAnim("休憩");
 			return;
 		}
 		// 移動処理-----------------------------
 		// 変更したい座標の変数アドレス += 移動量
-		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]];
+		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[0][0]];
+		SetAnim("索敵");
 		return;
 	}
+	SetAnim("休憩");
+}
+
+bool Enemy::initAnim(void)
+{
+	AddAnim("休憩", 0, 0, 2, 10, true);
+	AddAnim("	索敵", 0, 0, 1, 0, true);
+	return true;
 }
 
 bool Enemy::CheckDeath(void)

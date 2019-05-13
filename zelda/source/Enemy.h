@@ -73,6 +73,7 @@ public:
 	void SetDeathFlag(bool deathFlag);
 private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
+	bool initAnim(void);
 
 	ENEMY_STATE state;							// èÛë‘
 	// ENEMY_BEHAVIOR nowBehavior;		// åªç›ÇÃçsìÆ
