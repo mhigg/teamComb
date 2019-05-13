@@ -67,6 +67,14 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 					false,	// WALL26
 					false,	// WALL27
 					false,	// WALL28
+					false,	// WALL29
+					false,	// WALL30
+					false,  // WALL31
+					false,  // WALL32
+					false,  // WALL33
+					false,  // WALL34
+					false,  // WALL35
+					false,  // WALL36
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
@@ -108,10 +116,15 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 					false,	// STONE_3
 					false,	// STONE_4				
 	};
-	Enemy::dir = DIR::DIR_DOWN;
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
 	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
+
+	// ｶｳﾝﾄ系
+	timeCnt = 0;
+	behaviorCnt = 0;
+	faintCnt = 0;
+	oppFlag = false;
 }
 
 Enemy::~Enemy()
@@ -120,6 +133,7 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	timeCnt++;
 	auto &chipSize = lpStageMng.GetChipSize().x;
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
@@ -145,42 +159,41 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 
-	auto Move = [&, dir = Enemy::dir](DIR_TBL_ID id){
-		if (inputTbl[static_cast<int>(data.name)][keyIdTbl[DirTbl[dir][id]]])
-		{
-			Enemy::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
-
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
-			{
-				Enemy::dir = DirTbl[dir][id];
-				// 移動不可のオブジェクトが隣にあった場合
-				return false;
-			}
-
-			// 移動処理-----------------------------
-			// 変更したい座標の変数アドレス += 移動量
-			(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[static_cast<int>(data.name)][XINPUT_RUN_RB]];
-			//			scrollOffset += 
-			return true;
-		}
-		return false;
-	};
-	switch (GetRand(5))
+	if (!(timeCnt % 10))
 	{
-	case 0:
-		break;
-	case 1:
-		pos.x -= speed;
-		break;
-	case 2:
-		pos.y += speed;
-		break;
-	case 3:pos.y -= speed;
-		break;
-	case 4:
-	case 5:
-	default:
-		break;
+		switch (GetRand(4))
+		{
+		case 0:
+			Enemy::dir = (DIR_DOWN);
+			break;
+		case 1:
+			Enemy::dir = (DIR_LEFT);
+			break;
+		case 2:
+			Enemy::dir = (DIR_RIGHT);
+			break;
+		case 3:
+			Enemy::dir = (DIR_UP);
+			break;
+		case 4:
+
+		default:
+			break;
+		}
+	}
+
+	if (!(timeCnt % 2))
+	{
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]], IN_SIDE), MAP_ID::NONE))])
+		{
+			// 移動不可のオブジェクトが隣にあった場合
+			Enemy::dir = dir;
+			return;
+		}
+		// 移動処理-----------------------------
+		// 変更したい座標の変数アドレス += 移動量
+		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]];
+		return;
 	}
 }
 
