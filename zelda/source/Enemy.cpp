@@ -58,8 +58,8 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 					false,	// WALL17
 					false,	// WALL18
 					false,	// WALL19	// GetMapData‚ÌŒÅ’èID
-					true,	// WALL20
-					true,	// WALL21				‚Æ‚¨‚é
+					false,	// WALL20
+					false,	// WALL21				
 					false,	// WALL22
 					false,	// WALL23
 					false,	// WALL24
