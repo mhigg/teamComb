@@ -41,9 +41,9 @@ enum class MAP_ID
 	WALL34,
 	WALL35,
 	WALL36,
-	WALL37,		// ñ≥
-	WALL38,		// ñ≥
-	WALL39,		// ñ≥
+	WALL37,		
+	WALL38,		
+	WALL39,			// è∞
 	DOOR1,			// î‡
 	DOOR2,
 	DOOR3,
