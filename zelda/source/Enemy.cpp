@@ -120,6 +120,12 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
 	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 1), setUpPos);
+
+	// ¶³ÝÄŒn
+	timeCnt = 0;
+	behaviorCnt = 0;
+	faintCnt = 0;
+	oppFlag = false;
 }
 
 Enemy::~Enemy()
@@ -128,6 +134,7 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	timeCnt++;
 	auto &chipSize = lpStageMng.GetChipSize().x;
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
@@ -166,7 +173,8 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][inputTbl[0][XINPUT_RUN_RB]];
 		return true;
 	};
-	switch (GetRand(4))
+	
+	switch (GetRand(3))
 	{
 	case 0:
 		Move(DIR_DOWN);
@@ -180,7 +188,6 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	case 3:
 		Move(DIR_UP);
 		break;
-	case 4:
 	default:
 		break;
 	}
