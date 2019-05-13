@@ -33,8 +33,8 @@ enum class MAP_ID
 	WALL26,
 	WALL27,
 	WALL28,
-	WALL29,	// –³
-	WALL30,	// –³
+	WALL29,	
+	WALL30,
 	WALL31,	// –³
 	DOOR1,			// ”à
 	DOOR2,
@@ -84,6 +84,6 @@ enum class MAP_ID
 };
 
 #define ITEM_ID_START MAP_ID::POTION_1
-#define ITEM_MAX (static_cast<int>(MAP_ID::BOX_1) - static_cast<int>(ITEM_ID_START))
+#define ITEM_MAX (static_cast<int>(MAP_ID::MAX) - static_cast<int>(ITEM_ID_START))
 
 MAP_ID operator++(MAP_ID id);

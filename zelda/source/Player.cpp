@@ -67,6 +67,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL28
 					false,	// WALL29
 					false,	// WALL30
+					false,	// WALL31	// åªèÛâΩÇ‡Ç»Ç¢
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
@@ -246,7 +247,7 @@ void Player::GetItem(void)
 {
 	auto ItemID = [=] {
 		auto id = lpMapCtrl.GetMapData(pos, MAP_ID::WALL19);
-		return (id == MAP_ID::MEAT ? static_cast<MAP_ID>(ITEM_ID_START): id);
+		return (id == MAP_ID::MAX ? static_cast<MAP_ID>(ITEM_ID_START): id);
 	};
 
 	auto paramUP = [=](auto& paramFlag, auto limNum) {
