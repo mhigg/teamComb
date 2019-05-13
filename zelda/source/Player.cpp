@@ -67,6 +67,12 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL28
 					false,	// WALL29
 					false,	// WALL30
+					false,  // WALL31
+					false,  // WALL32
+					false,  // WALL33
+					false,  // WALL34
+					false,  // WALL35
+					false,  // WALL36
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
