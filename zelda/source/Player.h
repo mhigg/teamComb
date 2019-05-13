@@ -33,7 +33,6 @@ private:
 	void GetItem(void);				// ±²ÃÑŽæ“¾
 
 	int speed;
-	DIR dir;
 	int life;
 	VECTOR2 startPos;				// ½À°Ä’n“_(Ø½Îß°Ý—p)
 	unsigned int NotFlag;
