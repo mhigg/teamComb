@@ -44,8 +44,8 @@ enum DIR_TBL_ID {
 };
 
 enum SIDE_CHECK {
-	OUT_SIDE,	// 0
-	IN_SIDE,	// 1
+	OUT_SIDE,		// 0
+	IN_SIDE,			// 1
 	SIDE_MAX
 };
 

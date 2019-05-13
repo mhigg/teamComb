@@ -117,7 +117,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	this->plNum = plNum;
 
-	Init("image/playerRun.png", VECTOR2(80, 120), VECTOR2(4, 7), setUpPos);
+	Init("image/playerAll.png", VECTOR2(640 / 8, 840 / 7), VECTOR2(8, 7), setUpPos);
 	startPos = pos;
 	initAnim();
 
@@ -137,7 +137,7 @@ bool Player::initAnim(void)
 {
 	AddAnim("’âŽ~", 0, 0, 1, 6, true);
 	AddAnim("ˆÚ“®", 0, 1, 6, 2, true);
-	AddAnim("Ž¾‘–", 0, 1, 6, 1, true);
+	AddAnim("Ž¾‘–", 4, 1, 6, 1, true);
 	AddAnim("Ž€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®Ý‚ðÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
@@ -260,19 +260,21 @@ void Player::GetItem(void)
 		lpMapCtrl.SetMapData(pos, MAP_ID::NONE);
 	};
 
+	unsigned int num = 1;
+
 	switch (ItemID())
 	{
 		case MAP_ID::POTION_1:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 		case MAP_ID::POTION_2:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 		case MAP_ID::POTION_3:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 		case MAP_ID::POTION_4:
-			paramUP(NotFlag, 1);
+			paramUP(NotFlag, num);
 			break;
 
 	default:
