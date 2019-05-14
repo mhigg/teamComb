@@ -221,8 +221,8 @@ bool Enemy::initAnim(void)
 {
 	//AddAnim("‹xŒe", 2, 0, 4, 10, true);
 	//AddAnim("	õ“G", 2, 0, 1, 0, true);
-	AddAnim("‹xŒe", 0, 0, 3, 4, true);
-	AddAnim("	õ“G", 1, 0, 3, 4, true);
+	AddAnim("‹xŒe", 0, 0, 3, 10, true);
+	AddAnim("	õ“G", 1, 0, 3, 10, true);
 	return true;
 }
 
