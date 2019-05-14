@@ -58,7 +58,7 @@ int MenuScene::Init(void)
 		VECTOR2(0,160),
 		VECTOR2(0,280),
 	};
-	moveFlag = { 
+	moveFlag = {
 		true,false,false
 	};
 	count = 0;
