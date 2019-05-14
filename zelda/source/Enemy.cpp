@@ -201,7 +201,6 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			// 移動不可のオブジェクトが隣にあった場合
 			Enemy::dir = dir;
-		
 			return;
 		}
 		// 移動処理-----------------------------
