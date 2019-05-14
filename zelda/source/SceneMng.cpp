@@ -23,6 +23,7 @@ void SceneMng::Run(void)
 	{
 		gameCtrl->UpDate();
 		activeScene = activeScene->UpDate(std::move(activeScene), (*gameCtrl));
+		framCnt++;
 	}
 }
 
@@ -34,6 +35,11 @@ VECTOR2 SceneMng::GetDrawOffset(void)
 void SceneMng::SetDrawOffset(VECTOR2 drawOffset)
 {
 	this->drawOffset = drawOffset;
+}
+
+int SceneMng::GetFram(void)
+{
+	return framCnt;
 }
 
 SceneMng::~SceneMng()

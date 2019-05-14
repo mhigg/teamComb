@@ -19,15 +19,15 @@ struct DataHeader
 	char sum;			// ª—íl
 };
 
-#define ZELDA_VER_ID 0x01						// Ãß≤Ÿ ﬁ∞ºﬁÆ›î‘çÜ
+#define ZELDA_VER_ID 0x02						// Ãß≤Ÿ ﬁ∞ºﬁÆ›î‘çÜ
 #define ZELDA_FILE_ID "ZELDA_MAP_DATA"			// Ãß≤ŸÇÃIDèÓïÒ	
 
 
 MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
-	stageSize = lpStageMng.GetStageSize();
 	chipSize = lpStageMng.GetChipSize();
+	stageSize = lpStageMng.GetStageSize() / chipSize;
 	drawOffset = lpSceneMng.GetDrawOffset();
 }
 
@@ -52,6 +52,8 @@ struct CheckSize
 
 bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 {
+	lpImageMng.GetID("image/mapImage.png", VECTOR2(40, 40), VECTOR2(8, 10));
+
 	MapCtrl::chipSize = chipSize;
 	MapCtrl::drawOffset = drawOffset;
 
@@ -181,9 +183,9 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 
 	int playerNum = GetJoypadNum();		// ê⁄ë±ÇµÇƒÇÈÃﬂ⁄≤‘∞ÇÃêî
 	int plCnt = 0;	// ≤›Ω¿›ΩÇµÇΩÃﬂ⁄≤‘∞ÇÃêî
-	for (int y = 0; y < stageSize.y / chipSize.y; y++)
+	for (int y = 0; y < stageSize.y; y++)
 	{
-		for (int x = 0; x < stageSize.x / chipSize.x; x++)
+		for (int x = 0; x < stageSize.x; x++)
 		{
 			MAP_ID id = mapData[y][x];
 
@@ -200,7 +202,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				{
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
-						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(-10, -10)));
+						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(-20, -90)));
 					plCnt++;
 				}
 				break;
