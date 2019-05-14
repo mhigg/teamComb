@@ -213,7 +213,9 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 
 bool Enemy::initAnim(void)
 {
-	AddAnim("ãxåe", 0, 0, 2, 10, true);
+	//AddAnim("ãxåe", 2, 0, 4, 10, true);
+	//AddAnim("	çıìG", 2, 0, 1, 0, true);
+	AddAnim("ãxåe", 0, 0, 4, 10, true);
 	AddAnim("	çıìG", 0, 0, 1, 0, true);
 	return true;
 }

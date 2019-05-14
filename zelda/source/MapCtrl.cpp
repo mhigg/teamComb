@@ -200,7 +200,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				{
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
-						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(-20, -90)));
+						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(-10, -10)));
 					plCnt++;
 				}
 				break;
@@ -210,7 +210,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					// ´ÈÐ°‚Ì²Ý½ÀÝ½
 				/* Ã½Ä*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
-						("image/enemy.png", VECTOR2(80, 80), VECTOR2(4, 4),1, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset));
+						("image/enemy.png", VECTOR2(60, 80), VECTOR2(4, 4),1, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset));
 				}
 				break;
 			case MAP_ID::WALL1:
