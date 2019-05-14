@@ -73,6 +73,17 @@ void GameScene::Draw(void)
 
 	lpMapCtrl.Draw(false);
 
+// objList‚©‚ç‰æ–ÊŠO‚ÌµÌÞ¼Þª¸Ä‚ðœŠO‚·‚é
+	//auto tmpList = (*objList);
+	//tmpList.remove_if([&](sharedObj &tmp) {
+	//	if (tmp->GetPos().x < plPos.x - CHIP_SIZE * 21
+	//	 || tmp->GetPos().x > plPos.x + CHIP_SIZE * 21)
+	//	{
+	//		return true;
+	//	}
+	//	return false;
+	//});
+
 	for (auto& obj : (*objList))
 	{
 		obj->Draw();
@@ -100,6 +111,8 @@ void GameScene::Draw(void)
 	DrawBox(640, 0, 800 , 300, GetColor(255,255,0),true);
 	
 	DrawString(0, 800, "GameScene", 0x00ff0000);
+
+	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
 
 	ScreenFlip();
 }

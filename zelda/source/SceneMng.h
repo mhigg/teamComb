@@ -21,6 +21,7 @@ public:
 	void Run(void);
 	VECTOR2 GetDrawOffset(void);
 	void SetDrawOffset(VECTOR2 drawOffset);
+	int GetFram(void);
 
 private:
 	SceneMng();
@@ -28,6 +29,7 @@ private:
 	bool Init(void);
 
 	VECTOR2 drawOffset;
+	int framCnt;
 
 	uniqueBase activeScene;
 	std::unique_ptr<GameCtrl> gameCtrl;

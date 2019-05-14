@@ -13,8 +13,8 @@ enum PL_NUMBER {
 	PL_MAX
 };
 
-constexpr int PL_DEF_SPEED = 7;
-constexpr int PL_DASH_SPEED = 15;
+constexpr int PL_DEF_SPEED = 2;
+constexpr int PL_DASH_SPEED = 4;
 constexpr int PL_LIFE_MAX = 5;
 
 

@@ -16,6 +16,7 @@ EditCursor::EditCursor()
 	id = MAP_ID::NONE;
 	inputFlam = EDIT_KEY_GET_DEF_RNG;
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
+	scrollOffset = { 0,0 };
 
 	dirTable = { KEY_INPUT_NUMPAD2, KEY_INPUT_NUMPAD4, KEY_INPUT_NUMPAD6, KEY_INPUT_NUMPAD8 };
 	speedTable = { MOVE_SPEED, -MOVE_SPEED, MOVE_SPEED, -MOVE_SPEED };
@@ -26,6 +27,7 @@ EditCursor::EditCursor(VECTOR2 drawOffset) :Obj(drawOffset)
 	id = MAP_ID::NONE;
 	inputFlam = EDIT_KEY_GET_DEF_RNG;
 	keyGetRng = EDIT_KEY_GET_DEF_RNG;
+	scrollOffset = { 0,0 };
 
 	dirTable = { KEY_INPUT_NUMPAD2, KEY_INPUT_NUMPAD4, KEY_INPUT_NUMPAD6, KEY_INPUT_NUMPAD8 };
 	speedTable = { MOVE_SPEED, -MOVE_SPEED, MOVE_SPEED, -MOVE_SPEED };
@@ -77,7 +79,6 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 			{
 				// 1âÒâüÇµÇΩ
 				// Ç±Ç±Ç…óàÇÈÇΩÇ—Ç…æﬁ€∏ÿ±Ç∆äÓíÍêîÇÃîºå∏
-
 				pos = tmpPos;
 				inputFlam = 0;
 				keyGetRng /= 2;
