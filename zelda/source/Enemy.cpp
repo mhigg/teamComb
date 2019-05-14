@@ -121,7 +121,7 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 	};
 	this->objType = OBJ_ENEMY;
 	data.name = static_cast<ENEMY>(Enum);
-	Init(fileName, VECTOR2(40, 40), VECTOR2(1, 2), setUpPos);
+	Init(fileName, divSize, divCnt, setUpPos);
 
 	// ¶³ÝÄŒn
 	timeCnt = 0;
