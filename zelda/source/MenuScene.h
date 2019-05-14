@@ -3,8 +3,8 @@
 #include <array>
 
 constexpr auto MENU_NUM		= 3;
-constexpr auto BOX_SIZE_X	= 320;
-constexpr auto BOX_SIZE_Y	= 70;
+constexpr auto BOX_SIZE_X	= 460;
+constexpr auto SIZE_Y			= 90;			// •Ï‚¦‚È‚­‚Ä‚¢‚¢‚©‚à
 
 
 
