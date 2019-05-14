@@ -71,17 +71,15 @@ void Obj::Draw(void)
 		id = (animTable[animName][ANIM_TBL_START_ID]) + (int)dir + count * divCnt.x;
 	}
 	animCnt++;
+
 	if (id < IMAGE_ID(imageName).size())
 	{
-		if (visible)
-		{
 			DrawGraph(
 				drawOffset.x + pos.x,
 				drawOffset.y + pos.y,
 				IMAGE_ID(imageName)[id],
 				true
 			);
-		}
 	}
 	SetFontSize(18);
 	DrawFormatString(0, 0, 0x00ffffff, "posX:%d\nposY:%d", pos.x, pos.y);
