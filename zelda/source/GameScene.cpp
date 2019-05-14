@@ -95,8 +95,10 @@ void GameScene::Draw(void)
 		DrawLine(tmp1, tmp2, 0x00ffffff, true);
 	}
 
-	DrawBox(600, 300, 1000, 640, 0x00ffffff, true);
+	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
 
+	DrawBox(640, 0, 800 , 300, GetColor(255,255,0),true);
+	
 	DrawString(0, 800, "GameScene", 0x00ff0000);
 
 	ScreenFlip();
