@@ -46,7 +46,7 @@ void MenuScene::MenuDraw(void)
 	DrawGraph(0, 0, IMAGE_ID("image/menu.png")[0], true);
 	for (int i = 0; i < MENU_NUM; i++)
 	{
-		DrawGraph(movePos[i].x - size.x, movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu_bar.png", {320,120}, {1,3})[i], true);
+		DrawGraph(movePos[i].x - size.x, movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", {320,120}, {1,3})[i], true);
 	}
 	ScreenFlip();
 }
