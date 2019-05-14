@@ -200,6 +200,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		if (!(action == ENEM_ACT::DO_NOTHING))
 		{
+			Enemy::dir = dir;
 			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
 			{
 				// ˆÚ“®•s‰Â‚ÌƒIƒuƒWƒFƒNƒg‚ª—×‚É‚ ‚Á‚½ê‡
@@ -221,7 +222,7 @@ bool Enemy::initAnim(void)
 	//AddAnim("‹xŒe", 2, 0, 4, 10, true);
 	//AddAnim("	õ“G", 2, 0, 1, 0, true);
 	AddAnim("‹xŒe", 0, 0, 3, 4, true);
-	AddAnim("	õ“G", 0, 0, 1, 0, true);
+	AddAnim("	õ“G", 1, 0, 3, 4, true);
 	return true;
 }
 
