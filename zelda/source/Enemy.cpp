@@ -193,14 +193,14 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			break;
 		}
 		timeCnt = 0;
-	}
+	}	
+	SetAnim("‹xŒe");
 	if (!(action == ENEM_ACT::DO_NOTHING))
 	{
 		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
 		{
 			// ˆÚ“®•s‰Â‚ÌƒIƒuƒWƒFƒNƒg‚ª—×‚É‚ ‚Á‚½ê‡
 			Enemy::dir = dir;
-			SetAnim("‹xŒe");
 			return;
 		}
 		// ˆÚ“®ˆ—-----------------------------
@@ -209,7 +209,6 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		SetAnim("õ“G");
 		return;
 	}
-	SetAnim("‹xŒe");
 }
 
 bool Enemy::initAnim(void)

@@ -7,8 +7,8 @@
 #include "EditScene.h"
 #include "MenuScene.h"
 
-constexpr int SCREEN_SIZE_X = 1200;
-constexpr int SCREEN_SIZE_Y = 880;
+constexpr int SCREEN_SIZE_X = 1600;
+constexpr int SCREEN_SIZE_Y = 960;
 
 SceneMng::SceneMng()
 {
