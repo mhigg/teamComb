@@ -141,6 +141,7 @@ Enemy::~Enemy()
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	timeCnt++;
+	behaviorCnt++;
 	auto &chipSize = lpStageMng.GetChipSize().x;
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
@@ -166,7 +167,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 
-	int num = GetRand(10) + 5;
+	int num = GetRand(10) + 20;
 	if (!(timeCnt % num))
 	{
 		switch (GetRand(4))
@@ -195,19 +196,23 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		timeCnt = 0;
 	}	
 	SetAnim("休憩");
-	if (!(action == ENEM_ACT::DO_NOTHING))
+	if (behaviorCnt % 4 == 0)
 	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
+		if (!(action == ENEM_ACT::DO_NOTHING))
 		{
-			// 移動不可のオブジェクトが隣にあった場合
-			Enemy::dir = dir;
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
+			{
+				// 移動不可のオブジェクトが隣にあった場合
+				Enemy::dir = dir;
+				SetAnim("休憩");
+				return;
+			}
+			// 移動処理-----------------------------
+			// 変更したい座標の変数アドレス += 移動量
+			(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
+			SetAnim("索敵");
 			return;
 		}
-		// 移動処理-----------------------------
-		// 変更したい座標の変数アドレス += 移動量
-		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
-		SetAnim("索敵");
-		return;
 	}
 }
 
@@ -215,7 +220,7 @@ bool Enemy::initAnim(void)
 {
 	//AddAnim("休憩", 2, 0, 4, 10, true);
 	//AddAnim("	索敵", 2, 0, 1, 0, true);
-	AddAnim("休憩", 0, 0, 4, 10, true);
+	AddAnim("休憩", 0, 0, 3, 4, true);
 	AddAnim("	索敵", 0, 0, 1, 0, true);
 	return true;
 }

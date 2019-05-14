@@ -48,7 +48,7 @@ struct EnemyData
 	ENEMY		name;
 };
 
-constexpr auto ENEMY_SPEED = 3;
+constexpr auto ENEMY_SPEED = 5;
 constexpr auto ENEMY_DASH_SPEED = 6;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
