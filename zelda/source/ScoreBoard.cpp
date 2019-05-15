@@ -18,6 +18,10 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 	{
 	case DATA_SCORE:
 		score += val;
+		if (score < 0)
+		{
+			score = 0;
+		}
 		break;
 	case DATA_LIFE:
 		if (life + val >= PL_LIFE_MAX)
