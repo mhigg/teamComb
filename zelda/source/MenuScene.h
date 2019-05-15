@@ -10,6 +10,7 @@ constexpr auto SIZE_Y			= 90;			// 変えなくていいかも
 
 using BOX_ARRAY = std::array< VECTOR2 , MENU_NUM >;
 using MOVE_FLAG = std::array<   bool  , MENU_NUM >;
+using SELECT_POINT = std::array<   int, MENU_NUM >;
 
 class MenuScene :
 	public BaseScene
@@ -27,6 +28,8 @@ private:
 
 	BOX_ARRAY movePos;		// Boxの座標を持つ配列
 	MOVE_FLAG moveFlag;		// Boxの移動制御用配列
+	SELECT_POINT selectPoint; // 選んでいる奴の加算値
+	int nowSelect;          // どのモードを選択しているか
 
 	unsigned int count;		// MenuScene中のｶｳﾝﾄ
 	double add;
