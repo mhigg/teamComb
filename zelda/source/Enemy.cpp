@@ -8,7 +8,7 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VECTOR2 setUpPos, VECTOR2 drawOffset)
+Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VECTOR2 setUpPos, VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	speed = ENEMY_SPEED;
 	keyIdTbl = {
@@ -29,13 +29,6 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 		-ENEMY_SPEED	, -ENEMY_DASH_SPEED,		// ¶
 		 ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// ‰E
 		-ENEMY_SPEED	, -ENEMY_DASH_SPEED		// ã
-	};
-	DirTbl = {
-		//	MAIN				REV				OPP1				 OPP2
-		DIR_DOWN	,DIR_UP		,DIR_LEFT		,DIR_RIGHT,		// ‰º(REV:ã)(¶E‰E)
-		DIR_LEFT		,DIR_RIGHT	,DIR_DOWN	,DIR_UP,			// ¶(REV:‰E)(ãE‰º)
-		DIR_RIGHT	,DIR_LEFT		,DIR_DOWN	,DIR_UP,			// ‰E(REV:¶)(ãE‰º)
-		DIR_UP			,DIR_DOWN	,DIR_LEFT		,DIR_RIGHT		// ã(REV:‰º)(¶E‰E)
 	};
 	mapMoveTbl = {
 					true,	// NONE
@@ -140,10 +133,14 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	if (!behaviorCnt)
+	{
+		SetAnim("‹xŒe1");
+	}
 	timeCnt++;
 	behaviorCnt++;
 	auto &chipSize = lpStageMng.GetChipSize().x;
-	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
+	auto sidePos = [&chipSize = chipSize](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
 		switch (dir)
 		{
@@ -194,35 +191,63 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			break;
 		}
 		timeCnt = 0;
-	}	
-	SetAnim("‹xŒe");
-	if (behaviorCnt % 4 == 0)
+	}
+	if (behaviorCnt % 4)
 	{
-		if (!(action == ENEM_ACT::DO_NOTHING))
+		switch (dir)
 		{
+		case DIR_RIGHT:
+			SetAnim("‹xŒe1");
+			break;
+		case DIR_LEFT:
+			SetAnim("‹xŒe2");
+			break;
+		default:
+			break;
+		}
+		return;
+	}
+	if (!(action == ENEM_ACT::DO_NOTHING))
+	{
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
+		{
+			// ˆÚ“®•s‰Â‚ÌƒIƒuƒWƒFƒNƒg‚ª—×‚É‚ ‚Á‚½ê‡
 			Enemy::dir = dir;
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
+			switch (dir)
 			{
-				// ˆÚ“®•s‰Â‚ÌƒIƒuƒWƒFƒNƒg‚ª—×‚É‚ ‚Á‚½ê‡
-				Enemy::dir = dir;
-				SetAnim("‹xŒe");
-				return;
+			case DIR_RIGHT:
+				SetAnim("‹xŒe1");
+				break;
+			case DIR_LEFT:
+				SetAnim("‹xŒe2");
+				break;
+			default:
+				break;
 			}
-			// ˆÚ“®ˆ—-----------------------------
-			// •ÏX‚µ‚½‚¢À•W‚Ì•Ï”ƒAƒhƒŒƒX += ˆÚ“®—Ê
-			(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
-			SetAnim("õ“G");
 			return;
 		}
+		// ˆÚ“®ˆ—-----------------------------
+		// •ÏX‚µ‚½‚¢À•W‚Ì•Ï”ƒAƒhƒŒƒX += ˆÚ“®—Ê
+		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
+		return;
+	}
+	switch (dir)
+	{
+	case DIR_RIGHT:
+		SetAnim("‹xŒe1");
+		break;
+	case DIR_LEFT:
+		SetAnim("‹xŒe2");
+		break;
+	default:
+		break;
 	}
 }
 
 bool Enemy::initAnim(void)
 {
-	//AddAnim("‹xŒe", 2, 0, 4, 10, true);
-	//AddAnim("	õ“G", 2, 0, 1, 0, true);
-	AddAnim("‹xŒe", 0, 0, 3, 10, true);
-	AddAnim("	õ“G", 1, 0, 3, 10, true);
+	AddAnim("‹xŒe1", 0, 0, 3, 10, true);
+	AddAnim("‹xŒe2", 1, 0, 3, 10, true);
 	return true;
 }
 
