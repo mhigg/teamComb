@@ -194,7 +194,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE),MAP_ID::NONE))])
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE)))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合
@@ -257,7 +257,7 @@ bool Player::DeathPrc(void)
 void Player::GetItem(void)
 {
 	auto ItemID = [=] {
-		auto id = lpMapCtrl.GetMapData(pos, MAP_ID::WALL19);
+		auto id = lpMapCtrl.GetMapData(pos);
 		return (id == MAP_ID::MAX ? static_cast<MAP_ID>(ITEM_ID_START): id);
 	};
 
