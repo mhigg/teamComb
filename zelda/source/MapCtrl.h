@@ -16,8 +16,10 @@ public:
 		static MapCtrl s_Instance;
 		return s_Instance;
 	}
-	bool SetMapData(VECTOR2 mapPos, MAP_ID id);			// ﾏｯﾌﾟIDの設定(大体ｴﾃﾞｨｯﾄ用？)
-	MAP_ID GetMapData(VECTOR2 pos, MAP_ID defID);		// 指定したﾏｽのﾏｯﾌﾟIDを取得
+	bool SetMapData(const VECTOR2 & pos, MAP_ID id);
+
+	MAP_ID GetMapData(const VECTOR2 & pos);
+	MAP_ID GetPanelData(const VECTOR2 & pos);
 
 	// ﾏｯﾌﾟﾃﾞｰﾀのﾘｻｲｽﾞ・初期化
 	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);
@@ -34,16 +36,26 @@ public:
 
 	// ﾏｯﾌﾟ描画
 	void Draw(bool flag);
+	void ItemDraw(VECTOR2 offset);
 
 private:
 	MapCtrl();
 	~MapCtrl();
 
+	template<typename mapType, typename idType>
+	bool SetData(mapType maps, const VECTOR2 & pos, idType id);
+
+	template<typename mapType, typename idType>
+	idType GetData(mapType maps, const VECTOR2 & pos, idType defID);
+
 	int lineColor;		// ﾗｲﾝｶﾗｰ
 
-	std::vector<MAP_ID*> mapData;
-	std::vector<MAP_ID> mapData_Base;
-	VECTOR2 stageSize;
-	VECTOR2 chipSize;
-	VECTOR2 drawOffset;
+	std::vector<MAP_ID*>	mapData;				// ﾏｯﾌﾟ用の二次元ﾃﾞｰﾀ
+	std::vector<MAP_ID>		mapData_Base;		// ﾏｯﾌﾟ用のﾃﾞｰﾀ
+	std::vector<MAP_ID*>	itemData;				// ﾏｯﾌﾟのﾊﾟﾈﾙの二次元ﾃﾞｰﾀ
+	std::vector<MAP_ID>		itemData_Base;	// ﾏｯﾌﾟのﾊﾟﾈﾙﾃﾞｰﾀ
+
+	VECTOR2 stageSize;		// ｽﾃｰｼﾞのﾏｽ目数
+	VECTOR2 chipSize;			// ﾏｽの大きさ
+	VECTOR2 drawOffset;		// ｵﾌｾｯﾄ
 };

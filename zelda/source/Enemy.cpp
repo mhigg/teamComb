@@ -209,7 +209,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (!(action == ENEM_ACT::DO_NOTHING))
 	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE), MAP_ID::NONE))])
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE)))])
 		{
 			// 移動不可のオブジェクトが隣にあった場合
 			Enemy::dir = dir;
