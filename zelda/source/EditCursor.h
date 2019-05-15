@@ -5,7 +5,7 @@
 #include "MapCtrl.h"
 #include "Player.h"
 
-#define MOVE_SPEED (40)
+constexpr int MOVE_SPEED = 40;
 
 //class SceneMng;
 class EditCursor :
@@ -24,6 +24,7 @@ private:
 	int inputFlam;	// ｷｰを押しているﾌﾚｰﾑ数　押してないときｾﾞﾛｸﾘｱ
 
 	DIR_TBL_ARY dirTable;		// 入力したｷｰの方向　speedTableと方向を合わせる
+	DIR_TBL_ARY scrTable;		// ｽｸﾛｰﾙ用
 	DIR_TBL_ARY speedTable;		// ﾌﾞﾛｯｸの移動ｽﾋﾟｰﾄﾞ dirTableと方向を合わせる
 
 	// ｷｰを押したときの処理
@@ -34,6 +35,7 @@ private:
 		Spaceｷｰ押下時に選択しているﾌﾞﾛｯｸを配置する処理
 	*/
 	void SetMove(const GameCtrl &controller, weakListObj objList);
+	bool MoveDec(VECTOR2 temp, VECTOR2 &dec);		// 長押し処理の関数化
 	bool CheckObjType(OBJ_TYPE type);
 };
 

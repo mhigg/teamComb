@@ -41,8 +41,8 @@ struct CheckSize
 {
 	bool operator()(const VECTOR2 &selPos, const VECTOR2 &mapSize) {
 		if ((selPos.x < 0 || selPos.y < 0)
-			|| (mapSize.x <= selPos.x)
-			|| (mapSize.y <= selPos.y))
+		 || (mapSize.x <= selPos.x)
+		 || (mapSize.y <= selPos.y))
 		{
 			return false;
 		}
@@ -414,8 +414,8 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
 				DrawGraph(
-					tmpPos.x + offset.x,
-					tmpPos.y + offset.y,
+					tmpPos.x + offset.x - scrollOffset.x,
+					tmpPos.y + offset.y - scrollOffset.y,
 					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
 					true);
 				break;
@@ -423,8 +423,8 @@ void MapCtrl::Draw(bool flag)
 #ifdef _DEBUG
 				// ´×°•\Ž¦
 				DrawGraph(
-					tmpPos.x + offset.x,
-					tmpPos.y + offset.y,
+					tmpPos.x + offset.x - scrollOffset.x,
+					tmpPos.y + offset.y - scrollOffset.y,
 					IMAGE_ID("image/mapImage.png")[static_cast<int>(MAP_ID::NONE)],
 					true);
 #endif
@@ -478,4 +478,9 @@ void MapCtrl::ItemDraw(VECTOR2 offset)
 			}
 		}
 	}
+}
+
+void MapCtrl::AddScroll(VECTOR2 scrollOffset)
+{
+	this->scrollOffset = scrollOffset;
 }

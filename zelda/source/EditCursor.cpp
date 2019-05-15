@@ -8,8 +8,8 @@
 #include "StageMng.h"
 
 // ∂∞øŸà⁄ìÆÇÃë¨ìxïœâªóp
-#define EDIT_KEY_GET_DEF_RNG (60)
-#define MIN_KEY_RNG	(3)
+constexpr int EDIT_KEY_GET_DEF_RNG	= 60;
+constexpr int MIN_KEY_RNG			= 3;
 
 EditCursor::EditCursor()
 {
@@ -19,6 +19,7 @@ EditCursor::EditCursor()
 	scrollOffset = { 0,0 };
 
 	dirTable = { KEY_INPUT_NUMPAD2, KEY_INPUT_NUMPAD4, KEY_INPUT_NUMPAD6, KEY_INPUT_NUMPAD8 };
+	scrTable = { KEY_INPUT_DOWN, KEY_INPUT_LEFT, KEY_INPUT_RIGHT, KEY_INPUT_UP };
 	speedTable = { MOVE_SPEED, -MOVE_SPEED, MOVE_SPEED, -MOVE_SPEED };
 }
 
@@ -30,6 +31,7 @@ EditCursor::EditCursor(VECTOR2 drawOffset) :Obj(drawOffset)
 	scrollOffset = { 0,0 };
 
 	dirTable = { KEY_INPUT_NUMPAD2, KEY_INPUT_NUMPAD4, KEY_INPUT_NUMPAD6, KEY_INPUT_NUMPAD8 };
+	scrTable = { KEY_INPUT_DOWN, KEY_INPUT_LEFT, KEY_INPUT_RIGHT, KEY_INPUT_UP };
 	speedTable = { MOVE_SPEED, -MOVE_SPEED, MOVE_SPEED, -MOVE_SPEED };
 }
 
@@ -53,48 +55,36 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	auto ctrlOld = controller.GetCtrl(KEY_TYPE_OLD);
 
 	VECTOR2 tmpPos(pos);
+	VECTOR2 tmpScr(scrollOffset);
 	DIR_TBL_PTR tmpTable = { &tmpPos.y,0, &tmpPos.x,0, &tmpPos.x,0, &tmpPos.y,0 };
+	DIR_TBL_PTR tmpScrTable = { &tmpScr.y,0, &tmpScr.x,0, &tmpScr.x,0, &tmpScr.y,0 };
 
-	auto Move = [&](DIR dir)
+	auto TmpMove = [this, ctrl, tmpTable, tmpScrTable](DIR dir)
 	{
 		if (ctrl[dirTable[dir]])
 		{
 			(*tmpTable[dir][TBL_MAIN]) += speedTable[dir];
+		}
+		if (ctrl[scrTable[dir]])
+		{
+			(*tmpScrTable[dir][TBL_MAIN]) += speedTable[dir];
 		}
 	};
 
 	// à⁄ìÆèàóù
 	for (int j = 0; j < DIR_MAX; j++)
 	{
-		Move((DIR)j);
+		TmpMove((DIR)j);
 	}
 
-	if ((tmpPos.x < lpStageMng.GetStageSize().x) & (tmpPos.x >= 0)
-	 &  (tmpPos.y < lpStageMng.GetStageSize().y) & (tmpPos.y >= 0))
+	if (!MoveDec(tmpPos, pos) && !MoveDec(tmpScr, scrollOffset))
 	{
-		if (tmpPos != pos)
-		{
-			inputFlam++;
-			if (inputFlam >= keyGetRng)
-			{
-				// 1âÒâüÇµÇΩ
-				// Ç±Ç±Ç…óàÇÈÇΩÇ—Ç…æﬁ€∏ÿ±Ç∆äÓíÍêîÇÃîºå∏
-				pos = tmpPos;
-				inputFlam = 0;
-				keyGetRng /= 2;
-				if (keyGetRng < MIN_KEY_RNG)
-				{
-					keyGetRng = MIN_KEY_RNG;
-				}
-			}
-		}
-		else
-		{
-			// ∑∞Çó£ÇµÇƒÇ¢ÇÈÇ∆Ç´
-			inputFlam = EDIT_KEY_GET_DEF_RNG;
-			keyGetRng = EDIT_KEY_GET_DEF_RNG;
-		}
+		// ∑∞Çó£ÇµÇƒÇ¢ÇÈÇ∆Ç´
+		inputFlam = EDIT_KEY_GET_DEF_RNG;
+		keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	}
+
+	lpMapCtrl.AddScroll(scrollOffset);
 
 	// LCONTROLâüâ∫Ç≈ID++ WALL_BLUEÇ©ÇÁâ¡éZÇµÇƒMAXÇÃå„NONÇ÷ñﬂÇÈ
 	if (ctrl[KEY_INPUT_LCONTROL] & ~(ctrlOld[KEY_INPUT_LCONTROL]))
@@ -123,7 +113,34 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	{
 		lpMapCtrl.SetMapData(pos, id);
 	}
+}
 
+bool EditCursor::MoveDec(VECTOR2 temp, VECTOR2 & dec)
+{
+	if ((temp.x < lpStageMng.GetStageSize().x) & (temp.x >= 0)
+	 &  (temp.y < lpStageMng.GetStageSize().y) & (temp.y >= 0))
+	{
+		if (temp != dec)
+		{
+			inputFlam++;
+			if (inputFlam >= keyGetRng)
+			{
+				// 1âÒâüÇµÇΩ
+				// Ç±Ç±Ç…óàÇÈÇΩÇ—Ç…æﬁ€∏ÿ±Ç∆äÓíÍêîÇÃîºå∏
+				dec = temp;
+				inputFlam = 0;
+				keyGetRng /= 2;
+				if (keyGetRng < MIN_KEY_RNG)
+				{
+					keyGetRng = MIN_KEY_RNG;
+				}
+
+			}
+			return true;
+		}
+	}
+
+	return false;
 }
 
 bool EditCursor::CheckObjType(OBJ_TYPE type)

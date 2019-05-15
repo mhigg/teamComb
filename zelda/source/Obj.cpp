@@ -75,8 +75,8 @@ void Obj::Draw(void)
 	if (id < IMAGE_ID(imageName).size())
 	{
 			DrawGraph(
-				drawOffset.x + pos.x,
-				drawOffset.y + pos.y,
+				drawOffset.x + pos.x - scrollOffset.x,
+				drawOffset.y + pos.y - scrollOffset.y,
 				IMAGE_ID(imageName)[id],
 				true
 			);
@@ -92,8 +92,8 @@ void Obj::Draw(unsigned int id)
 		if (visible)
 		{
 			DrawGraph(
-				drawOffset.x + pos.x,
-				drawOffset.y + pos.y,
+				drawOffset.x + pos.x - scrollOffset.x,
+				drawOffset.y + pos.y - scrollOffset.y,
 				IMAGE_ID(imageName)[id],
 				true
 			);

@@ -39,6 +39,9 @@ public:
 	void Draw(bool flag);
 	void ItemDraw(VECTOR2 offset);
 
+	// ╫╦ш╟ы▓l┌л┴а▌Z
+	void AddScroll(VECTOR2 scrollOffset);
+
 private:
 	MapCtrl();
 	~MapCtrl();
@@ -58,5 +61,6 @@ private:
 
 	VECTOR2 stageSize;		// ╫ц╟╪ч┌ло╫√з░■
 	VECTOR2 chipSize;			// о╫┌л▒Е┌╚┌Ё
-	VECTOR2 drawOffset;		// ╣л╬╞д
+	VECTOR2 drawOffset;		// ∙`┴Ф╣л╬╞д
+	VECTOR2 scrollOffset;	// ╫╦ш╟ы╣л╬╞д
 };
