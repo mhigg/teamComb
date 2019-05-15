@@ -9,6 +9,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
 	life = PL_LIFE_MAX;
+	score = 0;
 
 	keyIdTbl = { XINPUT_DOWN,	// â∫
 				 XINPUT_LEFT,	// ç∂
@@ -156,12 +157,13 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	// Ãﬂ⁄≤‘∞ÇÃ¿ﬁ“∞ºﬁéÛÇØ(√ﬁ ﬁØ∏óp)
 	if (controller.GetCtrl(KEY_TYPE_NOW)[KEY_INPUT_F] & (~controller.GetCtrl(KEY_TYPE_OLD)[KEY_INPUT_F]))
 	{
-		life--;
+		lpScoreBoard.SetScore(DATA_LIFE, -1);
 	}
 	if (DeathPrc())
 	{
 		pos = startPos;		// ÿΩŒﬂ∞›èàóù
-		life = PL_LIFE_MAX;
+		lpScoreBoard.SetScore(DATA_SCORE, -100);
+		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
 	}
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
@@ -243,7 +245,7 @@ bool Player::CheckObjType(OBJ_TYPE type)
 
 bool Player::DeathPrc(void)
 {
-	if (life < 0)
+	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
 	{
 		/*SetAnim("éÄñS");*/
 		return true;
@@ -269,15 +271,19 @@ void Player::GetItem(void)
 	{
 		case MAP_ID::POTION_1:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 100);
 			break;
 		case MAP_ID::POTION_2:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 100);
 			break;
 		case MAP_ID::POTION_3:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 100);
 			break;
 		case MAP_ID::POTION_4:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 100);
 			break;
 		case MAP_ID::COIN_1:
 			paramUP(NotFlag, num);

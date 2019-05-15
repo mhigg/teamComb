@@ -21,14 +21,6 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
-	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
-	{
-		return std::make_unique<EditScene>();
-	}
-	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
-	{
-		return std::make_unique<EditScene>();
-	}
 	
 	for (int i = 0; i < MENU_NUM; i++)
 	{
@@ -41,8 +33,11 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		selectPoint[0] = PUSH_SIZE;
 		pushFlag = true;
 	}
+
+	// キー操作が可能になってからの処理
 	if (pushFlag)
 	{
+		// 選択
 		if (inputState[0][static_cast<int>(INPUT_ID::DOWN)] & !inputStateOld[0][static_cast<int>(INPUT_ID::DOWN)])
 		{
 			if (nowSelect < MENU_NUM - 1)
@@ -61,6 +56,16 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 				selectPoint[nowSelect - 1] = PUSH_SIZE;
 				nowSelect -= 1;
 			}
+		}
+
+		// ｼｰﾝ移行
+		if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+		{
+			return std::make_unique<EditScene>();
+		}
+		if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+		{
+			return std::make_unique<EditScene>();
 		}
 	}
 	MenuDraw();
