@@ -4,6 +4,7 @@
 #include "EditScene.h"
 #include "SceneMng.h"
 #include "StageMng.h"
+#include "ScoreBoard.h"
 #include "GameCtrl.h"
 #include "VECTOR2.h"
 
@@ -37,6 +38,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	}
 	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
 	{
+		lpScoreBoard.DataInit();
 		return std::make_unique<EditScene>();
 	}
 
@@ -108,8 +110,9 @@ void GameScene::Draw(void)
 
 	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
 
-	DrawBox(640, 0, 800 , 300, GetColor(255,255,0),true);
-	
+	// ½º±ÎÞ°ÄÞ•\Ž¦
+	lpScoreBoard.Draw();
+
 	DrawString(0, 800, "GameScene", 0x00ff0000);
 
 	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);

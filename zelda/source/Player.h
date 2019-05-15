@@ -3,7 +3,9 @@
 #include "VECTOR2.h"
 #include "Obj.h"
 #include "MapCtrl.h"
+#include "ScoreBoard.h"
 #include "GameCtrl.h"
+
 
 enum PL_NUMBER {
 	PL_1,
@@ -15,7 +17,6 @@ enum PL_NUMBER {
 
 constexpr int PL_DEF_SPEED = 2;
 constexpr int PL_DASH_SPEED = 4;
-constexpr int PL_LIFE_MAX = 5;
 
 
 class Player :
@@ -33,9 +34,11 @@ private:
 	void GetItem(void);				// ｱｲﾃﾑ取得
 
 	int speed;
-	int life;
 	VECTOR2 startPos;				// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
 	unsigned int NotFlag;
+
+	int score;
+	int life;
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
 	DIR_TBL_ARY keyIdTbl;				// 移動方向

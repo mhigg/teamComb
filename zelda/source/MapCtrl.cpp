@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "SceneMng.h"
 #include "StageMng.h"
+#include "ScoreBoard.h"
 #include "ClassObj.h"
 
 struct DataHeader
