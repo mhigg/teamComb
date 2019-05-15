@@ -76,7 +76,6 @@ private:
 	bool initAnim(void);
 
 	ENEMY_STATE state;							// 状態
-	// ENEMY_BEHAVIOR nowBehavior;		// 現在の行動
 	EnemyData data;								// 敵の情報
 	ENEM_ACT action;								// 敵の行動
 
@@ -90,7 +89,6 @@ private:
 	DIR_TBL_ARY keyIdTbl;				// 移動方向
 	DIR_TBL_PTR PosTbl;					// ﾎﾟｲﾝﾀを直接格納
 	DIR_TBL_A2D SpeedTbl;			// 移動速度
-	DIR_TBL_DIR DirTbl;					// 移動制御
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
 
 protected:
