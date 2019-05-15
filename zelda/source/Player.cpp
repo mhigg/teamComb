@@ -161,6 +161,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (DeathPrc())
 	{
+		dir = DIR_DOWN;
 		pos = startPos;		// ÿΩŒﬂ∞›èàóù
 		lpScoreBoard.SetScore(DATA_SCORE, -100);
 		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
