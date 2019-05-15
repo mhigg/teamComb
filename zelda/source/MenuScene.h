@@ -23,16 +23,17 @@ public:
 		const GameCtrl &controller		// ｷｰ取得
 	);
 private:
-	void MenuDraw(void);	// 描画
-	int Init(void);			// 初期化
+	void MenuDraw(void);		// 描画
+	int Init(void);						// 初期化
 
 	BOX_ARRAY movePos;		// Boxの座標を持つ配列
 	MOVE_FLAG moveFlag;		// Boxの移動制御用配列
 	SELECT_POINT selectPoint; // 選んでいる奴の加算値
-	int nowSelect;          // どのモードを選択しているか
+	int nowSelect;					 // どのモードを選択しているか
+	bool pushFlag;
 
-	unsigned int count;		// MenuScene中のｶｳﾝﾄ
-	double add;
-	VECTOR2		 size;		// Boxのｻｲｽﾞ
+	unsigned int count;				// MenuScene中のｶｳﾝﾄ
+	double add;						// ﾒﾆｭｰﾊﾞｰの加算値
+	VECTOR2 size;					// Boxのｻｲｽﾞ
 };
 

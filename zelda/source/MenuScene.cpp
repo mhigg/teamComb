@@ -35,28 +35,33 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		add = -1.25 * ((count - (i * 1)*(i * 1) - 75)*(count - (i * 1)*(i * 1) - 75)) + 68;
 		add >= -20 ? movePos[i].x += static_cast<int>(add) : movePos[i].x;
 	}
-
-	if (inputState[0][static_cast<int>(INPUT_ID::DOWN)] & !inputStateOld[0][static_cast<int>(INPUT_ID::DOWN)])
-	{	
-		if (nowSelect < MENU_NUM -1)
-		{
-			selectPoint[nowSelect] = 0;
-			selectPoint[nowSelect + 1] = 20;
-			nowSelect += 1;
-
-		}
-	}
-	else if (inputState[0][static_cast<int>(INPUT_ID::UP)] & !inputStateOld[0][static_cast<int>(INPUT_ID::UP)])
-	{
-		if (nowSelect > 0)
-		{
-			selectPoint[nowSelect] = 0;
-			selectPoint[nowSelect - 1] = 20;
-			nowSelect -= 1;
-		}
-	}
-
 	count++;
+	if (count > 100)
+	{
+		pushFlag = true;
+	}
+	if (pushFlag)
+	{
+		if (inputState[0][static_cast<int>(INPUT_ID::DOWN)] & !inputStateOld[0][static_cast<int>(INPUT_ID::DOWN)])
+		{
+			if (nowSelect < MENU_NUM - 1)
+			{
+				selectPoint[nowSelect] = 0;
+				selectPoint[nowSelect + 1] = 20;
+				nowSelect += 1;
+
+			}
+		}
+		else if (inputState[0][static_cast<int>(INPUT_ID::UP)] & !inputStateOld[0][static_cast<int>(INPUT_ID::UP)])
+		{
+			if (nowSelect > 0)
+			{
+				selectPoint[nowSelect] = 0;
+				selectPoint[nowSelect - 1] = 20;
+				nowSelect -= 1;
+			}
+		}
+	}
 	MenuDraw();
 	return std::move(own);
 }
@@ -89,5 +94,6 @@ int MenuScene::Init(void)
 	size = { BOX_SIZE_X,SIZE_Y };
 	add = 0;
 	nowSelect = 0;
+	pushFlag = false;
 	return 0;
 }
