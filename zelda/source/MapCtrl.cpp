@@ -77,22 +77,45 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 	};
 
 	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
+	CreateMap(itemData_Base, itemData, MAP_ID::NONE);
 
 	return true;
 }
 
-bool MapCtrl::SetMapData(VECTOR2 pos, MAP_ID id)
+bool MapCtrl::SetMapData(const VECTOR2 & pos, MAP_ID id)
 {
-	VECTOR2 mapPos(pos / chipSize);		// é©ï™é©êg
-	if (!CheckSize()(mapPos, stageSize))
+	return SetData(mapData, pos, id);
+}
+
+bool MapCtrl::SetItemData(const VECTOR2 & pos, MAP_ID id)
+{
+	return SetData(itemData, pos, id);
+}
+
+MAP_ID MapCtrl::GetMapData(const VECTOR2& pos)
+{
+	return GetData(mapData, pos, MAP_ID::WALL2);
+}
+
+MAP_ID MapCtrl::GetItemData(const VECTOR2 & pos)
+{
+	return GetData(itemData, pos, MAP_ID::NONE);
+}
+
+template<typename mapType, typename idType>
+bool MapCtrl::SetData(mapType maps, const VECTOR2 & pos, idType id)
+{
+	VECTOR2 selPos(pos / chipSize);
+	if (!CheckSize()(selPos, stageSize))
 	{
 		return false;
 	}
-	mapData[mapPos.y][mapPos.x] = id;
+	maps[selPos.y][selPos.x] = id;
 	return true;
 }
 
-MAP_ID MapCtrl::GetMapData(VECTOR2 pos, MAP_ID defID)
+template <typename mapType, typename idType>
+idType MapCtrl::GetData(mapType maps, const VECTOR2 & pos, idType defID)
 {
 	VECTOR2 selPos(pos / chipSize);
 	if (!CheckSize()(selPos, stageSize))
@@ -100,7 +123,7 @@ MAP_ID MapCtrl::GetMapData(VECTOR2 pos, MAP_ID defID)
 		// îÕàÕäOÇÃéûÇÕå≈íËÇÃIDÇï‘Ç∑
 		return defID;
 	}
-	return mapData[selPos.y][selPos.x];
+	return maps[selPos.y][selPos.x];
 }
 
 bool MapCtrl::MapSave(void)
@@ -216,6 +239,25 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 						("image/enemy.png", VECTOR2(60, 80), VECTOR2(8,4),1, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-20,-90)));
 				}
 				break;
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
+				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::NONE);
+				break;
 			case MAP_ID::WALL1:
 			case MAP_ID::WALL2:
 			case MAP_ID::WALL3:
@@ -259,22 +301,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
 			case MAP_ID::DOOR4:
-			case MAP_ID::POTION_1:
-			case MAP_ID::POTION_2:
-			case MAP_ID::POTION_3:
-			case MAP_ID::POTION_4:
-			case MAP_ID::COIN_1:
-			case MAP_ID::COIN_2:
-			case MAP_ID::COIN_3:
-			case MAP_ID::COIN_4:
-			case MAP_ID::KEY_1:
-			case MAP_ID::KEY_2:
-			case MAP_ID::MEAT:
-			case MAP_ID::SWORD:
-			case MAP_ID::SHIELD:
-			case MAP_ID::BOOK:
-			case MAP_ID::GOLD:
-			case MAP_ID::DIA:
 			case MAP_ID::BOX_1:
 			case MAP_ID::BOX_2:
 			case MAP_ID::MOTH_1:
@@ -294,6 +320,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
 			case MAP_ID::NONE:
+				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::NONE);
 				break;
 			default:
 				break;
@@ -368,22 +395,6 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
 			case MAP_ID::DOOR4:
-			case MAP_ID::POTION_1:
-			case MAP_ID::POTION_2:
-			case MAP_ID::POTION_3:
-			case MAP_ID::POTION_4:
-			case MAP_ID::COIN_1:
-			case MAP_ID::COIN_2:
-			case MAP_ID::COIN_3:
-			case MAP_ID::COIN_4:
-			case MAP_ID::KEY_1:
-			case MAP_ID::KEY_2:
-			case MAP_ID::MEAT:
-			case MAP_ID::SWORD:
-			case MAP_ID::SHIELD:
-			case MAP_ID::BOOK:
-			case MAP_ID::GOLD:
-			case MAP_ID::DIA:
 			case MAP_ID::BOX_1:
 			case MAP_ID::BOX_2:
 			case MAP_ID::MOTH_1:
@@ -417,6 +428,52 @@ void MapCtrl::Draw(bool flag)
 					IMAGE_ID("image/mapImage.png")[static_cast<int>(MAP_ID::NONE)],
 					true);
 #endif
+				break;
+			}
+		}
+	}
+	ItemDraw(offset);
+}
+
+void MapCtrl::ItemDraw(VECTOR2 offset)
+{
+	VECTOR2 tmpPos;
+	for (int y = 0; y < stageSize.y; y++)
+	{
+		for (int x = 0; x < stageSize.x; x++)
+		{
+			MAP_ID id = itemData[y][x];
+
+			tmpPos = { (x * chipSize.x),(y * chipSize.y) };
+			switch (id)
+			{
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
+				DrawGraph(
+					tmpPos.x + offset.x,
+					tmpPos.y + offset.y,
+					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+					true); DrawGraph(
+						tmpPos.x + offset.x,
+						tmpPos.y + offset.y,
+						IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+						true);
+				break;
+			default:
 				break;
 			}
 		}
