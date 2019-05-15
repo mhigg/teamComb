@@ -36,8 +36,9 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		add >= -20 ? movePos[i].x += static_cast<int>(add) : movePos[i].x;
 	}
 	count++;
-	if (count > 100)
+	if ((count > 80) && (!pushFlag))
 	{
+		selectPoint[0] = PUSH_SIZE;
 		pushFlag = true;
 	}
 	if (pushFlag)
@@ -47,7 +48,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			if (nowSelect < MENU_NUM - 1)
 			{
 				selectPoint[nowSelect] = 0;
-				selectPoint[nowSelect + 1] = 20;
+				selectPoint[nowSelect + 1] = PUSH_SIZE;
 				nowSelect += 1;
 
 			}
@@ -57,7 +58,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			if (nowSelect > 0)
 			{
 				selectPoint[nowSelect] = 0;
-				selectPoint[nowSelect - 1] = 20;
+				selectPoint[nowSelect - 1] = PUSH_SIZE;
 				nowSelect -= 1;
 			}
 		}
@@ -88,7 +89,7 @@ int MenuScene::Init(void)
 		true,false,false
 	};
 	selectPoint = {
-		20,0,0
+		0,0,0
 	};
 	count = 0;
 	size = { BOX_SIZE_X,SIZE_Y };

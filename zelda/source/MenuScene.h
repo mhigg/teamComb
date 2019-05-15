@@ -5,7 +5,7 @@
 constexpr auto MENU_NUM		= 3;
 constexpr auto BOX_SIZE_X	= 460;
 constexpr auto SIZE_Y			= 90;			// •Ï‚¦‚È‚­‚Ä‚¢‚¢‚©‚à
-
+constexpr auto PUSH_SIZE		= 40;			// ‘I‘ð’†‚ÌÒÆ­°ÊÞ°‚ÌµÌ¾¯Ä
 
 
 using BOX_ARRAY = std::array< VECTOR2 , MENU_NUM >;
