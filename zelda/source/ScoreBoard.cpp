@@ -20,7 +20,14 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 		score += val;
 		break;
 	case DATA_LIFE:
-		life += val;
+		if (life + val >= PL_LIFE_MAX)
+		{
+			life = PL_LIFE_MAX;
+		}
+		else
+		{
+			life += val;
+		}
 		break;
 	}
 }

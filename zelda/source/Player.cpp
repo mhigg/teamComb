@@ -272,31 +272,35 @@ void Player::GetItem(void)
 	{
 		case MAP_ID::POTION_1:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 100);
+			lpScoreBoard.SetScore(DATA_LIFE, 1);
 			break;
 		case MAP_ID::POTION_2:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 100);
+			lpScoreBoard.SetScore(DATA_LIFE, 2);
 			break;
 		case MAP_ID::POTION_3:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 100);
+			lpScoreBoard.SetScore(DATA_LIFE, 3);
 			break;
 		case MAP_ID::POTION_4:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 100);
+			lpScoreBoard.SetScore(DATA_LIFE, 4);
 			break;
 		case MAP_ID::COIN_1:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 100);
 			break;
 		case MAP_ID::COIN_2:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 200);
 			break;
 		case MAP_ID::COIN_3:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 300);
 			break;
 		case MAP_ID::COIN_4:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 400);
 			break;
 		case MAP_ID::KEY_1:
 			paramUP(NotFlag, num);
