@@ -257,13 +257,13 @@ bool Player::DeathPrc(void)
 void Player::GetItem(void)
 {
 	auto ItemID = [=] {
-		auto id = lpMapCtrl.GetMapData(pos);
+		auto id = lpMapCtrl.GetItemData(pos);
 		return (id == MAP_ID::MAX ? static_cast<MAP_ID>(ITEM_ID_START): id);
 	};
 
 	auto paramUP = [=](auto& paramFlag, auto limNum) {
 		paramFlag += (paramFlag < limNum);
-		lpMapCtrl.SetMapData(pos, MAP_ID::NONE);
+		lpMapCtrl.SetItemData(pos, MAP_ID::NONE);
 	};
 
 	unsigned int num = 1;

@@ -87,12 +87,17 @@ bool MapCtrl::SetMapData(const VECTOR2 & pos, MAP_ID id)
 	return SetData(mapData, pos, id);
 }
 
+bool MapCtrl::SetItemData(const VECTOR2 & pos, MAP_ID id)
+{
+	return SetData(itemData, pos, id);
+}
+
 MAP_ID MapCtrl::GetMapData(const VECTOR2& pos)
 {
 	return GetData(mapData, pos, MAP_ID::WALL2);
 }
 
-MAP_ID MapCtrl::GetPanelData(const VECTOR2 & pos)
+MAP_ID MapCtrl::GetItemData(const VECTOR2 & pos)
 {
 	return GetData(itemData, pos, MAP_ID::NONE);
 }

@@ -17,9 +17,10 @@ public:
 		return s_Instance;
 	}
 	bool SetMapData(const VECTOR2 & pos, MAP_ID id);
+	bool SetItemData(const VECTOR2 & pos, MAP_ID id);
 
 	MAP_ID GetMapData(const VECTOR2 & pos);
-	MAP_ID GetPanelData(const VECTOR2 & pos);
+	MAP_ID GetItemData(const VECTOR2 & pos);
 
 	// œØÃﬂ√ﬁ∞¿ÇÃÿª≤ΩﬁÅEèâä˙âª
 	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);
