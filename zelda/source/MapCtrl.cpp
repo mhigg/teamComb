@@ -229,6 +229,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + VECTOR2(-20, -90)));
 					plCnt++;
 				}
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
 			case MAP_ID::ENEMY:
 				if (1)
@@ -238,6 +239,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 						std::make_unique<Enemy>
 						("image/enemy.png", VECTOR2(60, 80), VECTOR2(8,4),1, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-20,-90)));
 				}
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
 			case MAP_ID::POTION_1:
 			case MAP_ID::POTION_2:
@@ -256,7 +258,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
-				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::NONE);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
 			case MAP_ID::WALL1:
 			case MAP_ID::WALL2:
