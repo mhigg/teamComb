@@ -38,6 +38,5 @@ private:
 	int power;
 	int guard;
 	bool inv;	//	無敵	
-	int upTime; // ステータス上昇時間
 };
 

@@ -12,6 +12,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	power = 1;
 	guard = 0;
 	score = 0;
+	upTime = 0;
 
 	keyIdTbl = { XINPUT_DOWN,	// 下
 				 XINPUT_LEFT,	// 左
@@ -169,8 +170,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		pos = startPos;		// ﾘｽﾎﾟｰﾝ処理
 		lpScoreBoard.SetScore(DATA_SCORE, -100);
 		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
+		lpScoreBoard.SetScore(DATA_POWER, -(lpScoreBoard.GetScore(DATA_LIFE) - 1));
 		InitScroll();
-		lpScoreBoard.SetScore(DATA_POWER, 1);	}
+	}
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
@@ -226,6 +228,18 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		}
 		return false;
 	};
+
+	// 時間経過によるステータス変更
+	int nowPower = (lpScoreBoard.GetScore(DATA_POWER));
+	if (nowPower >= 2)
+	{
+		upTime++;
+	}
+	if (upTime > 300)
+	{
+		lpScoreBoard.SetScore(DATA_POWER, (nowPower -1));
+	}
+
 
 	// 後key処理------------------------------------
 	if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP1 - (afterKeyFlag << 1)))		// OPP1,OPP2に移動しなかった場合
@@ -299,7 +313,7 @@ void Player::GetItem(void)
 			paramUP(NotFlag, num);
 			lpScoreBoard.SetScore(DATA_LIFE, 3);
 			break;
-		case MAP_ID::POTION_4:	// 黄
+		case MAP_ID::POTION_4:	// 虹
 			paramUP(NotFlag, num);
 			lpScoreBoard.SetScore(DATA_INV, 4);
 			break;

@@ -35,10 +35,6 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 		break;
 	case DATA_POWER:
 		power += val;
-		if (power > 3)
-		{
-			power = 3;
-		}
 		break;
 	}
 }
@@ -66,7 +62,6 @@ void ScoreBoard::DataInit(void)
 	life = PL_LIFE_MAX;
 	power = 1;
 	guard = 0;
-	upTime = 0;
 }
 
 void ScoreBoard::Draw(void)
@@ -75,5 +70,4 @@ void ScoreBoard::Draw(void)
 	DrawFormatString(650, 10, GetColor(0, 0, 0), "SCORE : %d", score);
 	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
 	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", power);
-	DrawFormatString(650, 120, GetColor(0, 0, 0), "time  : %d", upTime);
 }

@@ -43,6 +43,7 @@ private:
 	int power;
 	int guard;
 	bool inv;	//	無敵	
+	int upTime; // ステータス上昇時間
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
 	DIR_TBL_ARY keyIdTbl;				// 移動方向
