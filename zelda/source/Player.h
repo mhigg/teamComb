@@ -32,6 +32,7 @@ private:
 	bool CheckObjType(OBJ_TYPE type);
 	bool DeathPrc(void);			// 関数化
 	void GetItem(void);				// ｱｲﾃﾑ取得
+	void InitScroll(void);			// ﾌﾟﾚｲﾔｰの座標によってｽｸﾛｰﾙｵﾌｾｯﾄを初期化する
 
 	int speed;
 	VECTOR2 startPos;				// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
