@@ -8,7 +8,7 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VECTOR2 setUpPos, VECTOR2 drawOffset) :Obj(drawOffset)
+Enemy::Enemy(ENEMY enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 {
 	speed = ENEMY_SPEED;
 	keyIdTbl = {
@@ -113,18 +113,18 @@ Enemy::Enemy(std::string fileName, VECTOR2 divSize, VECTOR2 divCnt, int Enum, VE
 					false,	// STONE_4					
 	};
 	this->objType = OBJ_ENEMY;
-	data.name = static_cast<ENEMY>(Enum);
-	Init(fileName, divSize, divCnt, setUpPos);
+	name = enemyNum;
+	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
 
 	// ¶³ÝÄŒn
-	timeCnt = 0;
-	behaviorCnt = 0;
-	faintCnt = 0;
-	oppFlag = false;
+	timeCnt			= 0;
+	behaviorCnt	= 0;
+	faintCnt			= 0;
+	moveLim = setUpPos - VECTOR2(ENEMY_LIM, ENEMY_LIM);
+	oppFlag			= false;
+	initAnim();
 
 	action = ENEM_ACT::DO_NOTHING;
-
-	initAnim();
 }
 
 Enemy::~Enemy()

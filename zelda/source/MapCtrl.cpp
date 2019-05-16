@@ -237,7 +237,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				// ´ÈÐ°‚Ì²Ý½ÀÝ½
 				/* Ã½Ä*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
-						("image/enemy.png", VECTOR2(60, 80), VECTOR2(8,4),1, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-20,-90)));
+						(ENEMY::ENEMY_1, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-20,-90)));
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
