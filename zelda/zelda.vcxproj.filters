@@ -102,6 +102,9 @@
     <ClCompile Include="source\ScoreBoard.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="source\InfoCtrl.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\GameCtrl.h">
@@ -165,6 +168,9 @@
       <Filter>ヘッダー ファイル\ID</Filter>
     </ClInclude>
     <ClInclude Include="source\ScoreBoard.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="source\InfoCtrl.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
