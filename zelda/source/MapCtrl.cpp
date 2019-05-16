@@ -2,6 +2,7 @@
 #include <DxLib.h>
 #include <memory>
 #include "ImageMng.h"
+#include "InfoCtrl.h"
 #include "MapCtrl.h"
 #include "Player.h"
 #include "Enemy.h"
