@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <DxLib.h>
+#include <stdlib.h>
 #include "Enemy.h"
 #include "StageMng.h"
 #include "GameCtrl.h"
@@ -24,14 +25,14 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 		&pos.y,&pos.x		// 上
 	};
 	SpeedTbl = {
-		//		通常								ﾀﾞｯｼｭ
+		//			通常								ﾀﾞｯｼｭ
 		ENEMY_SPEED		,  ENEMY_DASH_SPEED,		// 下
-		-ENEMY_SPEED	, -ENEMY_DASH_SPEED,		// 左
+		-ENEMY_SPEED	, -ENEMY_DASH_SPEED,	// 左
 		 ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// 右
 		-ENEMY_SPEED	, -ENEMY_DASH_SPEED		// 上
 	};
 	mapMoveTbl = {
-					true,	// NONE
+					true,		// NONE
 					false,	// WALL1
 					false,	// WALL2
 					false,	// WALL3
@@ -41,8 +42,8 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 					false,	// WALL7
 					false,	// WALL8
 					false,	// WALL9
-					true,	// WALL10
-					true,	// WALL11
+					true,		// WALL10
+					true,		// WALL11
 					false,	// WALL12
 					false,	// WALL13
 					false,	// WALL14
@@ -62,24 +63,24 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 					false,	// WALL28
 					false,	// WALL29
 					false,	// WALL30
-					false,  // WALL31
-					false,  // WALL32
+					false,	// WALL31
+					false,	// WALL32
 					false,  // WALL33
 					false,  // WALL34
 					false,  // WALL35
 					false,  // WALL36
 					false,	// WALL37	
 					false,	// WALL38	
-					true,	// WALL39	
+					true,		// WALL39	
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
 					false,	// DOOR4
-					true,	// POTION_1
-					true,	// POTION_2
-					true,	// POTION_3
-					true,	// POTION_4
-					true,	// COIN_1
+					true,		// POTION_1
+					true,		// POTION_2
+					true,		// POTION_3
+					true,		// POTION_4
+					true,		// COIN_1
 					true,	// COIN_2
 					true,	// COIN_3
 					true,	// COIN_4
@@ -118,13 +119,9 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 
 	// ｶｳﾝﾄ系
 	timeCnt			= 0;
-	behaviorCnt	= 0;
+	behaviorCnt		= 0;
 	faintCnt			= 0;
-	moveLim =
-	{
-		setUpPos - VECTOR2(ENEMY_LIM, ENEMY_LIM),
-		setUpPos + VECTOR2(ENEMY_LIM, ENEMY_LIM)
-	};
+	addCnt				= { 0,0 };
 	oppFlag			= false;
 	initAnim();
 
@@ -229,7 +226,19 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			return;
 		}
 		// 移動処理-----------------------------
+		if (dir == 0 || dir == 3)
+		{
+			addCnt.y += SpeedTbl[Enemy::dir][0];
+		}
+		else
+		{
+			addCnt.x += SpeedTbl[Enemy::dir][0];
+		}
 		// 変更したい座標の変数アドレス += 移動量
+		if ((abs(addCnt.x) > ENEMY_LIM) || (abs(addCnt.y) > ENEMY_LIM))
+		{
+			return;
+		}
 		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
 		return;
 	}

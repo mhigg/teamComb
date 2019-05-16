@@ -42,7 +42,7 @@ struct SearchParam
 
 constexpr auto ENEMY_SPEED = 5;
 constexpr auto ENEMY_DASH_SPEED = 6;
-constexpr auto ENEMY_LIM = 400;
+constexpr auto ENEMY_LIM = 200;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
 using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
@@ -77,8 +77,8 @@ private:
 	bool oppFlag;					// ˆÚ“®”½“]Ì×¸Ş
 	int behaviorCnt;				// s“®‚Ì¶³İÄ
 	int speed;						// “G‚ÌˆÚ“®‘¬“x
+	VECTOR2 addCnt;			// “G‚ÌˆÚ“®—ÊŠÇ—
 	DIR dir;							// “G‚ÌŒü‚«
-	ENEMY_POS moveLim;	// ˆÚ“®”ÍˆÍ
 
 	DIR_TBL_ARY keyIdTbl;				// ˆÚ“®•ûŒü
 	DIR_TBL_PTR PosTbl;					// Îß²İÀ‚ğ’¼ÚŠi”[
