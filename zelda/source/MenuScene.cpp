@@ -59,13 +59,45 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		}
 
 		// º∞›à⁄çs
-		if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+		if (nowSelect != 2)
 		{
-			return std::make_unique<EditScene>();
+			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+			{
+				return std::make_unique<EditScene>();
+			}
+			if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+			{
+				return std::make_unique<EditScene>();
+			}
 		}
-		if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+		else
 		{
-			return std::make_unique<EditScene>();
+			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+			{
+				descriptionFlag = true;
+			}
+			if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+			{
+				descriptionFlag = true;
+			}
+		}
+		
+		if (descriptionFlag)
+		{
+			if ((cnt[KEY_INPUT_Z]) & (!cntOld[KEY_INPUT_Z]))
+			{
+				selectPoint[nowSelect] = 0;
+				nowSelect = 0;
+				selectPoint[nowSelect] = 20;
+				descriptionFlag = false;
+			}
+			if (inputState[0][static_cast<int>(INPUT_ID::ATT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::ATT)])
+			{
+				selectPoint[nowSelect] = 0;
+				nowSelect = 0;
+				selectPoint[nowSelect] = 20;
+				descriptionFlag = false;
+			}
 		}
 	}
 	MenuDraw();
@@ -76,9 +108,16 @@ void MenuScene::MenuDraw(void)
 {
 	ClsDrawScreen();
 	DrawGraph(0, 0, IMAGE_ID("image/menu.png")[0], true);
-	for (int i = 0; i < MENU_NUM; i++)
+	if(!descriptionFlag)
 	{
-		DrawGraph(movePos[i].x - size.x + selectPoint[i], movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", {460,180}, {1,3})[i], true);
+		for (int i = 0; i < MENU_NUM; i++)
+		{
+			DrawGraph(movePos[i].x - size.x + selectPoint[i], movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", {460,180}, {1,3})[i], true);
+		}
+	}
+	else
+	{
+		DrawGraph(0, 0, IMAGE_ID("image/setumei.png")[0], true);
 	}
 	ScreenFlip();
 }
@@ -100,6 +139,7 @@ int MenuScene::Init(void)
 	size = { BOX_SIZE_X,SIZE_Y };
 	add = 0;
 	nowSelect = 0;
+	descriptionFlag = false;
 	pushFlag = false;
 	return 0;
 }

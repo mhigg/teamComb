@@ -30,6 +30,7 @@ private:
 	MOVE_FLAG moveFlag;		// Boxの移動制御用配列
 	SELECT_POINT selectPoint; // 選んでいる奴の加算値
 	int nowSelect;					 // どのモードを選択しているか
+	bool descriptionFlag;			 // 説明
 	bool pushFlag;
 
 	unsigned int count;				// MenuScene中のｶｳﾝﾄ
