@@ -35,16 +35,6 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 		break;
 	case DATA_POWER:
 		power += val;
-		// 時間経過によるステータス変更
-		if (power >= 2)
-		{
-			upTime++;
-		}
-		if (upTime > 30)
-		{
-			power = 1;
-		}
-
 		if (power > 3)
 		{
 			power = 3;
