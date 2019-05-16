@@ -54,9 +54,10 @@ class Enemy :
 {
 public:
 	Enemy();
-	Enemy(	ENEMY enemyNum, 
-				VECTOR2 setUpPos, 
-				VECTOR2 drawOffset	);
+	Enemy(	
+		int enemyNum, 
+		VECTOR2 setUpPos, 
+		VECTOR2 drawOffset	);
 	~Enemy();
 
 	bool CheckDeath(void);							// Ž€–S”»’è,Ž€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ð•Ô‚·

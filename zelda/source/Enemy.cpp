@@ -8,24 +8,24 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(ENEMY enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
+Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 {
 	speed = ENEMY_SPEED;
 	keyIdTbl = {
 		XINPUT_DOWN,		// â∫
-		XINPUT_LEFT,		// ç∂
+		XINPUT_LEFT,			// ç∂
 		XINPUT_RIGHT,		// âE
-		XINPUT_UP			// è„
+		XINPUT_UP				// è„
 	};
 	PosTbl = {
 		&pos.y,&pos.x,	// â∫
 		&pos.x,&pos.y,	// ç∂
 		&pos.x,&pos.y,	// âE
-		&pos.y,&pos.x	// è„
+		&pos.y,&pos.x		// è„
 	};
 	SpeedTbl = {
-		//		í èÌ						¿ﬁØº≠
-		ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// â∫
+		//		í èÌ								¿ﬁØº≠
+		ENEMY_SPEED		,  ENEMY_DASH_SPEED,		// â∫
 		-ENEMY_SPEED	, -ENEMY_DASH_SPEED,		// ç∂
 		 ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// âE
 		-ENEMY_SPEED	, -ENEMY_DASH_SPEED		// è„
@@ -113,7 +113,7 @@ Enemy::Enemy(ENEMY enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 					false,	// STONE_4					
 	};
 	this->objType = OBJ_ENEMY;
-	name = enemyNum;
+	name = static_cast<ENEMY>(enemyNum);
 	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
 
 	// ∂≥›ƒån
@@ -248,8 +248,9 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 
 bool Enemy::initAnim(void)
 {
-	AddAnim("ãxåe1", 0, 0, 3, 10, true);
-	AddAnim("ãxåe2", 1, 0, 3, 10, true);
+	int num = static_cast<int>(name) * 2;
+	AddAnim("ãxåe1", num, 0, 3, 10, true);
+	AddAnim("ãxåe2", num + 1, 0, 3, 10, true);
 	return true;
 }
 
