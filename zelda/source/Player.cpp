@@ -123,6 +123,24 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	Init("image/playerAll.png", VECTOR2(640 / 8, 840 / 7), VECTOR2(8, 7), setUpPos);
 	startPos = pos;
+	if (pos.x >= SCROLL_AREA_X)
+	{
+		scrollOffset.x = pos.x - SCROLL_AREA_X;
+		if (pos.x >= SCROLL_AREA_SIZE_X)
+		{
+			scrollOffset.x = SCROLL_AREA_SIZE_X - SCROLL_AREA_X;
+		}
+		lpMapCtrl.AddScroll(scrollOffset);
+	}
+	if (pos.y >= SCROLL_AREA_Y)
+	{
+		scrollOffset.y = pos.y - SCROLL_AREA_Y;
+		if (pos.y >= SCROLL_AREA_SIZE_Y)
+		{
+			scrollOffset.y = SCROLL_AREA_SIZE_Y - SCROLL_AREA_Y;
+		}
+		lpMapCtrl.AddScroll(scrollOffset);
+	}
 	initAnim();
 
 	afterKeyFlag = false;
