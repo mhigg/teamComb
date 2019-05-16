@@ -84,7 +84,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 		keyGetRng = EDIT_KEY_GET_DEF_RNG;
 	}
 
-	lpMapCtrl.AddScroll(scrollOffset);
+	lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(0));
 
 	// LCONTROL‰Ÿ‰º‚ÅID++ WALL_BLUE‚©‚ç‰ÁŽZ‚µ‚ÄMAX‚ÌŒãNON‚Ö–ß‚é
 	if (ctrl[KEY_INPUT_LCONTROL] & ~(ctrlOld[KEY_INPUT_LCONTROL]))

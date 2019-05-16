@@ -4,7 +4,7 @@
 #include "ImageMng.h"
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
-#include "Player.h"
+//#include "Player.h"
 #include "Enemy.h"
 #include "SceneMng.h"
 #include "StageMng.h"
@@ -80,6 +80,8 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 
 	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
 	CreateMap(itemData_Base, itemData, MAP_ID::NONE);
+
+	scrollTbl.resize(1);
 
 	return true;
 }
@@ -332,6 +334,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			}
 		}
 	}
+	scrollTbl.resize(plCnt);
 	return true;
 }
 
@@ -339,6 +342,7 @@ void MapCtrl::Draw(bool flag)
 {
 	// Ï¯Ìß•`‰æ
 	VECTOR2 offset(lpSceneMng.GetDrawOffset());
+	VECTOR2 plScrSize(lpSceneMng.GetPlayScreen());
 	VECTOR2 tmpPos;
 	for (int y = 0; y < stageSize.y; y++)
 	{
@@ -490,12 +494,12 @@ void MapCtrl::ItemDraw(VECTOR2 offset)
 					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
 					true
 				);
-				DrawGraph(
-					tmpPos.x + offset.x - scrollOffset.x,
-					tmpPos.y + offset.y - scrollOffset.y,
-					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-					true
-				);
+				//DrawGraph(
+				//	tmpPos.x + offset.x - scrollOffset.x,
+				//	tmpPos.y + offset.y - scrollOffset.y,
+				//	IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+				//	true
+				//);
 				break;
 			default:
 				break;
@@ -504,7 +508,8 @@ void MapCtrl::ItemDraw(VECTOR2 offset)
 	}
 }
 
-void MapCtrl::AddScroll(VECTOR2 scrollOffset)
+void MapCtrl::AddScroll(VECTOR2 scrollOffset, int plNum)
 {
+//	this->scrollTbl[plNum] = scrollOffset;
 	this->scrollOffset = scrollOffset;
 }

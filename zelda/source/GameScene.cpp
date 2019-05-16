@@ -73,7 +73,7 @@ void GameScene::Draw(void)
 	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj2).GetPos().y; });
 
 	ClsDrawScreen();
-
+	
 	lpMapCtrl.Draw(false);
 
 // objList‚©‚ç‰æ–ÊŠO‚ÌµÌÞ¼Þª¸Ä‚ðœŠO‚·‚é

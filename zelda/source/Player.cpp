@@ -226,16 +226,15 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 			// 変更したい座標の変数アドレス += 移動量
 			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
 			
-// ※		// ｽｸﾛｰﾙ開始位置を仮にﾏｼﾞｯｸﾅﾝﾊﾞｰでｺｰﾃﾞｨﾝｸﾞ
 			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
 			{
 				scrollOffset.x = pos.x - SCROLL_AREA_X;
-				lpMapCtrl.AddScroll(scrollOffset);
+				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 			}
 			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
 			{
 				scrollOffset.y = pos.y - SCROLL_AREA_Y;
-				lpMapCtrl.AddScroll(scrollOffset);
+				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 			}
 
 			return true;
@@ -276,8 +275,8 @@ bool Player::CheckObjType(OBJ_TYPE type)
 	return (type == OBJ_PLAYER);
 
 }
-
 bool Player::DeathPrc(void)
+
 {
 	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
 	{
@@ -386,5 +385,5 @@ void Player::InitScroll(void)
 		}
 	}
 
-	lpMapCtrl.AddScroll(scrollOffset);
+	lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 }

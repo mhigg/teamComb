@@ -10,6 +10,9 @@
 constexpr int SCREEN_SIZE_X = 1600;
 constexpr int SCREEN_SIZE_Y = 960;
 
+constexpr int PL_SCREEN_SIZE_X = 800;
+constexpr int PL_SCREEN_SIZE_Y = 480;
+
 SceneMng::SceneMng()
 {
 	Init();
@@ -35,6 +38,11 @@ VECTOR2 SceneMng::GetDrawOffset(void)
 void SceneMng::SetDrawOffset(VECTOR2 drawOffset)
 {
 	this->drawOffset = drawOffset;
+}
+
+VECTOR2 SceneMng::GetPlayScreen(void)
+{
+	return VECTOR2(PL_SCREEN_SIZE_X, PL_SCREEN_SIZE_Y);
 }
 
 int SceneMng::GetFram(void)

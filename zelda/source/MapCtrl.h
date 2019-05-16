@@ -2,6 +2,7 @@
 
 #pragma once
 #include <vector>
+#include "Player.h"
 #include "VECTOR2.h"
 #include "MAP_ID.h"
 #include "ClassObj.h"
@@ -40,7 +41,7 @@ public:
 	void ItemDraw(VECTOR2 offset);
 
 	// ½¸Û°Ù’l‚Ì‰ÁZ
-	void AddScroll(VECTOR2 scrollOffset);
+	void AddScroll(VECTOR2 scrollOffset, int plNum);
 
 private:
 	MapCtrl();
@@ -58,6 +59,8 @@ private:
 	std::vector<MAP_ID>		mapData_Base;		// Ï¯Ìß—p‚ÌÃŞ°À
 	std::vector<MAP_ID*>	itemData;				// Ï¯Ìß‚ÌÊßÈÙ‚Ì“ñŸŒ³ÃŞ°À
 	std::vector<MAP_ID>		itemData_Base;	// Ï¯Ìß‚ÌÊßÈÙÃŞ°À
+
+	std::vector<VECTOR2> scrollTbl;			// ÌßÚ²Ô°‚²‚Æ‚Ì½¸Û°ÙµÌ¾¯Ä‚ğŠi”[
 
 	VECTOR2 stageSize;		// ½Ã°¼Ş‚ÌÏ½–Ú”
 	VECTOR2 chipSize;			// Ï½‚Ì‘å‚«‚³

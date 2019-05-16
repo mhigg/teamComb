@@ -18,10 +18,11 @@ public:
 		return s_instance;
 	}
 
-	void Run(void);
-	VECTOR2 GetDrawOffset(void);
+	void Run(void);								// ¹Ş°ÑÙ°Ìß
+	VECTOR2 GetDrawOffset(void);				// •`‰æµÌ¾¯Ä‚ğæ“¾
 	void SetDrawOffset(VECTOR2 drawOffset);
-	int GetFram(void);
+	VECTOR2 GetPlayScreen(void);				// 4•ªŠ„‚Ì1‰æ–Ê‚Ì»²½Ş‚ğæ“¾
+	int GetFram(void);							// ¹Ş°Ñ‹N“®‚©‚ç‚ÌÌÚ°Ñ”‚ğæ“¾
 
 private:
 	SceneMng();
