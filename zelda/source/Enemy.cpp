@@ -120,7 +120,11 @@ Enemy::Enemy(ENEMY enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 	timeCnt			= 0;
 	behaviorCnt	= 0;
 	faintCnt			= 0;
-	moveLim = setUpPos - VECTOR2(ENEMY_LIM, ENEMY_LIM);
+	moveLim =
+	{
+		setUpPos - VECTOR2(ENEMY_LIM, ENEMY_LIM),
+		setUpPos + VECTOR2(ENEMY_LIM, ENEMY_LIM)
+	};
 	oppFlag			= false;
 	initAnim();
 
@@ -161,8 +165,6 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		}
 		return pos + side;
 	};
-
-	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 
 	int num = GetRand(10) + 20;
 	if (!(timeCnt % num))

@@ -37,7 +37,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			  };
 
 	mapMoveTbl = {
-					true,	// NONE
+					true,		// NONE
 					false,	// WALL1
 					false,	// WALL2
 					false,	// WALL3
@@ -47,8 +47,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL7
 					false,	// WALL8
 					false,	// WALL9
-					true,	// WALL10
-					true,	// WALL11
+					true,		// WALL10
+					true,		// WALL11
 					false,	// WALL12
 					false,	// WALL13
 					false,	// WALL14
@@ -68,42 +68,42 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,	// WALL28
 					false,	// WALL29
 					false,	// WALL30
-					false,  // WALL31
-					false,  // WALL32
-					false,  // WALL33
-					false,  // WALL34
-					false,  // WALL35
-					false,  // WALL36
+					false,	// WALL31
+					false,	// WALL32
+					false,	// WALL33
+					false,	// WALL34
+					false,	// WALL35
+					false,	// WALL36
 					false,	// WALL37	
 					false,	// WALL38	
-					true,	// WALL39	
+					true,		// WALL39	
 					false,	// DOOR1
 					false,	// DOOR2
 					false,	// DOOR3
 					false,	// DOOR4
-					true,	// POTION_1
-					true,	// POTION_2
-					true,	// POTION_3
-					true,	// POTION_4
-					true,	// COIN_1
-					true,	// COIN_2
-					true,	// COIN_3
-					true,	// COIN_4
-					true,	// KEY_1
-					true,	// KEY_2
-					true,	// MEAT
-					true,	// PLAYER
-					true,	// ENEMY
-					true,	// SWORD
-					true,	// SHIELD
-					true,	// BOOK
-					true,	// GOLD
-					true,	// DIA
+					true,		// POTION_1
+					true,		// POTION_2
+					true,		// POTION_3
+					true,		// POTION_4
+					true,		// COIN_1
+					true,		// COIN_2
+					true,		// COIN_3
+					true,		// COIN_4
+					true,		// KEY_1
+					true,		// KEY_2
+					true,		// MEAT
+					true,		// PLAYER
+					true,		// ENEMY
+					true,		// SWORD
+					true,		// SHIELD
+					true,		// BOOK
+					true,		// GOLD
+					true,		// DIA
 					false,	// BOX_1	// •ó” 
 					false,	// BOX_2	// ‹ó‚¢‚Ä‚¢‚é•ó” 
-					true,	// MOTH_1	// ÂÎÞ
+					true,		// MOTH_1	// ÂÎÞ
 					false,	// MOTH_2	// ‰ó‚ê‚½ÂÎÞ
-					true,	// MOTH_3	// ’M
+					true,		// MOTH_3	// ’M
 					false,	// MOTH_4	// ‰ó‚ê‚½’M
 					false,	// TREE_1	// –Ø
 					false,	// TREE_2

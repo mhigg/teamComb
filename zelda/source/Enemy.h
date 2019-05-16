@@ -47,6 +47,8 @@ constexpr auto ENEMY_LIM = 400;
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
 using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
 
+using  ENEMY_POS = std::array<VECTOR2, 2>;
+
 class Enemy :
 	public Obj
 {
@@ -69,13 +71,13 @@ private:
 	ENEMY name;				// “G‚Ìí—Ş
 	ENEM_ACT action;			// “G‚Ìs“®
 
-	int faintCnt;					// ‹¯‚İ¶³İÄ
-	int timeCnt;					// Œo‰ßŠÔ‚Ì¶³İÄ
+	int faintCnt;						// ‹¯‚İ¶³İÄ
+	int timeCnt;						// Œo‰ßŠÔ‚Ì¶³İÄ
 	bool oppFlag;					// ˆÚ“®”½“]Ì×¸Ş
 	int behaviorCnt;				// s“®‚Ì¶³İÄ
 	int speed;						// “G‚ÌˆÚ“®‘¬“x
 	DIR dir;							// “G‚ÌŒü‚«
-	VECTOR2 moveLim;		// ˆÚ“®”ÍˆÍ
+	ENEMY_POS moveLim;	// ˆÚ“®”ÍˆÍ
 
 	DIR_TBL_ARY keyIdTbl;				// ˆÚ“®•ûŒü
 	DIR_TBL_PTR PosTbl;					// Îß²İÀ‚ğ’¼ÚŠi”[
