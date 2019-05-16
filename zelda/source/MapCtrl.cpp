@@ -466,14 +466,17 @@ void MapCtrl::ItemDraw(VECTOR2 offset)
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
 				DrawGraph(
-					tmpPos.x + offset.x,
-					tmpPos.y + offset.y,
+					tmpPos.x + offset.x - scrollOffset.x,
+					tmpPos.y + offset.y - scrollOffset.y,
 					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-					true); DrawGraph(
-						tmpPos.x + offset.x,
-						tmpPos.y + offset.y,
-						IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-						true);
+					true
+				);
+				DrawGraph(
+					tmpPos.x + offset.x - scrollOffset.x,
+					tmpPos.y + offset.y - scrollOffset.y,
+					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+					true
+				);
 				break;
 			default:
 				break;
