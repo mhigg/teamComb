@@ -260,6 +260,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
+			case MAP_ID::NONE:
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
 			case MAP_ID::WALL1:
@@ -323,7 +324,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::STONE_2:
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
-			case MAP_ID::NONE:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::NONE);
 				break;
 			default:
