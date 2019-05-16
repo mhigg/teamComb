@@ -39,6 +39,9 @@ private:
 
 	int score;
 	int life;
+	int power;
+	int guard;
+	bool inv;	//	–³“G	
 
 // ---------- Ã°ÌÞÙ”z—ñ ------------
 	DIR_TBL_ARY keyIdTbl;				// ˆÚ“®•ûŒü

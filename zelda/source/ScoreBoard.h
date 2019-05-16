@@ -5,7 +5,11 @@
 enum SCORE_DATA
 {
 	DATA_SCORE,
-	DATA_LIFE
+	DATA_LIFE,
+	DATA_POWER,
+	DATA_GUARD,
+	DATA_INV,
+	DATA_MAX
 };
 
 #define lpScoreBoard ScoreBoard::GetInstance()
@@ -31,5 +35,9 @@ private:
 	~ScoreBoard();
 	int score;
 	int life;
+	int power;
+	int guard;
+	bool inv;	//	無敵	
+	int upTime; // ステータス上昇時間
 };
 

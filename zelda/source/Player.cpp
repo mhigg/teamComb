@@ -9,6 +9,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
 	life = PL_LIFE_MAX;
+	power = 1;
+	guard = 0;
 	score = 0;
 
 	keyIdTbl = { XINPUT_DOWN,	// â∫
@@ -165,6 +167,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		pos = startPos;		// ÿΩŒﬂ∞›èàóù
 		lpScoreBoard.SetScore(DATA_SCORE, -100);
 		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
+		lpScoreBoard.SetScore(DATA_POWER, 1);
 	}
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
@@ -282,35 +285,35 @@ void Player::GetItem(void)
 
 	switch (ItemID())
 	{
-		case MAP_ID::POTION_1:
+		case MAP_ID::POTION_1:	// ê‘
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_LIFE, 1);
+			lpScoreBoard.SetScore(DATA_POWER, 1);
 			break;
-		case MAP_ID::POTION_2:
+		case MAP_ID::POTION_2:	// ê¬
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_LIFE, 2);
+			lpScoreBoard.SetScore(DATA_GUARD, 2);
 			break;
-		case MAP_ID::POTION_3:
+		case MAP_ID::POTION_3:	// óŒ
 			paramUP(NotFlag, num);
 			lpScoreBoard.SetScore(DATA_LIFE, 3);
 			break;
-		case MAP_ID::POTION_4:
+		case MAP_ID::POTION_4:	// â©
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_LIFE, 4);
+			lpScoreBoard.SetScore(DATA_INV, 4);
 			break;
-		case MAP_ID::COIN_1:
+		case MAP_ID::COIN_1:	// ê‘
 			paramUP(NotFlag, num);
 			lpScoreBoard.SetScore(DATA_SCORE, 100);
 			break;
-		case MAP_ID::COIN_2:
+		case MAP_ID::COIN_2:	// ê¬
 			paramUP(NotFlag, num);
 			lpScoreBoard.SetScore(DATA_SCORE, 200);
 			break;
-		case MAP_ID::COIN_3:
+		case MAP_ID::COIN_3:	// óŒ
 			paramUP(NotFlag, num);
 			lpScoreBoard.SetScore(DATA_SCORE, 300);
 			break;
-		case MAP_ID::COIN_4:
+		case MAP_ID::COIN_4:	// â©
 			paramUP(NotFlag, num);
 			lpScoreBoard.SetScore(DATA_SCORE, 400);
 			break;
