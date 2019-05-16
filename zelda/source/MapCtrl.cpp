@@ -11,13 +11,13 @@
 
 struct DataHeader
 {
-	char fileID[15];	// Ì§²Ù‚ÌIDî•ñ
+	char fileID[15];		// Ì§²Ù‚ÌIDî•ñ
 	char verID;			// ÊŞ°¼Ş®İ”Ô†
 	char reserve1[2];	// —\–ñ—Ìˆæ
-	int sizeX;			// Ï¯Ìß‚ÌÏ½Ò”X
-	int sizeY;			// Ï¯Ìß‚ÌÏ½Ò”Y
+	int sizeX;				// Ï¯Ìß‚ÌÏ½Ò”X
+	int sizeY;				// Ï¯Ìß‚ÌÏ½Ò”Y
 	char reserve2[1];	// —\–ñ—Ìˆæ
-	char sum;			// »Ñ’l
+	char sum;				// »Ñ’l
 };
 
 #define ZELDA_VER_ID 0x02						// Ì§²ÙÊŞ°¼Ş®İ”Ô†

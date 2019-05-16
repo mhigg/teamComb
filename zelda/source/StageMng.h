@@ -12,6 +12,11 @@
 constexpr int GAME_AREA_SIZE_X = 3200;		// ﾏｯﾌﾟ全体のｻｲｽﾞ
 constexpr int GAME_AREA_SIZE_Y = 1920;
 
+constexpr int SCROLL_AREA_X = 320;		// ｽｸﾛｰﾙ開始点X
+constexpr int SCROLL_AREA_Y = 200;		// ｽｸﾛｰﾙ開始点Y
+constexpr int SCROLL_AREA_SIZE_X = GAME_AREA_SIZE_X - 320;		// ｽｸﾛｰﾙ範囲の長さX
+constexpr int SCROLL_AREA_SIZE_Y = GAME_AREA_SIZE_Y - 280;		// ｽｸﾛｰﾙ範囲の長さY
+
 class StageMng
 {
 public:

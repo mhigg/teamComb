@@ -22,12 +22,6 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 				&pos.x,&pos.y,	// 右
 				&pos.y,&pos.x	// 上
 			 };
-
-	ScrTbl = {  &scrollOffset.y, &scrollOffset.x,
-				&scrollOffset.x, &scrollOffset.y,
-				&scrollOffset.x, &scrollOffset.y,
-				&scrollOffset.y, &scrollOffset.x
-			 };
 	
 	SpeedTbl = { PL_DEF_SPEED,  PL_DASH_SPEED,	// 下
 				-PL_DEF_SPEED, -PL_DASH_SPEED,	// 左
@@ -212,11 +206,16 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
 			
 // ※		// ｽｸﾛｰﾙ開始位置を仮にﾏｼﾞｯｸﾅﾝﾊﾞｰでｺｰﾃﾞｨﾝｸﾞ
-			//if (((pos.x >= 200) && (pos.x <= (GAME_AREA_SIZE_X - 200))) || ((pos.y >= 160) && (pos.y <= (GAME_AREA_SIZE_Y - 160))))
-			//{
-			//	(*ScrTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
-			//	lpMapCtrl.AddScroll(scrollOffset);
-			//}
+			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
+			{
+				scrollOffset.x = pos.x - SCROLL_AREA_X;
+				lpMapCtrl.AddScroll(scrollOffset);
+			}
+			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
+			{
+				scrollOffset.y = pos.y - SCROLL_AREA_Y;
+				lpMapCtrl.AddScroll(scrollOffset);
+			}
 
 			return true;
 		}
