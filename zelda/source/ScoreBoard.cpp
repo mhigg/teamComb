@@ -40,6 +40,12 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 			power = 3;
 		}
 		break;
+	case DATA_GUARD:
+		guard += val;
+		break;
+	case DATA_INV:
+		inv += val;
+		break;
 	}
 }
 
@@ -55,6 +61,12 @@ int ScoreBoard::GetScore(SCORE_DATA data)
 		break;
 	case DATA_POWER:
 		return power;
+		break;
+	case DATA_GUARD:
+		return guard;
+		break;
+	case DATA_INV:
+		return inv;
 		break;
 	}
 	return 0;
@@ -75,4 +87,5 @@ void ScoreBoard::Draw(void)
 	DrawFormatString(650, 10, GetColor(0, 0, 0), "SCORE : %d", score);
 	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
 	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", power);
+	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", guard);
 }
