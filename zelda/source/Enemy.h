@@ -35,36 +35,29 @@ enum class ENEM_ACT
 // enemy‚ªplayer‚ğ’Tõ‚·‚é‚Æ‚«‚Ég‚¤
 struct SearchParam
 {
-	float ExploreDistance;		// ’Tõ‹——£
+	// float ExploreDistance;		// ’Tõ‹——£
 	float ExploreAngle;			// ’TõŠp“x
 	float SignDistance;			// ‹C”z‚ğŠ´‚¶‚é‹——£
 };
 
-struct EnemyData
-{
-	std::string fileName;
-	VECTOR2	divSize;
-	VECTOR2	divCnt;
-	ENEMY		name;
-};
-
 constexpr auto ENEMY_SPEED = 5;
 constexpr auto ENEMY_DASH_SPEED = 6;
+constexpr auto ENEMY_LIM = 400;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
 using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
+
+using  ENEMY_POS = std::array<VECTOR2, 2>;
 
 class Enemy :
 	public Obj
 {
 public:
 	Enemy();
-	Enemy(	std::string fileName, 
-				VECTOR2	divSize,
-				VECTOR2 divCnt,
-				int Enum, 
-				VECTOR2 setUpPos, 
-				VECTOR2 drawOffset	);
+	Enemy(	
+		int enemyNum, 
+		VECTOR2 setUpPos, 
+		VECTOR2 drawOffset	);
 	~Enemy();
 
 	bool CheckDeath(void);							// €–S”»’è,€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
@@ -75,16 +68,17 @@ private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 	bool initAnim(void);
 
-	ENEMY_STATE state;							// ó‘Ô
-	EnemyData data;								// “G‚Ìî•ñ
-	ENEM_ACT action;								// “G‚Ìs“®
+	ENEMY_STATE state;		// ó‘Ô
+	ENEMY name;				// “G‚Ìí—Ş
+	ENEM_ACT action;			// “G‚Ìs“®
 
-	int faintCnt;				// ‹¯‚İ¶³İÄ
-	int timeCnt;				// Œo‰ßŠÔ‚Ì¶³İÄ
-	bool oppFlag;				// ˆÚ“®”½“]Ì×¸Ş
-	int behaviorCnt;			// s“®‚Ì¶³İÄ
-	int speed;					// “G‚ÌˆÚ“®‘¬“x
-	DIR dir;						// “G‚ÌŒü‚«
+	int faintCnt;						// ‹¯‚İ¶³İÄ
+	int timeCnt;						// Œo‰ßŠÔ‚Ì¶³İÄ
+	bool oppFlag;					// ˆÚ“®”½“]Ì×¸Ş
+	int behaviorCnt;				// s“®‚Ì¶³İÄ
+	int speed;						// “G‚ÌˆÚ“®‘¬“x
+	DIR dir;							// “G‚ÌŒü‚«
+	ENEMY_POS moveLim;	// ˆÚ“®”ÍˆÍ
 
 	DIR_TBL_ARY keyIdTbl;				// ˆÚ“®•ûŒü
 	DIR_TBL_PTR PosTbl;					// Îß²İÀ‚ğ’¼ÚŠi”[

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <DxLib.h>
 #include <memory>
 #include "ImageMng.h"
@@ -234,10 +235,11 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::ENEMY:
 				if (1)
 				{
+					int num = GetRand(static_cast<int>(ENEMY::ENEMY_MAX) - 1);
 				// ´ÈÐ°‚Ì²Ý½ÀÝ½
 				/* Ã½Ä*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
-						("image/enemy.png", VECTOR2(60, 80), VECTOR2(8,4),1, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-20,-90)));
+						(num, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-20,-90)));
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
@@ -260,6 +262,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
+			case MAP_ID::NONE:
 			case MAP_ID::WALL1:
 			case MAP_ID::WALL2:
 			case MAP_ID::WALL3:
@@ -321,7 +324,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::STONE_2:
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
-			case MAP_ID::NONE:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::NONE);
 				break;
 			default:
@@ -415,6 +417,22 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::STONE_2:
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
 				DrawGraph(
 					tmpPos.x + offset.x - scrollOffset.x,
 					tmpPos.y + offset.y - scrollOffset.y,
@@ -466,14 +484,17 @@ void MapCtrl::ItemDraw(VECTOR2 offset)
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
 				DrawGraph(
-					tmpPos.x + offset.x,
-					tmpPos.y + offset.y,
+					tmpPos.x + offset.x - scrollOffset.x,
+					tmpPos.y + offset.y - scrollOffset.y,
 					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-					true); DrawGraph(
-						tmpPos.x + offset.x,
-						tmpPos.y + offset.y,
-						IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-						true);
+					true
+				);
+				DrawGraph(
+					tmpPos.x + offset.x - scrollOffset.x,
+					tmpPos.y + offset.y - scrollOffset.y,
+					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+					true
+				);
 				break;
 			default:
 				break;

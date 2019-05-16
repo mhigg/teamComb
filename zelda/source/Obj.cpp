@@ -82,7 +82,7 @@ void Obj::Draw(void)
 			);
 	}
 	SetFontSize(18);
-	DrawFormatString(0, 0, 0x00ffffff, "posX:%d\nposY:%d", pos.x, pos.y);
+	DrawFormatString(pos.x - drawOffset.x - scrollOffset.x, pos.y - drawOffset.y - scrollOffset.y, 0x00ffffff, "scrX:%d\nscrY:%d", scrollOffset.x, scrollOffset.y);
 }
 
 void Obj::Draw(unsigned int id)
