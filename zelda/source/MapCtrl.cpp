@@ -415,6 +415,22 @@ void MapCtrl::Draw(bool flag)
 			case MAP_ID::STONE_2:
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
 				DrawGraph(
 					tmpPos.x + offset.x - scrollOffset.x,
 					tmpPos.y + offset.y - scrollOffset.y,
