@@ -123,6 +123,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	Init("image/playerAll.png", VECTOR2(640 / 8, 840 / 7), VECTOR2(8, 7), setUpPos);
 	startPos = pos;
+
+	InitScroll();
 	initAnim();
 
 	afterKeyFlag = false;
@@ -165,6 +167,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		pos = startPos;		// Ø½Îß°Ýˆ—
 		lpScoreBoard.SetScore(DATA_SCORE, -100);
 		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
+		InitScroll();
 	}
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
@@ -341,4 +344,28 @@ void Player::GetItem(void)
 	default:
 		break;
 	}
+}
+
+void Player::InitScroll(void)
+{
+	scrollOffset = { 0,0 };
+
+	if (pos.x >= SCROLL_AREA_X)
+	{
+		scrollOffset.x = pos.x - SCROLL_AREA_X;
+		if (pos.x >= SCROLL_AREA_SIZE_X)
+		{
+			scrollOffset.x = SCROLL_AREA_SIZE_X - SCROLL_AREA_X;
+		}
+	}
+	if (pos.y >= SCROLL_AREA_Y)
+	{
+		scrollOffset.y = pos.y - SCROLL_AREA_Y;
+		if (pos.y >= SCROLL_AREA_SIZE_Y)
+		{
+			scrollOffset.y = SCROLL_AREA_SIZE_Y - SCROLL_AREA_Y;
+		}
+	}
+
+	lpMapCtrl.AddScroll(scrollOffset);
 }
