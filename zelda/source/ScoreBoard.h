@@ -37,6 +37,6 @@ private:
 	int life;
 	int power;
 	int guard;
-	bool inv;	//	–³“G	
+	int inv;	//	–³“G	
 };
 

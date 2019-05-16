@@ -35,6 +35,10 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 		break;
 	case DATA_POWER:
 		power += val;
+		if (power > 3)
+		{
+			power = 3;
+		}
 		break;
 	}
 }
@@ -62,6 +66,7 @@ void ScoreBoard::DataInit(void)
 	life = PL_LIFE_MAX;
 	power = 1;
 	guard = 0;
+	inv = 0;
 }
 
 void ScoreBoard::Draw(void)

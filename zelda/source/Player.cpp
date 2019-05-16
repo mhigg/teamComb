@@ -13,6 +13,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	guard = 0;
 	score = 0;
 	upTime = 0;
+	inv = 0;
+	inv = 0;
 
 	keyIdTbl = { XINPUT_DOWN,	// 下
 				 XINPUT_LEFT,	// 左
@@ -154,6 +156,7 @@ bool Player::initAnim(void)
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	GetItem();
+	int nowPower = (lpScoreBoard.GetScore(DATA_POWER));
 
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
@@ -170,7 +173,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		pos = startPos;		// ﾘｽﾎﾟｰﾝ処理
 		lpScoreBoard.SetScore(DATA_SCORE, -100);
 		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
-		lpScoreBoard.SetScore(DATA_POWER, -(lpScoreBoard.GetScore(DATA_LIFE) - 1));
+		lpScoreBoard.SetScore(DATA_POWER, -(nowPower - 1));
 		InitScroll();
 	}
 
@@ -230,15 +233,14 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	};
 
 	// 時間経過によるステータス変更
-	int nowPower = (lpScoreBoard.GetScore(DATA_POWER));
 	if (nowPower >= 2)
 	{
 		upTime++;
 	}
-	if (upTime > 300)
+	if (upTime > 600)
 	{
-		lpScoreBoard.SetScore(DATA_POWER, -1);
-		upTime -= 300;
+		lpScoreBoard.SetScore(DATA_POWER, - (nowPower -1));
+		upTime -= 600;
 	}
 
 
@@ -308,15 +310,15 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::POTION_2:	// 青
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_GUARD, 2);
+			lpScoreBoard.SetScore(DATA_GUARD, 1);
 			break;
 		case MAP_ID::POTION_3:	// 緑
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_LIFE, 3);
+			lpScoreBoard.SetScore(DATA_LIFE, 2);
 			break;
 		case MAP_ID::POTION_4:	// 虹
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_INV, 4);
+			lpScoreBoard.SetScore(DATA_INV, 180);
 			break;
 		case MAP_ID::COIN_1:	// 赤
 			paramUP(NotFlag, num);
@@ -342,6 +344,7 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::MEAT:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_LIFE, 4);
 			break;
 		case MAP_ID::SWORD:
 			paramUP(NotFlag, num);

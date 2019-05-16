@@ -42,7 +42,7 @@ private:
 	int life;
 	int power;
 	int guard;
-	bool inv;	//	無敵	
+	int inv;	//	無敵時間	
 	int upTime; // ステータス上昇時間
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
