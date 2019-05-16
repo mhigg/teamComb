@@ -53,7 +53,7 @@ int ScoreBoard::GetScore(SCORE_DATA data)
 		return power;
 		break;
 	}
-	return -1;
+	return 0;
 }
 
 void ScoreBoard::DataInit(void)

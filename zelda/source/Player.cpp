@@ -237,7 +237,8 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (upTime > 300)
 	{
-		lpScoreBoard.SetScore(DATA_POWER, (nowPower -1));
+		lpScoreBoard.SetScore(DATA_POWER, -1);
+		upTime -= 300;
 	}
 
 
