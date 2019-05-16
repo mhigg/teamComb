@@ -177,6 +177,17 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		InitScroll();
 	}
 
+	// 時間経過によるステータス変更
+	if (nowPower >= 2)
+	{
+		upTime++;
+	}
+	if (upTime > 600)
+	{
+		lpScoreBoard.SetScore(DATA_POWER, -(nowPower - 1));
+		upTime -= 600;
+	}
+
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
 		VECTOR2 side;
 		switch (dir)
@@ -231,18 +242,6 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		}
 		return false;
 	};
-
-	// 時間経過によるステータス変更
-	if (nowPower >= 2)
-	{
-		upTime++;
-	}
-	if (upTime > 600)
-	{
-		lpScoreBoard.SetScore(DATA_POWER, - (nowPower -1));
-		upTime -= 600;
-	}
-
 
 	// 後key処理------------------------------------
 	if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP1 - (afterKeyFlag << 1)))		// OPP1,OPP2に移動しなかった場合
