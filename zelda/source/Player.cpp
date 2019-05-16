@@ -206,14 +206,14 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
 			
 // ¦		// ½¸Û°ÙŠJŽnˆÊ’u‚ð‰¼‚ÉÏ¼Þ¯¸ÅÝÊÞ°‚Åº°ÃÞ¨Ý¸Þ
-			if (((pos.x >= 320) && (pos.x <= (GAME_AREA_SIZE_X - 320))))
+			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
 			{
-				scrollOffset.x = pos.x - 320;
+				scrollOffset.x = pos.x - SCROLL_AREA_X;
 				lpMapCtrl.AddScroll(scrollOffset);
 			}
-			if (((pos.y >= 200) && (pos.y <= (GAME_AREA_SIZE_Y - 280))))
+			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
 			{
-				scrollOffset.y = pos.y - 200;
+				scrollOffset.y = pos.y - SCROLL_AREA_Y;
 				lpMapCtrl.AddScroll(scrollOffset);
 			}
 
