@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "StageMng.h"
 #include "GameCtrl.h"
+#include "InfoCtrl.h"
 
 Enemy::Enemy()
 {
@@ -239,6 +240,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			return;
 		}
+		lpInfoCtrl.SetEnemyPos(pos);
 		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
 		return;
 	}
