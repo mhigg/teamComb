@@ -10,18 +10,16 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
 	life = PL_LIFE_MAX;
-	power = 1;
-	guard = 0;
+
+	state.Power = 1;
+	state.Guard = 0;
+	state.Inv = 0;
 	score = 0;
+
 	upTime = {
 		0,0
 	};
-	inv = 0;
 	invTime = 0;
-
-	state.Power	= lpScoreBoard.GetScore(DATA_POWER);
-	state.Guard	= lpScoreBoard.GetScore(DATA_GUARD);
-	state.Inv		= lpScoreBoard.GetScore(DATA_INV);
 
 	keyIdTbl = { XINPUT_DOWN,	// â∫
 				 XINPUT_LEFT,	// ç∂
@@ -198,9 +196,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		upTime[0]++;
 	}
-	if (upTime[0] > 600)
+	if (upTime[0] / 600 == 1)
 	{
-		lpScoreBoard.SetScore(DATA_POWER, -(state.Power - 1));
+		lpScoreBoard.SetScore(DATA_POWER, -1);
 		upTime[0] -= 600;
 	}
 	// ñhå‰
@@ -397,6 +395,10 @@ void Player::GetItem(void)
 	default:
 		break;
 	}
+
+	state.Power = lpScoreBoard.GetScore(DATA_POWER);
+	state.Guard = lpScoreBoard.GetScore(DATA_GUARD);
+	state.Inv = lpScoreBoard.GetScore(DATA_INV);
 }
 
 void Player::InitScroll(void)

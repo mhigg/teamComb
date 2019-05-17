@@ -48,9 +48,6 @@ private:
 
 	int score;
 	int life;
-	int power;
-	int guard;
-	int inv;						//	無敵時間	
 	UP_TIME upTime;		// ステータス(攻撃,防御)上昇時間
 	int invTime;				// inv減算用
 	std::array<int,SCORE_DATA::DATA_MAX> param;
