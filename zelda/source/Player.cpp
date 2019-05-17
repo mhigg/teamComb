@@ -7,7 +7,6 @@
 
 Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOffset)
 {
-	pos = { 0,0 };
 	speed = PL_DEF_SPEED;
 	life = PL_LIFE_MAX;
 	power = 1;
@@ -140,6 +139,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	this->plNum = plNum;
 
+	halfSize = lpStageMng.GetChipSize() / 2;
+
 	Init("image/playerAll.png", VECTOR2(640 / 8, 840 / 7), VECTOR2(8, 7), setUpPos);
 	startPos = pos;
 
@@ -223,21 +224,21 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		invTime = 0;
 	}
 
-	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
+	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, int sideNum) {
 		VECTOR2 side;
 		switch (dir)
 		{
 		case DIR_DOWN:
-			side = { 0,(chipSize - sideFlag) + speed };
+			side = { sideNum,(halfSize.y) + speed - 2 };
 			break;
 		case DIR_LEFT:
-			side = { speed - (sideFlag ^ 1),0 };
+			side = { speed - (halfSize.x),sideNum };
 			break;
 		case DIR_RIGHT:
-			side = { (chipSize - sideFlag) + speed,0 };
+			side = { (halfSize.x) + speed - 2,sideNum };
 			break;
 		case DIR_UP:
-			side = { 0,speed - (sideFlag ^ 1) };
+			side = { sideNum,speed - (halfSize.y) };
 			break;
 		default:
 			break;
@@ -250,7 +251,8 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], IN_SIDE)))])
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -halfSize.x)))]
+				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], halfSize.x - 1)))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合
@@ -260,7 +262,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 			// 移動処理-----------------------------
 			// 変更したい座標の変数アドレス += 移動量
 			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
-			
+
 			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
 			{
 				scrollOffset.x = pos.x - SCROLL_AREA_X;

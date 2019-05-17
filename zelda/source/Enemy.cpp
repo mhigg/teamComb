@@ -115,8 +115,9 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
 					false,	// STONE_4					
 	};
 	this->objType = OBJ_ENEMY;
+	halfSize = {30,40};
 	name = static_cast<ENEMY>(enemyNum);
-	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
+	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos + halfSize);
 
 	// ｶｳﾝﾄ系
 	timeCnt			= 0;
@@ -143,21 +144,21 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	timeCnt++;
 	behaviorCnt++;
 	auto &chipSize = lpStageMng.GetChipSize().x;
-	auto sidePos = [&chipSize = chipSize](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {
+	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, int sideNum) {
 		VECTOR2 side;
 		switch (dir)
 		{
 		case DIR_DOWN:
-			side = { 0,(chipSize - sideFlag) + speed };
+			side = { sideNum,(halfSize.y) + speed - 2 };
 			break;
 		case DIR_LEFT:
-			side = { speed - (sideFlag ^ 1),0 };
+			side = { speed - (halfSize.x),sideNum };
 			break;
 		case DIR_RIGHT:
-			side = { (chipSize - sideFlag) + speed,0 };
+			side = { (halfSize.x) + speed - 2,sideNum };
 			break;
 		case DIR_UP:
-			side = { 0,speed - (sideFlag ^ 1) };
+			side = { sideNum,speed - (halfSize.y) };
 			break;
 		default:
 			break;
@@ -210,7 +211,8 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (!(action == ENEM_ACT::DO_NOTHING))
 	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], IN_SIDE)))])
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], -halfSize.x)))]
+			|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], halfSize.x - 1)))])
 		{
 			// 移動不可のオブジェクトが隣にあった場合
 			Enemy::dir = dir;
