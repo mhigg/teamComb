@@ -42,6 +42,10 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 		break;
 	case DATA_GUARD:
 		guard += val;
+		if (guard > 3)
+		{
+			guard = 3;
+		}
 		break;
 	case DATA_INV:
 		inv += val;
@@ -88,4 +92,5 @@ void ScoreBoard::Draw(void)
 	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
 	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", power);
 	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", guard);
+	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", inv);
 }

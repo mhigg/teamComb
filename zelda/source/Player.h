@@ -17,6 +17,7 @@ enum PL_NUMBER {
 
 constexpr int PL_DEF_SPEED = 2;
 constexpr int PL_DASH_SPEED = 4;
+using UP_TIME = std::array < int, 2 >;
 
 
 class Player :
@@ -42,8 +43,9 @@ private:
 	int life;
 	int power;
 	int guard;
-	int inv;	//	無敵時間	
-	int upTime; // ステータス上昇時間
+	int inv;		//	無敵時間	
+	UP_TIME upTime;		// ステータス(攻撃,防御)上昇時間
+	int invTime;	// inv減算用
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
 	DIR_TBL_ARY keyIdTbl;				// 移動方向
