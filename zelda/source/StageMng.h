@@ -28,7 +28,7 @@ public:
 
 	const VECTOR2& GetChipSize(void);		// ChipSize‚Ìæ“¾
 	const VECTOR2& GetStageSize(void);		// StageSize‚Ìæ“¾
-	const VECTOR2& GetDrawOffset(void);		// drawOffset‚Ìæ“¾
+	const VECTOR2& GetDrawOffset(void);	// drawOffset‚Ìæ“¾
 
 
 private:
@@ -38,8 +38,8 @@ private:
 	bool Init(void);
 
 	VECTOR2 stageSize;	// ½Ã°¼Ş»²½Ş
-	VECTOR2 mapSize;	// ƒ}ƒX‚Ì”
-	VECTOR2 chipSize;	// 1Ï½‚Ì»²½Ş
+	VECTOR2 mapSize;	// Ï½‚Ì”
+	VECTOR2 chipSize;		// 1Ï½‚Ì»²½Ş
 	VECTOR2 drawOffset;
 };
 

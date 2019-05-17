@@ -15,9 +15,6 @@ StageMng::~StageMng()
 {
 }
 
-
-
-
 const VECTOR2 & StageMng::GetChipSize(void)
 {
 	return chipSize;

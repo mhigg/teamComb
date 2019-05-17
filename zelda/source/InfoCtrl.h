@@ -7,6 +7,11 @@
 #define lpInfoCtrl InfoCtrl::GetInstance()
 constexpr auto ENEMY_MAX = 20;
 
+struct Info {
+	std::vector<VECTOR2> pos;			// ç¿ïWä«óù
+	std::vector<bool> flag;					// ë∂ç›Ç∑ÇÈÇ©Ç«Ç§Ç©
+};
+
 class InfoCtrl
 {
 public:
@@ -15,18 +20,22 @@ public:
 		static InfoCtrl s_Instance;
 		return s_Instance;
 	}
-	bool SetPlayerPos(const VECTOR2 & pos);
-	bool SetEnemyPos(const VECTOR2 & pos);
-
-	VECTOR2 GetPlayerPos(void);
-	VECTOR2 GetEnemyPos(void);
+	bool SetPlayerPos(const VECTOR2 & pos, int num, bool flag);
+	bool SetEnemyPos(const VECTOR2 & pos, int num, bool flag);
+	VECTOR2 GetPlayerPos(int num);
+	VECTOR2 GetEnemyPos(int num);
 private:
 	InfoCtrl();
 	~InfoCtrl();
 
 	void Init(void);
+	template<typename objType>
+	bool SetData(objType type, const VECTOR2 & pos, int num,bool flag);
 
-	std::vector<VECTOR2> playerPos;			// Ãﬂ⁄≤‘∞ÇÃç¿ïWä«óù
-	std::vector<VECTOR2> enemyPos;			// ¥»–∞ÇÃç¿ïWä«óù
+	template<typename objType>
+	VECTOR2 GetData(objType type,int num);
+
+	Info player;
+	Info enemy;
 };
 

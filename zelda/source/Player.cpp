@@ -12,9 +12,11 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	power = 1;
 	guard = 0;
 	score = 0;
-	upTime = 0;
+	upTime = {
+		0,0
+	};
 	inv = 0;
-	inv = 0;
+	invTime = 0;
 
 	keyIdTbl = { XINPUT_DOWN,	// 下
 				 XINPUT_LEFT,	// 左
@@ -157,15 +159,21 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	GetItem();
 	int nowPower = (lpScoreBoard.GetScore(DATA_POWER));
+	int nowGuard = (lpScoreBoard.GetScore(DATA_GUARD));
+	int nowInv = (lpScoreBoard.GetScore(DATA_INV));
+	invTime = nowInv;
 
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸ用)
-	if (controller.GetCtrl(KEY_TYPE_NOW)[KEY_INPUT_F] & (~controller.GetCtrl(KEY_TYPE_OLD)[KEY_INPUT_F]))
+	if (nowInv <= 0)
 	{
-		lpScoreBoard.SetScore(DATA_LIFE, -1);
+		if (controller.GetCtrl(KEY_TYPE_NOW)[KEY_INPUT_F] & (~controller.GetCtrl(KEY_TYPE_OLD)[KEY_INPUT_F]))
+		{
+			lpScoreBoard.SetScore(DATA_LIFE, -1);
+		}
 	}
 	if (DeathPrc())
 	{
@@ -174,18 +182,40 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		lpScoreBoard.SetScore(DATA_SCORE, -100);
 		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
 		lpScoreBoard.SetScore(DATA_POWER, -(nowPower - 1));
+		lpScoreBoard.SetScore(DATA_GUARD, - nowGuard);
+		lpScoreBoard.SetScore(DATA_INV, - nowInv);
 		InitScroll();
 	}
 
 	// 時間経過によるステータス変更
+	// 攻撃
 	if (nowPower >= 2)
 	{
-		upTime++;
+		upTime[0]++;
 	}
-	if (upTime > 600)
+	if (upTime[0] > 600)
 	{
 		lpScoreBoard.SetScore(DATA_POWER, -(nowPower - 1));
-		upTime -= 600;
+		upTime[0] -= 600;
+	}
+	// 防御
+	if (nowGuard >= 1)
+	{
+		upTime[1]++;
+	}
+	if (upTime[1] > 600)
+	{
+		lpScoreBoard.SetScore(DATA_GUARD, - nowGuard);
+		upTime[1] -= 600;
+	}
+	// 無敵
+	if (invTime > 0)
+	{
+		lpScoreBoard.SetScore(DATA_INV, -1);
+	}
+	else
+	{
+		invTime = 0;
 	}
 
 	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, SIDE_CHECK sideFlag) {

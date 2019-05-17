@@ -36,8 +36,8 @@ enum class ENEM_ACT
 struct SearchParam
 {
 	// float ExploreDistance;		// 探索距離
-	float ExploreAngle;			// 探索角度
-	float SignDistance;			// 気配を感じる距離
+	float ExploreAngle;				// 探索角度
+	float SignDistance;				// 気配を感じる距離
 };
 
 constexpr auto ENEMY_SPEED = 5;
@@ -72,8 +72,8 @@ private:
 	ENEMY name;				// 敵の種類
 	ENEM_ACT action;			// 敵の行動
 
-	int faintCnt;						// 怯みｶｳﾝﾄ
-	int timeCnt;						// 経過時間のｶｳﾝﾄ
+	int faintCnt;					// 怯みｶｳﾝﾄ
+	int timeCnt;					// 経過時間のｶｳﾝﾄ
 	bool oppFlag;					// 移動反転ﾌﾗｸﾞ
 	int behaviorCnt;				// 行動時のｶｳﾝﾄ
 	int speed;						// 敵の移動速度

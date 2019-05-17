@@ -1,23 +1,53 @@
 #include "InfoCtrl.h"
 
-bool InfoCtrl::SetPlayerPos(const VECTOR2 & pos)
+bool InfoCtrl::SetPlayerPos(const VECTOR2 & pos, int num, bool flag)
 {
+	if (num > sizeof(player))
+	{
+		return false;
+	}
+	SetData(player,pos,num,flag);
 	return true;
 }
 
-bool InfoCtrl::SetEnemyPos(const VECTOR2 & pos)
+bool InfoCtrl::SetEnemyPos(const VECTOR2 & pos, int num, bool flag)
 {
+	if (num > sizeof(enemy))
+	{
+		return false;
+	}
+	SetData(enemy, pos, num,flag);
 	return true;
 }
 
-VECTOR2 InfoCtrl::GetPlayerPos(void)
+template<typename objType>
+bool InfoCtrl::SetData(objType type, const VECTOR2 & pos,int num,bool flag)
 {
-	return playerPos[0];
+	/*if (!CheckSize()(selPos, stageSize))
+	{
+		return false;
+	}*/
+	type.pos[num] = pos;
+	type.flag[num] = flag;
+	return true;
 }
 
-VECTOR2 InfoCtrl::GetEnemyPos(void)
+VECTOR2 InfoCtrl::GetPlayerPos(int num)
 {
-	return enemyPos[0];
+	return GetData(player,num);
+}
+
+VECTOR2 InfoCtrl::GetEnemyPos(int num)
+{
+	return GetData(enemy,num);
+}
+template<typename objType>
+VECTOR2 InfoCtrl::GetData(objType type, int num)
+{
+	if (type.flag[num])
+	{
+		return type.pos[num];
+	}
 }
 
 InfoCtrl::InfoCtrl()
@@ -32,6 +62,21 @@ InfoCtrl::~InfoCtrl()
 
 void InfoCtrl::Init(void)
 {
-	enemyPos.resize(ENEMY_MAX);
-	playerPos.resize(4);
+	player.pos.resize(4);
+	player.flag.resize(4);
+	enemy.pos.resize(ENEMY_MAX);
+	enemy.flag.resize(ENEMY_MAX);
+	
+	for (int j = 0; j < enemy.pos.size(); j++)
+	{
+		// ‘S‘Ì‚ÉNON‚ ‚é‚¢‚Í0(¾ÞÛ)‚ð“ü‚ê‚é
+		enemy.pos[j] = { 0,0 };
+		enemy.flag[j] = false;
+	}
+	for (int j = 0; j < player.pos.size(); j++)
+	{
+		// ‘S‘Ì‚ÉNON‚ ‚é‚¢‚Í0(¾ÞÛ)‚ð“ü‚ê‚é
+		player.pos[j] = { 0,0 };
+		player.flag[j] = false;
+	}
 }

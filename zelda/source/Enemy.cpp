@@ -240,7 +240,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			return;
 		}
-		lpInfoCtrl.SetEnemyPos(pos);
+		// lpInfoCtrl.SetEnemyPos(pos);
 		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
 		return;
 	}
