@@ -135,6 +135,7 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	scrollOffset = lpInfoCtrl.GetAddScroll(0);
 	if (!behaviorCnt)
 	{
 		SetAnim("ãxåe1");
