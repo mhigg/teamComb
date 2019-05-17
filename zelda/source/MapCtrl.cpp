@@ -220,7 +220,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 
 	int playerNum = GetJoypadNum();		// ê⁄ë±ÇµÇƒÇÈÃﬂ⁄≤‘∞ÇÃêî
 	scrollTbl.resize(playerNum);
-	int plCnt = 0;	// ≤›Ω¿›ΩÇµÇΩÃﬂ⁄≤‘∞ÇÃêî
+	int plCnt = 0;		// ≤›Ω¿›ΩÇµÇΩÃﬂ⁄≤‘∞ÇÃêî
+	int enCnt = 0;	// ≤›Ω¿›ΩÇµÇΩìGÇÃêî
 	for (int y = 0; y < stageSize.y; y++)
 	{
 		for (int x = 0; x < stageSize.x; x++)
@@ -241,6 +242,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt] + VECTOR2(-20, -90)));
+					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt, true);
 					plCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
@@ -253,6 +255,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				/* √Ωƒ*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
 						(num, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-20,-90)));
+				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt, true);
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
