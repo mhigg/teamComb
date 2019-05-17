@@ -74,12 +74,12 @@ void Obj::Draw(void)
 
 	if (id < IMAGE_ID(imageName).size())
 	{
-			DrawGraph(
-				drawOffset.x + pos.x - scrollOffset.x,
-				drawOffset.y + pos.y - scrollOffset.y,
-				IMAGE_ID(imageName)[id],
-				true
-			);
+		DrawGraph(
+			drawOffset.x + pos.x - scrollOffset.x - halfSize.x,
+			drawOffset.y + pos.y - scrollOffset.y - halfSize.y,
+			IMAGE_ID(imageName)[id],
+			true
+		);
 	}
 	SetFontSize(18);
 	DrawFormatString(pos.x - drawOffset.x - scrollOffset.x, pos.y - drawOffset.y - scrollOffset.y, 0x00ffffff, "scrX:%d\nscrY:%d", scrollOffset.x, scrollOffset.y);
@@ -92,8 +92,8 @@ void Obj::Draw(unsigned int id)
 		if (visible)
 		{
 			DrawGraph(
-				drawOffset.x + pos.x - scrollOffset.x,
-				drawOffset.y + pos.y - scrollOffset.y,
+				drawOffset.x + pos.x - scrollOffset.x - halfSize.x,
+				drawOffset.y + pos.y - scrollOffset.y - halfSize.y,
 				IMAGE_ID(imageName)[id],
 				true
 			);

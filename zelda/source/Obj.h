@@ -117,6 +117,7 @@ protected:
 	VECTOR2 pos;				// 表示する座標
 	const VECTOR2 drawOffset;	// 描画ｵﾌｾｯﾄ
 	VECTOR2 scrollOffset;		// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
+	VECTOR2 halfSize;						// playerの中心座標を求めるための変数
 
 	std::string imageName;	// 表示する画像のﾌｧｲﾙ名
 	VECTOR2 divSize;			// 画像の分割ｻｲｽﾞ
