@@ -2,6 +2,7 @@
 
 #pragma once
 #include <vector>
+#include <array>
 #include "Player.h"
 #include "VECTOR2.h"
 #include "MAP_ID.h"
@@ -61,6 +62,7 @@ private:
 	std::vector<MAP_ID>		itemData_Base;	// Ï¯Ìß‚ÌÊßÈÙÃŞ°À
 
 	std::vector<VECTOR2> scrollTbl;			// ÌßÚ²Ô°‚²‚Æ‚Ì½¸Û°ÙµÌ¾¯Ä‚ğŠi”[
+	std::array<VECTOR2, 4> plScrTbl;		// •ªŠ„‚ÌŠe‰æ–Ê‚Ì¶ã
 
 	VECTOR2 stageSize;		// ½Ã°¼Ş‚ÌÏ½–Ú”
 	VECTOR2 chipSize;			// Ï½‚Ì‘å‚«‚³
