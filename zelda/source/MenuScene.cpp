@@ -113,6 +113,15 @@ void MenuScene::MenuDraw(void)
 		for (int i = 0; i < MENU_NUM; i++)
 		{
 			DrawGraph(movePos[i].x - size.x + selectPoint[i], movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", {460,180}, {1,3})[i], true);
+
+			VECTOR2 tmp1(0, 0);
+			VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
+
+			for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += 800)
+			{
+				tmp2.x = tmp1.x;
+				DrawLine(tmp1, tmp2, 0x00ffffff, true);
+			}
 		}
 	}
 	else
