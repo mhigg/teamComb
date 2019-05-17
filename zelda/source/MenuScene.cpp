@@ -84,14 +84,14 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		
 		if (descriptionFlag)
 		{
-			if ((cnt[KEY_INPUT_Z]) & (!cntOld[KEY_INPUT_Z]))
+			if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))
 			{
 				selectPoint[nowSelect] = 0;
 				nowSelect = 0;
 				selectPoint[nowSelect] = 20;
 				descriptionFlag = false;
 			}
-			if (inputState[0][static_cast<int>(INPUT_ID::ATT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::ATT)])
+			if (inputState[0][static_cast<int>(INPUT_ID::PAUSE)] & !inputStateOld[0][static_cast<int>(INPUT_ID::PAUSE)])
 			{
 				selectPoint[nowSelect] = 0;
 				nowSelect = 0;
@@ -112,22 +112,24 @@ void MenuScene::MenuDraw(void)
 		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
 		for (int i = 0; i < MENU_NUM; i++)
 		{
-			DrawGraph(movePos[i].x - size.x + selectPoint[i], movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", {460,180}, {1,3})[i], true);
+			DrawGraph(movePos[i].x - size.x + selectPoint[i], movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", { 460,180 }, { 1,3 })[i], true);
+		}
+		VECTOR2 tmp1(0, 0);
+		VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 
-			VECTOR2 tmp1(0, 0);
-			VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
-
-			for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += 800)
-			{
-				tmp2.x = tmp1.x;
-				DrawLine(tmp1, tmp2, 0x00ffffff, true);
-			}
+		for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += 800)
+		{
+			tmp2.x = tmp1.x;
+			DrawLine(tmp1, tmp2, 0x00ffffff, true);
 		}
 	}
 	else
 	{
-		DrawGraph(0, 0, IMAGE_ID("image/haikei.png")[0], true);
+		SetDrawBright(128, 128, 128);
+		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
+		SetDrawBright(255, 255, 255);
 		DrawGraph(0, 0, IMAGE_ID("image/setumei.png")[0], true);
+		DrawGraph(0,860 , IMAGE_ID("image/sousa.png")[0], true);
 	}
 	ScreenFlip();
 }
