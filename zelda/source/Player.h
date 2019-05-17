@@ -15,6 +15,12 @@ enum PL_NUMBER {
 	PL_MAX
 };
 
+struct State {
+	int Power;
+	int Guard;
+	int Inv;
+};
+
 constexpr int PL_DEF_SPEED = 2;
 constexpr int PL_DASH_SPEED = 4;
 using UP_TIME = std::array < int, 2 >;
@@ -38,14 +44,16 @@ private:
 	int speed;
 	VECTOR2 startPos;				// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
 	unsigned int NotFlag;
+	State state;
 
 	int score;
 	int life;
 	int power;
 	int guard;
-	int inv;		//	無敵時間	
+	int inv;						//	無敵時間	
 	UP_TIME upTime;		// ステータス(攻撃,防御)上昇時間
-	int invTime;	// inv減算用
+	int invTime;				// inv減算用
+	std::array<int,SCORE_DATA::DATA_MAX> param;
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
 	DIR_TBL_ARY keyIdTbl;				// 移動方向

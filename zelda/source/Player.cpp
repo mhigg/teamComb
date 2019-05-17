@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "Player.h"
 #include "StageMng.h"
+#include "InfoCtrl.h"
 #include "MapCtrl.h"
 
 
@@ -17,6 +18,10 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	};
 	inv = 0;
 	invTime = 0;
+
+	state.Power	= lpScoreBoard.GetScore(DATA_POWER);
+	state.Guard	= lpScoreBoard.GetScore(DATA_GUARD);
+	state.Inv		= lpScoreBoard.GetScore(DATA_INV);
 
 	keyIdTbl = { XINPUT_DOWN,	// 下
 				 XINPUT_LEFT,	// 左
@@ -42,7 +47,14 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			   DIR_RIGHT,DIR_LEFT ,DIR_DOWN ,DIR_UP,	// 右(REV:左)(上・下)
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// 上(REV:下)(左・右)
 			  };
-
+	param =
+	{
+		 -100
+		,PL_LIFE_MAX
+		,-(state.Power - 1)
+		, -state.Guard
+		, -state.Inv
+	};
 	mapMoveTbl = {
 					true,		// NONE
 					false,	// WALL1
@@ -158,17 +170,14 @@ bool Player::initAnim(void)
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	GetItem();
-	int nowPower = (lpScoreBoard.GetScore(DATA_POWER));
-	int nowGuard = (lpScoreBoard.GetScore(DATA_GUARD));
-	int nowInv = (lpScoreBoard.GetScore(DATA_INV));
-	invTime = nowInv;
+	invTime = state.Inv;
 
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸ用)
-	if (nowInv <= 0)
+	if (state.Inv <= 0)
 	{
 		if (controller.GetCtrl(KEY_TYPE_NOW)[KEY_INPUT_F] & (~controller.GetCtrl(KEY_TYPE_OLD)[KEY_INPUT_F]))
 		{
@@ -179,33 +188,29 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		dir = DIR_DOWN;
 		pos = startPos;		// ﾘｽﾎﾟｰﾝ処理
-		lpScoreBoard.SetScore(DATA_SCORE, -100);
-		lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
-		lpScoreBoard.SetScore(DATA_POWER, -(nowPower - 1));
-		lpScoreBoard.SetScore(DATA_GUARD, - nowGuard);
-		lpScoreBoard.SetScore(DATA_INV, - nowInv);
+		
 		InitScroll();
 	}
 
 	// 時間経過によるステータス変更
 	// 攻撃
-	if (nowPower >= 2)
+	if (state.Power >= 2)
 	{
 		upTime[0]++;
 	}
 	if (upTime[0] > 600)
 	{
-		lpScoreBoard.SetScore(DATA_POWER, -(nowPower - 1));
+		lpScoreBoard.SetScore(DATA_POWER, -(state.Power - 1));
 		upTime[0] -= 600;
 	}
 	// 防御
-	if (nowGuard >= 1)
+	if (state.Guard >= 1)
 	{
 		upTime[1]++;
 	}
 	if (upTime[1] > 600)
 	{
-		lpScoreBoard.SetScore(DATA_GUARD, - nowGuard);
+		lpScoreBoard.SetScore(DATA_GUARD, - state.Guard);
 		upTime[1] -= 600;
 	}
 	// 無敵
@@ -266,7 +271,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 				scrollOffset.y = pos.y - SCROLL_AREA_Y;
 				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 			}
-
+			lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 			return true;
 		}
 		return false;

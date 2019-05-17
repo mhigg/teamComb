@@ -22,8 +22,10 @@ public:
 	}
 	bool SetPlayerPos(const VECTOR2 & pos, int num, bool flag);
 	bool SetEnemyPos(const VECTOR2 & pos, int num, bool flag);
+	bool SetAddScroll(const VECTOR2 & offset, int num);					// ÌßÚ²Ô°‚Ì‚Ý‚ªŒÄ‚Ô
 	VECTOR2 GetPlayerPos(int num);
 	VECTOR2 GetEnemyPos(int num);
+	VECTOR2 GetAddScroll(int num);
 private:
 	InfoCtrl();
 	~InfoCtrl();
@@ -37,5 +39,6 @@ private:
 
 	Info player;
 	Info enemy;
+	std::vector<VECTOR2> scrNum;
 };
 
