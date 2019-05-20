@@ -10,7 +10,7 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset)
+Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	speed = ENEMY_SPEED;
 	keyIdTbl = {

@@ -203,7 +203,8 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		dir = DIR_DOWN;
 		pos = startPos;		// ÿΩŒﬂ∞›èàóù
-		
+		lpScoreBoard.DataInit();
+
 		InitScroll();
 	}
 
