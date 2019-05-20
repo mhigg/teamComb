@@ -91,7 +91,7 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 	};
 
 	scrollTbl.resize(1);
-
+	flag = true;
 	return true;
 }
 
@@ -239,10 +239,11 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				// ÌßÚ²Ô°‚ð²Ý½ÀÝ½
 				else
 				{
+					
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt] + VECTOR2(-20, -90)));
-					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt, true);
+					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt, flag);
 					plCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
@@ -254,8 +255,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				// ´ÈÐ°‚Ì²Ý½ÀÝ½
 				/* Ã½Ä*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
-						(num, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-10,-35)));
-				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt, true);
+						(num, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-10,-35),enCnt));
+				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt, flag);
 				enCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);

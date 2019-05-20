@@ -1,0 +1,28 @@
+Class Code,+
+BYTE,ProgrammingInterface
+BYTE,Subclass
+BYTE,BaseClass
+
+PCI configuration space,+
+WORD,VendorID
+WORD,DeviceID
+WORD,Command
+WORD,Status
+BYTE,RevisionID
+Class Code,ClassCode
+BYTE,CacheLineSize
+BYTE,LatencyTimer
+BYTE,HeaderType
+BYTE,BIST
+DWORD,BaseAddressRegister[6]
+DWORD,CardBusCIS
+WORD,SubsystemVendorID
+WORD,SubsystemID
+DWORD,ExpansionRomBaseAddress
+BYTE,CAP_PTR
+BYTE,Reserved0[3]
+DWORD,Reserved1
+BYTE,InterruptLine
+BYTE,InterruptPin
+BYTE,Min_Gnt
+BYTE,Max_Lat

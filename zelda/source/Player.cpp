@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <math.h>
 #include "Player.h"
 #include "StageMng.h"
 #include "InfoCtrl.h"
@@ -185,7 +186,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 
 	// UŒ‚ˆ—
-	if (inputTbl[plNum][XINPUT_ATT] & (~inputTblOld[plNum][XINPUT_ATT]))
+	if (inputTbl[plNum][XINPUT_ATT] && (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("UŒ‚");
 		return;
@@ -260,6 +261,20 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		}
 		return pos + side;
 	};
+
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
+		if (ePos != VECTOR2(-1, -1))
+		{
+			VECTOR2 tmp = { ePos - pos };
+			if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
+			{
+				// “–‚½‚Á‚Ä‚é‚Æ‚«
+				lpScoreBoard.SetScore(DATA_LIFE, -1);
+			}
+		}
+	}
 
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
 		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])
