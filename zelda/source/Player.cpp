@@ -341,7 +341,7 @@ void Player::Stop(const GameCtrl & controller)
 
 	_updater = &Player::Move;
 
-	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸ用)
+	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸﾞ用)
 	if (inputTbl[plNum][XINPUT_MAP] & (~inputTblOld[plNum][XINPUT_MAP]))
 	{
 		_updater = &Player::Damage;
@@ -359,7 +359,7 @@ void Player::Move(const GameCtrl & controller)
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 
-	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸ用)
+	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸﾞ用)
 	if (inputTbl[plNum][XINPUT_MAP] & (~inputTblOld[plNum][XINPUT_MAP]))
 	{
 		_updater = &Player::Damage;
@@ -395,6 +395,8 @@ void Player::Move(const GameCtrl & controller)
 		return pos + side;
 	};
 
+//--------- 敵に当たった時の処理 ----------
+
 	bool damageFlag = false;
 	for (int i = 0; (i < ENEMY_MAX) && (damageFlag == false); i++)
 	{
@@ -415,6 +417,7 @@ void Player::Move(const GameCtrl & controller)
 		_updater = &Player::Damage;
 		return;
 	}
+// ----------------------------------------
 
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
 		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])
