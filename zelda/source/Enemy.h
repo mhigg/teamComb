@@ -57,7 +57,8 @@ public:
 	Enemy(	
 		int enemyNum, 
 		VECTOR2 setUpPos, 
-		VECTOR2 drawOffset	);
+		VECTOR2 drawOffset,
+		int enCnt	);
 	~Enemy();
 
 	bool CheckDeath(void);							// €–S”»’è,€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
@@ -76,6 +77,7 @@ private:
 	int timeCnt;					// Œo‰ßŠÔ‚Ì¶³İÄ
 	bool oppFlag;					// ˆÚ“®”½“]Ì×¸Ş
 	int behaviorCnt;				// s“®‚Ì¶³İÄ
+	int enCnt;						// ©•ª©g‚ÌÅİÊŞ°
 	int speed;						// “G‚ÌˆÚ“®‘¬“x
 	VECTOR2 addCnt;			// “G‚ÌˆÚ“®—ÊŠÇ—
 	DIR dir;							// “G‚ÌŒü‚«

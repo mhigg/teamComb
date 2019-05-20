@@ -10,41 +10,42 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset) :Obj(drawOffset)
+Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :Obj(drawOffset)
 {
+	enCnt = enCnt;
 	speed = ENEMY_SPEED;
 	keyIdTbl = {
-		XINPUT_DOWN,		// â∫
+		XINPUT_DOWN,			// â∫
 		XINPUT_LEFT,			// ç∂
-		XINPUT_RIGHT,		// âE
+		XINPUT_RIGHT,			// âE
 		XINPUT_UP				// è„
 	};
 	PosTbl = {
-		&pos.y,&pos.x,	// â∫
-		&pos.x,&pos.y,	// ç∂
-		&pos.x,&pos.y,	// âE
-		&pos.y,&pos.x		// è„
+		&pos.y,&pos.x,			// â∫
+		&pos.x,&pos.y,			// ç∂
+		&pos.x,&pos.y,			// âE
+		&pos.y,&pos.x			// è„
 	};
 	SpeedTbl = {
-		//			í èÌ								¿ﬁØº≠
-		ENEMY_SPEED		,  ENEMY_DASH_SPEED,		// â∫
+		//			í èÌ						¿ﬁØº≠
+		ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// â∫
 		-ENEMY_SPEED	, -ENEMY_DASH_SPEED,	// ç∂
 		 ENEMY_SPEED	,  ENEMY_DASH_SPEED,		// âE
 		-ENEMY_SPEED	, -ENEMY_DASH_SPEED		// è„
 	};
 	mapMoveTbl = {
-					true,		// NONE
-					false,	// WALL1
-					false,	// WALL2
-					false,	// WALL3
-					false,	// WALL4
-					false,	// WALL5
-					false,	// WALL6
-					false,	// WALL7
-					false,	// WALL8
-					false,	// WALL9
-					true,		// WALL10
-					true,		// WALL11
+					true,			// NONE
+					false,			// WALL1
+					false,			// WALL2
+					false,			// WALL3
+					false,			// WALL4
+					false,			// WALL5
+					false,			// WALL6
+					false,			// WALL7
+					false,			// WALL8
+					false,			// WALL9
+					true,			// WALL10
+					true,			// WALL11
 					false,	// WALL12
 					false,	// WALL13
 					false,	// WALL14
@@ -121,9 +122,9 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset) :Obj(drawOffset
 
 	// ∂≥›ƒån
 	timeCnt			= 0;
-	behaviorCnt		= 0;
+	behaviorCnt	= 0;
 	faintCnt			= 0;
-	addCnt				= { 0,0 };
+	addCnt			= { 0,0 };
 	oppFlag			= false;
 	initAnim();
 
@@ -137,6 +138,7 @@ Enemy::~Enemy()
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	scrollOffset = lpInfoCtrl.GetAddScroll(0);
+	lpInfoCtrl.SetEnemyPos(pos, enCnt,true);
 	if (!behaviorCnt)
 	{
 		SetAnim("ãxåe1");
