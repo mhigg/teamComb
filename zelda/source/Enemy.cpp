@@ -12,7 +12,7 @@ Enemy::Enemy()
 
 Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :Obj(drawOffset)
 {
-	enCnt = enCnt;
+	Enemy::enCnt = enCnt;
 	speed = ENEMY_SPEED;
 	keyIdTbl = {
 		XINPUT_DOWN,			// â∫
@@ -127,6 +127,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	addCnt			= { 0,0 };
 	oppFlag			= false;
 	initAnim();
+	flag = true;
 
 	action = ENEM_ACT::DO_NOTHING;
 }
@@ -138,7 +139,7 @@ Enemy::~Enemy()
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	scrollOffset = lpInfoCtrl.GetAddScroll(0);
-	lpInfoCtrl.SetEnemyPos(pos, enCnt,true);
+	lpInfoCtrl.SetEnemyPos(pos, enCnt, flag);
 	if (!behaviorCnt)
 	{
 		SetAnim("ãxåe1");

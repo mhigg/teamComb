@@ -68,4 +68,6 @@ private:
 	VECTOR2 chipSize;			// Ï½‚Ì‘å‚«‚³
 	VECTOR2 drawOffset;		// •`‰æµÌ¾¯Ä
 	VECTOR2 scrollOffset;	// ½¸Û°ÙµÌ¾¯Ä
+
+	bool flag;
 };

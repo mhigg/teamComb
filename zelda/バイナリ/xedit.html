@@ -1,0 +1,1164 @@
+<!doctype html public "-//w3c//dtd html 4.01 transitional//en">
+<html>
+<head>
+<title>ROM化支援バイナリエディタ - xedit -</title>
+	<meta http-equiv="content-type" content="text/html; charset=shift_jis">
+	<meta http-equiv="content-style-type" content="text/css">
+	<link rel="stylesheet" href="xedit.css" type="text/css">
+</head>
+
+<body>
+
+<div class="title2">Copyright &copy; 2001-2016 Janus</div>
+<h1 class="title">ROM化支援バイナリエディタ - xedit -</h1>
+<table width="75%">
+	<tr><th>目次</th></tr>
+	<tr><td>
+		<ul>
+		<li><a href="#1st">はじめに</a></li>
+		<li><a href="#install">インストール方法</a></li>
+		<li><a href="#uninstall">アンインストール方法</a></li>
+		<li><a href="#manual">操作説明</a></li>
+		<li><a href="#edit">編集メニュー</a></li>
+		<li><a href="#find">検索メニュー</a></li>
+		<li><a href="#command">コマンドバー</a></li>
+		<li><a href="#status">ステータスバー &amp; 解析パレット</a></li>
+		<li><a href="#menu">ツールメニュー</a></li>
+		<li><a href="#option">引数オプション</a></li>
+		<li><a href="#struct">構造体解析</a></li>
+		<li><a href="#lua">Luaスクリプト</a></li>
+		<li><a href="#rom">ROM化支援</a></li>
+		<li><a href="#env">動作環境</a></li>
+		<li><a href="#free">配布条件等</a></li>
+		<li><a href="#copyright">著作権・免責等</a></li>
+		<li><a href="#lua_license">License for Lua 5.0 and later versions</a></li>
+		<li><a href="#history">変更履歴</a></li>
+		</ul>
+	</td></tr>
+</table>
+
+<h1><a name="1st">はじめに</a></h1>
+このプログラムはフリーソフトのバイナリエディタです。
+元々、他プログラムのバイナリエディット部のデバッグルーチンでしたが、
+意外と使えるので機能追加した形で公開しています。
+
+	<h2>特徴</h2>
+	<ul>
+		<li>新規ファイルは任意のバイト位置で編集が可能です。(最大 0x10000000 バイト)</li>
+		<li>既存ファイルは任意のバイト位置でパッチ編集が可能です。(最大 0x10000000000000000 バイト)</li>
+		<li>検索・置換・削除・アンドゥ・リドゥ等の基本的機能が使用できます。</li>
+		<li>構造体による解析・編集が可能です。</li>
+		<li>クリップボードのテキストデータを数値認識しデータとして取り込めます。</li>
+		<li>モトローラS/インテルHEXフォーマット形式のファイルを読み書き出来ます。（マークにより指定範囲のみの書き出しも可能）</li>
+		<li>キャラクター表示に以下を選択出来ます。</li>
+		<ul>
+			<li>ASCII/EBCDIC</li>
+			<li>Shift-JIS/EUC-JP/UCS-2/UTF-8(Unicode)</li>
+			<li>グラデーション</li>
+		</ul>
+		<li>サム, ハッシュ, CRC等の算出が出来ます。</li>
+		<ul>
+			<li>SUM</li>
+			<li>MD5/SHA-1/SHA-256</li>
+			<li>CRC-8/CRC-16/CRC-32</li>
+		</ul>
+		<li><a href="http://www.lua.org/">Lua</a>スクリプトによる細かな編集が可能です。</li>
+		<li>パレット機能によりカーソル位置の数値解析をカスタマイズできます。</li>
+		<li>コマンド入力欄から検索・ジャンプなどの基本的機能を命令できます。</li>
+		<li>複数のウインドウ間でデータ比較ができます。</li>
+		<li>プラグインで他プロセスメモリ参照等が利用可能です。</li>
+	</ul>
+
+	<h2>アーカイブ内容</h2>
+	<table width="80%">
+		<tr>
+			<th width="30%">ファイル名</th>
+			<th>内容</th>
+		</tr>
+		<tr>
+			<td>xedit.exe</td>
+			<td>ver.1 実行ファイル</td>
+		</tr>
+		<tr>
+			<td>xedit2.exe</td>
+			<td>ver.2 実行ファイル(ベータ版)</td>
+		</tr>
+			<td>xedit.html</td>
+			<td>ヘルプファイル(このファイル)</td>
+		</tr>
+		</tr>
+			<td>style.css</td>
+			<td>ヘルプファイル用スタイルシート</td>
+		</tr>
+		<tr>
+			<td>bmp.csv</td>
+			<td>構造体解析用定義サンプルファイル1(bmpファイルヘッダ定義)</td>
+		</tr>
+		<tr>
+			<td>pci.csv</td>
+			<td>構造体解析用定義サンプルファイル2(PCIコンフィグレジスタ定義)</td>
+		</tr>
+		<tr>
+			<td>dump.lua</td>
+			<td>Luaスクリプトサンプルファイル1</td>
+		</tr>
+		<tr>
+			<td>fill.lua</td>
+			<td>Luaスクリプトサンプルファイル2</td>
+		</tr>
+		<tr>
+			<td>patch.lua</td>
+			<td>Luaスクリプトサンプルファイル3</td>
+		</tr>
+		<tr>
+			<td>sum.lua</td>
+			<td>Luaスクリプトサンプルファイル4</td>
+		</tr>
+	</table>
+
+	<h2><a name="page">ページ処理</a></h2>
+	巨大なファイルの中身を全て閲覧可能とする処理方式です。
+	ファイルをページと呼ばれる単位で読み込みます。
+	挿入、削除等のデータ移動を伴う編集は行えませんが、パッチによる部分書き換えが可能です。
+	検索はページ内で処理されます。
+	「読み込み専用」で開くとページ処理を行います。
+
+<h1><a name="install">インストール方法</a></h1>
+
+	<ol>
+		<li>任意のフォルダーにアーカイブ内容を展開します。(xedit.exe 以外のアーカイブ内容は削除しても動作に問題ありません)</li>
+		<li>必要に応じ xedit.exe へのショートカットを作成します。</li>
+	</ol>
+	xedit.exe を実行すると実行ファイルと同じフォルダに ini ファイルを作成します。
+	実行ファイルは書き込み権限のあるフォルダに展開して下さい。
+
+
+<h1><a name="uninstall">アンインストール方法</a></h1>
+
+	<ol>
+    	<li>インストール時に展開したファイルを全て削除します。</li>
+		<li>作成された xedit.ini ファイルを削除します。(ver.1 はレジストリを使用していません。)</li>
+	</ol>
+
+
+<h1><a name="manual">操作説明</a></h1>
+
+	<h2>カーソル移動</h2>
+	<ul>
+		<li>カーソル移動には[↑][↓][←][→]キーを使用します。</li>
+		<li>データ先頭位置への移動は[Ctrl+Home]キーを使用します。</li>
+		<li>データ末尾位置への移動は[Ctrl+End]キーを使用します。</li>
+		<li>また、桁の先頭には[Home]キーを、桁の末尾には[End]キーを使用します。</li>
+		<li>[Ctrl+W]キーでデータ部とASCII部のカーソル位置に変更できます。</li>
+	</ul>
+
+	<h2>ページ移動</h2>
+	<a href="#page">ページ</a>単位での読み込みが行われた場合、
+	<ul>
+		<li>前ページへの移動はデータ先頭位置で[Ctrl+Home]キーを使用します。</li>
+		<li>後ページへの移動はデータ末尾位置で[Ctrl+End]キーを使用します。</li>
+	</ul>
+
+	<h2>データのキーボード入力</h2>
+	通常は 0～9 及び a～f（大文字又は小文字）の半角文字が入力可能です。
+	IMEがオンの場合、またはASCII部にカーソルがある場合は文字コードがそのまま入力されます。
+	</p>
+	右クリックで表示されるメニューの「貼り付け」を選択することで、クリップボードからデータを入力することも可能です。
+	[Ctrl+V]でも同様の貼り付け動作が行えます。
+	この際、クリップボード内のデータは以下の条件を満たしている必要があります。
+	(条件を満たしていない場合、思い通りの取り込み結果にならない場合があります)
+
+	<ol>
+		<li>テキストデータであること。</li>
+		<li>16進数値半角文字列であること。(0x表記は可能)</li>
+	</ol>
+
+	テキストデータを可能な限り数値変換しデータとして取り込みます。
+	ただし、IMEがオンの場合、またはASCII部にカーソルがある場合は表示モードに応じた文字列に変換後、数値変換せずに貼り付けます。
+	(表示モードがASCII, グラデーションの場合は無変換)
+	</p>
+
+	貼り付け動作は全て挿入となります。
+	選択状態での貼り付け動作は選択データを削除後、データを挿入します。
+
+	<h2>データの挿入</h2>
+	編集は任意の位置から可能です。
+	空白欄に数値を入力すると、新規データとして記憶されます。
+	この際、編集済み最終位置から編集位置まで「画面設定」-「埋め込みデータ」で設定した値が自動で挿入されます。
+	既存データ上で数値を入力すると、データを上書きします。
+	</p>
+
+	既にデータが存在する場所にデータを挿入したい場合は、挿入したい位置にカーソルを移動し、[SPACE]キーを入力します。
+	「画面設定」-「埋め込みデータ」で設定した値が入力され、カーソル位置以降のデータが後方にシフトされます。
+	または、[Insert]キーを押して挿入モードに切り替えます。
+	</p>
+	挿入モードではカーソルの横の長さが通常の1／4になります。
+	この状態で上位バイト位置にカーソルがある場合にデータを入力すると「画面設定」-「埋め込みデータ」で設定した値が挿入され、
+	更に、入力したデータで編集されます。再度、[Insert]キーを押すと上書きモードに切り替わります。
+
+	<h2>データのポイント編集</h2>
+	<ul>
+		<li>カーソル位置で[+]キーを押すとそのデータに 0x01 が加算されます</li>
+		<li>カーソル位置で[-]キーを押すとそのデータに 0x01 が減算されます</li>
+		<li>カーソル位置で[*]キーを押すとそのデータに 0x10 が加算されます</li>
+		<li>カーソル位置で[/]キーを押すとそのデータに 0x10 が減算されます</li>
+		<li>カーソル位置で[~]キーを押すとそのデータがビット反転します</li>
+		<li>カーソル位置で[&gt;]キーを押すとそのデータを右ビットシフトします</li>
+		<li>カーソル位置で[&lt;]キーを押すとそのデータを左ビットシフトします</li>
+		<li>カーソル位置で[)]キーを押すとそのデータを右ローテートシフトします</li>
+		<li>カーソル位置で[(]キーを押すとそのデータを左ローテートシフトします</li>
+	</ul>
+	それぞれ 0 ～ 255 の範囲で演算されます
+
+	<h2>データファイルからの入出力</h2>
+	ファイル内容を以下のいずれかの方法でファイル編集が可能です。
+	<ul>
+		<li>画面にファイルをドロップする。
+		<li>右クリックで表示されるメニューから「ファイルから読み込む」を選択する。</li>
+		<li>[Ctrl+O]キーでファイルを開く。</li>
+	</ul>
+
+	編集内容を以下のいずれかの方法でファイルに保存することが出来ます。
+	<ul>
+		<li>右クリックで表示されるメニューから「ファイルへ保存」を選択する。</li>
+		<li>[Ctrl+S]キーでファイルを保存する。</li>
+	</ul>
+
+	<h2>ウインドウへのファイルドロップ</h2>
+	ウインドウに編集対象ファイルをドロップするとファイル種別を自動で判別して開きます。
+	<ul>
+		<li>[CTRL]キーを押したままドロップするとファイル種別の自動判別を行いません。</li>
+		<li>[SHIFT]キーを押したままドロップすると読み込み専用で開きます。</li>
+	</ul>
+
+
+<h1><a name="edit">編集メニュー</a></h1>
+
+	<h2>編集のアンドゥ・リドゥ</h2>
+	<ul>
+		<li>[Ctrl+Z]キーまたは「元に戻す」メニューで編集内容を元に戻すことが出来ます。</li>
+		<li>[Ctrl+Y]キーまたは「やり直し」メニューで元に戻した内容をやり直すことが出来ます。</li>
+	</ul>
+
+	<h2>選択編集</h2>
+	範囲選択はマウスカーソルまたは[Shift+↑↓→←]キーにより行います。
+	また、「選択範囲の指定」メニューで選択範囲の指定も可能です。
+	選択すると選択部分のデータは反転表示されます。
+	</p>
+
+	選択状態では
+	<ul>
+		<li>[Delete],[BackSpace]キーを押すとデータを削除します。</li>
+		<li>[Ctrl+X]キーを押すとクリップボード転送後にデータを削除します。</li>
+		<li>[Ctrl+C]キーを押すとクリップボードにデータを転送します。</li>
+		<li>[Ctrl+B]キーを押すとアドレス付きでクリップボードにデータを転送します。</li>
+		<li>[Ctrl+T]キーを押すとバイナリデータそのままを文字としてクリップボードに転送します。</li>
+		<li>[+],[-],[*].[/],[~] [&gt;],[&lt;],[)],[(]キーを押すとデータをポイント編集します。</li>
+	</ul>
+
+
+<h1><a name="find">検索メニュー</a></h1>
+これらの機能は全てページ内で有効となります。
+
+	<h2>検索・置換・アドレスジャンプ</h2>
+	[Ctrl+F],[Ctrl+H],[F5]キーで検索用ダイアログが表示されます。
+	</p>
+
+	<table width="80%">
+		<tr>
+			<th width="30%">機能</th>
+			<th>処理内容</th>
+		</tr>
+		<tr>
+			<td>アドレスジャンプ</td>
+			<td>指定アドレスにカーソルを移動します。
+				アドレスの前に '+', '-' を付加するとカレント位置から相対移動します。
+				アドレスには算術式を記述できます。
+			</td>
+		</tr>
+			<td>データ検索</td>
+			<td>カーソル位置からデータを検索します。
+				継続検索は後方は[F3]キー又は[Ctrl+PgDn]キーで、
+				前方は[Shift+F3]キー又は[Ctrl+PgUp]キーで可能です。
+			</td>
+		</tr>
+		<tr>
+			<td>データ置換</td>
+			<td>カーソル位置から検索データを置換データで置き換えます。</td>
+		</tr>
+	</table>
+	</p>
+
+	データを選択中に継続検索を行うと選択データを検索データとして検索します。
+	検索結果の数が ini ファイルの SelLimit 以下の場合、ハイライト表示を行います。
+	SelLimit=0 の場合、この制限を用いず、全ての結果をハイライト表示します。
+	ただし、マシンによっては処理が重たくなるので環境に応じ SelLimit を変更して下さい。
+	SelLimit の変更は xedit 終了後に ini ファイルを直接編集してください。
+	</p>
+	ハイライト表示は [ESC] キーで解除できます。
+
+	<h2>拡張ジャンプ</h2>
+	カーソル位置のデータを元に分岐先を決定します。
+	アドレスの前に '+', '-' を付加するとカレント位置から相対移動します。
+	アドレスには算術式を記述できます。
+
+	<h2>ジャンプ履歴</h2>
+	ジャンプアドレスの履歴を参照出来ます。
+
+	<h2>マーク</h2>
+	[Ctrl+M]キーで選択範囲をマーク(別色表示)することが出来ます。
+	[Shif+F2]キー又は[F2]キーでマーキングした場所にカーソル移動します。
+	マーク範囲上にカーソルがある場合、[Ctrl+F2]キーでマーク範囲を選択します。
+	マーク情報は「編集」-「マーク」-「マークの登録/解除」メニューで編集可能です。
+
+<h1><a name="command">コマンドバー</a></h1>
+
+	<h2>コマンドバー</h2>
+	コマンドバーには下記書式で処理を指定出来ます。
+	実行したコマンドはカーソルの[↑][↓] キーで履歴を呼び出す事が出来ます。
+	</p>
+	[CTRL+TAB]キーで編集画面とコマンドバーへのカーソルフォーカスを変更できます。
+
+	<ul>
+		<li>アドレスジャンプ(絶対位置)</li></p>
+		<table width="80%">
+			<tr>
+				<td width="30%">コマンド</td>
+				<td>jump | j | &gt;</td>
+			</tr>
+			<tr>
+				<td>書式</td>
+				<td>jump address</td>
+			</tr>
+			<tr>
+				<td>使用例</td>
+				<td>j 100</td>
+			</tr>
+			<tr>
+				<td>ノート</td>
+				<td>addressには算術式を記述出来ます。</td>
+			</tr>
+		</table>
+		</p>
+
+		<li>アドレスジャンプ(相対位置)</li></p>
+		<table width="80%">
+			<tr>
+				<td width="30%">コマンド</td>
+				<td>jump+ | j+ | +</td>
+			</tr>
+			<tr>
+				<td>書式</td>
+				<td>jump+ address</td>
+			</tr>
+			<tr>
+				<td>使用例</td>
+				<td>j+ 100</td>
+			</tr>
+			<tr>
+				<td>ノート</td>
+				<td>addressには算術式を記述出来ます。</td>
+			</tr>
+		</table>
+		</p>
+
+		<li>データ検索</li></p>
+		<table width="80%">
+			<tr>
+				<td width="30%">コマンド</td>
+				<td>find | f | #</td>
+			</tr>
+			<tr>
+				<td>書式</td>
+				<td>find [hexdata]+</td>
+			</tr>
+			<tr>
+				<td>使用例</td>
+				<td>f 0 1 2</td>
+			</tr>
+		</table>
+		</p>
+
+		<li>文字列検索</li></p>
+		<table width="80%">
+			<tr>
+				<td width="30%">コマンド</td>
+				<td>findstr | fs</td>
+			</tr>
+			<tr>
+				<td>書式</td>
+				<td>findstr string</td>
+			</tr>
+			<tr>
+				<td>使用例</td>
+				<td>fs string</td>
+			</tr>
+			<tr>
+				<td>ノート</td>
+				<td>検索文字列コードは「表示」メニューに従います。</td>
+			</tr>
+		</table>
+		</p>
+
+		<li>データ選択</li></p>
+		<table width="80%">
+			<tr>
+				<td width="30%">コマンド</td>
+				<td>select | sel</td>
+			</tr>
+			<tr>
+				<td>書式</td>
+				<td>sel start length</td>
+			</tr>
+			<tr>
+				<td>使用例</td>
+				<td>sel 0 ff</td>
+			</tr>
+			<tr>
+				<td>ノート</td>
+				<td>start, length には算術式を記述できます。</td>
+			</tr>
+		</table>
+		</p>
+
+		<li>計算機</li></p>
+		上記以外の書式の場合、入力された文字を計算式として処理します。
+		演算子には +, -, *, /, %, &amp;, |, ^, &gt;&gt;, &lt;&lt;, ~ が使用できます。
+		数値は 16 進数として解釈します。ただし、下記により指示可能です。
+		</p>
+		<ul>
+			<li>数値の先頭に 0 を付加すると 8進数 として解釈します。</li>
+			<li>数値の先頭に 0x 又は x を付加すると 16 進数として解釈します。</li>
+			<li>数値の末尾に l 又は L を付加すると 10 進数として解釈します。</li>
+		</ul>
+		</p>
+
+		計算結果の基数は下記書式にて指定します。
+		</p>
+		<ul>
+			<li>基数16進数にする書式: hex [計算式]</li>
+			<li>基数10進数にする書式: dex [計算式]</li>
+			<li>基数8進数にする書式: oct [計算式]</li>
+		</ul>
+		</p>
+
+		ここで、計算式を省略した場合、デフォルトの基数が変更されます。
+		デフォルトの基数はコマンドバーの背景色で確認できます。
+		</p>
+
+		<ul>
+			<li>青色 : 16進数</li>
+			<li>緑色 : 10進数</li>
+			<li>赤色 : 8進数</li>
+		</ul>
+
+	</ul>
+
+
+<h1><a name="status">ステータスバー &amp; 解析パレット</a></h1>
+
+	<h2>ステータスバー</h2>
+	ステータスバーの表示内容をカスタマイズすることが可能です。
+	カスタマイズするには ini ファイルの StatusBar1, StatusBar2 を直接書き換えます。
+	StatusBar1 は選択状態の表示内容、StatusBar2 は通常時の表示内容となります。
+	表示内容には下記置換キーワードが使用できます。
+	置換キーワードは '&lt;' と '&gt;' で括ってください。
+	@を挟んで左ブロックと右ブロックを指定して下さい。
+	</p>
+
+	<table width="80%">
+		<tr><td>sel_start</td><td>選択開始アドレス</td></tr>
+		<tr><td>sel_end</td><td>選択終了アドレス</td></tr>
+		<tr><td>sel_size</td><td>選択サイズ</td></tr>
+		<tr><td>addr</td><td>カーソルアドレス</td></tr>
+		<tr><td>addr_offset</td><td>ページ内カーソルアドレス</td></tr>
+		<tr><td>addr_page</td><td>ページアドレス</td></tr>
+		<tr><td>size</td><td>データサイズ</td></tr>
+		<tr><td>型名称</td><td>カーソル位置データ</td></tr>
+		<tr><td>md</td><td>編集モード(挿入/上書き)</td></tr>
+	</table>
+	</p>
+
+	置換キーワード型名称には<a href="#struct">構造体解析</a>で指定可能な型名称を指定します。
+	</p>
+	例) 16進数の4バイト幅でビッグエンディアンを表示する
+
+	<pre>&lt;DWORD:big&gt;</pre>
+
+	<h2>解析パレット</h2>
+	ステータスバーで表示可能な内容をリスト形式で表示します。
+	表示形式は<a href="#struct">構造体解析</a>で使用する表示形式を指定します。
+	ただしステータスバーの時と異なりキーワードを '&lt;', '&gt;' で括る必要はありません。
+	構造体解析表示との同時利用は出来ません。
+	解析パレットのリスト上でマウスを右クリックすると設定内容を変更できます。
+
+
+<h1><a name="menu">ツールメニュー</a></h1>
+
+	<h2>Luaスクリプト</h2>
+	Luaスクリプトを実行します。
+
+	</p><table width="80%">
+		<tr><td width="30%">開始</td><td>スクリプトファイルを選択後、実行します。</td></tr>
+		<tr><td>停止</td><td>Luaスクリプト動作を停止させます。</td></tr>
+	</table></p>
+		
+
+	<h2>フィルデータ</h2>
+	設定した範囲内を指定データで埋め尽くします。
+
+	</p><table width="80%">
+		<tr><td width="30%">固定値</td><td>指定したデータで埋め尽くします。指定したデータ長から繰り返しデータ長を決定します。</td></tr>
+		<tr><td>ランダム値</td><td>ランダムなデータ値で埋め尽くします。</td></tr>
+		<tr><td>インクリメント値</td><td>指定したデータに 1 を加算しながら埋め尽くします。</td></tr>
+		<tr><td>デクリメント値</td><td>指定したデータに 1 を減算しながら埋め尽くします。</td></tr>
+	</table></p>
+
+	<h2>数値解析</h2>
+	カーソル位置からエンディアンを考慮した数値解析を行います。
+	2 バイト以上選択されている場合は選択位置から数値解析を行います。
+	<a href="#status">ステータスバーや解析パレット</a>の内容をコピーしたい場合はこの機能を利用します。
+
+	<h2>サム/ハッシュ値の計算, CRC計算</h2>
+	選択されているデータを対象に計算します。
+
+	</p><table width="80%">
+		<tr><td width="30%">サム計算</td><td>1, 2, 4バイト単位での合計値, XOR値を算出します。 同時に、1 の補数及び 2 の補数も算出します。</td></tr>
+		<tr><td>ハッシュ計算</td><td>MD5, SHA-1, SHA-256でハッシュ値を算出します。</td></tr>
+		<tr><td>CRC計算</td><td>各パラメータを設定しCRCを算出します。</td></tr>
+	</table></p>
+	
+	CRCパラメータのデフォルトには下記があります。
+
+	</p><table width="80%">
+		<tr><th><a name="crc_type">TYPE</a></th><th>Bit</th><th>TrunPoly.</th><th>IniRem.</th><th>FinXOR</th><th>RefIn</th><th>RefRem</th></tr>
+		<tr><td>CRC-8</td><td>8</td><td>0x07</td><td>0x00</td><td>0x00</td><td>Yes</td><td>Yes</td>
+		<tr><td>CRC-16</td><td>16</td><td>0x8005</td><td>0x0000</td><td>0x0000</td><td>Yes</td><td>Yes</td></tr>
+		<tr><td>CRC-16/FILE</td><td>16</td><td>0x1021</td><td>0xffff</td><td>0x0000</td><td>Yes</td><td>Yes</td></tr>
+		<tr><td>CRC-16/CCITT</td><td>16</td><td>0x1021</td><td>0xffff</td><td>0x0000</td><td>No</td><td>No</td></tr>
+		<tr><td>CRC-16/XMODEM</td><td>16</td><td>0x8408</td><td>0x0000</td><td>0x0000</td><td>Yes</td><td>Yes</td></tr>
+		<tr><td>CRC-16/USB</td><td>16</td><td>0x8005</td><td>0xffff</td><td>0xffff</td><td>Yes</td><td>Yes</td></tr>
+		<tr><td>CRC-16/MODBUS</td><td>16</td><td>0x8005</td><td>0xffff</td><td>0x0000</td><td>Yes</td><td>Yes</td></tr>
+		<tr><td>CRC-32</td><td>32</td><td>0x04c11db7</td><td>0xffffffff</td><td>0xffffffff</td><td>Yes</td><td>Yes</td></tr>
+		<tr><td>CRC-32C</td><td>32</td><td>0x1edc6f41</td><td>0xffffffff</td><td>0xffffffff</td><td>Yes</td><td>Yes</td></tr>
+	</table></p>
+
+	<h2>並び替え</h2>
+	選択されているデータの並びをマップにしたがって交換します。
+	部分的なエンディアン変換等の目的で利用可能です。
+
+	<h2>データを比較</h2>
+	現在編集中のデータと他ウインドウのデータを比較します。
+	選択状態の場合、選択範囲内で比較します。
+	比較可能な他ウインドウが複数ある場合、選択画面を表示します。
+	</p>
+	
+	比較結果はハイライト表示します。
+	ハイライト表示の上限は ini ファイルの DiffLimit で変更可能です。
+	DiffLimit=0 とすると上限を設定しません。
+	</p>
+	
+	ハイライト表示は[ESC]キーで解除できます。
+	[Shif+F2]キー又は[F2]キーで不一致箇所にカーソル移動します。
+
+	<h2>パッチ</h2>
+	ページ処理（読み込み専用）で開いた場合でデータを選択状態にすると使用できます。
+	選択部分のコピーがダイアログに展開され、データを編集できます。
+	ダイアログで「OK」を選ぶと直接ファイル内容を書き換えます。アンドゥ操作は出来ません。
+	予めバックアップを作成しておくことをお奨めします。
+	パッチ処理用ダイアログ上での編集は挿入、削除、アンドゥ等の操作が可能です。
+
+	<h2>オプション</h2>
+
+	</p><table width="80%">
+		<tr><td>基本</td><td>表示に関する設定が可能です</td></tr>
+		<tr><td>色</td><td>表示色の設定が可能です</td></tr>
+		<tr><td>詳細</td><td>デバッグ用です</td></tr>
+		<tr><td>その他</td><td>各ディレクトリの初期位置を設定可能です</td></tr>
+		<tr><td>プラグイン</td><td>拡張機能の追加選択が可能です</td></tr>
+		<tr><td>Lua</td><td>Luaスクリプトをキーボードに割り当てることが可能です</td></tr>
+	</table></p>
+
+
+<h1><a name="option">引数オプション</a></h1>
+実行コマンドは以下となります。
+<pre>xedit.exe [options] 編集ファイル</pre>
+options には下記を指定することが可能です。
+
+</p><table width="80%">
+<tr>
+	<td width="30%">-ini iniファイル</td>
+	<td>
+		使用する ini ファイルを指定します。指定しない場合は
+		xedit.exe と同じディレクトリ下の xedit.ini を使用します。
+		(実行ファイル名が xedit の場合)
+	</td>
+</tr>
+<tr>
+	<td>-read</td>
+	<td>開始時の問い合わせ表示を行わず、読み込み専用で開きます。</td>
+</tr>
+<tr>
+	<td>-edit</td>
+	<td>開始時の問い合わせ表示を行わず、編集可能な状態で開きます。<tr>
+</tr>
+<tr>
+	<td>-noauto</td>
+	<td>編集対象ファイルを開く際、ファイル種別の自動判別を行いません。</td>
+</tr>
+</table></p>
+
+<h1><a name="struct">構造体解析</a></h1>
+編集データを構造体に割り当てた状態で解析表示・編集することが可能です。
+(構造体解析時は処理速度が大幅に落ちます。)
+定義ファイルはカンマ区切りで記述します。
+<!--
+定義ファイルは C 言語の構造体ライクに記述する方法とカンマ区切りで記述する方法があります。
+混在による記述は行えません。
+
+	<h2><a name="struct_c">C言語構造体ライクによる記述</a></h2>
+	下記のような C 言語ライクな構文となります。
+
+<pre>
+struct Sample
+{
+    WORD vID;       /* 型 変数名; */
+    WORD dID;
+    WORD Value;
+};</pre>
+	
+	型名称には「<a href="#struct_type">構造体解析の型名称</a>」が指定できます。
+	
+	* 「<a href="#struct_csv">カンマ区切り</a>」と異なり表示形式やエンディアンの指定は出来ません。
+-->
+
+	<h2><a name="struct_csv">カンマ区切りによる記述</a></h2>
+	下記構文となります。
+
+<pre>
+構造体名称,+
+型名称,変数名[,表示形式]</pre>
+	
+	例えば C 言語で記述する以下の構造体は
+
+<pre>
+struct Sample
+{
+    WORD vID;
+    WORD dID;
+    WORD Value;
+};</pre>
+	
+	次の様になります。
+
+<pre>
+Sample,+
+WORD,vID
+WORD,dID
+WORD,Value</pre>
+	
+	構造体名称にはスペースを含む名前の指定が可能です。
+	型名称には「<a href="#struct_type">構造体解析の型名称</a>」が指定できます。
+	表示形式には書式やエンディアンの指定が可能です。
+	複数の書式を設定する場合は ':' で区切ります。
+	エンディアンの指定がない場合はリトルエンディアンとして表示します。
+
+	</p><table width="80%">
+		<tr><td>bin</td><td>2進数表示</td>
+		<tr><td>oct</td><td>8進数表示</td>
+		<tr><td>dec</td><td>10進数符号なし表示</td>
+		<tr><td>hex</td><td>16進数表示</td>
+		<tr><td>int</td><td>10進数符号付き表示</td>
+		<tr><td>little</td><td>リトルエンディアン表示</td>
+		<tr><td>big</td><td>ビッグエンディアン表示</td>
+		<tr><td>数値</td><td>表示幅</td>
+	</table></p>
+		
+	先程の構造体をビッグエンディアンで解析させる場合は次の様になります。
+
+<pre>
+Sample,+
+WORD,vID,hex:big
+WORD,dID,hex:big
+WORD,Value,big</pre>
+
+	<h2><a name="struct_type">構造体解析の型名称</a></h2>
+	構造体解析には以下の型名称が使用できます。
+
+	<ul>
+		<li>double</li>
+		<li>long double</li>
+		<li>float</li>
+		<li>char</li>
+		<li>signed char</li>
+		<li>unsigned char</li>
+		<li>BYTE</li>
+		<li>short</li>
+		<li>signed short</li>
+		<li>unsigned short</li>
+		<li>WORD</li>
+		<li>SHORT</li>
+		<li>USHORT</li>
+		<li>long</li>
+		<li>signed long</li>
+		<li>unsigned long</li>
+		<li>DWORD</li>
+		<li>LONG</li>
+		<li>ULONG</li>
+		<li>int</li>
+		<li>signed int</li>
+		<li>unsigned int</li>
+		<li>INT</li>
+		<li>UINT</li>
+		<li>__int64</li>
+		<li>signed __int64</li>
+		<li>unsigned __int64</li>
+		<li>long long</li>
+		<li>signed long long</li>
+		<li>unsigned long long</li>
+		<li>ULONGLONG</li>
+		<li>QWORD</li>
+	</ul>
+	
+<h1><a name="lua">Luaスクリプト</a></h1>
+Luaスクリプト内で下記関数を用いることでバイナリデータの編集が可能です。
+スクリプトはグローバルテーブル変数 arg にて自身のスクリプトファイルパス名と引数情報が参照可能です。
+
+<ul>
+	<li>データの更新</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.set(アドレス, データ)</td></tr>
+		<tr><td>引数1:アドレス</td><td>対象アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:データ</td><td>数値又は文字列を指定します。</td></tr>
+		<tr><td>戻り</td><td>なし</td></tr>
+		<tr><td>概要</td><td>指定アドレスのデータを更新します。</td></tr>
+	</table></p>
+
+	<li>データの参照</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.get(アドレス)</td></tr>
+		<tr><td>引数:アドレス</td><td>対象アドレスを数値で指定します。</td></tr>
+		<tr><td>戻り</td><td>指定アドレスのバイトデータを数値で返します。</td></tr>
+		<tr><td>概要</td><td>指定アドレスのデータを1バイト参照します。アドレス部にデータがない場合は 0 が返ります。</td></tr>
+	</table></p>
+
+	<li>データの文字列参照</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.gets(アドレス, サイズ)</td></tr>
+		<tr><td>引数1:アドレス</td><td>対象アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:サイズ</td><td>参照するサイズを数値で指定します。</td></tr>
+		<tr><td>戻り</td><td>指定範囲のデータを文字列として返します。</td></tr>
+		<tr><td>概要</td><td>指定アドレスのデータを1バイト参照します。アドレス部にデータがない場合は 0 が返ります。</td></tr>
+	</table></p>
+
+	<li>データの削除</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.del(アドレス[, サイズ])</td></tr>
+		<tr><td>引数1:アドレス</td><td>対象アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:サイズ</td><td>削除するサイズを数値で指定します。</td></tr>
+		<tr><td>戻り</td><td>なし</td></tr>
+		<tr><td>概要</td><td>指定アドレスのデータを指定バイト数削除します。サイズを省略すると 1 バイト削除します。</td></tr>
+	</table></p>
+
+	<li>データの挿入</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.ins(アドレス, データ)</td></tr>
+		<tr><td>引数1:アドレス</td><td>対象アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:データ</td><td>数値又は文字列を指定します。</td></tr>
+		<tr><td>戻り</td><td>なし</td></tr>
+		<tr><td>概要</td><td>指定アドレスにデータを挿入します。</td></tr>
+	</table></p>
+
+	<li>データの検索</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.find(アドレス[, データ]+)</td></tr>
+		<tr><td>引数1:アドレス</td><td>検索開始アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:データ</td><td>数値又は文字列を指定します。</td></tr>
+		<tr><td>戻り1:結果</td><td>検索結果を boolean で返します。</td></tr>
+		<tr><td>戻り2:アドレス1</td><td>見つかった開始位置のアドレスを数値で返します。</td></tr>
+		<tr><td>戻り3:アドレス2</td><td>見つかった終了位置のアドレスを数値で返します。</td></tr>
+		<tr><td>概要</td><td>指定アドレスからデータを検索します。見つかった場合は、選択状態となります。</td></tr>
+	</table></p>
+
+	<li>カーソル位置の取得</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.get_cur()</td></tr>
+		<tr><td>引数</td><td>なし</td></tr>
+		<tr><td>戻り:アドレス</td><td>カーソル位置のアドレスを数値で返します。</td></tr>
+		<tr><td>概要</td><td>カーソル位置のアドレスを返します。</td></tr>
+	</table></p>
+
+	<li>カーソル位置の設定</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.set_cur(アドレス)</td></tr>
+		<tr><td>引数:アドレス</td><td>移動するアドレス位置を数値で指定します。</td></tr>
+		<tr><td>戻り</td><td>なし</td></tr>
+		<tr><td>概要</td><td>カーソルをアドレス位置に移動させます。</td></tr>
+	</table></p>
+
+	<li>ページ位置の取得</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.get_page()</td></tr>
+		<tr><td>引数</td><td>なし</td></tr>
+		<tr><td>戻り:ページ番号</td><td>現在のページ番号を数値で返します。</td></tr>
+		<tr><td>概要</td><td>現在のページ番号を返します。</td></tr>
+	</table></p>
+
+	<li>ページ位置の設定</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.set_page(ページ番号)</td></tr>
+		<tr><td>引数:ページ番号</td><td>移動するページ番号を数値で指定します。</td></tr>
+		<tr><td>戻り:ページ番号</td><td>移動後のページ番号を数値で返します。</td></tr>
+		<tr><td>概要</td><td>ページに移動します。</td></tr>
+	</table></p>
+
+	<li>選択範囲の設定</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.set_sel(開始アドレス, 選択サイズ)</td></tr>
+		<tr><td>引数1:開始アドレス</td><td>選択開始アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:選択サイズ</td><td>選択サイズを数値で指定します。</td></tr>
+		<tr><td>戻り</td><td>なし</td></tr>
+		<tr><td>概要</td><td>選択範囲を設定します。すべてを選択する場合は set_sel(0, 0) を、選択を解除する場合は set_sel(1, 0) として下さい。</td></tr>
+	</table></p>
+
+	<li>選択範囲の取得</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.get_sel()</td></tr>
+		<tr><td>引数</td><td>なし</td></tr>
+		<tr><td>戻り1:開始アドレス</td><td>選択開始アドレスを数値で返します。</td></tr>
+		<tr><td>戻り2:選択サイズ</td><td>選択サイズを数値で返します。</td></tr>
+		<tr><td>概要</td><td>選択範囲の情報を返します。選択されていない場合は、戻り:開始アドレスにカーソル位置、選択サイズに 0 を返します。</td></tr>
+	</table></p>
+
+	<li>バッファサイズの取得</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.size()</td></tr>
+		<tr><td>引数</td><td>なし</td></tr>
+		<tr><td>戻り:サイズ</td><td>編集バッファのサイズを数値で返します。</td></tr>
+		<tr><td>概要</td><td>編集バッファのサイズを返します。</td></tr>
+	</table></p>
+
+	<li>マーク情報の登録</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.set_mark(アドレス, サイズ[, テキスト色, 背景色])</td></tr>
+		<tr><td>引数1:アドレス</td><td>マーク開始アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:サイズ</td><td>マークサイズを数値で指定します。</td></tr>
+		<tr><td>引数3:テキスト色</td><td>マークのテキスト色を数値で指定します。</td></tr>
+		<tr><td>引数4:背景色</td><td>マークの背景色を数値で指定します。</td></tr>
+		<tr><td>戻り</td><td>なし</td></tr>
+		<tr><td>概要</td><td>指定範囲をマーク登録します。</td></tr>
+	</table></p>
+
+	<li>マーク情報の取得</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.get_mark()</td></tr>
+		<tr><td>引数</td><td>なし</td></tr>
+		<tr><td>戻り</td><td>マーク情報がある場合、開始アドレスとマークサイズのテーブルをテーブルとして返します。</td></tr>
+		<tr><td>概要</td><td>マーク情報をテーブルで返します。</td></tr>
+		<tr><td>サンプル</td><td>開始アドレスと範囲を表示する。</p>
+<pre>
+tbl = xedit.get_mark()
+for key, mk in pairs(tbl) do
+    print(mk[1], mk[2])
+end
+</pre>
+</td></tr>
+	</table></p>
+
+
+	<li>マーク情報の削除</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.del_mark(アドレス, サイズ)</td></tr>
+		<tr><td>引数1:アドレス</td><td>マーク開始アドレスを数値で指定します。</td></tr>
+		<tr><td>引数2:サイズ</td><td>マーク開サイズを数値で指定します。</td></tr>
+		<tr><td>戻り:結果</td><td>削除の結果を boolean で返します。</td></tr>
+		<tr><td>概要</td><td>マーク情報を検索し、アドレス・サイズに一致するマーク 1 つを削除します。</td></tr>
+	</table></p>
+
+	<li>CRCの計算</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.crc(タイプ, 開始アドレス, 終了アドレス)</td></tr>
+		<tr><td>引数1:タイプ</td><td>CRCのTYPE(種別)を文字列で指定します。</td></tr>
+		<tr><td>引数2:開始アドレス</td><td>演算対象開始アドレスを数値で指定します。</td></tr>
+		<tr><td>引数3:終了アドレス</td><td>演算対象終了アドレスを数値で指定します。</td></tr>
+		<tr><td>戻り:演算結果</td><td>CRCの演算結果を数値で返します。</td></tr>
+		<tr><td>概要</td><td>開始アドレスから終了アドレスの範囲でCRCを算出します。<a href="#crc_type">TYPE</a>には"CRC-8"等の文字列で指定します。</td></tr>
+	</table></p>
+
+	<li>ハッシュの計算</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.hash(タイプ, 開始アドレス, 終了アドレス)</td></tr>
+		<tr><td>引数1:タイプ</td><td>ハッシュの種別を文字列で指定します。</td></tr>
+		<tr><td>引数2:開始アドレス</td><td>演算対象開始アドレスを数値で指定します。</td></tr>
+		<tr><td>引数3:終了アドレス</td><td>演算対象終了アドレスを数値で指定します。</td></tr>
+		<tr><td>戻り:ハッシュ値</td><td>演算結果をテーブルで返します。</td></tr>
+		<tr><td>概要</td><td>開始アドレスから終了アドレスの範囲でハッシュを算出します。種別には</br>
+			<ul>
+				<li>"MD5"</li>
+				<li>"SHA-1"</li>
+				<li>"SHA-256"</li>
+			</ul>が指定可能です。</td></tr>
+	</table></p>
+
+	<li>構造体編集</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.struct_create(構造体名称)</td></tr>
+		<tr><td>引数:構造体名称</td><td>構造体定義の名称を文字列で指定します。</td></tr>
+		<tr><td>戻り:識別番号</td><td>構造体の識別番号を数値で返します。</td></tr>
+		<tr><td>概要</td><td>構造体の作成を開始します。</td></tr>
+	</table></p>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.struct_add_member(識別番号, メンバ定義)</td></tr>
+		<tr><td>引数1:識別番号</td><td>処理対象とする構造体を数値で指定します。</td></tr>
+		<tr><td>引数2:メンバ定義</td><td>メンバの定義を文字列で指定します。</td></tr>
+		<tr><td>戻り:結果</td><td>処理結果として成功/失敗を返します。</td></tr>
+		<tr><td>概要</td><td>構造体定義にメンバを追加します。</br>
+識別番号は struct_create で得た結果を指定します。
+メンバ定義は「型名称」「変数名」「表示形式」を「,」で区切ります。「表示形式」は省略可能です。メンバ定義は構造体の最後に追加されます。
+1つのメンバに定義に対して struct_add_member を1回呼び出してください。
+<pre>
+xedit.struct_add_member(fd, "int,name")
+xedit.struct_add_member(fd, "int,type")
+xedit.struct_add_member(fd, "char,data[8],char")
+</pre>
+		</td></tr>
+	</table></p>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>xedit.struct_close(識別番号)</td></tr>
+		<tr><td>引数:識別番号</td><td>構造体の識別番号を数値で指定します。</td></tr>
+		<tr><td>戻り:結果</td><td>処理結果として成功/失敗を返します。</td></tr>
+		<tr><td>概要</td><td>構造体の作成を終了します。同時に、構造体解析のウインドウに定義が追加されます。</td></tr>
+	</table></p>
+
+	<li>文字列入力ダイアログの表示</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>wui.input(タイトル[, 初期値])</td></tr>
+		<tr><td>引数1:タイトル</td><td>ダイアログのタイトルを文字列で指定します。</td>
+		<tr><td>引数2:初期値</td><td>入力文字の初期値を文字列で指定します。</td>
+		<tr><td>戻り1:結果</td><td>操作結果を boolean で返します。</td>
+		<tr><td>戻り2:入力文字列</td><td>入力文字列を返します。</td>
+		<tr><td>概要</td><td>入力用ダイアログボックスを表示します。ダイアログボックスにはファイル選択とディレクトリ選択のボタンが付加されています。</td></tr>
+	</table></p>
+
+	<li>色選択ダイアログの表示</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>wui.color([初期色値])</td></tr>
+		<tr><td>引数:初期色値</td><td>色情報(RGB)を数値で指定します。</td>
+		<tr><td>戻り1:結果</td><td>操作結果を boolean で返します。</td>
+		<tr><td>戻り2:色値</td><td>選択した色値を数値で返します。</td>
+		<tr><td>概要</td><td>色選択用ダイアログボックスを表示します。</td></tr>
+	</table></p>
+
+	<li>外部フィルターの実行</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>eui.execute(実行ファイル)</td></tr>
+		<tr><td>引数:実行ファイル</td><td>実行ファイルのパスを文字列で指定します。</td>
+		<tr><td>戻り:結果</td><td>実行ファイルのコンソール出力結果を文字列で返します。</td>
+		<tr><td>概要</td><td>実行ファイルを実行します。戻りには終了コードでなく実行ファイルが出力した文字列となります。</td></tr>
+	</table></p>
+
+	<li>環境変数の設定</li>
+
+	</p><table width="80%">
+		<tr><td width="30%">書式</td><td>eui.putenv(文字列)</td></tr>
+		<tr><td>引数:文字列</td><td>"ENV=値"の形で文字列を指定します。</td>
+		<tr><td>戻り:結果</td><td>設定結果を boolean で返します。</td>
+		<tr><td>概要</td><td>環境変数を登録します。</td></tr>
+	</table></p>
+</ul>
+
+
+<h1><a name="rom">ROM化支援</a></h1>
+ファイル選択ダイアログで「ファイルの種類」に形式を選択することでモトローラSフォーマットやインテルHEXフォーマットの
+(ROM化ファイルと呼ぶことにします)ファイル読み込み／書き込みを行うことが出来ます。
+
+	<h2>読み込み</h2>
+	両フォーマットとも ROM化を目的としたデータファイルでテキストファイルです。
+	1行が1レコードで成り立っており1レコードには「ロードアドレス：書き込みデータ」等の情報が記述されています。
+	(ロードアドレスとは ROMに書き込むアドレスのことです)
+	xedit では各フォーマットに応じたレコードの解析を行いエディット画面に取り込みます。
+	</p>
+	ROM化ファイルは必ずしもロードアドレスが 0 番地から始まるとは限りません。
+	また、すべてのアドレスにデータが埋まるわけでもありません。
+	よって、xedit では歯抜け部分に「画面設定」-「埋め込みデータ」で指定したバイトデータで埋めます。
+	</p>
+	また、エラーレコードを発見した場合は、そのレコードの読み込みを無視して次のレコードを継続処理します。
+	ロードアドレスが重複した記述の場合には後方レコードで情報が上書きされます。
+	</p>
+	ini ファイルの RomAddrMaskRead を 1 にすると編集可能範囲外のアドレスを検出した場合、
+	編集可能範囲内にアドレスを変更し、強制的に読み込みます。(保存すると元のデータは失われます)
+	</p>
+	ini ファイルの RomForceRead を 1 にするとアドレス不正検出でも読み込みを継続します。
+	(保存すると元のデータは失われます)
+	</p>
+	読み込みが完了すると、読み込み範囲をハイライト表示します。
+	ハイライト表示の上限は ini ファイルの DiffLimit で変更可能です。(比較時のハイライト設定と共有)
+	また、ハイライト部分をマークとして記憶することが可能です。
+	読み込み範囲のハイライト表示は編集または[ESC]キーを押すことで解除出来ます。
+
+	<h2>保存</h2>
+	1レコードにデータを 0x10 バイト区切りとして出力します。
+	各フォーマットに応じた形式で出力するのでそのままROM化データとして使用可能です。
+	</p>
+	ただし、1レコードが全て「埋め込みデータ」の場合は保存対象レコードから外す事が出来ます。
+	これは読み込み時に歯抜け部分として挿入したデータを保存対象外とする事でROM化ファイルのサイズを小さく出来ます。
+	保存時のオプションで選択してください。
+	</p>
+	マークを記憶または編集している場合はマーク部分のみを出力することが可能です。
+	</p>
+	上記理由からxedit以外で作成したROM化ファイルを「読み込み」-「保存」を行っても元のファイルと同じテキストを得られる可能性は低いですが、
+	ROM化においては同一データとなります。
+
+	<h2>変換</h2>
+	読み込み形式にモトローラSフォーマット（又はインテルHEXフォーマット）を選択し、
+	書き込む形式にインテルHEXフォーマット（又はモトローラSフォーマット）にすればフォーマット変換として利用することも可能です。
+
+
+<h1><a name="env">動作環境</a></h1>
+<ul>
+	<li>Ver.1.75まではWindowsXPの動作する環境で確認しています。</li>
+	<li>Ver.1.76からはWindows7(64bit)の動作する環境で確認しています。</li>
+</ul>
+
+<h1><a name="free">配布条件等</a></h1>
+<ul>
+	<li>フリーソフトウェアです。配布する際はアーカイブのまま行ってください。</li>
+	<li>バージョン情報は実行ファイルのプロパティにて確認できます。</li>
+	<li>連絡先 mailto:janus@fj8.so-net.ne.jp</li>
+	<li>ホームページ <a href="http://www002.upp.so-net.ne.jp/janus/">http://www002.upp.so-net.ne.jp/janus/</a></li>
+</ul>
+
+
+
+<h1><a name="copyright">著作権・免責等</a></h1>
+<ul>
+	<li>本ソフトウェアに関する著作権は Janus が保有します。</li>
+	<li>本ソフトウェアを使用した上で生じた損害について Janus は一切責任を負いません。</li>
+	<li>本ソフトウェアの保守を行う義務を Janus は負いません。</li>
+	<li>製品名などは、各社の商標・登録商標です。</li>
+	<li>本ソフトウェアは <a href="http://zlib.net">zlib</a> version 1.2.3 を利用しています。</li>
+	<li>本ソフトウェアは技術的制限手段を違法に回避するものではありません。</li>
+	<li>本ソフトウェアはスクリプト <a href="http://www.lua.org/">Lua</a> 5.2 を組み込んでいます。</li>
+</ul>
+
+
+<h1><a name="lua_license">License for Lua 5.0 and later versions</a></h1>
+<pre>
+    Copyright(c) 1994-2011 Lua.org, PUC-Rio.
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+    THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+</pre>
+
+
+<h1><a name="history">変更履歴</a></h1>
+
+<h3>1.80 2016/06/15</h3>
+<ul>
+	<li>マークの選択機能追加</li>
+	<li>Luaウインドウの端末制御コントローラを変更</li>
+	<li>Luaウインドウコマンドの未実装部を追加</li>
+	<li>ROM化ファイル読み込み後のマーク背景が適用されない不具合を修正</li>
+	<li>ROM化ファイル読み込み後、マーク先頭位置にジャンプする</li>
+	<li>ROM化ファイルの内容が1行255文字以上だと解析に失敗する不具合を修正</li>
+</ul>
+
+<h3>1.79 2016/02/16</h3>
+<ul>
+	<li>Luaスクリプトで構造体を操作可能とする</li>
+	<li>Luaスクリプトを分割ウインドウで処理する</li>
+	<li>ファイルを開く際の [CTRL], [SHIFT]キー を見直し</li>
+	<li>引数オプション auto を廃止、noauto を追加</li>
+	<li>インテルHEXフォーマットの拡張アドレス付近での境界処理不具合を一部修正</li>
+	<li>xedit ver2 のベータ版を同梱</li>
+</ul>
+
+<h3>1.78 2012/03/02</h3>
+<ul>
+	<li>Luaスクリプト用関数名 mark を set_markに変更</li>
+	<li>Luaスクリプト用関数 get_mark, del_mark を追加</li>
+	<li>プラグインのコマンド種別に AM_DEL_MARK を追加</li>
+	<li>算術式解析を boost Spirit Classic → Spirit V2.5 へ変更</li>
+	<li>分割窓のサイズを構造体とパレットで個々に記憶するように変更</li>
+	<li>Luaホットキーで起動したLuaの中断が同一ホットキーで行えるように変更</li>
+	<li>構造体定義を C 言語の構造体ライクで指定できる機能を暫定追加 (この機能追加で実行ファイルのサイズが大きくなるので切り離すかも)</li>
+	<li>コマンドバーで使用できるコマンド表記に &gt;, +, # を追加</li>
+	<li>引数オプションを追加</li>
+</ul>
+
+<h3>1.77 2012/02/11</h3>
+<ul>
+	<li>Luaホットキーで引数指定できない不具合修正</li>
+	<li>Luaダイアログで xedit モジュール登録不具合修正</li>
+	<li>Luaスクリプト用関数 eui.bit_xx を削除</li>
+	<li>Luaスクリプト用関数 xedit.get_sel/get_sel の仕様変更</li>
+	<li>置換時にカーソル移動を行うようにする</li>
+	<li>構造体表示形式の指定文字を見直す</li>
+	<li>ステータスバーの表示状態を記憶する</li>
+	<li>ステータスバーの置換キーワードを構造体解析に合わせる</li>
+</ul>
+
+<h3>1.76 2012/02/04</h3>
+<ul>
+	<li>選択範囲の保存が行われない不具合を修正</li>
+	<li>検索メニューのアクセラレータを変更</li>
+	<li>アイコンを変更</li>
+	<li>ホットキーでの Lua 実行方法を変更</li>
+	<li>ステータスバーの置換キーワードを変更</li>
+	<li>解析パレット機能を追加</li>
+	<li>組み込み Lua のバージョンを 5.2 とする</li>
+	<li>ROM化ファイルを開いた際、読み込み範囲をハイライト表示する</li>
+	<li>ROM化ファイルの読み書きでマークに対応</li>
+	<li>ファイルドロップでの自動判別方法を変更</li>
+</ul>
+
+<h3>1.75 2011/04/19</h3>
+<ul>
+	<li>Luaスクリプト用関数を追加</li>
+	<li>Luaスクリプトダイアログの入力項目を実行中に記憶しておく</li>
+	<li>Luaでの引数の添え字をスタンドアロン版にあわせる</li>
+	<li>比較動作が正しく機能していない不具合を修正</li>
+</ul>
+
+</body>
+</html>
+
