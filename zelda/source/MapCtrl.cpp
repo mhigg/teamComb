@@ -248,7 +248,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
 			case MAP_ID::ENEMY:
-				if (1)
+				if (enCnt < ENEMY_MAX)
 				{
 					int num = GetRand(static_cast<int>(ENEMY::ENEMY_MAX) - 1);
 				// ´ÈÐ°‚Ì²Ý½ÀÝ½
@@ -256,6 +256,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 						std::make_unique<Enemy>
 						(num, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-10,-35)));
 				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt, true);
+				enCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
