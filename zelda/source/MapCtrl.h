@@ -59,10 +59,10 @@ private:
 	std::vector<MAP_ID*>	mapData;				// ﾏｯﾌﾟ用の二次元ﾃﾞｰﾀ
 	std::vector<MAP_ID>		mapData_Base;		// ﾏｯﾌﾟ用のﾃﾞｰﾀ
 	std::vector<MAP_ID*>	itemData;				// ﾏｯﾌﾟのﾊﾟﾈﾙの二次元ﾃﾞｰﾀ
-	std::vector<MAP_ID>		itemData_Base;	// ﾏｯﾌﾟのﾊﾟﾈﾙﾃﾞｰﾀ
+	std::vector<MAP_ID>		itemData_Base;		// ﾏｯﾌﾟのﾊﾟﾈﾙﾃﾞｰﾀ
 
 	std::vector<VECTOR2> scrollTbl;			// ﾌﾟﾚｲﾔｰごとのｽｸﾛｰﾙｵﾌｾｯﾄを格納
-	std::array<VECTOR2, 4> plScrTbl;		// 分割時の各画面の左上
+	std::array<VECTOR2, 4> plScrTbl;			// 分割時の各画面の左上
 
 	VECTOR2 stageSize;		// ｽﾃｰｼﾞのﾏｽ目数
 	VECTOR2 chipSize;			// ﾏｽの大きさ
