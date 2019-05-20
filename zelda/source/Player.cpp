@@ -139,7 +139,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	halfSize = lpStageMng.GetChipSize() / 2;
 
-	Init("image/playerAll.png", VECTOR2(640 / 8, 840 / 7), VECTOR2(8, 7), setUpPos);
+	Init("image/playerAll.png", VECTOR2(960 / 12, 840 / 7), VECTOR2(12, 7), setUpPos);
 	startPos = pos;
 
 	InitScroll();
@@ -162,6 +162,7 @@ bool Player::initAnim(void)
 	AddAnim("’â~", 0, 0, 1, 6, true);
 	AddAnim("ˆÚ“®", 0, 1, 6, 8, true);
 	AddAnim("¾‘–", 4, 1, 6, 6, true);
+	AddAnim("UŒ‚", 8, 1, 6, 3, false);
 	AddAnim("€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
@@ -175,6 +176,21 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
+	if (!animEndFlag)	// UŒ‚Ó°¼®İ‚ªI‚í‚é‚Ü‚Å‚Ì±ÆÒ°¼®İ•Û
+	{
+		if (GetAnim() == "UŒ‚")
+		{
+			return;
+		}
+	}
+
+	// UŒ‚ˆ—
+	if (inputTbl[plNum][XINPUT_ATT] & (~inputTblOld[plNum][XINPUT_ATT]))
+	{
+		SetAnim("UŒ‚");
+		return;
+	}
+
 	// ÌßÚ²Ô°‚ÌÀŞÒ°¼Şó‚¯(ÃŞÊŞ¯¸—p)
 	if (state.Inv <= 0)
 	{
@@ -187,7 +203,8 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		dir = DIR_DOWN;
 		pos = startPos;		// Ø½Îß°İˆ—
-		
+		lpScoreBoard.DataInit();
+
 		InitScroll();
 	}
 
@@ -310,8 +327,8 @@ bool Player::CheckObjType(OBJ_TYPE type)
 	return (type == OBJ_PLAYER);
 
 }
-bool Player::DeathPrc(void)
 
+bool Player::DeathPrc(void)
 {
 	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
 	{
