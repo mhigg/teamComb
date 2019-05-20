@@ -147,6 +147,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	initAnim();
 
 	afterKeyFlag = false;
+
+	_updater = &Player::Stop;	// 初期状態は停止状態
 }
 
 Player::Player()
@@ -173,41 +175,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	GetItem();
 	invTime = state.Inv;
 
-	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
-	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
-	if (!animEndFlag)	// 攻撃ﾓｰｼｮﾝが終わるまでのｱﾆﾒｰｼｮﾝ保持
-	{
-		if (GetAnim() == "攻撃")
-		{
-			return;
-		}
-	}
-
-	// 攻撃処理
-	if (inputTbl[plNum][XINPUT_ATT] && (!inputTblOld[plNum][XINPUT_ATT]))
-	{
-		SetAnim("攻撃");
-		return;
-	}
-
-	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸ用)
-	if (state.Inv <= 0)
-	{
-		if (controller.GetCtrl(KEY_TYPE_NOW)[KEY_INPUT_F] & (~controller.GetCtrl(KEY_TYPE_OLD)[KEY_INPUT_F]))
-		{
-			lpScoreBoard.SetScore(DATA_LIFE, -1);
-		}
-	}
-	if (DeathPrc())
-	{
-		dir = DIR_DOWN;
-		pos = startPos;		// ﾘｽﾎﾟｰﾝ処理
-		lpScoreBoard.DataInit();
-
-		InitScroll();
-	}
+	(this->*_updater)(controller);
 
 	// 時間経過によるステータス変更
 	// 攻撃
@@ -240,101 +210,6 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 		invTime = 0;
 	}
 
-	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, int sideNum) {
-		VECTOR2 side;
-		switch (dir)
-		{
-		case DIR_DOWN:
-			side = { sideNum,(halfSize.y) + speed - 2 };
-			break;
-		case DIR_LEFT:
-			side = { speed - (halfSize.x),sideNum };
-			break;
-		case DIR_RIGHT:
-			side = { (halfSize.x) + speed - 2,sideNum };
-			break;
-		case DIR_UP:
-			side = { sideNum,speed - (halfSize.y) };
-			break;
-		default:
-			break;
-		}
-		return pos + side;
-	};
-
-	for (int i = 0; i < ENEMY_MAX; i++)
-	{
-		VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
-		if (ePos != VECTOR2(-1, -1))
-		{
-			VECTOR2 tmp = { ePos - pos };
-			if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
-			{
-				// 当たってるとき
-				lpScoreBoard.SetScore(DATA_LIFE, -1);
-			}
-		}
-	}
-
-	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
-		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])
-		{
-			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
-
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -halfSize.x)))]
-				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], halfSize.x - 1)))])
-			{
-				Player::dir = DirTbl[dir][id];
-				// 移動不可のオブジェクトが隣にあった場合
-				return false;
-			}
-
-			// 移動処理-----------------------------
-			// 変更したい座標の変数アドレス += 移動量
-			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
-
-			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
-			{
-				scrollOffset.x = pos.x - SCROLL_AREA_X;
-				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
-			}
-			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
-			{
-				scrollOffset.y = pos.y - SCROLL_AREA_Y;
-				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
-			}
-			lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
-			return true;
-		}
-		return false;
-	};
-
-	// 後key処理------------------------------------
-	if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP1 - (afterKeyFlag << 1)))		// OPP1,OPP2に移動しなかった場合
-	 ||   Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP2 - (afterKeyFlag << 1)))))	// (key入力がなかった場合)
-	{
-		afterKeyFlag = false;
-		if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_MAIN + (afterKeyFlag << 1)))	// MAIN,REVに移動しなかった場合
-		 ||   Move(static_cast<DIR_TBL_ID>(DIR_TBL_REV  + (afterKeyFlag << 1)))))// (key入力がなかった場合)
-		{
-			SetAnim("停止");
-			return;
-		}
-	}
-	else
-	{
-		// OPP1もしくはOPP2にkey入力があった場合の情報
-		afterKeyFlag = static_cast<bool>(inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]]);
-		afterKeyFlag |= static_cast<bool>(inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]]);
-		afterKeyFlag ^= static_cast<int>(GetAnim() == "停止");
-	}
-	// ﾌﾟﾚｲﾔｰが走っているときは疾走ｱﾆﾒｰｼｮﾝにする
-	if (inputTbl[plNum][XINPUT_RUN_RB])
-	{
-		SetAnim("疾走");
-		return;
-	}
-	SetAnim("移動");
 }
 
 bool Player::CheckObjType(OBJ_TYPE type)
@@ -457,4 +332,180 @@ void Player::InitScroll(void)
 	}
 
 	lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+}
+
+void Player::Stop(const GameCtrl & controller)
+{
+	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
+
+	_updater = &Player::Move;
+
+	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸ用)
+	if (inputTbl[plNum][XINPUT_MAP] & (~inputTblOld[plNum][XINPUT_MAP]))
+	{
+		_updater = &Player::Damage;
+	}
+
+	if (inputTbl[plNum][XINPUT_ATT] & (~inputTblOld[plNum][XINPUT_ATT]))
+	{
+		SetAnim("攻撃");
+		_updater = &Player::Attack;
+	}
+}
+
+void Player::Move(const GameCtrl & controller)
+{
+	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
+
+	// ﾌﾟﾚｲﾔｰのﾀﾞﾒｰｼﾞ受け(ﾃﾞﾊﾞｯｸ用)
+	if (inputTbl[plNum][XINPUT_MAP] & (~inputTblOld[plNum][XINPUT_MAP]))
+	{
+		_updater = &Player::Damage;
+		return;
+	}
+
+	if (inputTbl[plNum][XINPUT_ATT] & (~inputTblOld[plNum][XINPUT_ATT]))
+	{
+		SetAnim("攻撃");
+		_updater = &Player::Attack;
+		return;
+	}
+
+	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, int sideNum) {
+		VECTOR2 side;
+		switch (dir)
+		{
+		case DIR_DOWN:
+			side = { sideNum,(halfSize.y) + speed - 2 };
+			break;
+		case DIR_LEFT:
+			side = { speed - (halfSize.x),sideNum };
+			break;
+		case DIR_RIGHT:
+			side = { (halfSize.x) + speed - 2,sideNum };
+			break;
+		case DIR_UP:
+			side = { sideNum,speed - (halfSize.y) };
+			break;
+		default:
+			break;
+		}
+		return pos + side;
+	};
+
+	bool damageFlag = false;
+	for (int i = 0; (i < ENEMY_MAX) && (damageFlag == false); i++)
+	{
+		VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
+		if (ePos != VECTOR2(-1, -1))
+		{
+			VECTOR2 tmp = { ePos - pos };
+			if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
+			{
+				// 当たってるとき
+				damageFlag = true;
+			}
+		}
+	}
+
+	if (damageFlag)
+	{
+		_updater = &Player::Damage;
+		return;
+	}
+
+	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
+		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])
+		{
+			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
+
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -halfSize.x)))]
+				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], halfSize.x - 1)))])
+			{
+				Player::dir = DirTbl[dir][id];
+				// 移動不可のオブジェクトが隣にあった場合
+				return false;
+			}
+
+			// 移動処理-----------------------------
+			// 変更したい座標の変数アドレス += 移動量
+			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
+
+			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
+			{
+				scrollOffset.x = pos.x - SCROLL_AREA_X;
+				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+			}
+			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
+			{
+				scrollOffset.y = pos.y - SCROLL_AREA_Y;
+				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+			}
+			lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
+			return true;
+		}
+		return false;
+	};
+
+	// 後key処理------------------------------------
+	if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP1 - (afterKeyFlag << 1)))		// OPP1,OPP2に移動しなかった場合
+		|| Move(static_cast<DIR_TBL_ID>(DIR_TBL_OPP2 - (afterKeyFlag << 1)))))	// (key入力がなかった場合)
+	{
+		afterKeyFlag = false;
+		if (!(Move(static_cast<DIR_TBL_ID>(DIR_TBL_MAIN + (afterKeyFlag << 1)))	// MAIN,REVに移動しなかった場合
+			|| Move(static_cast<DIR_TBL_ID>(DIR_TBL_REV + (afterKeyFlag << 1)))))// (key入力がなかった場合)
+		{
+			SetAnim("停止");
+			return;
+		}
+	}
+	else
+	{
+		// OPP1もしくはOPP2にkey入力があった場合の情報
+		afterKeyFlag = static_cast<bool>(inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP1]]]);
+		afterKeyFlag |= static_cast<bool>(inputTbl[plNum][keyIdTbl[DirTbl[dir][DIR_TBL_OPP2]]]);
+		afterKeyFlag ^= static_cast<int>(GetAnim() == "停止");
+	}
+	// ﾌﾟﾚｲﾔｰが走っているときは疾走ｱﾆﾒｰｼｮﾝにする
+	if (inputTbl[plNum][XINPUT_RUN_RB])
+	{
+		SetAnim("疾走");
+		return;
+	}
+	SetAnim("移動");
+}
+
+void Player::Attack(const GameCtrl & controller)
+{
+	if (!animEndFlag)
+	{
+		// 攻撃処理
+
+		return;
+	}
+
+	// ｱﾆﾒｰｼｮﾝが終わったら元に戻す
+	_updater = &Player::Move;
+}
+
+void Player::Damage(const GameCtrl & controller)
+{
+	if (state.Inv <= 0)
+	{
+		lpScoreBoard.SetScore(DATA_LIFE, -1);
+	}
+
+	if (DeathPrc())
+	{
+		dir = DIR_DOWN;
+		pos = startPos;		// ﾘｽﾎﾟｰﾝ処理
+		lpScoreBoard.DataInit();
+
+		InitScroll();
+	}
+
+	// ﾀﾞﾒｰｼﾞｱﾆﾒｰｼｮﾝが終わったら遷移(予定)
+	_updater = &Player::Stop;
 }

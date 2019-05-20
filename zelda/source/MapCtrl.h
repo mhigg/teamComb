@@ -39,7 +39,6 @@ public:
 
 	// Ï¯Ìß•`‰æ
 	void Draw(bool flag);
-	void ItemDraw(VECTOR2 offset);
 
 	// ½¸Û°Ù’l‚Ì‰ÁŽZ
 	void AddScroll(VECTOR2 scrollOffset, int plNum);
@@ -47,6 +46,8 @@ public:
 private:
 	MapCtrl();
 	~MapCtrl();
+
+	void ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset);
 
 	template<typename mapType, typename idType>
 	bool SetData(mapType maps, const VECTOR2 & pos, idType id);
