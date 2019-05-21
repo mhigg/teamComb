@@ -12,7 +12,6 @@ Obj::Obj()
 Obj::Obj(VECTOR2 drawOffset) :drawOffset(drawOffset)
 {
 	// ‚±‚Ìºİ½Ä×¸À‚ªŒÄ‚Ño‚³‚ê‚½uŠÔ^‚Áæ‚ÉdrawOffset‚ª‰Šú‰»‚³‚ê‚é
-
 	dir = DIR_DOWN; // (¾ŞÛ‚Ì‘ã‚í‚è)
 	visible = true;
 }
@@ -75,14 +74,15 @@ void Obj::Draw(void)
 	if (id < IMAGE_ID(imageName).size())
 	{
 		DrawGraph(
-			drawOffset.x + pos.x - scrollOffset.x - halfSize.x,
-			drawOffset.y + pos.y - scrollOffset.y - halfSize.y,
+			drawOffset.x + pos.x - scrollOffset.x - actOff.x,
+			drawOffset.y + pos.y - scrollOffset.y - actOff.y,
 			IMAGE_ID(imageName)[id],
 			true
 		);
 	}
 	SetFontSize(18);
-	DrawFormatString(pos.x - drawOffset.x - scrollOffset.x, pos.y - drawOffset.y - scrollOffset.y, 0x00ffffff, "scrX:%d\nscrY:%d", scrollOffset.x, scrollOffset.y);
+	DrawFormatString(pos.x - scrollOffset.x +drawOffset.x , pos.y - scrollOffset.y +drawOffset.y,0x00ffffff, "scrX:%d\nscrY:%d", pos.x, pos.y);
+	DrawCircle(pos.x - scrollOffset.x +drawOffset.x, pos.y - scrollOffset.y +drawOffset.y, hitRad.x, 0x00ffffff, false);
 }
 
 void Obj::Draw(unsigned int id)
@@ -92,8 +92,8 @@ void Obj::Draw(unsigned int id)
 		if (visible)
 		{
 			DrawGraph(
-				drawOffset.x + pos.x - scrollOffset.x - halfSize.x,
-				drawOffset.y + pos.y - scrollOffset.y - halfSize.y,
+				drawOffset.x + pos.x - scrollOffset.x - actOff.x,
+				drawOffset.y + pos.y - scrollOffset.y - actOff.y,
 				IMAGE_ID(imageName)[id],
 				true
 			);

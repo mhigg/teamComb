@@ -35,6 +35,7 @@ public:
 	~Player();
 	bool initAnim(void);		// ±∆“∞ºÆ›ä«óù
 private:
+	void PlInit(void);
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 	bool CheckObjType(OBJ_TYPE type);
 	bool DeathPrc(void);			// ä÷êîâª

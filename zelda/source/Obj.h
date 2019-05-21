@@ -114,10 +114,11 @@ private:
 protected:
 	void SetPos(VECTOR2 pos);	// 座標を設定
 
-	VECTOR2 pos;				// 表示する座標
+	VECTOR2 pos;						// 表示する座標
+	VECTOR2 scrollOffset;				// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
 	const VECTOR2 drawOffset;	// 描画ｵﾌｾｯﾄ
-	VECTOR2 scrollOffset;		// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
-	VECTOR2 halfSize;						// playerの中心座標を求めるための変数
+	VECTOR2 hitRad;					// ｵﾌﾞｼﾞｪｸﾄの当たり判定のｻｲｽﾞ
+	VECTOR2 actOff;					// ｵﾌﾞｼﾞｪｸﾄの(当たり判定の)中心座標までのｽﾞﾚ
 
 	std::string imageName;	// 表示する画像のﾌｧｲﾙ名
 	VECTOR2 divSize;			// 画像の分割ｻｲｽﾞ
@@ -130,5 +131,5 @@ protected:
 	unsigned int animCnt;		// ｱﾆﾒｰｼｮﾝのｶｳﾝﾄ
 	bool animEndFlag;			// ｱﾆﾒｰｼｮﾝの最終ｺﾏ到達ﾌﾗｸﾞ
 
-	bool visible;
+	bool visible;					// 点滅ﾌﾗｸﾞ
 };

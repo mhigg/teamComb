@@ -116,9 +116,10 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 					false,	// STONE_4					
 	};
 	this->objType = OBJ_ENEMY;
-	halfSize = {30,40};
+	actOff = VECTOR2(30, 40);
+	hitRad = VECTOR2(30, 30);
 	name = static_cast<ENEMY>(enemyNum);
-	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos + halfSize);
+	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
 
 	// ｶｳﾝﾄ系
 	timeCnt			= 0;
@@ -152,16 +153,16 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		switch (dir)
 		{
 		case DIR_DOWN:
-			side = { sideNum,(halfSize.y) + speed - 2 };
+			side = { sideNum,(hitRad.y) + speed - 2 };
 			break;
 		case DIR_LEFT:
-			side = { speed - (halfSize.x),sideNum };
+			side = { speed - (hitRad.x),sideNum };
 			break;
 		case DIR_RIGHT:
-			side = { (halfSize.x) + speed - 2,sideNum };
+			side = { (hitRad.x) + speed - 2,sideNum };
 			break;
 		case DIR_UP:
-			side = { sideNum,speed - (halfSize.y) };
+			side = { sideNum,speed - (hitRad.y) };
 			break;
 		default:
 			break;
@@ -214,8 +215,8 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (!(action == ENEM_ACT::DO_NOTHING))
 	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], -halfSize.x)))]
-			|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], halfSize.x - 1)))])
+		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], -hitRad.x)))]
+			|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], hitRad.x - 1)))])
 		{
 			// 移動不可のオブジェクトが隣にあった場合
 			Enemy::dir = dir;
@@ -247,7 +248,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			return;
 		}
 		// lpInfoCtrl.SetEnemyPos(pos);
-		(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
+		/*(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];*/
 		return;
 	}
 	switch (dir)

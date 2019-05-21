@@ -242,7 +242,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
-						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt] + VECTOR2(-20, -90)));
+						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y) + VECTOR2(20, 100), drawOffset + plScrTbl[plCnt]));
 					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt, flag);
 					plCnt++;
 				}
@@ -255,7 +255,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				// ´ÈÐ°‚Ì²Ý½ÀÝ½
 				/* Ã½Ä*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
-						(num, chipSize * VECTOR2(x, y) - VECTOR2(20,20), drawOffset + VECTOR2(-10,-35),enCnt));
+						(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), drawOffset,enCnt));
 				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt, flag);
 				enCnt++;
 				}

@@ -8,19 +8,6 @@
 
 Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOffset)
 {
-	speed = PL_DEF_SPEED;
-	life = PL_LIFE_MAX;
-
-	state.Power = 1;
-	state.Guard = 0;
-	state.Inv = 0;
-	score = 0;
-
-	upTime = {
-		0,0
-	};
-	invTime = 0;
-
 	keyIdTbl = { XINPUT_DOWN,	// 下
 				 XINPUT_LEFT,	// 左
 				 XINPUT_RIGHT,	// 右
@@ -138,17 +125,15 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	this->plNum = plNum;
 
-	halfSize = lpStageMng.GetChipSize() / 2;
+	hitRad = VECTOR2(20, 20);
+	actOff = VECTOR2(40, 100);
 
 	Init("image/playerAll.png", VECTOR2(960 / 12, 840 / 7), VECTOR2(12, 7), setUpPos);
 	startPos = pos;
 
 	InitScroll();
 	initAnim();
-
-	afterKeyFlag = false;
-
-	_updater = &Player::Stop;	// 初期状態は停止状態
+	PlInit();
 }
 
 Player::Player()
@@ -168,6 +153,25 @@ bool Player::initAnim(void)
 	AddAnim("攻撃", 8, 1, 6, 3, false);
 	AddAnim("死亡", 4, 0, 4, 8, false);	// falseでｱﾆﾒｰｼｮﾝをﾙｰﾌﾟさせない
 	return true;
+}
+
+void Player::PlInit(void)
+{
+	speed = PL_DEF_SPEED;
+	life = PL_LIFE_MAX;
+
+	state.Power = 1;
+	state.Guard = 0;
+	state.Inv = 0;
+	score = 0;
+
+	upTime = {
+		0,0
+	};
+	invTime = 0;
+	afterKeyFlag = false;
+
+	_updater = &Player::Move;	// 初期状態は停止状態
 }
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
@@ -378,16 +382,16 @@ void Player::Move(const GameCtrl & controller)
 		switch (dir)
 		{
 		case DIR_DOWN:
-			side = { sideNum,(halfSize.y) + speed - 2 };
+			side = { sideNum,(hitRad.y) + speed - 2 };
 			break;
 		case DIR_LEFT:
-			side = { speed - (halfSize.x),sideNum };
+			side = { speed - (hitRad.x),sideNum };
 			break;
 		case DIR_RIGHT:
-			side = { (halfSize.x) + speed - 2,sideNum };
+			side = { (hitRad.x) + speed - 2,sideNum };
 			break;
 		case DIR_UP:
-			side = { sideNum,speed - (halfSize.y) };
+			side = { sideNum,speed - (hitRad.y) };
 			break;
 		default:
 			break;
@@ -396,14 +400,15 @@ void Player::Move(const GameCtrl & controller)
 	};
 
 //--------- 敵に当たった時の処理 ----------
-
+	
 	bool damageFlag = false;
 	for (int i = 0; (i < ENEMY_MAX) && (damageFlag == false); i++)
 	{
-		VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
+		 VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
 		if (ePos != VECTOR2(-1, -1))
 		{
-			VECTOR2 tmp = { ePos - pos };
+			 	VECTOR2 tmp = { ePos - pos };
+			_RPTN(_CRT_WARN, "\n%d\t%d\t%d\t%d", ePos.x, ePos.y,pos.x,pos.y);
 			if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
 			{
 				// 当たってるとき
@@ -411,6 +416,7 @@ void Player::Move(const GameCtrl & controller)
 			}
 		}
 	}
+
 
 	if (damageFlag && (state.Inv <= 0))
 	{
@@ -424,8 +430,8 @@ void Player::Move(const GameCtrl & controller)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -halfSize.x)))]
-				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], halfSize.x - 1)))])
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -hitRad.x)))]
+				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], hitRad.x - 1)))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合
