@@ -1,0 +1,17 @@
+#pragma once
+#include "BaseScene.h"
+class SelectScene :
+	public BaseScene
+{
+public:
+	SelectScene();
+	~SelectScene();
+	uniqueBase UpDate(						// çXêV
+		uniqueBase own,					// åªç›ÇÃº∞›
+		const GameCtrl &controller		// ∑∞éÊìæ
+	);
+private:
+	void SelectDraw(void);
+	int Init(void);
+};
+
