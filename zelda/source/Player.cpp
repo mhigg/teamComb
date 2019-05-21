@@ -412,7 +412,7 @@ void Player::Move(const GameCtrl & controller)
 		}
 	}
 
-	if (damageFlag)
+	if (damageFlag && (state.Inv <= 0))
 	{
 		_updater = &Player::Damage;
 		return;
@@ -510,5 +510,5 @@ void Player::Damage(const GameCtrl & controller)
 	}
 
 	// ÀÞÒ°¼Þ±ÆÒ°¼®Ý‚ªI‚í‚Á‚½‚ç‘JˆÚ(—\’è)
-	_updater = &Player::Stop;
+	_updater = &Player::Move;
 }
