@@ -3,7 +3,7 @@
 #include "GameScene.h"
 #include "EditScene.h"
 #include "ImageMng.h"
-
+#include "SelectScene.h"
 
 MenuScene::MenuScene()
 {
@@ -59,18 +59,18 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		}
 
 		// º∞›à⁄çs
-		if (nowSelect != 2)
+		if ((nowSelect == 0)||(nowSelect == 1))
 		{
 			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 			{
-				return std::make_unique<EditScene>();
+				return std::make_unique<SelectScene>();
 			}
 			if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
 			{
-				return std::make_unique<EditScene>();
+				return std::make_unique<SelectScene>();
 			}
 		}
-		else
+		else if(nowSelect == 2)
 		{
 			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 			{
