@@ -369,9 +369,9 @@ void MapCtrl::Draw(bool flag)
 	// Ãﬂ⁄≤‘∞ÇÃç¿ïW - VECTOR2(320, 200)
 	// forëÊìÒà¯êîÇÕÅAplScrSizeñ¢ñûÇÃä‘
 	
-	VECTOR2 XYoffset;
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
+		VECTOR2 XYoffset;
 		XYoffset = scrollTbl[pIdx] / chipSize;
 
 		if (flag)
@@ -492,56 +492,53 @@ void MapCtrl::Draw(bool flag)
 				}
 			}
 		}
+		ItemDraw(offset, plScrSize, XYoffset, pIdx);
 	}
-	ItemDraw(offset, plScrSize, XYoffset);
 }
 
-void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset)
+void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pIdx)
 {
 	VECTOR2 tmpPos;
-	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
+	for (int y = XYoffset.y; y < XYoffset.y + scrSize.y; y++)
 	{
-		for (int y = XYoffset.y; y < XYoffset.y + scrSize.y; y++)
+		for (int x = XYoffset.x; x < XYoffset.x + scrSize.x; x++)
 		{
-			for (int x = XYoffset.x; x < XYoffset.x + scrSize.x; x++)
-			{
-				MAP_ID id = itemData[y][x];
+			MAP_ID id = itemData[y][x];
 
-				tmpPos = { (x * chipSize.x),(y * chipSize.y) };
-				switch (id)
-				{
-				case MAP_ID::POTION_1:
-				case MAP_ID::POTION_2:
-				case MAP_ID::POTION_3:
-				case MAP_ID::POTION_4:
-				case MAP_ID::COIN_1:
-				case MAP_ID::COIN_2:
-				case MAP_ID::COIN_3:
-				case MAP_ID::COIN_4:
-				case MAP_ID::KEY_1:
-				case MAP_ID::KEY_2:
-				case MAP_ID::MEAT:
-				case MAP_ID::SWORD:
-				case MAP_ID::SHIELD:
-				case MAP_ID::BOOK:
-				case MAP_ID::GOLD:
-				case MAP_ID::DIA:
-					DrawGraph(
-						tmpPos.x + offset.x + plScrTbl[pIdx].x - scrollTbl[pIdx].x,
-						tmpPos.y + offset.y + plScrTbl[pIdx].y - scrollTbl[pIdx].y,
-						IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-						true
-					);
-					//DrawGraph(
-					//	tmpPos.x + offset.x - scrollOffset.x,
-					//	tmpPos.y + offset.y - scrollOffset.y,
-					//	IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-					//	true
-					//);
-					break;
-				default:
-					break;
-				}
+			tmpPos = { (x * chipSize.x),(y * chipSize.y) };
+			switch (id)
+			{
+			case MAP_ID::POTION_1:
+			case MAP_ID::POTION_2:
+			case MAP_ID::POTION_3:
+			case MAP_ID::POTION_4:
+			case MAP_ID::COIN_1:
+			case MAP_ID::COIN_2:
+			case MAP_ID::COIN_3:
+			case MAP_ID::COIN_4:
+			case MAP_ID::KEY_1:
+			case MAP_ID::KEY_2:
+			case MAP_ID::MEAT:
+			case MAP_ID::SWORD:
+			case MAP_ID::SHIELD:
+			case MAP_ID::BOOK:
+			case MAP_ID::GOLD:
+			case MAP_ID::DIA:
+				DrawGraph(
+					tmpPos.x + offset.x + plScrTbl[pIdx].x - scrollTbl[pIdx].x,
+					tmpPos.y + offset.y + plScrTbl[pIdx].y - scrollTbl[pIdx].y,
+					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+					true
+				);
+				//DrawGraph(
+				//	tmpPos.x + offset.x - scrollOffset.x,
+				//	tmpPos.y + offset.y - scrollOffset.y,
+				//	IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+				//	true
+				//);
+				break;
+			default:
+				break;
 			}
 		}
 	}
@@ -550,5 +547,4 @@ void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset)
 void MapCtrl::AddScroll(VECTOR2 scrollOffset, int plNum)
 {
 	this->scrollTbl[plNum] = scrollOffset;
-//	this->scrollOffset = scrollOffset;
 }

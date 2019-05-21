@@ -47,7 +47,7 @@ private:
 	MapCtrl();
 	~MapCtrl();
 
-	void ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset);
+	void ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pIdx);
 
 	template<typename mapType, typename idType>
 	bool SetData(mapType maps, const VECTOR2 & pos, idType id);

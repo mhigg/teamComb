@@ -96,11 +96,15 @@ void GameScene::Draw(void)
 	//	return false;
 	//});
 
-	for (auto& obj : (*objList))
-	{
-		obj->Draw();
-	}
+	//int playerNum = GetJoypadNum();
 
+	//for (int plCnt = 0; plCnt < playerNum; plCnt++)
+	{
+		for (auto& obj : (*objList))
+		{
+			obj->Draw();
+		}
+	}
 
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
