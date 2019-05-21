@@ -41,6 +41,13 @@ private:
 	void GetItem(void);				// ±²ÃÑæ“¾
 	void InitScroll(void);			// ÌßÚ²Ô°‚ÌÀ•W‚É‚æ‚Á‚Ä½¸Û°ÙµÌ¾¯Ä‚ğ‰Šú‰»‚·‚é
 
+// ---------- ÌßÚ²Ô°‚Ìó‘ÔŠÖ” ------------
+	void Stop(const GameCtrl & controller);			// ’â~ó‘Ô
+	void Move(const GameCtrl & controller);			// •à‚«^‘–‚èó‘Ô
+	void Attack(const GameCtrl & controller);			// UŒ‚
+	void Damage(const GameCtrl & controller);			// ÀŞÒ°¼Ş
+
+
 	int speed;
 	VECTOR2 startPos;				// ½À°Ä’n“_(Ø½Îß°İ—p)
 	unsigned int NotFlag;
@@ -61,5 +68,7 @@ private:
 
 	bool afterKeyFlag;			// key‚ÌŒã“ü—Í‚ğ—Dæ‚³‚¹‚éÌ×¸Ş
 	PL_NUMBER plNum;
+
+	void (Player::*_updater)(const GameCtrl & controller);		// ó‘ÔŠÖ”Îß²İÀ
 };
 

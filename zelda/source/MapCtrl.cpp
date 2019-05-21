@@ -368,10 +368,11 @@ void MapCtrl::Draw(bool flag)
 	// x,yの初期値を各分割画面の左上にする
 	// ﾌﾟﾚｲﾔｰの座標 - VECTOR2(320, 200)
 	// for第二引数は、plScrSize未満の間
-
+	
+	VECTOR2 XYoffset;
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
-		VECTOR2 XYoffset = scrollTbl[pIdx] / chipSize;
+		XYoffset = scrollTbl[pIdx] / chipSize;
 
 		if (flag)
 		{
@@ -492,17 +493,17 @@ void MapCtrl::Draw(bool flag)
 			}
 		}
 	}
-	ItemDraw(offset);
+	ItemDraw(offset, plScrSize, XYoffset);
 }
 
-void MapCtrl::ItemDraw(VECTOR2 offset)
+void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset)
 {
 	VECTOR2 tmpPos;
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
-		for (int y = 0; y < stageSize.y; y++)
+		for (int y = XYoffset.y; y < XYoffset.y + scrSize.y; y++)
 		{
-			for (int x = 0; x < stageSize.x; x++)
+			for (int x = XYoffset.x; x < XYoffset.x + scrSize.x; x++)
 			{
 				MAP_ID id = itemData[y][x];
 
