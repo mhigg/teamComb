@@ -25,14 +25,13 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 #ifdef _DEBUG	// √ﬁ ﬁØ∏ﬁéûÇÃÇ›éÊìæ
 	auto ctrl = controller.GetCtrl(KEY_TYPE_NOW);
 	auto ctrlOld = controller.GetCtrl(KEY_TYPE_OLD);
-	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
-	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
-#else
-#endif
-
 	auto pad = controller.GetInputState(KEY_TYPE_NOW);
 	auto padOld = controller.GetInputState(KEY_TYPE_OLD);
-
+#else
+#endif
+	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
+	
 #ifdef _DEBUG	// √ﬁ ﬁØ∏ﬁéûÇÃÇ›é¿çs
 	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
 	{
@@ -45,7 +44,13 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<EditScene>();
 	}
 #else
+	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	{
+		lpScoreBoard.DataInit();
+		return std::make_unique<GameScene>();
+	}
 #endif
+
 
 	for (auto& obj : (*objList))
 	{
