@@ -27,6 +27,26 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
+
+	// ‘I‘ð
+	if (inputState[0][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::RIGHT)])
+	{
+		if (nowChara < CHARA_NUM - 1)
+		{
+			selectChara[nowChara] = false;
+			selectChara[nowChara + 1] = true;
+			nowChara += 1;
+		}
+	}
+	if (inputState[0][static_cast<int>(INPUT_ID::LEFT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::LEFT)])
+	{
+		if (nowChara > 0)
+		{
+			selectChara[nowChara] = false;
+			selectChara[nowChara - 1] = true;
+			nowChara -= 1;
+		}
+	}
 	SelectDraw();
 	return std::move(own);
 }
@@ -51,11 +71,20 @@ void SelectScene::SelectDraw(void)
 		DrawLine(tmp1, tmp2, 0x00ffffff, true);
 	}
 	DrawString(0, 0, "SelectScene", 0x00ff0000);
-	DrawGraph(100, 100, IMAGE_ID("image/tatie.png")[0], true);
+	DrawGraph(20, 20, IMAGE_ID("image/p1.png")[0], true);
+	DrawGraph(820, 20, IMAGE_ID("image/p2.png")[0], true);
+	if (selectChara[0])
+	{
+		DrawGraph(100, 100, IMAGE_ID("image/tatie.png")[0], true);
+	}
 	ScreenFlip();
 }
 
 int SelectScene::Init(void)
 {
+	selectChara = {
+		true,false,false,false,
+	};
+	nowChara = 0;
 	return 0;
 }
