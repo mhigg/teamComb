@@ -1,11 +1,11 @@
-#include "DxLib.h"
-#include "SceneMng.h"
-#include "EditScene.h"
-#include "Obj.h"
+#include <DxLib.h>
 #include "EditCursor.h"
+#include "SceneMng.h"
+#include "StageMng.h"
+#include "EditScene.h"
 #include "GameCtrl.h"
 #include "MapCtrl.h"
-#include "StageMng.h"
+//#include "InfoCtrl.h"
 
 // ¶°¿ÙˆÚ“®‚Ì‘¬“x•Ï‰»—p
 constexpr int EDIT_KEY_GET_DEF_RNG	= 60;
@@ -85,6 +85,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	}
 
 	lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(0));
+//	lpInfoCtrl.SetAddScroll(scrollOffset, 0);
 
 	// LCONTROL‰Ÿ‰º‚ÅID++ WALL_BLUE‚©‚ç‰ÁŽZ‚µ‚ÄMAX‚ÌŒãNON‚Ö–ß‚é
 	if (ctrl[KEY_INPUT_LCONTROL] & ~(ctrlOld[KEY_INPUT_LCONTROL]))
