@@ -131,7 +131,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	Init("image/playerAll.png", VECTOR2(960 / 12, 840 / 7), VECTOR2(12, 7), setUpPos);
 	startPos = pos;
 
-	InitScroll();
+	InitScroll(static_cast<int>(plNum));
 	initAnim();
 	PlInit();
 }
@@ -314,30 +314,6 @@ void Player::GetItem(void)
 	state.Inv = lpScoreBoard.GetScore(DATA_INV);
 }
 
-void Player::InitScroll(void)
-{
-	scrollOffset = { 0,0 };
-
-	if (pos.x >= SCROLL_AREA_X)
-	{
-		scrollOffset.x = pos.x - SCROLL_AREA_X;
-		if (pos.x >= SCROLL_AREA_SIZE_X)
-		{
-			scrollOffset.x = SCROLL_AREA_SIZE_X - SCROLL_AREA_X;
-		}
-	}
-	if (pos.y >= SCROLL_AREA_Y)
-	{
-		scrollOffset.y = pos.y - SCROLL_AREA_Y;
-		if (pos.y >= SCROLL_AREA_SIZE_Y)
-		{
-			scrollOffset.y = SCROLL_AREA_SIZE_Y - SCROLL_AREA_Y;
-		}
-	}
-
-	lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
-}
-
 void Player::Stop(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
@@ -512,7 +488,7 @@ void Player::Damage(const GameCtrl & controller)
 		pos = startPos;		// ÿΩŒﬂ∞›èàóù
 		lpScoreBoard.DataInit();
 
-		InitScroll();
+		InitScroll(static_cast<int>(plNum));
 	}
 
 	// ¿ﬁ“∞ºﬁ±∆“∞ºÆ›Ç™èIÇÌÇ¡ÇΩÇÁëJà⁄(ó\íË)

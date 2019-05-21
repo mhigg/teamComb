@@ -85,7 +85,7 @@ public:
 	);
 	virtual bool CheckDeath(void) { return false; };	// 死亡判定　基本死んでなければfalse
 	virtual bool CheckObjType(OBJ_TYPE type) = 0;		// 指定した値と同じ型が来たらtrueを返す
-	virtual void Draw(void);		// 描画
+	virtual void Draw(void);	// 描画
 	void Draw(unsigned int id);		// ID指定描画
 	const VECTOR2 &GetPos(void);	// 座標取得関数
 
@@ -108,11 +108,13 @@ public:
 private:
 	virtual void SetMove(const GameCtrl &controller, weakListObj objList) = 0;
 
+
 	std::string animName;	// 表示するｱﾆﾒｰｼｮﾝ名
 	std::map<std::string, int[ANIM_TBL_MAX]> animTable;	// ｱﾆﾒｰｼｮﾝの設定を保存する配列
 
 protected:
 	void SetPos(VECTOR2 pos);	// 座標を設定
+	void InitScroll(int plNum);	// ｽｸﾛｰﾙｵﾌｾｯﾄを初期化する
 
 	VECTOR2 pos;						// 表示する座標
 	VECTOR2 scrollOffset;				// ｽｸﾛｰﾙによるｵﾌｾｯﾄ

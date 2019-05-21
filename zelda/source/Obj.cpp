@@ -2,6 +2,10 @@
 #include "Obj.h"
 #include "SceneMng.h"
 #include "ImageMng.h"
+#include "StageMng.h"
+//#include "InfoCtrl.h"
+#include "MapCtrl.h"
+
 
 Obj::Obj()
 {
@@ -45,6 +49,8 @@ void Obj::UpDate(const GameCtrl &controller, weakListObj objList)
 
 void Obj::Draw(void)
 {
+//	scrollOffset = lpInfoCtrl.GetAddScroll(plNum);
+
 	if (imageName.length() == 0)
 	{
 		return;
@@ -109,6 +115,30 @@ const VECTOR2 & Obj::GetPos(void)
 void Obj::SetPos(VECTOR2 pos)
 {
 	Obj::pos = pos;
+}
+
+void Obj::InitScroll(int plNum)
+{
+	scrollOffset = { 0,0 };
+
+	if (pos.x >= SCROLL_AREA_X)
+	{
+		scrollOffset.x = pos.x - SCROLL_AREA_X;
+		if (pos.x >= SCROLL_AREA_SIZE_X)
+		{
+			scrollOffset.x = SCROLL_AREA_SIZE_X - SCROLL_AREA_X;
+		}
+	}
+	if (pos.y >= SCROLL_AREA_Y)
+	{
+		scrollOffset.y = pos.y - SCROLL_AREA_Y;
+		if (pos.y >= SCROLL_AREA_SIZE_Y)
+		{
+			scrollOffset.y = SCROLL_AREA_SIZE_Y - SCROLL_AREA_Y;
+		}
+	}
+
+	lpMapCtrl.AddScroll(scrollOffset, plNum);
 }
 
 bool Obj::AddAnim(std::string animName, int id_x, int id_y, int frame, int inv, bool loop)

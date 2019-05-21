@@ -40,7 +40,6 @@ private:
 	bool CheckObjType(OBJ_TYPE type);
 	bool DeathPrc(void);			// ŠÖ”‰»
 	void GetItem(void);				// ±²ÃÑæ“¾
-	void InitScroll(void);			// ÌßÚ²Ô°‚ÌÀ•W‚É‚æ‚Á‚Ä½¸Û°ÙµÌ¾¯Ä‚ğ‰Šú‰»‚·‚é
 
 // ---------- ÌßÚ²Ô°‚Ìó‘ÔŠÖ” ------------
 	void Stop(const GameCtrl & controller);			// ’â~ó‘Ô
