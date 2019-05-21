@@ -1,5 +1,10 @@
 #pragma once
 #include "BaseScene.h"
+
+constexpr auto CHARA_NUM = 4;
+
+using SELECT_CHARA = std::array< bool, CHARA_NUM >;
+
 class SelectScene :
 	public BaseScene
 {
@@ -13,5 +18,8 @@ public:
 private:
 	void SelectDraw(void);
 	int Init(void);
+
+	SELECT_CHARA selectChara;
+	int nowChara;	// ¡‘I‘ğ‚µ‚Ä‚¢‚éƒLƒƒƒ‰
 };
 
