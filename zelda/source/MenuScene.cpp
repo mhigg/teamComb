@@ -123,18 +123,15 @@ void MenuScene::MenuDraw(void)
 		}
 		DrawGraph(0,GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/idou.png")[0], true);
 		DrawGraph(180, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/kettei.png")[0], true);
-		DrawGraph(360, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/modoru.png")[0], true);
 	}
 	else
 	{
 		SetDrawBright(128, 128, 128);
 		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
 		SetDrawBright(255, 255, 255);
-		DrawGraph(0, 0, IMAGE_ID("image/setumei.png")[0], true);
-		DrawGraph(GAME_SCREEN_SIZE_X - 400,860 , IMAGE_ID("image/sousa.png")[0], true);
-		DrawGraph(0, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/idou.png")[0], true);
-		DrawGraph(180, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/kettei.png")[0], true);
-		DrawGraph(360, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/modoru.png")[0], true);
+		DrawGraph(0, 120, IMAGE_ID("image/setumei.png")[0], true);
+		DrawGraph(0,30 , IMAGE_ID("image/sousa.png")[0], true);
+		DrawGraph(0, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/modoru.png")[0], true);
 	}
 	ScreenFlip();
 }
