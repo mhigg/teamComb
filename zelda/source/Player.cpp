@@ -125,10 +125,10 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,		// STONE_4				
 	};
 	actAdd = {
-		VECTOR2(hitRad.x	,	0			),
-		VECTOR2(0			,	-hitRad.y),
-		VECTOR2(0			,	hitRad.y),
-		VECTOR2(-hitRad.x	,	0			)
+		VECTOR2(0					,	hitRad.y * 2	),
+		VECTOR2(-hitRad.x * 2	,	0					),		
+		VECTOR2(hitRad.x * 2	,	0					),
+		VECTOR2(0					,	-hitRad.y * 2	)
 	};
 
 	this->plNum = plNum;
