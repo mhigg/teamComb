@@ -70,7 +70,7 @@ void Obj::Draw(void)
 			// ˆê’è’l‚ğ’´‚¦‚½Œã‚Ìˆ—
 			count = animTable[animName][ANIM_TBL_FRAME] - 1;
 			animEndFlag = true;
-			visible = false;
+			// visible = false;
 		}
 
 		id = (animTable[animName][ANIM_TBL_START_ID]) + static_cast<int>(dir) + count * divCnt.x;
@@ -79,12 +79,15 @@ void Obj::Draw(void)
 
 	if (id < IMAGE_ID(imageName).size())
 	{
-		DrawGraph(
-			drawOffset.x + pos.x - scrollOffset.x - actOff.x,
-			drawOffset.y + pos.y - scrollOffset.y - actOff.y,
-			IMAGE_ID(imageName)[id],
-			true
-		);
+		if (visible)
+		{
+			DrawGraph(
+				drawOffset.x + pos.x - scrollOffset.x - actOff.x,
+				drawOffset.y + pos.y - scrollOffset.y - actOff.y,
+				IMAGE_ID(imageName)[id],
+				true
+			);
+		}
 	}
 	SetFontSize(18);
 	DrawFormatString(pos.x - scrollOffset.x +drawOffset.x , pos.y - scrollOffset.y +drawOffset.y,0x00ffffff, "scrX:%d\nscrY:%d", pos.x, pos.y);

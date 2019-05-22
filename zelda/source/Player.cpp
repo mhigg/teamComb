@@ -151,7 +151,7 @@ bool Player::initAnim(void)
 	AddAnim("ˆÚ“®", 0, 1, 6, 8, true);
 	AddAnim("¾‘–", 4, 1, 6, 6, true);
 	AddAnim("UŒ‚", 8, 1, 6, 3, false);
-	AddAnim("€–S", 4, 0, 4, 8, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
+	AddAnim("€–S", 0, 0, 1, 6, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
 
@@ -169,9 +169,11 @@ void Player::PlInit(void)
 		0,0
 	};
 	invTime = 0;
+	damaCnt = 0;
 	afterKeyFlag = false;
-
-	_updater = &Player::Move;	// ‰Šúó‘Ô‚Í’â~ó‘Ô
+	visible = true;
+	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
+	_updater = &Player::Move;				// ‰Šúó‘Ô‚ÍMoveó‘Ô
 }
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
@@ -396,6 +398,7 @@ void Player::Move(const GameCtrl & controller)
 
 	if (damageFlag && (state.Inv <= 0))
 	{
+		SetAnim("€–S");
 		_updater = &Player::Damage;
 		return;
 	}
@@ -477,20 +480,53 @@ void Player::Attack(const GameCtrl & controller)
 
 void Player::Damage(const GameCtrl & controller)
 {
-	if (state.Inv <= 0)
+	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+	if (damaCnt)
+	{
+		if (damaCnt % 5 == 0)
+		{
+			(*PosTbl[Player::dir][TBL_MAIN]) -= SpeedTbl[Player::dir][inputTbl[plNum][0]] / 2 * 10;
+			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
+			{
+				scrollOffset.x = pos.x - SCROLL_AREA_X;
+				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+			}
+			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
+			{
+				scrollOffset.y = pos.y - SCROLL_AREA_Y;
+				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+			}
+			lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
+			if (damaCnt / 10 % 2 == 0)
+			{
+				visible = false;
+			}
+			if(damaCnt / 10% 2)
+			{
+				visible = true;
+			}
+		}
+		if (damaCnt >= 60)
+		{
+			damaCnt = 0;
+			if (DeathPrc())
+			{
+				dir = DIR_DOWN;
+				pos = startPos;		// Ø½Îß°İˆ—
+				lpScoreBoard.DataInit();
+				InitScroll(static_cast<int>(plNum));
+			}
+			// ÀŞÒ°¼Ş±ÆÒ°¼®İ‚ªI‚í‚Á‚½‚ç‘JˆÚ(—\’è)
+			_updater = &Player::Move;
+			visible = true;
+		}
+		damaCnt++;
+		return;
+	}
+	else
 	{
 		lpScoreBoard.SetScore(DATA_LIFE, -1);
+		damaCnt++;
+		return;
 	}
-
-	if (DeathPrc())
-	{
-		dir = DIR_DOWN;
-		pos = startPos;		// Ø½Îß°İˆ—
-		lpScoreBoard.DataInit();
-
-		InitScroll(static_cast<int>(plNum));
-	}
-
-	// ÀŞÒ°¼Ş±ÆÒ°¼®İ‚ªI‚í‚Á‚½‚ç‘JˆÚ(—\’è)
-	_updater = &Player::Move;
 }
