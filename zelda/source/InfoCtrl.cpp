@@ -1,24 +1,42 @@
 #include "InfoCtrl.h"
 
-bool InfoCtrl::SetPlayerPos(const VECTOR2 & pos, int num, bool flag)
+bool InfoCtrl::SetPlayerPos(const VECTOR2 & pos, int num)
 {
 	if (num > 4)
 	{
 		return false;
 	}
 	plPos[num] = pos;
+	return true;
+}
+
+bool InfoCtrl::SetPlayerFlag(bool flag, int num)
+{
+	if (num > 4)
+	{
+		return false;
+	}
 	plFlag[num] = flag;
 	return true;
 }
 
-bool InfoCtrl::SetEnemyPos(const VECTOR2 & pos, int num, bool flag)
+bool InfoCtrl::SetEnemyPos(const VECTOR2 & pos, int num)
 {
 	if (num > ENEMY_MAX)
 	{
 		return false;
 	}
 	enPos[num]	= pos;
-	enFlag[num]	=flag;
+	return true;
+}
+
+bool InfoCtrl::SetEnemyFlag(bool flag, int num)
+{
+	if (num > ENEMY_MAX)
+	{
+		return false;
+	}
+	enFlag[num] = flag;
 	return true;
 }
 
@@ -48,6 +66,14 @@ VECTOR2 InfoCtrl::GetEnemyPos(int num)
 		return enPos[num];
 	}
 	return VECTOR2(-1, -1);
+}
+bool InfoCtrl::GetPlayerFlag(int num)
+{
+	return plFlag[num];
+}
+bool InfoCtrl::GetEnemyFlag(int num)
+{
+	return enFlag[num];
 }
 VECTOR2 InfoCtrl::GetAddScroll(int num)
 {

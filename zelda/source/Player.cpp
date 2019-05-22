@@ -8,6 +8,8 @@
 
 Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOffset)
 {
+	hitRad = VECTOR2(20, 20);
+	actOff = VECTOR2(40, 100);
 	keyIdTbl = { XINPUT_DOWN,	// â∫
 				 XINPUT_LEFT,	// ç∂
 				 XINPUT_RIGHT,	// âE
@@ -42,49 +44,49 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	};
 	mapMoveTbl = {
 					true,		// NONE
-					false,	// WALL1
-					false,	// WALL2
-					false,	// WALL3
-					false,	// WALL4
-					false,	// WALL5
-					false,	// WALL6
-					false,	// WALL7
-					false,	// WALL8
-					false,	// WALL9
+					false,		// WALL1
+					false,		// WALL2
+					false,		// WALL3
+					false,		// WALL4
+					false,		// WALL5
+					false,		// WALL6
+					false,		// WALL7
+					false,		// WALL8
+					false,		// WALL9
 					true,		// WALL10
 					true,		// WALL11
-					false,	// WALL12
-					false,	// WALL13
-					false,	// WALL14
-					false,	// WALL15
-					false,	// WALL16
-					false,	// WALL17
-					false,	// WALL18
-					false,	// WALL19	// GetMapDataÇÃå≈íËID
-					false,	// WALL20
-					false,	// WALL21				
-					false,	// WALL22
-					false,	// WALL23
-					false,	// WALL24
-					false,	// WALL25
-					false,	// WALL26
-					false,	// WALL27
-					false,	// WALL28
-					false,	// WALL29
-					false,	// WALL30
-					false,	// WALL31
-					false,	// WALL32
-					false,	// WALL33
-					false,	// WALL34
-					false,	// WALL35
-					false,	// WALL36
-					false,	// WALL37	
-					false,	// WALL38	
+					false,		// WALL12
+					false,		// WALL13
+					false,		// WALL14
+					false,		// WALL15
+					false,		// WALL16
+					false,		// WALL17
+					false,		// WALL18
+					false,		// WALL19		// GetMapDataÇÃå≈íËID
+					false,		// WALL20
+					false,		// WALL21				
+					false,		// WALL22
+					false,		// WALL23
+					false,		// WALL24
+					false,		// WALL25
+					false,		// WALL26
+					false,		// WALL27
+					false,		// WALL28
+					false,		// WALL29
+					false,		// WALL30
+					false,		// WALL31
+					false,		// WALL32
+					false,		// WALL33
+					false,		// WALL34
+					false,		// WALL35
+					false,		// WALL36
+					false,		// WALL37	
+					false,		// WALL38	
 					true,		// WALL39	
-					false,	// DOOR1
-					false,	// DOOR2
-					false,	// DOOR3
-					false,	// DOOR4
+					false,		// DOOR1
+					false,		// DOOR2
+					false,		// DOOR3
+					false,		// DOOR4
 					true,		// POTION_1
 					true,		// POTION_2
 					true,		// POTION_3
@@ -103,30 +105,33 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					true,		// BOOK
 					true,		// GOLD
 					true,		// DIA
-					false,	// BOX_1	// ïÛî†
-					false,	// BOX_2	// ãÛÇ¢ÇƒÇ¢ÇÈïÛî†
-					true,		// MOTH_1	// ¬Œﬁ
-					false,	// MOTH_2	// âÛÇÍÇΩ¬Œﬁ
-					true,		// MOTH_3	// íM
-					false,	// MOTH_4	// âÛÇÍÇΩíM
-					false,	// TREE_1	// ñÿ
-					false,	// TREE_2
-					false,	// TREE_3
-					false,	// TREE_4
-					false,	// HOLL_1	// à‰åÀ
-					false,	// HOLL_2
-					false,	// HOLL_3
-					false,	// HOLL_4
-					false,	// STONE_1	// ä‚
-					false,	// STONE_2
-					false,	// STONE_3
-					false,	// STONE_4				
+					false,		// BOX_1		// ïÛî†
+					false,		// BOX_2		// ãÛÇ¢ÇƒÇ¢ÇÈïÛî†
+					true,		// MOTH_1		// ¬Œﬁ
+					false,		// MOTH_2		// âÛÇÍÇΩ¬Œﬁ
+					true,		// MOTH_3		// íM
+					false,		// MOTH_4		// âÛÇÍÇΩíM
+					false,		// TREE_1		// ñÿ
+					false,		// TREE_2
+					false,		// TREE_3
+					false,		// TREE_4
+					false,		// HOLL_1		// à‰åÀ
+					false,		// HOLL_2
+					false,		// HOLL_3
+					false,		// HOLL_4
+					false,		// STONE_1	// ä‚
+					false,		// STONE_2
+					false,		// STONE_3
+					false,		// STONE_4				
+	};
+	actAdd = {
+		VECTOR2(hitRad.x	,	0			),
+		VECTOR2(0			,	-hitRad.y),
+		VECTOR2(0			,	hitRad.y),
+		VECTOR2(-hitRad.x	,	0			)
 	};
 
 	this->plNum = plNum;
-
-	hitRad = VECTOR2(20, 20);
-	actOff = VECTOR2(40, 100);
 
 	Init("image/playerAll.png", VECTOR2(960 / 12, 840 / 7), VECTOR2(12, 7), setUpPos);
 	startPos = pos;
@@ -164,6 +169,7 @@ void Player::PlInit(void)
 	state.Guard = 0;
 	state.Inv = 0;
 	score = 0;
+	damageFlag = false;
 
 	upTime = {
 		0,0
@@ -176,9 +182,35 @@ void Player::PlInit(void)
 	_updater = &Player::Move;				// èâä˙èÛë‘ÇÕMoveèÛë‘
 }
 
+VECTOR2 Player::sidePos(VECTOR2 pos, DIR dir, int speed, int sideNum)
+{
+	VECTOR2 side;
+	switch (dir)
+	{
+	case DIR_DOWN:
+		side = { sideNum,(hitRad.y) + speed - 2 };
+		break;
+	case DIR_LEFT:
+		side = { speed - (hitRad.x),sideNum };
+		break;
+	case DIR_RIGHT:
+		side = { (hitRad.x) + speed - 2,sideNum };
+		break;
+	case DIR_UP:
+		side = { sideNum,speed - (hitRad.y) };
+		break;
+	default:
+		break;
+	}
+	return pos + side;
+}
+
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
-	GetItem();
+	if (!damageFlag)
+	{
+		GetItem();
+	}
 	invTime = state.Inv;
 
 	auto &chipSize = lpStageMng.GetChipSize().x;
@@ -215,13 +247,11 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		invTime = 0;
 	}
-
 }
 
 bool Player::CheckObjType(OBJ_TYPE type)
 {
 	return (type == OBJ_PLAYER);
-
 }
 
 bool Player::DeathPrc(void)
@@ -324,12 +354,12 @@ void Player::Stop(const GameCtrl & controller)
 	_updater = &Player::Move;
 
 	// Ãﬂ⁄≤‘∞ÇÃ¿ﬁ“∞ºﬁéÛÇØ(√ﬁ ﬁØ∏ﬁóp)
-	if (inputTbl[plNum][XINPUT_MAP] & (~inputTblOld[plNum][XINPUT_MAP]))
+	if (inputTbl[plNum][XINPUT_MAP] & (!inputTblOld[plNum][XINPUT_MAP]))
 	{
 		_updater = &Player::Damage;
 	}
 
-	if (inputTbl[plNum][XINPUT_ATT] & (~inputTblOld[plNum][XINPUT_ATT]))
+	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
 		_updater = &Player::Attack;
@@ -342,61 +372,39 @@ void Player::Move(const GameCtrl & controller)
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 
 	// Ãﬂ⁄≤‘∞ÇÃ¿ﬁ“∞ºﬁéÛÇØ(√ﬁ ﬁØ∏ﬁóp)
-	if (inputTbl[plNum][XINPUT_MAP] & (~inputTblOld[plNum][XINPUT_MAP]))
+	if (inputTbl[plNum][XINPUT_MAP] & (!inputTblOld[plNum][XINPUT_MAP]))
 	{
+		damageFlag = true;
 		_updater = &Player::Damage;
 		return;
 	}
 
-	if (inputTbl[plNum][XINPUT_ATT] & (~inputTblOld[plNum][XINPUT_ATT]))
+	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
 		_updater = &Player::Attack;
 		return;
 	}
 
-	auto sidePos = [&](VECTOR2 pos, DIR dir, int speed, int sideNum) {
-		VECTOR2 side;
-		switch (dir)
-		{
-		case DIR_DOWN:
-			side = { sideNum,(hitRad.y) + speed - 2 };
-			break;
-		case DIR_LEFT:
-			side = { speed - (hitRad.x),sideNum };
-			break;
-		case DIR_RIGHT:
-			side = { (hitRad.x) + speed - 2,sideNum };
-			break;
-		case DIR_UP:
-			side = { sideNum,speed - (hitRad.y) };
-			break;
-		default:
-			break;
-		}
-		return pos + side;
-	};
-
 //--------- ìGÇ…ìñÇΩÇ¡ÇΩéûÇÃèàóù ----------
-	
-	bool damageFlag = false;
-	for (int i = 0; (i < ENEMY_MAX) && (damageFlag == false); i++)
+	if (state.Inv == 0)
 	{
-		 VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
-		if (ePos != VECTOR2(-1, -1))
+		for (int i = 0; (i < ENEMY_MAX) && (damageFlag == false); i++)
 		{
-			 	VECTOR2 tmp = { ePos - pos };
-			_RPTN(_CRT_WARN, "\n%d\t%d\t%d\t%d", ePos.x, ePos.y,pos.x,pos.y);
-			if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
+			VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
+			if (ePos != VECTOR2(-1, -1))
 			{
-				// ìñÇΩÇ¡ÇƒÇÈÇ∆Ç´
-				damageFlag = true;
+				VECTOR2 tmp = { ePos - pos };
+				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
+				{
+					// ìñÇΩÇ¡ÇƒÇÈÇ∆Ç´
+					damageFlag = true;
+				}
 			}
 		}
 	}
 
-
-	if (damageFlag && (state.Inv <= 0))
+	if (damageFlag)
 	{
 		SetAnim("éÄñS");
 		_updater = &Player::Damage;
@@ -470,10 +478,22 @@ void Player::Attack(const GameCtrl & controller)
 	if (!animEndFlag)
 	{
 		// çUåÇèàóù
-
+		VECTOR2 actPos = pos + actAdd[Player::dir];
+		for (int i = 0; i < ENEMY_MAX; i++)
+		{
+			VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
+			if (ePos != VECTOR2(-1, -1))
+			{
+				VECTOR2 tmp = { ePos - actPos };
+				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 40)
+				{
+					// ìñÇΩÇ¡ÇƒÇÈÇ∆Ç´
+					lpInfoCtrl.SetEnemyFlag(false, i);
+				}
+			}
+		}
 		return;
 	}
-
 	// ±∆“∞ºÆ›Ç™èIÇÌÇ¡ÇΩÇÁå≥Ç…ñﬂÇ∑
 	_updater = &Player::Move;
 }
@@ -485,18 +505,24 @@ void Player::Damage(const GameCtrl & controller)
 	{
 		if (damaCnt % 5 == 0)
 		{
-			(*PosTbl[Player::dir][TBL_MAIN]) -= SpeedTbl[Player::dir][inputTbl[plNum][0]] / 2 * 10;
-			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
+			DIR tmp = static_cast < DIR>(3 - Player::dir);
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, hitRad.x)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, -hitRad.x - 1)))])
 			{
-				scrollOffset.x = pos.x - SCROLL_AREA_X;
-				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+				// à⁄ìÆïsâ¬ÇÃÉIÉuÉWÉFÉNÉgÇ™ó◊Ç…Ç»Ç¢èÍçá
+				(*PosTbl[Player::dir][TBL_MAIN]) -= SpeedTbl[Player::dir][inputTbl[plNum][0]] / 2 * 6;
+				if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
+				{
+					scrollOffset.x = pos.x - SCROLL_AREA_X;
+					lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+				}
+				if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
+				{
+					scrollOffset.y = pos.y - SCROLL_AREA_Y;
+					lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
+				}
+				lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 			}
-			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
-			{
-				scrollOffset.y = pos.y - SCROLL_AREA_Y;
-				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
-			}
-			lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 			if (damaCnt / 10 % 2 == 0)
 			{
 				visible = false;
@@ -515,10 +541,13 @@ void Player::Damage(const GameCtrl & controller)
 				pos = startPos;		// ÿΩŒﬂ∞›èàóù
 				lpScoreBoard.DataInit();
 				InitScroll(static_cast<int>(plNum));
+				PlInit();
 			}
 			// ¿ﬁ“∞ºﬁ±∆“∞ºÆ›Ç™èIÇÌÇ¡ÇΩÇÁëJà⁄(ó\íË)
+			damageFlag = false;
 			_updater = &Player::Move;
 			visible = true;
+			return;
 		}
 		damaCnt++;
 		return;

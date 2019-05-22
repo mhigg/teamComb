@@ -243,7 +243,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y) + VECTOR2(20, 100), drawOffset + plScrTbl[plCnt]));
-					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt, flag);
+					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt);
+					lpInfoCtrl.SetPlayerFlag(true, plCnt);
 					plCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
@@ -256,7 +257,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				/* Ã½Ä*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
 						(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), drawOffset,enCnt));
-				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt, flag);
+				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt);
+				lpInfoCtrl.SetEnemyFlag(true, enCnt);
 				enCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);

@@ -25,6 +25,7 @@ constexpr int PL_DEF_SPEED = 2;
 constexpr int PL_DASH_SPEED = 4;
 using UP_TIME = std::array < int, 2 >;
 
+using ACT_ARR = std::array<VECTOR2, DIR_MAX>;
 
 class Player :
 	public Obj
@@ -39,7 +40,12 @@ private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 	bool CheckObjType(OBJ_TYPE type);
 	bool DeathPrc(void);			// 関数化
-	void GetItem(void);				// ｱｲﾃﾑ取得
+	void GetItem(void);			// ｱｲﾃﾑ取得
+	VECTOR2 sidePos(				// ｻｲﾄﾞ判定
+		VECTOR2 pos, 
+		DIR dir, 
+		int speed, 
+		int sideNum);
 
 // ---------- ﾌﾟﾚｲﾔｰの状態関数 ------------
 	void Stop(const GameCtrl & controller);			// 停止状態
@@ -47,9 +53,9 @@ private:
 	void Attack(const GameCtrl & controller);		// 攻撃時
 	void Damage(const GameCtrl & controller);		// ﾀﾞﾒｰｼﾞ時
 
-
 	int speed;
 	VECTOR2 startPos;				// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
+	ACT_ARR actAdd;
 	unsigned int NotFlag;
 	State state;
 
@@ -57,6 +63,7 @@ private:
 	int life;
 	int invTime;				// inv減算用
 	int damaCnt;				// ﾀﾞﾒｰｼﾞを受けてからのｶｳﾝﾄ
+	bool damageFlag;		// ﾀﾞﾒｰｼﾞをうけているﾌﾗｸﾞ
 	std::array<int,SCORE_DATA::DATA_MAX> param;
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------

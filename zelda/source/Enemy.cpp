@@ -128,7 +128,6 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	addCnt			= { 0,0 };
 	oppFlag			= false;
 	initAnim();
-	flag = true;
 
 	action = ENEM_ACT::DO_NOTHING;
 }
@@ -139,8 +138,14 @@ Enemy::~Enemy()
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
+	if (!deathFlag)
+	{
+		visible = false;
+		return;
+	}
 	scrollOffset = lpInfoCtrl.GetAddScroll(0);
-	lpInfoCtrl.SetEnemyPos(pos, enCnt, flag);
+	lpInfoCtrl.SetEnemyPos(pos, enCnt);
 	if (!behaviorCnt)
 	{
 		SetAnim("ãxåe1");

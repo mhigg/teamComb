@@ -86,9 +86,6 @@ private:
 	DIR_TBL_PTR PosTbl;					// Îß²İÀ‚ğ’¼ÚŠi”[
 	DIR_TBL_A2D SpeedTbl;			// ˆÚ“®‘¬“x
 	MAP_MOVE_TBL mapMoveTbl;	// ˆÚ“®§Œä,ˆÚ“®‰Â”\µÌŞ¼Şª¸Ä‚È‚çtrue‚ğ•Ô‚·©±²ÃÑ‚âáŠQ•¨‚ğ’Ç‰Á‚µ‚½‚Æ‚«‚Ég‚¤
-
-	bool flag;
-
 protected:
 	bool deathFlag;			// €–SÌ×¸Ş
 };
