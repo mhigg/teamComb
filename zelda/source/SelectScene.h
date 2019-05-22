@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseScene.h"
+#include <array>
 
 constexpr auto CHARA_NUM = 4;
 
@@ -17,8 +18,8 @@ public:
 		const GameCtrl &controller		// ｷｰ取得
 	);
 private:
-	void SelectDraw(void);
-	int Init(void);
+	void SelectDraw(void);		// 描画
+	int Init(void);				// 初期化
 
 	SELECT_CHARA selectChara;	// プレイヤー毎の今選択しているキャラ
 	SELECT_POS selectPos;		// プレイヤー毎の立ち絵位置

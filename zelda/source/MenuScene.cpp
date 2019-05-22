@@ -82,6 +82,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			}
 		}
 		
+		// BACK‚Åƒƒjƒ…[‰æ–Ê‚Ö–ß‚é
 		if (descriptionFlag)
 		{
 			if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))

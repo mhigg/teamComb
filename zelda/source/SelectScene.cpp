@@ -28,6 +28,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
+	// BACKでメニューへ戻る
 	if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))
 	{
 		return std::make_unique<MenuScene>();
@@ -36,7 +37,6 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<MenuScene>();
 	}
-
 
 	// 選択
 	if (inputState[0][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::RIGHT)])
@@ -83,6 +83,7 @@ void SelectScene::SelectDraw(void)
 	DrawGraph(20, 500, IMAGE_ID("image/p3.png")[0], true);
 	DrawGraph(820, 500, IMAGE_ID("image/p4.png")[0], true);
 
+	// プレイヤーの数分立ち絵描画
 	for (int i = 0; i < CHARA_NUM; i++)
 	{
 		if (selectChara[i] == 0)
