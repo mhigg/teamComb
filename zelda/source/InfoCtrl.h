@@ -15,11 +15,15 @@ public:
 		static InfoCtrl s_Instance;
 		return s_Instance;
 	}
-	bool SetPlayerPos(const VECTOR2 & pos, int num, bool flag);
-	bool SetEnemyPos(const VECTOR2 & pos, int num, bool flag);
+	bool SetPlayerPos(const VECTOR2 & pos, int num);
+	bool SetPlayerFlag(bool flag, int num);
+	bool SetEnemyPos(const VECTOR2 & pos, int num);
+	bool SetEnemyFlag(bool flag, int num);
 	bool SetAddScroll(const VECTOR2 & offset, int num);					// ÌßÚ²Ô°‚Ì‚Ý‚ªŒÄ‚Ô
 	VECTOR2 GetPlayerPos(int num);
 	VECTOR2 GetEnemyPos(int num);
+	bool GetPlayerFlag(int num);
+	bool GetEnemyFlag(int num);
 	VECTOR2 GetAddScroll(int num);
 private:
 	InfoCtrl();
