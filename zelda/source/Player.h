@@ -44,8 +44,8 @@ private:
 // ---------- ﾌﾟﾚｲﾔｰの状態関数 ------------
 	void Stop(const GameCtrl & controller);			// 停止状態
 	void Move(const GameCtrl & controller);			// 歩き／走り状態
-	void Attack(const GameCtrl & controller);			// 攻撃時
-	void Damage(const GameCtrl & controller);			// ﾀﾞﾒｰｼﾞ時
+	void Attack(const GameCtrl & controller);		// 攻撃時
+	void Damage(const GameCtrl & controller);		// ﾀﾞﾒｰｼﾞ時
 
 
 	int speed;
@@ -55,15 +55,16 @@ private:
 
 	int score;
 	int life;
-	UP_TIME upTime;		// ステータス(攻撃,防御)上昇時間
 	int invTime;				// inv減算用
+	int damaCnt;				// ﾀﾞﾒｰｼﾞを受けてからのｶｳﾝﾄ
 	std::array<int,SCORE_DATA::DATA_MAX> param;
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
-	DIR_TBL_ARY keyIdTbl;				// 移動方向
-	DIR_TBL_PTR PosTbl;					// ﾎﾟｲﾝﾀを直接格納
-	DIR_TBL_A2D SpeedTbl;				// 移動速度
-	DIR_TBL_DIR DirTbl;					// 移動制御
+	UP_TIME	upTime;				// ステータス(攻撃,防御)上昇時間
+	DIR_TBL_ARY keyIdTbl;		// 移動方向
+	DIR_TBL_PTR PosTbl;			// ﾎﾟｲﾝﾀを直接格納
+	DIR_TBL_A2D SpeedTbl;		// 移動速度
+	DIR_TBL_DIR DirTbl;			// 移動制御
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
 
 	bool afterKeyFlag;			// keyの後入力を優先させるﾌﾗｸﾞ

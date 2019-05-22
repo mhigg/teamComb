@@ -85,7 +85,7 @@ public:
 	);
 	virtual bool CheckDeath(void) { return false; };	// 死亡判定　基本死んでなければfalse
 	virtual bool CheckObjType(OBJ_TYPE type) = 0;		// 指定した値と同じ型が来たらtrueを返す
-	virtual void Draw(void);	// 描画
+	virtual void Draw(void);		// 描画
 	void Draw(unsigned int id);		// ID指定描画
 	const VECTOR2 &GetPos(void);	// 座標取得関数
 
@@ -116,22 +116,22 @@ protected:
 	void SetPos(VECTOR2 pos);	// 座標を設定
 	void InitScroll(int plNum);	// ｽｸﾛｰﾙｵﾌｾｯﾄを初期化する
 
-	VECTOR2 pos;						// 表示する座標
-	VECTOR2 scrollOffset;				// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
-	const VECTOR2 drawOffset;	// 描画ｵﾌｾｯﾄ
+	VECTOR2 pos;					// 表示する座標
+	VECTOR2 scrollOffset;			// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
+	const VECTOR2 drawOffset;		// 描画ｵﾌｾｯﾄ
 	VECTOR2 hitRad;					// ｵﾌﾞｼﾞｪｸﾄの当たり判定のｻｲｽﾞ
 	VECTOR2 actOff;					// ｵﾌﾞｼﾞｪｸﾄの(当たり判定の)中心座標までのｽﾞﾚ
 
-	std::string imageName;	// 表示する画像のﾌｧｲﾙ名
+	std::string imageName;		// 表示する画像のﾌｧｲﾙ名
 	VECTOR2 divSize;			// 画像の分割ｻｲｽﾞ
-	VECTOR2 divCnt;			// 画像の分割数
+	VECTOR2 divCnt;				// 画像の分割数
 
-	OBJ_TYPE objType;		// ｵﾌﾞｼﾞｪｸﾄの種類
+	OBJ_TYPE objType;			// ｵﾌﾞｼﾞｪｸﾄの種類
 
-	DIR dir;							// ｵﾌﾞｼﾞｪｸﾄの向いている方向
+	DIR dir;					// ｵﾌﾞｼﾞｪｸﾄの向いている方向
 
 	unsigned int animCnt;		// ｱﾆﾒｰｼｮﾝのｶｳﾝﾄ
 	bool animEndFlag;			// ｱﾆﾒｰｼｮﾝの最終ｺﾏ到達ﾌﾗｸﾞ
 
-	bool visible;					// 点滅ﾌﾗｸﾞ
+	bool visible;				// 点滅ﾌﾗｸﾞ
 };
