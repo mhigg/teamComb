@@ -133,7 +133,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	this->plNum = plNum;
 
-	Init("image/playerAll.png", VECTOR2(960 / 12, 840 / 7), VECTOR2(12, 7), setUpPos);
+	Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
 	startPos = pos;
 
 	InitScroll(static_cast<int>(plNum));
@@ -156,7 +156,7 @@ bool Player::initAnim(void)
 	AddAnim("ˆÚ“®", 0, 1, 6, 8, true);
 	AddAnim("¾‘–", 4, 1, 6, 6, true);
 	AddAnim("UŒ‚", 8, 1, 6, 3, false);
-	AddAnim("€–S", 0, 0, 1, 6, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
+	AddAnim("€–S", 12, 0, 7, 6, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
 
@@ -258,8 +258,10 @@ bool Player::DeathPrc(void)
 {
 	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
 	{
-		/*SetAnim("€–S");*/
-		return true;
+		if (animEndFlag)
+		{
+			return true;
+		}
 	}
 	return false;
 }

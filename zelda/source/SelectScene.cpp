@@ -2,6 +2,7 @@
 #include "GameScene.h"
 #include "ImageMng.h"
 #include "EditScene.h"
+#include "MenuScene.h"
 
 SelectScene::SelectScene()
 {
@@ -27,6 +28,15 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
+	if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))
+	{
+		return std::make_unique<MenuScene>();
+	}
+	if (inputState[0][static_cast<int>(INPUT_ID::PAUSE)] & !inputStateOld[0][static_cast<int>(INPUT_ID::PAUSE)])
+	{
+		return std::make_unique<MenuScene>();
+	}
+
 
 	// ‘I‘ð
 	if (inputState[0][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::RIGHT)])
@@ -72,6 +82,7 @@ void SelectScene::SelectDraw(void)
 	DrawGraph(820, 20, IMAGE_ID("image/p2.png")[0], true);
 	DrawGraph(20, 500, IMAGE_ID("image/p3.png")[0], true);
 	DrawGraph(820, 500, IMAGE_ID("image/p4.png")[0], true);
+
 	for (int i = 0; i < CHARA_NUM; i++)
 	{
 		if (selectChara[i] == 0)
