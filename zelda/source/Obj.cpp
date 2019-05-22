@@ -73,7 +73,7 @@ void Obj::Draw(void)
 			visible = false;
 		}
 
-		id = (animTable[animName][ANIM_TBL_START_ID]) + (int)dir + count * divCnt.x;
+		id = (animTable[animName][ANIM_TBL_START_ID]) + static_cast<int>(dir) + count * divCnt.x;
 	}
 	animCnt++;
 
