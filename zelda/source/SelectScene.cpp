@@ -31,22 +31,19 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	// ‘I‘ð
 	if (inputState[0][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::RIGHT)])
 	{
-		if (nowChara < CHARA_NUM - 1)
+		if (selectChara[0] < CHARA_NUM - 1)
 		{
-			selectChara[nowChara] = false;
-			selectChara[nowChara + 1] = true;
-			nowChara += 1;
+			selectChara[0] += 1;
 		}
 	}
 	if (inputState[0][static_cast<int>(INPUT_ID::LEFT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::LEFT)])
 	{
-		if (nowChara > 0)
+		if (selectChara[0] > 0)
 		{
-			selectChara[nowChara] = false;
-			selectChara[nowChara - 1] = true;
-			nowChara -= 1;
+			selectChara[0] -= 1;
 		}
 	}
+
 	SelectDraw();
 	return std::move(own);
 }
@@ -73,9 +70,14 @@ void SelectScene::SelectDraw(void)
 	DrawString(0, 0, "SelectScene", 0x00ff0000);
 	DrawGraph(20, 20, IMAGE_ID("image/p1.png")[0], true);
 	DrawGraph(820, 20, IMAGE_ID("image/p2.png")[0], true);
-	if (selectChara[0])
+	DrawGraph(20, 500, IMAGE_ID("image/p3.png")[0], true);
+	DrawGraph(820, 500, IMAGE_ID("image/p4.png")[0], true);
+	for (int i = 0; i < CHARA_NUM; i++)
 	{
-		DrawGraph(100, 100, IMAGE_ID("image/tatie.png")[0], true);
+		if (selectChara[i] == 0)
+		{
+			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/tatie.png")[0], true);
+		}
 	}
 	ScreenFlip();
 }
@@ -83,8 +85,13 @@ void SelectScene::SelectDraw(void)
 int SelectScene::Init(void)
 {
 	selectChara = {
-		true,false,false,false,
+		0,0,0,0,
 	};
-	nowChara = 0;
+	selectPos = {
+		VECTOR2(100,100),
+		VECTOR2(900,100),
+		VECTOR2(100,580),
+		VECTOR2(900,580),
+	};
 	return 0;
 }

@@ -72,9 +72,9 @@ bool EditScene::EditDraw(void)
 {
 	ClsDrawScreen();
 	lpMapCtrl.Draw(true);
-	for (auto itr = objList->begin(); itr != objList->end(); itr++)
+	for (auto& itr : (*objList))
 	{
-		(*itr)->Draw();
+		itr->Draw();
 	}
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);

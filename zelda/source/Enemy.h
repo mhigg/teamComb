@@ -63,7 +63,7 @@ public:
 
 	bool CheckDeath(void);							// Ž€–S”»’è,Ž€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ð•Ô‚·
 	bool CheckObjType(OBJ_TYPE type);		// Žw’è‚µ‚½’l‚Æ“¯‚¶Œ^‚ª—ˆ‚½‚çtrue‚ð•Ô‚·
-	virtual const OBJ_TYPE& GetObjType(void)const;
+	const OBJ_TYPE& GetObjType(void)const;
 	void SetDeathFlag(bool deathFlag);
 private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
