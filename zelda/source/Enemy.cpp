@@ -386,6 +386,7 @@ void Enemy::Track(const GameCtrl & controller)
 				comPos[e] = sqrt(plPos[num].x * checkPos[e].x) + sqrt(plPos[num].y * checkPos[e].y);
 			}
 		}
+		std::sort(comPos.begin(), comPos.end());
 		action = ENEM_ACT::TRA;
 		return;
 	}
