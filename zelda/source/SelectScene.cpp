@@ -3,6 +3,7 @@
 #include "ImageMng.h"
 #include "EditScene.h"
 #include "MenuScene.h"
+#include "GameCtrl.h"
 
 SelectScene::SelectScene()
 {
@@ -39,18 +40,21 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	}
 
 	// ‘I‘ð
-	if (inputState[0][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::RIGHT)])
+	for (int i = 0; i < GetJoypadNum(); i++)
 	{
-		if (selectChara[0] < CHARA_NUM - 1)
+		if (inputState[i][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[i][static_cast<int>(INPUT_ID::RIGHT)])
 		{
-			selectChara[0] += 1;
+			if (selectChara[i] < CHARA_NUM - 1)
+			{
+				selectChara[i] += 1;
+			}
 		}
-	}
-	if (inputState[0][static_cast<int>(INPUT_ID::LEFT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::LEFT)])
-	{
-		if (selectChara[0] > 0)
+		if (inputState[i][static_cast<int>(INPUT_ID::LEFT)] & !inputStateOld[i][static_cast<int>(INPUT_ID::LEFT)])
 		{
-			selectChara[0] -= 1;
+			if (selectChara[i] > 0)
+			{
+				selectChara[i] -= 1;
+			}
 		}
 	}
 
