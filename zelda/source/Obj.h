@@ -108,30 +108,29 @@ public:
 private:
 	virtual void SetMove(const GameCtrl &controller, weakListObj objList) = 0;
 
-
-	std::string animName;	// 表示するｱﾆﾒｰｼｮﾝ名
-	std::map<std::string, int[ANIM_TBL_MAX]> animTable;	// ｱﾆﾒｰｼｮﾝの設定を保存する配列
+	std::string animName;		// 表示するｱﾆﾒｰｼｮﾝ名
+	std::map<std::string,int[ANIM_TBL_MAX]> animTable;	// ｱﾆﾒｰｼｮﾝの設定を保存する配列
 
 protected:
 	void SetPos(VECTOR2 pos);	// 座標を設定
-	void InitScroll(int plNum);	// ｽｸﾛｰﾙｵﾌｾｯﾄを初期化する
+	void InitScroll(int plNum);		// ｽｸﾛｰﾙｵﾌｾｯﾄを初期化する
 
-	VECTOR2 pos;					// 表示する座標
-	VECTOR2 scrollOffset;			// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
-	const VECTOR2 drawOffset;		// 描画ｵﾌｾｯﾄ
+	VECTOR2 pos;						// 表示する座標
+	VECTOR2 scrollOffset;				// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
+	const VECTOR2 drawOffset;	// 描画ｵﾌｾｯﾄ
 	VECTOR2 hitRad;					// ｵﾌﾞｼﾞｪｸﾄの当たり判定のｻｲｽﾞ
 	VECTOR2 actOff;					// ｵﾌﾞｼﾞｪｸﾄの(当たり判定の)中心座標までのｽﾞﾚ
 
-	std::string imageName;		// 表示する画像のﾌｧｲﾙ名
-	VECTOR2 divSize;			// 画像の分割ｻｲｽﾞ
-	VECTOR2 divCnt;				// 画像の分割数
+	std::string imageName;			// 表示する画像のﾌｧｲﾙ名
+	VECTOR2 divSize;					// 画像の分割ｻｲｽﾞ
+	VECTOR2 divCnt;					// 画像の分割数
 
-	OBJ_TYPE objType;			// ｵﾌﾞｼﾞｪｸﾄの種類
+	OBJ_TYPE objType;				// ｵﾌﾞｼﾞｪｸﾄの種類
 
-	DIR dir;					// ｵﾌﾞｼﾞｪｸﾄの向いている方向
+	DIR dir;									// ｵﾌﾞｼﾞｪｸﾄの向いている方向
 
-	unsigned int animCnt;		// ｱﾆﾒｰｼｮﾝのｶｳﾝﾄ
-	bool animEndFlag;			// ｱﾆﾒｰｼｮﾝの最終ｺﾏ到達ﾌﾗｸﾞ
+	unsigned int animCnt;				// ｱﾆﾒｰｼｮﾝのｶｳﾝﾄ
+	bool animEndFlag;					// ｱﾆﾒｰｼｮﾝの最終ｺﾏ到達ﾌﾗｸﾞ
 
-	bool visible;				// 点滅ﾌﾗｸﾞ
+	bool visible;							// 点滅ﾌﾗｸﾞ
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include<array>
+#include <vector>
 #include "Obj.h"
 #include "MAP_ID.h"
 
@@ -29,15 +30,8 @@ enum class ENEM_ACT
 	DO_NOTHING,	// 何もしない
 	MOVE,				// 移動
 	TRA,					// 追跡
+	SERCH,				// 探索
 	MAX
-};
-
-// enemyがplayerを探索するときに使う
-struct SearchParam
-{
-	// float ExploreDistance;		// 探索距離
-	float ExploreAngle;				// 探索角度
-	float SignDistance;				// 気配を感じる距離
 };
 
 constexpr auto ENEMY_SPEED = 5;
@@ -46,8 +40,13 @@ constexpr auto ENEMY_LIM = 201;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
 using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
+using PASS_FLAG = std::array<bool, DIR_MAX * 3>;
+using PASS_ARR_ALL = std::array<VECTOR2, DIR_MAX * 3>;
+using DIR_PASS = std::array<DIR[3], DIR_MAX>;
+using CHECK_ARR = std::vector<int>;
 
-using  ENEMY_POS = std::array<VECTOR2, 2>;
+using  OBJ_POS = std::array<VECTOR2, 4>;
+using  OBJ_INT = std::array<int, 4>;
 
 class Enemy :
 	public Obj
@@ -66,26 +65,52 @@ public:
 	const OBJ_TYPE& GetObjType(void)const;
 	void SetDeathFlag(bool deathFlag);
 private:
+	// ﾌﾚｰﾑごとに実行するもの
 	void SetMove(const GameCtrl &controller, weakListObj objList);
+	// ｻｲﾄﾞ判定
+	VECTOR2 sidePos(VECTOR2 pos, DIR dir, int speed, int sideNum);
 	bool initAnim(void);
+	// ｴﾈﾐｰの初期化
+	void EnInit(void);
+	// 都度初期化が必要なもの	
+	void CheckFree(void);
+	// 探索
+	VECTOR2 Serch(DIR tmpDir,VECTOR2 pos);
 
-	ENEMY_STATE state;		// 状態
-	ENEMY name;				// 敵の種類
-	ENEM_ACT action;			// 敵の行動
+	// ---------- ｴﾈﾐｰの状態関数 ------------
+	void Move(const GameCtrl & controller);			// ﾗﾝﾀﾞﾑ
+	void Track(const GameCtrl & controller);			// 追跡
+	void SpMove(const GameCtrl & controller);		// 指定行動
+	void Damage(const GameCtrl & controller);		// ﾀﾞﾒｰｼﾞ時
+	void Escape(const GameCtrl & controller);		// 逃げる
+	void Teleport(const GameCtrl & controller);		// ﾃﾚﾎﾟｰﾄ
 
-	int faintCnt;					// 怯みｶｳﾝﾄ
-	int timeCnt;					// 経過時間のｶｳﾝﾄ
-	bool oppFlag;					// 移動反転ﾌﾗｸﾞ
-	int behaviorCnt;				// 行動時のｶｳﾝﾄ
-	int enCnt;						// 自分自身のﾅﾝﾊﾞｰ
-	int speed;						// 敵の移動速度
-	VECTOR2 addCnt;			// 敵の移動量管理
-	DIR dir;							// 敵の向き
+	ENEMY_STATE state;			// 状態
+	ENEMY name;					// 敵の種類
+	ENEM_ACT action;				// 敵の行動
+	// ------------------近いﾌﾟﾚｲﾔｰの検索用--------------------------
+	OBJ_POS plPos;					// ﾌﾟﾚｲﾔｰの座標
+	OBJ_INT enPos;					// 敵の座標
+
+	int faintCnt;						// 怯みｶｳﾝﾄ
+	int timeCnt;						// 経過時間のｶｳﾝﾄ
+	bool oppFlag;						// 移動反転ﾌﾗｸﾞ
+	int behaviorCnt;					// 行動時のｶｳﾝﾄ
+	int enCnt;							// 自分自身のﾅﾝﾊﾞｰ
+	int speed;							// 敵の移動速度
+	CHECK_ARR comPos;			// 優先度の比較用配列(昇順)
+	VECTOR2 addCnt;				// 敵の移動量管理
+	DIR dir;								// 敵の向き
+	PASS_FLAG passFlag;			// 移動できるﾊﾟｽ
+	PASS_ARR_ALL checkPos;	// 分岐点
+	DIR_PASS dirOpp;				// 垂直方向
 
 	DIR_TBL_ARY keyIdTbl;				// 移動方向
 	DIR_TBL_PTR PosTbl;					// ﾎﾟｲﾝﾀを直接格納
 	DIR_TBL_A2D SpeedTbl;			// 移動速度
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
+
+	void (Enemy::*_updater)(const GameCtrl & controller);		// 状態関数ﾎﾟｲﾝﾀ
 protected:
 	bool deathFlag;			// 死亡ﾌﾗｸﾞ
 };
