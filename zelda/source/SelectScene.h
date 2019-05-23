@@ -23,5 +23,7 @@ private:
 
 	SELECT_CHARA selectChara;	// プレイヤー毎の今選択しているキャラ
 	SELECT_POS selectPos;		// プレイヤー毎の立ち絵位置
+	int selectMode;				// 選んだモード
+	int backChange;				// 背景切り替えの時間
 };
 

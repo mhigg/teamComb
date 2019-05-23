@@ -21,6 +21,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
+
 	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 	{
 		return std::make_unique<EditScene>();
@@ -56,7 +57,6 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			}
 		}
 	}
-
 	SelectDraw();
 	return std::move(own);
 }
@@ -64,7 +64,8 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void SelectScene::SelectDraw(void)
 {
 	ClsDrawScreen();
-	DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
+	DrawGraph(0, 0, IMAGE_ID("image/menu.png")[0], true);
+
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 
@@ -87,7 +88,7 @@ void SelectScene::SelectDraw(void)
 	DrawGraph(820, 500, IMAGE_ID("image/p4.png")[0], true);
 
 	// ÉvÉåÉCÉÑÅ[ÇÃêîï™óßÇøäGï`âÊ
-	for (int i = 0; i < CHARA_NUM; i++)
+	for (int i = 0; i < GetJoypadNum(); i++)
 	{
 		if (selectChara[i] == 0)
 		{
@@ -108,5 +109,6 @@ int SelectScene::Init(void)
 		VECTOR2(100,580),
 		VECTOR2(900,580),
 	};
+	backChange = 0;
 	return 0;
 }
