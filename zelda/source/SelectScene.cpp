@@ -24,7 +24,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
 		return std::make_unique<EditScene>();
 	}
@@ -33,20 +33,20 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<MenuScene>();
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::PAUSE)] & !inputStateOld[0][static_cast<int>(INPUT_ID::PAUSE)])
+	if (inputState[0][XINPUT_PAUSE] & !inputStateOld[0][XINPUT_PAUSE])
 	{
 		return std::make_unique<MenuScene>();
 	}
 
 	// ‘I‘ð
-	if (inputState[0][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::RIGHT)])
+	if (inputState[0][XINPUT_RIGHT] & !inputStateOld[0][XINPUT_RIGHT])
 	{
 		if (selectChara[0] < CHARA_NUM - 1)
 		{
 			selectChara[0] += 1;
 		}
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::LEFT)] & !inputStateOld[0][static_cast<int>(INPUT_ID::LEFT)])
+	if (inputState[0][XINPUT_LEFT] & !inputStateOld[0][XINPUT_LEFT])
 	{
 		if (selectChara[0] > 0)
 		{

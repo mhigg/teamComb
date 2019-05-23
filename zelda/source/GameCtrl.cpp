@@ -73,7 +73,7 @@ bool GameCtrl::UpDate(void)
 
 		// ‚»‚Ì‘¼(ÒÆ­°,Îß°½Þ‚È‚Ç)
 		inputState[p][XINPUT_START] = padData[p].Buttons[XINPUT_BUTTON_START];
-		inputState[p][XINPUT_PAUSE] = padData[p].Buttons[XINPUT_BUTTON_BACK];
+		inputState[p][XINPUT_PAUSE] = padData[p].Buttons[XINPUT_BUTTON_BACK] | keyData[KEY_INPUT_LSHIFT];
 	}
 
 
