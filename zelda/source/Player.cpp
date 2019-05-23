@@ -361,6 +361,7 @@ void Player::Stop(const GameCtrl & controller)
 	// ÌßÚ²Ô°‚ÌÀÞÒ°¼ÞŽó‚¯(ÃÞÊÞ¯¸Þ—p)
 	if (inputTbl[plNum][XINPUT_MAP] & (!inputTblOld[plNum][XINPUT_MAP]))
 	{
+		SetAnim("’âŽ~");
 		_updater = &Player::Damage;
 	}
 
