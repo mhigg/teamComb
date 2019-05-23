@@ -181,6 +181,7 @@ void Player::PlInit(void)
 	afterKeyFlag = false;
 	visible = true;
 	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
+	lpInfoCtrl.SetPlayerPos(pos, static_cast<int>(plNum));
 	_updater = &Player::Move;				// ‰Šúó‘Ô‚ÍMoveó‘Ô
 }
 
@@ -209,6 +210,7 @@ VECTOR2 Player::sidePos(VECTOR2 pos, DIR dir, int speed, int sideNum)
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	lpInfoCtrl.SetPlayerPos(pos,static_cast<int>(plNum));
 	if (!damageFlag)
 	{
 		GetItem();

@@ -152,6 +152,7 @@ void Enemy::EnInit(void)
 
 void Enemy::CheckFree(void)
 {
+	actNum = 0;
 	for (int i = 0; i < 4; i++)
 	{
 		plPos[i] = lpInfoCtrl.GetPlayerPos(i);
@@ -364,7 +365,7 @@ void Enemy::Track(const GameCtrl & controller)
 			if (plPos[i] != VECTOR2(-1, -1))
 			{
 				VECTOR2 tmp = tmpPos - plPos[i];
-				enPos[i] = sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y);
+				enPos[i] = static_cast<int>(sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y));
 			}
 		}
 		//---------óDêÊìxÇê›íË-------------
@@ -383,16 +384,24 @@ void Enemy::Track(const GameCtrl & controller)
 		{
 			if (passFlag[e])
 			{
-				comPos[e] = sqrt(plPos[num].x * checkPos[e].x) + sqrt(plPos[num].y * checkPos[e].y);
+				comPos[e] = static_cast<int>(sqrt(plPos[num].x * checkPos[e].x) + sqrt(plPos[num].y * checkPos[e].y));
 			}
 		}
-		std::sort(comPos.begin(), comPos.end());
+		actNum = 0;
+		for (int e = 1; e < 12; e++)
+		{
+			if (comPos[e] < comPos[actNum])
+			{
+				actNum = e;
+			}
+		}
 		action = ENEM_ACT::TRA;
 		return;
 	}
 	if (action == ENEM_ACT::TRA)
 	{
-
+		(*PosTbl[actNum % 4][TBL_MAIN]) += SpeedTbl[actNum % 4][0];
+		if(actNum % 4 == )
 	}
 	switch (dir)
 	{

@@ -98,6 +98,7 @@ private:
 	int behaviorCnt;					// 行動時のｶｳﾝﾄ
 	int enCnt;							// 自分自身のﾅﾝﾊﾞｰ
 	int speed;							// 敵の移動速度
+	int actNum;						// 行動するやつ
 	CHECK_ARR comPos;			// 優先度の比較用配列(昇順)
 	VECTOR2 addCnt;				// 敵の移動量管理
 	DIR dir;								// 敵の向き
@@ -109,7 +110,6 @@ private:
 	DIR_TBL_PTR PosTbl;					// ﾎﾟｲﾝﾀを直接格納
 	DIR_TBL_A2D SpeedTbl;			// 移動速度
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
-
 	void (Enemy::*_updater)(const GameCtrl & controller);		// 状態関数ﾎﾟｲﾝﾀ
 protected:
 	bool deathFlag;			// 死亡ﾌﾗｸﾞ
