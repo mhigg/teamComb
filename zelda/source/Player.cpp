@@ -156,7 +156,7 @@ bool Player::initAnim(void)
 	AddAnim("ˆÚ“®", 0, 1, 6, 8, true);
 	AddAnim("¾‘–", 4, 1, 6, 6, true);
 	AddAnim("UŒ‚", 8, 1, 6, 3, false);
-	AddAnim("€–S", 12, 0, 7, 6, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
+	AddAnim("€–S", 12, 0, 7, 7, false);	// false‚Å±ÆÒ°¼®İ‚ğÙ°Ìß‚³‚¹‚È‚¢
 	return true;
 }
 
@@ -176,6 +176,7 @@ void Player::PlInit(void)
 	};
 	invTime = 0;
 	damaCnt = 0;
+	deathInv = 0;
 	afterKeyFlag = false;
 	visible = true;
 	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
@@ -256,13 +257,15 @@ bool Player::CheckObjType(OBJ_TYPE type)
 
 bool Player::DeathPrc(void)
 {
-	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
+	if (animEndFlag)
 	{
-		if (animEndFlag)
+		if (deathInv >= 80)
 		{
 			return true;
 		}
 	}
+	dir = DIR_DOWN;
+	SetAnim("€–S");
 	return false;
 }
 
@@ -377,6 +380,7 @@ void Player::Move(const GameCtrl & controller)
 	if (inputTbl[plNum][XINPUT_MAP] & (!inputTblOld[plNum][XINPUT_MAP]))
 	{
 		damageFlag = true;
+		SetAnim("’â~");
 		_updater = &Player::Damage;
 		return;
 	}
@@ -408,7 +412,7 @@ void Player::Move(const GameCtrl & controller)
 
 	if (damageFlag)
 	{
-		SetAnim("€–S");
+		SetAnim("’â~");
 		_updater = &Player::Damage;
 		return;
 	}
@@ -515,8 +519,7 @@ void Player::Damage(const GameCtrl & controller)
 			InitScroll(static_cast<int>(plNum));
 			PlInit();
 		}
-		dir = DIR_DOWN;
-		SetAnim("€–S");
+		deathInv++;
 		return;
 	}
 
