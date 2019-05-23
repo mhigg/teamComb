@@ -77,6 +77,7 @@ private:
 
 	bool afterKeyFlag;			// keyの後入力を優先させるﾌﾗｸﾞ
 	PL_NUMBER plNum;
+	int randomBonus;			// ランダムにボーナスアイテムを決める
 
 	void (Player::*_updater)(const GameCtrl & controller);		// 状態関数ﾎﾟｲﾝﾀ
 };

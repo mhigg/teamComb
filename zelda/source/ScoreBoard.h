@@ -9,6 +9,7 @@ enum SCORE_DATA
 	DATA_POWER,
 	DATA_GUARD,
 	DATA_INV,
+	DATA_BONUS,
 	DATA_MAX
 };
 
@@ -33,10 +34,11 @@ public:
 private:
 	ScoreBoard();
 	~ScoreBoard();
-	int score;
-	int life;
-	int power;
-	int guard;
-	int inv;	//	–³“G	
+	int score;  // “¾“_
+	int life;	// ‘Ì—Í
+	int power;	// UŒ‚—Í	
+	int guard;  // –hŒä—Í	
+	int inv;	// –³“G	
+	int bonus;  // ƒ{[ƒiƒX
 };
 

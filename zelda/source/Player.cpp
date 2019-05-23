@@ -169,6 +169,7 @@ void Player::PlInit(void)
 	state.Guard = 0;
 	state.Inv = 0;
 	score = 0;
+	randomBonus = GetRand(4);
 	damageFlag = false;
 
 	upTime = {
@@ -282,7 +283,7 @@ void Player::GetItem(void)
 	};
 
 	unsigned int num = 1;
-
+	
 	switch (ItemID())
 	{
 		case MAP_ID::POTION_1:	// ê‘
@@ -303,19 +304,19 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::COIN_1:	// ê‘
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 300);
+			lpScoreBoard.SetScore(DATA_SCORE, 200);
 			break;
 		case MAP_ID::COIN_2:	// ê¬
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 500);
+			lpScoreBoard.SetScore(DATA_SCORE, 300);
 			break;
 		case MAP_ID::COIN_3:	// óŒ
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 800);
+			lpScoreBoard.SetScore(DATA_SCORE, 400);
 			break;
 		case MAP_ID::COIN_4:	// â©
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 1000);
+			lpScoreBoard.SetScore(DATA_SCORE, 500);
 			break;
 		case MAP_ID::KEY_1:
 			paramUP(NotFlag, num);
@@ -329,18 +330,43 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::SWORD:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			if (randomBonus == 0)
+			{
+				lpScoreBoard.SetScore(DATA_BONUS, 1);
+			}
 			break;
 		case MAP_ID::SHIELD:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			if (randomBonus == 1)
+			{
+				lpScoreBoard.SetScore(DATA_BONUS, 1);
+			}
 			break;
 		case MAP_ID::BOOK:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			if (randomBonus == 2)
+			{
+				lpScoreBoard.SetScore(DATA_BONUS, 1);
+			}
 			break;
 		case MAP_ID::GOLD:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			if (randomBonus == 3)
+			{
+				lpScoreBoard.SetScore(DATA_BONUS, 1);
+			}
 			break;
 		case MAP_ID::DIA:
 			paramUP(NotFlag, num);
+			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			if (randomBonus == 4)
+			{
+				lpScoreBoard.SetScore(DATA_BONUS, 1);
+			}
 			break;
 	default:
 		break;

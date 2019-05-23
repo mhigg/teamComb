@@ -55,6 +55,9 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 	case DATA_INV:
 		inv += val;
 		break;
+	case DATA_BONUS:
+		bonus += val;
+		break;
 	}
 }
 
@@ -77,6 +80,9 @@ int ScoreBoard::GetScore(SCORE_DATA data)
 	case DATA_INV:
 		return inv;
 		break;
+	case DATA_BONUS:
+		return bonus;
+		break;
 	}
 	return 0;
 }
@@ -88,6 +94,7 @@ void ScoreBoard::DataInit(void)
 	power = 1;
 	guard = 0;
 	inv = 0;
+	bonus = 0;
 }
 
 void ScoreBoard::Draw(void)
@@ -100,6 +107,7 @@ void ScoreBoard::Draw(void)
 	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", power);
 	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", guard);
 	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", inv);
+	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
 	if (numTemp == 0)
 	{
 		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 50, 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[0], true);
