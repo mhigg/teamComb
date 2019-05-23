@@ -64,6 +64,7 @@ private:
 	int invTime;				// invŒ¸ŽZ—p
 	int damaCnt;				// ÀÞÒ°¼Þ‚ðŽó‚¯‚Ä‚©‚ç‚Ì¶³ÝÄ
 	bool damageFlag;		// ÀÞÒ°¼Þ‚ð‚¤‚¯‚Ä‚¢‚éÌ×¸Þ
+	int deathInv;			// Ž€–SŽž“|‚ê‚½‚Ü‚Ü‚ÌŽžŠÔ
 	std::array<int,SCORE_DATA::DATA_MAX> param;
 
 // ---------- Ã°ÌÞÙ”z—ñ ------------
