@@ -38,7 +38,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	if (pushFlag)
 	{
 		// ëIë
-		if (inputState[0][static_cast<int>(INPUT_ID::DOWN)] & !inputStateOld[0][static_cast<int>(INPUT_ID::DOWN)])
+		if (inputState[0][XINPUT_DOWN] & !inputStateOld[0][XINPUT_DOWN])
 		{
 			if (nowSelect < MENU_NUM - 1)
 			{
@@ -48,7 +48,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 
 			}
 		}
-		else if (inputState[0][static_cast<int>(INPUT_ID::UP)] & !inputStateOld[0][static_cast<int>(INPUT_ID::UP)])
+		else if (inputState[0][XINPUT_UP] & !inputStateOld[0][XINPUT_UP])
 		{
 			if (nowSelect > 0)
 			{
@@ -65,7 +65,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			{
 				return std::make_unique<SelectScene>();
 			}
-			if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 			{
 				return std::make_unique<SelectScene>();
 			}
@@ -76,7 +76,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			{
 				descriptionFlag = true;
 			}
-			if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 			{
 				descriptionFlag = true;
 			}
@@ -85,14 +85,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		// BACKÇ≈ÉÅÉjÉÖÅ[âÊñ Ç÷ñﬂÇÈ
 		if (descriptionFlag)
 		{
-			if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))
-			{
-				selectPoint[nowSelect] = 0;
-				nowSelect = 0;
-				selectPoint[nowSelect] = 20;
-				descriptionFlag = false;
-			}
-			if (inputState[0][static_cast<int>(INPUT_ID::PAUSE)] & !inputStateOld[0][static_cast<int>(INPUT_ID::PAUSE)])
+			if (inputState[0][XINPUT_PAUSE] & !inputStateOld[0][XINPUT_PAUSE])
 			{
 				selectPoint[nowSelect] = 0;
 				nowSelect = 0;

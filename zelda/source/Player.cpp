@@ -503,6 +503,23 @@ void Player::Attack(const GameCtrl & controller)
 void Player::Damage(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+
+	// €–Sˆ—
+	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
+	{
+		if (DeathPrc())
+		{
+			// Ø½Îß°İˆ—
+			pos = startPos;
+			lpScoreBoard.DataInit();
+			InitScroll(static_cast<int>(plNum));
+			PlInit();
+		}
+		dir = DIR_DOWN;
+		SetAnim("€–S");
+		return;
+	}
+
 	if (damaCnt)
 	{
 		if (damaCnt % 5 == 0)
@@ -537,14 +554,7 @@ void Player::Damage(const GameCtrl & controller)
 		if (damaCnt >= 60)
 		{
 			damaCnt = 0;
-			if (DeathPrc())
-			{
-				dir = DIR_DOWN;
-				pos = startPos;		// Ø½Îß°İˆ—
-				lpScoreBoard.DataInit();
-				InitScroll(static_cast<int>(plNum));
-				PlInit();
-			}
+			
 			// ÀŞÒ°¼Ş±ÆÒ°¼®İ‚ªI‚í‚Á‚½‚ç‘JˆÚ(—\’è)
 			damageFlag = false;
 			_updater = &Player::Move;

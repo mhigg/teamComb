@@ -25,7 +25,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
 		return std::make_unique<EditScene>();
 	}
@@ -34,7 +34,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<MenuScene>();
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::PAUSE)] & !inputStateOld[0][static_cast<int>(INPUT_ID::PAUSE)])
+	if (inputState[0][XINPUT_PAUSE] & !inputStateOld[0][XINPUT_PAUSE])
 	{
 		return std::make_unique<MenuScene>();
 	}
@@ -42,15 +42,14 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	// ‘I‘ð
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{
-		if (inputState[i][static_cast<int>(INPUT_ID::RIGHT)] & !inputStateOld[i][static_cast<int>(INPUT_ID::RIGHT)])
+	if (inputState[i][XINPUT_RIGHT] & !inputStateOld[i][XINPUT_RIGHT])
 		{
 			if (selectChara[i] < CHARA_NUM - 1)
 			{
 				selectChara[i] += 1;
 			}
 		}
-		if (inputState[i][static_cast<int>(INPUT_ID::LEFT)] & !inputStateOld[i][static_cast<int>(INPUT_ID::LEFT)])
-		{
+	if (inputState[i][XINPUT_LEFT] & !inputStateOld[i][XINPUT_LEFT])		{
 			if (selectChara[i] > 0)
 			{
 				selectChara[i] -= 1;
