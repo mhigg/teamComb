@@ -38,13 +38,13 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		lpScoreBoard.DataInit();
 		return std::make_unique<EditScene>();
 	}
-	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
 		lpScoreBoard.DataInit();
 		return std::make_unique<EditScene>();
 	}
 #else
-	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
+	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
 		lpScoreBoard.DataInit();
 		return std::make_unique<GameScene>();
