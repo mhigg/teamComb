@@ -90,7 +90,9 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 		plScrSize
 	};
 
+	mapImage.resize(1);
 	scrollTbl.resize(1);
+
 	flag = true;
 	return true;
 }
@@ -220,6 +222,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 
 	int playerNum = GetJoypadNum();		// 接続してるﾌﾟﾚｲﾔｰの数
 	scrollTbl.resize(playerNum);
+	mapImage.resize(playerNum);
+
 	int plCnt = 0;		// ｲﾝｽﾀﾝｽしたﾌﾟﾚｲﾔｰの数
 	int enCnt = 0;	// ｲﾝｽﾀﾝｽした敵の数
 	for (int y = 0; y < stageSize.y; y++)
@@ -245,6 +249,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y) + VECTOR2(20, 100), drawOffset + plScrTbl[plCnt]));
 					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt);
 					lpInfoCtrl.SetPlayerFlag(true, plCnt);
+					mapImage[plCnt] = MakeScreen(800, 480, false);
 					plCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
@@ -366,11 +371,6 @@ void MapCtrl::Draw(bool flag)
 		plScrSize = stageSize;
 	}
 
-	// ↓描画処理の重さの軽減のため
-	// x,yの初期値を各分割画面の左上にする
-	// ﾌﾟﾚｲﾔｰの座標 - VECTOR2(320, 200)
-	// for第二引数は、plScrSize未満の間
-	
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
 		VECTOR2 XYoffset;
@@ -381,6 +381,14 @@ void MapCtrl::Draw(bool flag)
 			XYoffset = { 0,0 };
 		}
 
+		SetDrawScreen(mapImage[pIdx]);
+
+		ClsDrawScreen();
+
+		// ↓描画処理の重さの軽減のため
+		// x,yの初期値を各分割画面の左上にする
+		// ﾌﾟﾚｲﾔｰの座標 - VECTOR2(320, 200)
+		// for第二引数は、plScrSize未満の間
 		for (int y = XYoffset.y; y < XYoffset.y + plScrSize.y; y++)
 		{
 			for (int x = XYoffset.x; x < XYoffset.x + plScrSize.x; x++)
@@ -476,8 +484,8 @@ void MapCtrl::Draw(bool flag)
 				case MAP_ID::GOLD:
 				case MAP_ID::DIA:
 					DrawGraph(
-						tmpPos.x + offset.x + plScrTbl[pIdx].x - scrollTbl[pIdx].x,
-						tmpPos.y + offset.y + plScrTbl[pIdx].y - scrollTbl[pIdx].y,
+						tmpPos.x + offset.x - scrollTbl[pIdx].x,
+						tmpPos.y + offset.y - scrollTbl[pIdx].y,
 						IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
 						true);
 					break;
@@ -485,17 +493,31 @@ void MapCtrl::Draw(bool flag)
 #ifdef _DEBUG
 					// ｴﾗｰ表示
 					DrawGraph(
-						tmpPos.x + offset.x + plScrTbl[pIdx].x - scrollTbl[pIdx].x,
-						tmpPos.y + offset.y + plScrTbl[pIdx].y - scrollTbl[pIdx].y,
+						tmpPos.x + offset.x - scrollTbl[pIdx].x,
+						tmpPos.y + offset.y - scrollTbl[pIdx].y,
 						IMAGE_ID("image/mapImage.png")[static_cast<int>(MAP_ID::NONE)],
-						true);
+						true
+					);
 #endif
 					break;
 				}
 			}
 		}
 		ItemDraw(offset, plScrSize, XYoffset, pIdx);
+
+		SetDrawScreen(DX_SCREEN_BACK);
 	}
+
+	SetDrawScreen(drawHandle);
+
+	for (int idx = 0; idx < mapImage.size(); idx++)
+	{
+		DrawGraph(plScrTbl[idx].x, plScrTbl[idx].y, mapImage[idx], true);
+	}
+
+	SetDrawScreen(DX_SCREEN_BACK);
+
+	DrawGraph(0, 0, drawHandle, true);
 }
 
 void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pIdx)
@@ -527,17 +549,11 @@ void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pI
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
 				DrawGraph(
-					tmpPos.x + offset.x + plScrTbl[pIdx].x - scrollTbl[pIdx].x,
-					tmpPos.y + offset.y + plScrTbl[pIdx].y - scrollTbl[pIdx].y,
+					tmpPos.x + offset.x - scrollTbl[pIdx].x,
+					tmpPos.y + offset.y - scrollTbl[pIdx].y,
 					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
 					true
 				);
-				//DrawGraph(
-				//	tmpPos.x + offset.x - scrollOffset.x,
-				//	tmpPos.y + offset.y - scrollOffset.y,
-				//	IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-				//	true
-				//);
 				break;
 			default:
 				break;

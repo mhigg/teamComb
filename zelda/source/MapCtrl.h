@@ -65,6 +65,9 @@ private:
 	std::vector<VECTOR2> scrollTbl;				// ÌßÚ²Ô°‚²‚Æ‚Ì½¸Û°ÙµÌ¾¯Ä‚ğŠi”[
 	std::array<VECTOR2, 4> plScrTbl;			// •ªŠ„‚ÌŠe‰æ–Ê‚Ì¶ã
 
+	std::vector<int> mapImage;					// ÌßÚ²Ô°‚²‚Æ‚Ì— •`‰æ½¸Ø°İÊİÄŞÙ
+	int drawHandle;			// 4l•ª‚ÌÏ¯Ìß•`‰æÊİÄŞÙ
+
 	VECTOR2 stageSize;		// ½Ã°¼Ş‚ÌÏ½–Ú”
 	VECTOR2 chipSize;		// Ï½‚Ì‘å‚«‚³
 	VECTOR2 drawOffset;		// •`‰æµÌ¾¯Ä
