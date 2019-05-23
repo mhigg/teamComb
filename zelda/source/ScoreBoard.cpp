@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include "GameScene.h"
 #include "ScoreBoard.h"
+#include "ImageMng.h"
 
 
 ScoreBoard::ScoreBoard()
@@ -21,6 +22,10 @@ void ScoreBoard::SetScore(SCORE_DATA data,int val)
 		if (score < 0)
 		{
 			score = 0;
+		}
+		if (score >= 10000)
+		{
+			score = 10000;
 		}
 		break;
 	case DATA_LIFE:
@@ -87,10 +92,22 @@ void ScoreBoard::DataInit(void)
 
 void ScoreBoard::Draw(void)
 {
+	int digit = 0;
+	int numTemp = score;
 	DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
-	DrawFormatString(650, 10, GetColor(0, 0, 0), "SCORE : %d", score);
+	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
 	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
 	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", power);
 	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", guard);
 	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", inv);
+	if (numTemp == 0)
+	{
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 50, 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[0], true);
+	}
+	while (numTemp > 0)
+	{
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 -(digit + 1) * 20 - (30),15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[numTemp % 10], true);
+		numTemp /= 10;
+		digit++;
+	}
 }

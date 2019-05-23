@@ -127,6 +127,7 @@ void MenuScene::MenuDraw(void)
 		DrawGraph(0,30 , IMAGE_ID("image/sousa.png")[0], true);
 		DrawGraph(0, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/modoru.png")[0], true);
 	}
+	DrawString(0, 0, "MenuScene", 0x00ff0000);
 	ScreenFlip();
 }
 

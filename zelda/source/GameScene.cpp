@@ -127,11 +127,6 @@ void GameScene::Draw(void)
 	// ½º±ÎÞ°ÄÞ•\Ž¦
 	lpScoreBoard.Draw();
 
-	for (int i = 0; i < 10; i++)
-	{
-		DrawGraph(640 + (i * 20),0, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[i], true);
-	}
-
 	DrawString(0, 800, "GameScene", 0x00ff0000);
 
 	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
