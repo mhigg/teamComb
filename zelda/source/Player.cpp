@@ -476,12 +476,12 @@ void Player::Move(const GameCtrl & controller)
 			// 変更したい座標の変数アドレス += 移動量
 			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
 
-			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
+			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_END_X)))
 			{
 				scrollOffset.x = pos.x - SCROLL_AREA_X;
 				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 			}
-			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
+			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_END_Y)))
 			{
 				scrollOffset.y = pos.y - SCROLL_AREA_Y;
 				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
@@ -580,12 +580,12 @@ void Player::Damage(const GameCtrl & controller)
 			{
 				// 移動不可のオブジェクトが隣にない場合
 				(*PosTbl[Player::dir][TBL_MAIN]) -= SpeedTbl[Player::dir][inputTbl[plNum][0]] / 2 * 6;
-				if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_AREA_SIZE_X)))
+				if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_END_X)))
 				{
 					scrollOffset.x = pos.x - SCROLL_AREA_X;
 					lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 				}
-				if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_AREA_SIZE_Y)))
+				if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_END_Y)))
 				{
 					scrollOffset.y = pos.y - SCROLL_AREA_Y;
 					lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));

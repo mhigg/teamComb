@@ -3,7 +3,6 @@
 #pragma once
 #include <vector>
 #include <array>
-#include "Player.h"
 #include "VECTOR2.h"
 #include "MAP_ID.h"
 #include "ClassObj.h"

@@ -1,10 +1,10 @@
-#include <algorithm>
 #include <DxLib.h>
+#include <algorithm>
 #include <memory>
 #include "ImageMng.h"
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
-//#include "Player.h"
+#include "Player.h"
 #include "Enemy.h"
 #include "SceneMng.h"
 #include "StageMng.h"
@@ -245,9 +245,10 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				{			
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
-						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y) + VECTOR2(20, 100), drawOffset + plScrTbl[plCnt]));
+						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y)/* + VECTOR2(20, 100)*/, drawOffset + plScrTbl[plCnt])
+					);
 					mapImage[plCnt] = MakeScreen(800, 480, false);
-					lpInfoCtrl.SetPlayerFlag(true,plCnt);
+					lpInfoCtrl.SetPlayerFlag(true, plCnt);
 					plCnt++;
 				}				
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
@@ -360,22 +361,24 @@ void MapCtrl::Draw(bool flag)
 {
 	// ﾏｯﾌﾟ描画
 	VECTOR2 offset(lpSceneMng.GetDrawOffset());
-	VECTOR2 plScrSize(lpSceneMng.GetPlayScreen() / chipSize);		// 分割1画面のｻｲｽﾞ
 	VECTOR2 tmpPos;
-
-	if (flag)
-	{
-		plScrSize = stageSize;
-	}
 
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
-		VECTOR2 XYoffset;
-		XYoffset = scrollTbl[pIdx] / chipSize;
+		VECTOR2 plScrSize(flag ? stageSize : (lpSceneMng.GetPlayScreen() / chipSize));		// 分割1画面のｻｲｽﾞ
 
-		if (flag)
+		VECTOR2 XYoffset;	// forﾙｰﾌﾟのx,yの開始点ｵﾌｾｯﾄ
+		XYoffset = (flag ? VECTOR2(0,0) : VECTOR2(scrollTbl[pIdx] / chipSize));		// ｽｸﾛｰﾙしたﾏｽ分開始点をずらす
+
+		if (!flag && scrollTbl[pIdx].x > 0 && scrollTbl[pIdx].x < SCROLL_AREA_SIZE_X)
 		{
-			XYoffset = { 0,0 };
+//			XYoffset.x = XYoffset.x - 1;
+			plScrSize.x = plScrSize.x + 1;
+		}
+		if (!flag && scrollTbl[pIdx].y > 0 && scrollTbl[pIdx].y < SCROLL_AREA_SIZE_Y)
+		{
+//			XYoffset.y = XYoffset.y - 1;
+			plScrSize.y = plScrSize.y + 1;
 		}
 
 		SetDrawScreen(mapImage[pIdx]);

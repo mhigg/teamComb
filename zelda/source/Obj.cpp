@@ -128,17 +128,17 @@ void Obj::InitScroll(int plNum)
 	if (pos.x >= SCROLL_AREA_X)
 	{
 		scrollOffset.x = pos.x - SCROLL_AREA_X;
-		if (pos.x >= SCROLL_AREA_SIZE_X)
+		if (pos.x >= SCROLL_END_X)
 		{
-			scrollOffset.x = SCROLL_AREA_SIZE_X - SCROLL_AREA_X;
+			scrollOffset.x = SCROLL_END_X;
 		}
 	}
 	if (pos.y >= SCROLL_AREA_Y)
 	{
 		scrollOffset.y = pos.y - SCROLL_AREA_Y;
-		if (pos.y >= SCROLL_AREA_SIZE_Y)
+		if (pos.y >= SCROLL_END_Y)
 		{
-			scrollOffset.y = SCROLL_AREA_SIZE_Y - SCROLL_AREA_Y;
+			scrollOffset.y = SCROLL_END_Y;
 		}
 	}
 
