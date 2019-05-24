@@ -442,6 +442,10 @@ void Enemy::Track(const GameCtrl & controller)
 					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
 					movePos += SpeedTbl[tmpAct][0];
 				}
+				else
+				{
+					movePos +=0;
+				}
 			}
 			else
 			{
