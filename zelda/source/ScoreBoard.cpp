@@ -89,7 +89,7 @@ int ScoreBoard::GetScore(SCORE_DATA data)
 
 void ScoreBoard::DataInit(void)
 {
-	score = 0;
+	static int score = 0;
 	life = PL_LIFE_MAX;
 	power = 1;
 	guard = 0;
