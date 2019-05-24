@@ -102,9 +102,11 @@ private:
 	int actNum;						// 行動するやつ
 	int movePos;						// 移動量		
 	CHECK_ARR comPos;			// 優先度の比較用配列(昇順)
+	CHECK_ARR comNum;		// 優先度の配列
 	VECTOR2 addCnt;				// 敵の移動量管理
 	DIR dir;								// 敵の向き
 	PASS_FLAG passFlag;			// 移動できるﾊﾟｽ
+	int comFlag;						// 優先配列に格納されている数
 	PASS_ARR_ALL checkPos;	// 分岐点
 	DIR_PASS dirOpp;				// 垂直方向
 
