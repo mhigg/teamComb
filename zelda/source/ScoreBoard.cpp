@@ -100,7 +100,12 @@ void ScoreBoard::DataInit(void)
 void ScoreBoard::Draw(void)
 {
 	int digit = 0;
-	int numTemp = score;
+	int additionTime = 30;
+	if (oldScore < score)
+	{
+		oldScore++;
+	}
+	int numTemp = oldScore * 100;
 	DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
 	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
 	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);

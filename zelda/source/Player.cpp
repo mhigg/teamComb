@@ -308,19 +308,19 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::COIN_1:	// ê‘
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			lpScoreBoard.SetScore(DATA_SCORE, 2);
 			break;
 		case MAP_ID::COIN_2:	// ê¬
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 300);
+			lpScoreBoard.SetScore(DATA_SCORE, 3);
 			break;
 		case MAP_ID::COIN_3:	// óŒ
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 400);
+			lpScoreBoard.SetScore(DATA_SCORE, 4);
 			break;
 		case MAP_ID::COIN_4:	// â©
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 500);
+			lpScoreBoard.SetScore(DATA_SCORE, 5);
 			break;
 		case MAP_ID::KEY_1:
 			paramUP(NotFlag, num);

@@ -40,5 +40,6 @@ private:
 	int guard;  // 防御力	
 	int inv;	// 無敵	
 	int bonus;  // ボーナス
+	int oldScore;
 };
 
