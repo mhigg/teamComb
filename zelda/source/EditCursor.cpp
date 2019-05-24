@@ -110,7 +110,7 @@ void EditCursor::SetMove(const GameCtrl &controller, weakListObj objList)
 	}
 
 	// SPACE‰Ÿ‰º‚ÅSetMapDataŒÄ‚Ño‚µ
-	if (ctrl[KEY_INPUT_SPACE] & ~(ctrlOld[KEY_INPUT_SPACE]))
+	if (ctrl[KEY_INPUT_SPACE])
 	{
 		lpMapCtrl.SetMapData(pos, id);
 	}
