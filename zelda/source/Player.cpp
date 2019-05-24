@@ -178,6 +178,7 @@ void Player::PlInit(void)
 	invTime = 0;
 	damaCnt = 0;
 	deathInv = 0;
+	reStartCnt = 0U;
 	afterKeyFlag = false;
 	visible = true;
 	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
@@ -405,12 +406,18 @@ void Player::Move(const GameCtrl & controller)
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
 
+	reStartCnt -= (reStartCnt > 0);		// ê^ÇÃèÍçáÇÃ1Ç∂≥›ƒÇ©ÇÁå∏ÇÁÇ∑
+	visible = true;
+	if ((reStartCnt / 3) % 2)
+	{
+		visible = false;
+	}
+
 	// Ãﬂ⁄≤‘∞ÇÃ¿ﬁ“∞ºﬁéÛÇØ(√ﬁ ﬁØ∏ﬁóp)
 	if (inputTbl[plNum][XINPUT_MAP] & (!inputTblOld[plNum][XINPUT_MAP]))
 	{
 		damageFlag = true;
 		SetAnim("í‚é~");
-		_updater = &Player::Damage;
 		return;
 	}
 
@@ -441,8 +448,12 @@ void Player::Move(const GameCtrl & controller)
 
 	if (damageFlag)
 	{
-		SetAnim("í‚é~");
-		_updater = &Player::Damage;
+		if (!reStartCnt)
+		{
+			SetAnim("í‚é~");
+			_updater = &Player::Damage;
+		}
+		damageFlag = false;
 		return;
 	}
 // ----------------------------------------
@@ -537,6 +548,11 @@ void Player::Damage(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 
+	if (reStartCnt)
+	{
+		_updater = &Player::Move;
+	}
+
 	// éÄñSèàóù
 	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
 	{
@@ -547,6 +563,7 @@ void Player::Damage(const GameCtrl & controller)
 			lpScoreBoard.DataInit();
 			InitScroll(static_cast<int>(plNum));
 			PlInit();
+			reStartCnt = PL_RESTART_CNT;
 		}
 		deathInv++;
 		return;
