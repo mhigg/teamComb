@@ -92,7 +92,15 @@ void SelectScene::SelectDraw(void)
 	{
 		if (selectChara[i] == 0)
 		{
-			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/tatie.png")[0], true);
+			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand.png")[0], true);
+		}
+		if (selectChara[i] == 1)
+		{
+			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand2.png")[0], true);
+		}
+		if (selectChara[i] == 2)
+		{
+			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand3.png")[0], true);
 		}
 	}
 	ScreenFlip();
