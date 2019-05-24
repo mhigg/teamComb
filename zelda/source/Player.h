@@ -23,6 +23,7 @@ struct State {
 
 constexpr int PL_DEF_SPEED = 2;
 constexpr int PL_DASH_SPEED = 4;
+constexpr unsigned int PL_RESTART_CNT = 120U;
 using UP_TIME = std::array < int, 2 >;
 
 using ACT_ARR = std::array<VECTOR2, DIR_MAX>;
@@ -65,6 +66,7 @@ private:
 	int damaCnt;				// ÀÞÒ°¼Þ‚ðŽó‚¯‚Ä‚©‚ç‚Ì¶³ÝÄ
 	bool damageFlag;		// ÀÞÒ°¼Þ‚ð‚¤‚¯‚Ä‚¢‚éÌ×¸Þ
 	int deathInv;			// Ž€–SŽž“|‚ê‚½‚Ü‚Ü‚ÌŽžŠÔ
+	unsigned int reStartCnt;
 	std::array<int,SCORE_DATA::DATA_MAX> param;
 
 // ---------- Ã°ÌÞÙ”z—ñ ------------
