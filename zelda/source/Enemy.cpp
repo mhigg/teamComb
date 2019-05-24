@@ -340,9 +340,9 @@ void Enemy::Track(const GameCtrl & controller)
 		//---------------ëÊàÍï™äÚì_ÇÃê›íË----------------
 		for (DIR tmp = DIR_DOWN; tmp < DIR::DIR_MAX; tmp = static_cast<DIR>(tmp + 1))
 		{
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[Enemy::dir][0], hitRad.x - 1)))]
-				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[Enemy::dir][0], 0)))])
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], -hitRad.x)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], hitRad.x - 1)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], 0)))])
 			{
 				VECTOR2 tmpPos = pos;
 				checkPos[static_cast<int>(tmp)] = Serch(tmp, tmpPos);
@@ -407,9 +407,9 @@ void Enemy::Track(const GameCtrl & controller)
 		case 3:
 			if ((*PosTbl[tmpAct][TBL_MAIN]) != checkPos[actNum].y)
 			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[Enemy::dir][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[Enemy::dir][0], 0)))])
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
 				{
 					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
 					movePos += SpeedTbl[tmpAct][0];
@@ -417,9 +417,9 @@ void Enemy::Track(const GameCtrl & controller)
 			}
 			else
 			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[Enemy::dir][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[Enemy::dir][0], 0)))])
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], 0)))])
 				{
 					(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
 					movePos += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
@@ -435,9 +435,9 @@ void Enemy::Track(const GameCtrl & controller)
 		case 2:
 			if ((*PosTbl[tmpAct][TBL_MAIN]) != plPos[nearP].x)
 			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[Enemy::dir][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[Enemy::dir][0], 0)))])
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
 				{
 					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
 					movePos += SpeedTbl[tmpAct][0];
@@ -449,9 +449,9 @@ void Enemy::Track(const GameCtrl & controller)
 			}
 			else
 			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[Enemy::dir][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[Enemy::dir][0], 0)))])
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], 0)))])
 				{
 					(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
 					movePos += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
