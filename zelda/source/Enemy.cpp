@@ -401,7 +401,10 @@ void Enemy::Track(const GameCtrl & controller)
 	if (action == ENEM_ACT::TRA)
 	{
 		(*PosTbl[actNum % 4][TBL_MAIN]) += SpeedTbl[actNum % 4][0];
-		if(actNum % 4 == )
+		if (actNum % 4 == 0)
+		{
+
+		}
 	}
 	switch (dir)
 	{
