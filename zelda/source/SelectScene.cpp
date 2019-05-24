@@ -30,7 +30,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	// BACKでメニューへ戻る
+	// BACK(左SHIFT)でメニューへ戻る
 	if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))
 	{
 		return std::make_unique<MenuScene>();
