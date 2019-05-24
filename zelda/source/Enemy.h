@@ -34,7 +34,7 @@ enum class ENEM_ACT
 	MAX
 };
 
-constexpr auto ENEMY_SPEED = 5;
+constexpr auto ENEMY_SPEED = 2;
 constexpr auto ENEMY_DASH_SPEED = 6;
 constexpr auto ENEMY_LIM = 201;
 
@@ -97,8 +97,10 @@ private:
 	bool oppFlag;						// 移動反転ﾌﾗｸﾞ
 	int behaviorCnt;					// 行動時のｶｳﾝﾄ
 	int enCnt;							// 自分自身のﾅﾝﾊﾞｰ
+	int nearP;							// 近いﾌﾟﾚｲﾔｰ
 	int speed;							// 敵の移動速度
 	int actNum;						// 行動するやつ
+	int movePos;						// 移動量		
 	CHECK_ARR comPos;			// 優先度の比較用配列(昇順)
 	VECTOR2 addCnt;				// 敵の移動量管理
 	DIR dir;								// 敵の向き
