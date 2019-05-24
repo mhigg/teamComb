@@ -448,11 +448,12 @@ void Player::Move(const GameCtrl & controller)
 
 	if (damageFlag)
 	{
-		if (!(reStartCnt > 0))
+		if (!reStartCnt)
 		{
 			SetAnim("í‚é~");
 			_updater = &Player::Damage;
 		}
+		damageFlag = false;
 		return;
 	}
 // ----------------------------------------
@@ -546,6 +547,11 @@ void Player::Attack(const GameCtrl & controller)
 void Player::Damage(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+
+	if (reStartCnt)
+	{
+		_updater = &Player::Move;
+	}
 
 	// éÄñSèàóù
 	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
