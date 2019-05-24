@@ -191,7 +191,8 @@ VECTOR2 Enemy::sidePos(VECTOR2 pos, DIR dir, int speed, int sideNum)
 VECTOR2 Enemy::Serch(DIR tmpDir,VECTOR2 pos)
 {
 	while (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], -hitRad.x)))]
-		&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], hitRad.x - 1)))])
+		&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], hitRad.x - 1)))]
+		&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], 0)))])
 	{
 		if (tmpDir == DIR_DOWN || tmpDir == DIR_UP)
 		{
