@@ -101,6 +101,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void MenuScene::MenuDraw(void)
 {
 	ClsDrawScreen();
+	// メニュー画像表示(操作説明選択で説明画像表示)
 	if(!descriptionFlag)
 	{
 		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);

@@ -211,6 +211,7 @@ VECTOR2 Player::sidePos(VECTOR2 pos, DIR dir, int speed, int sideNum)
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	lpInfoCtrl.SetPlayerFlag(true, static_cast<int>(plNum));
 	lpInfoCtrl.SetPlayerPos(pos,static_cast<int>(plNum));
 	if (!damageFlag)
 	{

@@ -242,16 +242,14 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				}
 				// ÌßÚ²Ô°‚ð²Ý½ÀÝ½
 				else
-				{
-					
+				{			
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y) + VECTOR2(20, 100), drawOffset + plScrTbl[plCnt]));
-					lpInfoCtrl.SetPlayerPos(VECTOR2(x * chipSize.x, y * chipSize.y), plCnt);
-					lpInfoCtrl.SetPlayerFlag(true, plCnt);
 					mapImage[plCnt] = MakeScreen(800, 480, false);
+					lpInfoCtrl.SetPlayerFlag(true,plCnt);
 					plCnt++;
-				}
+				}				
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
 			case MAP_ID::ENEMY:
@@ -262,7 +260,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				/* Ã½Ä*/	auto obj = AddObjList()(objList,
 						std::make_unique<Enemy>
 						(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), drawOffset,enCnt));
-				lpInfoCtrl.SetEnemyPos(VECTOR2(x * chipSize.x, y * chipSize.y), enCnt);
 				lpInfoCtrl.SetEnemyFlag(true, enCnt);
 				enCnt++;
 				}

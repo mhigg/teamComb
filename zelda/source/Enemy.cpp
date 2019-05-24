@@ -13,12 +13,6 @@ Enemy::Enemy()
 Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :Obj(drawOffset)
 {
 	Enemy::enCnt = enCnt;
-	plPos = {
-		VECTOR2(0,0),
-		VECTOR2(0,0),
-		VECTOR2(0,0),
-		VECTOR2(0,0)
-	};
 	keyIdTbl = {
 		XINPUT_DOWN,			// 下
 		XINPUT_LEFT,			// 左
@@ -42,7 +36,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 		DIR_DOWN	,DIR_LEFT		,DIR_RIGHT,
 		DIR_LEFT		,DIR_DOWN	,DIR_UP,
 		DIR_RIGHT	,DIR_DOWN	,DIR_UP,
-		DIR_UP			,DIR_LEFT		,DIR_RIGHT
+		DIR_UP			,DIR_RIGHT	,DIR_LEFT
 	};
 	mapMoveTbl = {
 					true,			// NONE
@@ -132,8 +126,8 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	name = static_cast<ENEMY>(enemyNum);
 	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
 	comPos.resize(12);
+	initAnim();
 	EnInit();
-	CheckFree();
 }
 
 void Enemy::EnInit(void)
@@ -145,7 +139,6 @@ void Enemy::EnInit(void)
 	faintCnt = 0;
 	addCnt = { 0,0 };
 	oppFlag = false;
-	initAnim();
 	_updater = &Enemy::Track;
 	action = ENEM_ACT::SERCH;
 }
@@ -153,6 +146,8 @@ void Enemy::EnInit(void)
 void Enemy::CheckFree(void)
 {
 	actNum = 0;
+	nearP = 0;
+	movePos = 0;
 	for (int i = 0; i < 4; i++)
 	{
 		plPos[i] = lpInfoCtrl.GetPlayerPos(i);
@@ -196,7 +191,8 @@ VECTOR2 Enemy::sidePos(VECTOR2 pos, DIR dir, int speed, int sideNum)
 VECTOR2 Enemy::Serch(DIR tmpDir,VECTOR2 pos)
 {
 	while (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], -hitRad.x)))]
-		&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], hitRad.x - 1)))])
+		&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], hitRad.x - 1)))]
+		&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmpDir, SpeedTbl[tmpDir][0], 0)))])
 	{
 		if (tmpDir == DIR_DOWN || tmpDir == DIR_UP)
 		{
@@ -340,11 +336,13 @@ void Enemy::Track(const GameCtrl & controller)
 	//-------------ﾊﾟｽ探索(移動ﾊﾟｽがない時のみ)-----------
 	if (action == ENEM_ACT::SERCH)
 	{
+		CheckFree();
 		//---------------第一分岐点の設定----------------
 		for (DIR tmp = DIR_DOWN; tmp < DIR::DIR_MAX; tmp = static_cast<DIR>(tmp + 1))
 		{
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[Enemy::dir][0], hitRad.x - 1)))])
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], -hitRad.x)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], hitRad.x - 1)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], 0)))])
 			{
 				VECTOR2 tmpPos = pos;
 				checkPos[static_cast<int>(tmp)] = Serch(tmp, tmpPos);
@@ -369,14 +367,13 @@ void Enemy::Track(const GameCtrl & controller)
 			}
 		}
 		//---------優先度を設定-------------
-		int num = 0;
 		for (int i = 1; i < 4; i++)
 		{
-			if (enPos[num] != -1)
+			if (enPos[nearP] != -1)
 			{
-				if (enPos[i] < enPos[num] && enPos[i] != -1)
+				if (enPos[i] < enPos[nearP] && enPos[i] != -1)
 				{
-					num = i;
+					nearP = i;
 				}
 			}
 		}
@@ -384,10 +381,11 @@ void Enemy::Track(const GameCtrl & controller)
 		{
 			if (passFlag[e])
 			{
-				comPos[e] = static_cast<int>(sqrt(plPos[num].x * checkPos[e].x) + sqrt(plPos[num].y * checkPos[e].y));
+				VECTOR2 exPos = { plPos[nearP].x - checkPos[e].x ,plPos[nearP].y - checkPos[e].y };
+				comPos[e] = static_cast<int>(sqrt(exPos.x*exPos.x) + sqrt(exPos.y * exPos.y));
 			}
 		}
-		actNum = 0;
+		// 第一、第二分岐点までのDIRを決定
 		for (int e = 1; e < 12; e++)
 		{
 			if (comPos[e] < comPos[actNum])
@@ -398,13 +396,82 @@ void Enemy::Track(const GameCtrl & controller)
 		action = ENEM_ACT::TRA;
 		return;
 	}
+	//-----------移動-------------
 	if (action == ENEM_ACT::TRA)
 	{
-		(*PosTbl[actNum % 4][TBL_MAIN]) += SpeedTbl[actNum % 4][0];
-		if (actNum % 4 == 0)
+		int tmpAct = actNum % 4;
+		movePos = 0;
+		switch (tmpAct)
 		{
-
+		case 0:
+		case 3:
+			if ((*PosTbl[tmpAct][TBL_MAIN]) != checkPos[actNum].y)
+			{
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
+				{
+					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
+					movePos += SpeedTbl[tmpAct][0];
+				}
+			}
+			else
+			{
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], 0)))])
+				{
+					(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
+					movePos += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
+				}
+				if ((*PosTbl[tmpAct][TBL_OPP]) == checkPos[actNum].x)
+				{
+					action = ENEM_ACT::SERCH;
+					return;
+				}
+			}
+			break;
+		case 1:
+		case 2:
+			if ((*PosTbl[tmpAct][TBL_MAIN]) != plPos[nearP].x)
+			{
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
+				{
+					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
+					movePos += SpeedTbl[tmpAct][0];
+				}
+				else
+				{
+					movePos +=0;
+				}
+			}
+			else
+			{
+				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], -hitRad.x)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], hitRad.x - 1)))]
+					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actNum / 4], SpeedTbl[dirOpp[tmpAct][actNum / 4]][0], 0)))])
+				{
+					(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
+					movePos += SpeedTbl[dirOpp[tmpAct][actNum / 4]][0];
+				}
+				if ((*PosTbl[tmpAct][TBL_OPP]) == plPos[nearP].y)
+				{
+					action = ENEM_ACT::SERCH;
+					return;
+				}
+			}
+			break;
+		default :
+			break;
 		}
+	}
+	//---------移動をしていなかった場合再度方向を決める-------------
+	if (movePos == 0)
+	{
+		action = ENEM_ACT::SERCH;
+		return;
 	}
 	switch (dir)
 	{

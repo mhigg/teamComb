@@ -57,6 +57,9 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		obj->UpDate(controller, objList);
 	}
 
+	// Žc‚èŽžŠÔŒ¸­
+	gameFrame--;
+
 	Draw();
 
 	return move(own);
@@ -73,6 +76,7 @@ int GameScene::Init(void)
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
 	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
+	gameFrame = 10800;
 	return 0;
 }
 
@@ -127,8 +131,18 @@ void GameScene::Draw(void)
 	// ½º±ÎÞ°ÄÞ•\Ž¦
 	lpScoreBoard.Draw();
 
-	DrawString(0, 800, "GameScene", 0x00ff0000);
+	// ŽžŠÔ•\Ž¦
+	int gameDigit = 0;
+	int secondNumTemp = gameFrame / 60;
 
+	while (secondNumTemp > 0)
+	{
+		DrawGraph(200 - (gameDigit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
+		secondNumTemp /= 10;
+		gameDigit++;
+	}
+	
+	DrawString(0, 800, "GameScene", 0x00ff0000);
 	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
 
 	ScreenFlip();

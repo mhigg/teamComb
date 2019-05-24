@@ -30,7 +30,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	// BACKでメニューへ戻る
+	// BACK(左SHIFT)でメニューへ戻る
 	if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))
 	{
 		return std::make_unique<MenuScene>();
@@ -92,7 +92,15 @@ void SelectScene::SelectDraw(void)
 	{
 		if (selectChara[i] == 0)
 		{
-			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/tatie.png")[0], true);
+			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand.png")[0], true);
+		}
+		if (selectChara[i] == 1)
+		{
+			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand2.png")[0], true);
+		}
+		if (selectChara[i] == 2)
+		{
+			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand3.png")[0], true);
 		}
 	}
 	ScreenFlip();
