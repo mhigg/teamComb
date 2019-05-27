@@ -235,7 +235,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	// Ž€‚ñ‚Å‚é‚©‚Ç‚¤‚©
 	deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
-	if (!deathFlag)
+	if (deathFlag)
 	{
 		visible = false;
 		return;

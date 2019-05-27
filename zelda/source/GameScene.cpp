@@ -60,6 +60,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		obj->UpDate(controller, objList);
 	}
+	objList->remove_if([](sharedObj &obj) { return obj->CheckDeath(); });
 
 	// c‚èŠÔŒ¸­
 	gameFrame--;

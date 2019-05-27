@@ -535,7 +535,7 @@ void Player::Attack(const GameCtrl & controller)
 				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 40)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
-					lpInfoCtrl.SetEnemyFlag(false, i);
+					lpInfoCtrl.SetEnemyFlag(true, i);
 				}
 			}
 		}
