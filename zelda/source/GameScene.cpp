@@ -98,7 +98,7 @@ void GameScene::Draw(void)
 	VECTOR2 plPos = lpInfoCtrl.GetPlayerPos(0);
 
 	// objList‚©‚ç‰æ–ÊŠO‚ÌµÌÞ¼Þª¸Ä‚ðœŠO‚·‚é
-	auto tmpList = (*objList);
+	/*auto tmpList = (*objList);
 	tmpList.remove_if([&](sharedObj &tmp) {
 	if (tmp->GetPos().x < plPos.x - CHIP_SIZE * 6
 		|| tmp->GetPos().x > plPos.x + CHIP_SIZE * 6
@@ -108,7 +108,7 @@ void GameScene::Draw(void)
 		return true;
 	}
 	return false;
-	});
+	});*/
 
 	//int playerNum = GetJoypadNum();
 
