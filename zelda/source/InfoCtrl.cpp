@@ -32,10 +32,6 @@ bool InfoCtrl::SetEnemyPos(const VECTOR2 & pos, int num)
 
 bool InfoCtrl::SetEnemyFlag(bool flag, int num)
 {
-	if (num > ENEMY_MAX)
-	{
-		return false;
-	}
 	enFlag[num] = flag;
 	return true;
 }
@@ -61,7 +57,7 @@ VECTOR2 InfoCtrl::GetPlayerPos(int num)
 
 VECTOR2 InfoCtrl::GetEnemyPos(int num)
 {
-	if (enFlag[num])
+	if (!enFlag[num])
 	{
 		return enPos[num];
 	}

@@ -438,7 +438,7 @@ void Player::Move(const GameCtrl & controller)
 			if (ePos != VECTOR2(-1, -1))
 			{
 				VECTOR2 tmp = { ePos - pos };
-				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
+				if (tmp.x * tmp.x + tmp.y * tmp.y <= 2500)
 				{
 					// 当たってるとき
 					damageFlag = true;
@@ -464,8 +464,8 @@ void Player::Move(const GameCtrl & controller)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -hitRad.x)))]
-				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], hitRad.x - 1)))])
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -hitRad.x + 2)))]
+				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], hitRad.x - 1 - 2)))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合
@@ -535,7 +535,7 @@ void Player::Attack(const GameCtrl & controller)
 				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 40)
 				{
 					// 当たってるとき
-					lpInfoCtrl.SetEnemyFlag(false, i);
+					lpInfoCtrl.SetEnemyFlag(true, i);
 				}
 			}
 		}

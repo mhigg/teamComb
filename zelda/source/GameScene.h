@@ -12,11 +12,12 @@ public:
 
 	uniqueBase UpDate(uniqueBase own, const GameCtrl &controller);
 private:
-	int Init(void);
-	void Draw(void);
+	int Init(void);				// ‰Šú‰»				
+	void Draw(void);			// •`‰æ
 
-	sharedListObj objList;					// ¼ª±ÄŞÎß²İÀ°
-	int gameFrame;							// ƒQ[ƒ€’†‚ÌŒo‰ßŠÔ
+	sharedListObj objList;		// ¼ª±ÄŞÎß²İÀ°
+	int gameFrame;				// ¹Ş°Ñ’†‚ÌŒo‰ßŠÔ
+	int tile;
 };
 
 int DrawLine(VECTOR2 vec1, VECTOR2 vec2, unsigned int Color, int Thickness);

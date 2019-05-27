@@ -21,9 +21,9 @@ private:
 	void SelectDraw(void);		// 描画
 	int Init(void);				// 初期化
 
-	SELECT_CHARA selectChara;	// プレイヤー毎の今選択しているキャラ
-	SELECT_POS selectPos;		// プレイヤー毎の立ち絵位置
-	int selectMode;				// 選んだモード
+	SELECT_CHARA selectChara;	// ﾌﾟﾚｲﾔｰ毎の今選択しているｷｬﾗ
+	SELECT_POS selectPos;		// ﾌﾟﾚｲﾔｰ毎の立ち絵位置
+	int selectMode;				// 選んだﾓｰﾄﾞ
 	int backChange;				// 背景切り替えの時間
 };
 

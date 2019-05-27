@@ -29,7 +29,7 @@ private:
 	BOX_ARRAY movePos;			// Boxの座標を持つ配列
 	MOVE_FLAG moveFlag;			// Boxの移動制御用配列
 	SELECT_POINT selectPoint;	// 選んでいる奴の加算値
-	int nowSelect;				// どのモードを選択しているか
+	int nowSelect;				// どのﾓｰﾄﾞを選択しているか
 	bool descriptionFlag;	    // 説明
 	bool pushFlag;
 

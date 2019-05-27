@@ -8,7 +8,7 @@
 #include "GameCtrl.h"
 #include "VECTOR2.h"
 #include "ImageMng.h"
-
+#include "ResultScene.h"
 
 GameScene::GameScene()
 {
@@ -43,6 +43,10 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		lpScoreBoard.DataInit();
 		return std::make_unique<EditScene>();
 	}
+	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
+	{
+		return std::make_unique<ResultScene>();
+	}
 #else
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
@@ -56,6 +60,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		obj->UpDate(controller, objList);
 	}
+	objList->remove_if([](sharedObj &obj) { return obj->CheckDeath(); });
 
 	// 残り時間減少
 	gameFrame--;
@@ -77,6 +82,7 @@ int GameScene::Init(void)
 	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
+	tile = LoadGraph("image/tile.png", true);
 	return 0;
 }
 
@@ -86,7 +92,7 @@ void GameScene::Draw(void)
 	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj2).GetPos().y; });
 
 	ClsDrawScreen();
-	
+	DrawGraph(0, 0, tile, true);
 	lpMapCtrl.Draw(false);
 
 // objListから画面外のｵﾌﾞｼﾞｪｸﾄを除外する
@@ -133,15 +139,36 @@ void GameScene::Draw(void)
 
 	// 時間表示
 	int gameDigit = 0;
-	int secondNumTemp = gameFrame / 60;
-
+	int minNumTemp = gameFrame / 3600;
+	int secondNumTemp = (gameFrame % 3600) / 60;
+	// 分
+	// 分が0の時
+	if (minNumTemp < 1)
+	{
+		DrawGraph(100, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+	}
+	while (minNumTemp > 0)
+	{
+		DrawGraph(100, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[minNumTemp % 10], true);
+		minNumTemp /= 10;
+	}
+	// 秒が0の時
+	if (secondNumTemp < 10)
+	{
+		DrawGraph(130, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+	}
+	if (secondNumTemp < 1)
+	{
+		DrawGraph(150, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+	}
+	// 秒
 	while (secondNumTemp > 0)
 	{
 		DrawGraph(200 - (gameDigit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
 		secondNumTemp /= 10;
 		gameDigit++;
 	}
-	
+
 	DrawString(0, 800, "GameScene", 0x00ff0000);
 	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
 

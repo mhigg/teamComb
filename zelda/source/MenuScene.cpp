@@ -34,7 +34,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		pushFlag = true;
 	}
 
-	// キー操作が可能になってからの処理
+	// ｷｰ操作が可能になってからの処理
 	if (pushFlag)
 	{
 		// 選択
@@ -82,7 +82,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			}
 		}
 		
-		// BACKでメニュー画面へ戻る
+		// BACKでﾒﾆｭｰ画面へ戻る
 		if (descriptionFlag)
 		{
 			if (inputState[0][XINPUT_PAUSE] & !inputStateOld[0][XINPUT_PAUSE])
@@ -101,7 +101,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void MenuScene::MenuDraw(void)
 {
 	ClsDrawScreen();
-	// メニュー画像表示(操作説明選択で説明画像表示)
+	// ﾒﾆｭｰ画像表示(操作説明選択で説明画像表示)
 	if(!descriptionFlag)
 	{
 		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
