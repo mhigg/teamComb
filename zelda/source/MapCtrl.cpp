@@ -370,15 +370,24 @@ void MapCtrl::Draw(bool flag)
 		VECTOR2 XYoffset;	// forﾙｰﾌﾟのx,yの開始点ｵﾌｾｯﾄ
 		XYoffset = (flag ? VECTOR2(0,0) : VECTOR2(scrollTbl[pIdx] / chipSize));		// ｽｸﾛｰﾙしたﾏｽ分開始点をずらす
 
+// --------------------- ｹﾞｰﾑﾓｰﾄﾞ時に少しでもｽｸﾛｰﾙしたら分割ｽｸﾘｰﾝの終点をずらす ---------------------------
 		if (!flag && scrollTbl[pIdx].x > 0 && scrollTbl[pIdx].x < SCROLL_AREA_SIZE_X)
 		{
-//			XYoffset.x = XYoffset.x - 1;
-			plScrSize.x = plScrSize.x + 1;
+			plScrSize.x = plScrSize.x + 2;
 		}
 		if (!flag && scrollTbl[pIdx].y > 0 && scrollTbl[pIdx].y < SCROLL_AREA_SIZE_Y)
 		{
-//			XYoffset.y = XYoffset.y - 1;
-			plScrSize.y = plScrSize.y + 1;
+			plScrSize.y = plScrSize.y + 2;
+		}
+
+// --------------------- ｹﾞｰﾑﾓｰﾄﾞ時に1ﾏｽ分ｽｸﾛｰﾙするごとに分割ｽｸﾘｰﾝの始点をずらす ---------------------------
+		if (!flag && XYoffset.x > 0 && XYoffset.x < (SCROLL_AREA_SIZE_X / chipSize.x))
+		{
+			XYoffset.x = XYoffset.x - 1;
+		}
+		if (!flag && XYoffset.y > 0 && XYoffset.y < (SCROLL_AREA_SIZE_Y / chipSize.y))
+		{
+			XYoffset.y = XYoffset.y - 1;
 		}
 
 		SetDrawScreen(mapImage[pIdx]);
