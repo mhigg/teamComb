@@ -438,7 +438,7 @@ void Player::Move(const GameCtrl & controller)
 			if (ePos != VECTOR2(-1, -1))
 			{
 				VECTOR2 tmp = { ePos - pos };
-				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 50)
+				if (tmp.x * tmp.x + tmp.y * tmp.y <= 2500)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
 					damageFlag = true;
