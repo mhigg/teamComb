@@ -11,7 +11,7 @@ public:
 		const GameCtrl &controller		// ·°æ“¾
 	);
 private:
-	void TitleDraw(void); // •`‰æ
-	int Init(void); 
+	void TitleDraw(void);	// •`‰æ
+	int Init(void);			// ‰Šú‰»
 };
 

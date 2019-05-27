@@ -8,7 +8,7 @@
 #include "GameCtrl.h"
 #include "VECTOR2.h"
 #include "ImageMng.h"
-
+#include "ResultScene.h"
 
 GameScene::GameScene()
 {
@@ -42,6 +42,10 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		lpScoreBoard.DataInit();
 		return std::make_unique<EditScene>();
+	}
+	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
+	{
+		return std::make_unique<ResultScene>();
 	}
 #else
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
@@ -136,6 +140,11 @@ void GameScene::Draw(void)
 	int minNumTemp = gameFrame / 3600;
 	int secondNumTemp = (gameFrame % 3600) / 60;
 	// •ª
+	// •ª‚ª0‚ÌŽž
+	if (minNumTemp < 1)
+	{
+		DrawGraph(100, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+	}
 	while (minNumTemp > 0)
 	{
 		DrawGraph(100, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[minNumTemp % 10], true);

@@ -1,8 +1,8 @@
-#include "DxLib.h"
+#include <DxLib.h>
+#include "ResultScene.h"
 #include "ImageMng.h"
 #include "GameScene.h"
 #include "ScoreBoard.h"
-#include "ResultScene.h"
 
 ResultScene::ResultScene()
 {
@@ -15,31 +15,49 @@ ResultScene::~ResultScene()
 
 uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
-	return std::move(own);
+	auto cnt = controller.GetCtrl(KEY_TYPE_NOW);
+	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
+	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
+	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
+
+	bonusPoint[0] = lpScoreBoard.GetScore(DATA_BONUS);
+
+	resultScore[0] = lpScoreBoard.GetScore(DATA_SCORE);
+
+	ResultDraw();
+	return move(own);
 }
 
 void ResultScene::ResultDraw(void)
 {
-	VECTOR2 tmp1(0, 0);
-	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
+	ClsDrawScreen();
+	DrawGraph(220, 100, IMAGE_ID("image/p1.png")[0], true);
+	DrawGraph(570, 100, IMAGE_ID("image/p2.png")[0], true);
+	DrawGraph(920, 100, IMAGE_ID("image/p3.png")[0], true);
+	DrawGraph(1270, 100, IMAGE_ID("image/p4.png")[0], true);
+	DrawString(0, 0, "ResultScene", 0x00ff0000);
 
-	for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += 800)
+	int digit = 0;
+	int numTemp = resultScore[0] * 100;
+	if (numTemp == 0)
 	{
-		tmp2.x = tmp1.x;
-		DrawLine(tmp1, tmp2, 0x00ffffff, true);
+		DrawGraph(300 - 50, 500, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[0], true);
 	}
-	tmp1 = VECTOR2(0, 0);
-	tmp2.x = GAME_SCREEN_SIZE_X;
-	for (; tmp1.y <= GAME_SCREEN_SIZE_Y; tmp1.y += 480)
+	while (numTemp > 0)
 	{
-		tmp2.y = tmp1.y;
-		DrawLine(tmp1, tmp2, 0x00ffffff, true);
+		DrawGraph(300 - (digit + 1) * 20 - (30), 500, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[numTemp % 10], true);
+		numTemp /= 10;
+		digit++;
 	}
+	ScreenFlip();
 }
 
 int ResultScene::Init(void)
 {
 	bonusPoint = {
+		0,0,0,0
+	};
+	resultScore = {
 		0,0,0,0
 	};
 	return 0;
