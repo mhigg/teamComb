@@ -561,7 +561,10 @@ void Player::Damage(const GameCtrl & controller)
 		{
 			// ÿΩŒﬂ∞›èàóù
 			pos = startPos;
-			lpScoreBoard.DataInit();
+			lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
+			lpScoreBoard.SetScore(DATA_SCORE, - 1);
+			lpScoreBoard.SetScore(DATA_POWER, - (state.Power - 1));
+			lpScoreBoard.SetScore(DATA_GUARD, -(state.Guard - 1));
 			InitScroll(static_cast<int>(plNum));
 			PlInit();
 			reStartCnt = PL_RESTART_CNT;

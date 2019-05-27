@@ -95,6 +95,7 @@ void ScoreBoard::DataInit(void)
 	guard = 0;
 	inv = 0;
 	bonus = 0;
+	oldScore = 0;
 	additionTime = 8;
 }
 
