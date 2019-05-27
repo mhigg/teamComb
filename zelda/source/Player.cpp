@@ -334,7 +334,7 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::SWORD:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			lpScoreBoard.SetScore(DATA_SCORE, 2);
 			if (randomBonus == 0)
 			{
 				lpScoreBoard.SetScore(DATA_BONUS, 1);
@@ -342,7 +342,7 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::SHIELD:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			lpScoreBoard.SetScore(DATA_SCORE, 2);
 			if (randomBonus == 1)
 			{
 				lpScoreBoard.SetScore(DATA_BONUS, 1);
@@ -350,7 +350,7 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::BOOK:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			lpScoreBoard.SetScore(DATA_SCORE, 2);
 			if (randomBonus == 2)
 			{
 				lpScoreBoard.SetScore(DATA_BONUS, 1);
@@ -358,7 +358,7 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::GOLD:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			lpScoreBoard.SetScore(DATA_SCORE, 2);
 			if (randomBonus == 3)
 			{
 				lpScoreBoard.SetScore(DATA_BONUS, 1);
@@ -366,7 +366,7 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::DIA:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 200);
+			lpScoreBoard.SetScore(DATA_SCORE, 2);
 			if (randomBonus == 4)
 			{
 				lpScoreBoard.SetScore(DATA_BONUS, 1);
