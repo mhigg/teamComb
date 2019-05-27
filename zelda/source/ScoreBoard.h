@@ -41,5 +41,6 @@ private:
 	int inv;	// 無敵	
 	int bonus;  // ボーナス
 	int oldScore;
+	int additionTime;
 };
 
