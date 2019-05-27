@@ -17,6 +17,7 @@ private:
 
 	sharedListObj objList;		// ¼ª±ÄÞÎß²ÝÀ°
 	int gameFrame;				// ¹Þ°Ñ’†‚ÌŒo‰ßŽžŠÔ
+	int tile;
 };
 
 int DrawLine(VECTOR2 vec1, VECTOR2 vec2, unsigned int Color, int Thickness);

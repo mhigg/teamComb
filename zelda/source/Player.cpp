@@ -464,8 +464,8 @@ void Player::Move(const GameCtrl & controller)
 		{
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
-			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -hitRad.x)))]
-				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], hitRad.x - 1)))])
+			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -hitRad.x + 2)))]
+				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], hitRad.x - 1 - 2)))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合

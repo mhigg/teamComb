@@ -82,6 +82,7 @@ int GameScene::Init(void)
 	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
+	tile = LoadGraph("image/tile.png", true);
 	return 0;
 }
 
@@ -91,7 +92,7 @@ void GameScene::Draw(void)
 	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj2).GetPos().y; });
 
 	ClsDrawScreen();
-	
+	DrawGraph(0, 0, tile, true);
 	lpMapCtrl.Draw(false);
 
 // objList‚©‚ç‰æ–ÊŠO‚ÌµÌÞ¼Þª¸Ä‚ðœŠO‚·‚é
