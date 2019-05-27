@@ -123,6 +123,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	this->objType = OBJ_ENEMY;
 	actOff = VECTOR2(30, 40);
 	hitRad = VECTOR2(30, 30);
+	behaviorCnt = 0;
 	name = static_cast<ENEMY>(enemyNum);
 	action = ENEM_ACT::SERCH;
 	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
@@ -137,7 +138,7 @@ void Enemy::EnInit(void)
 	speed = ENEMY_SPEED;
 	// ∂≥›ƒån
 	timeCnt = 0;
-	behaviorCnt = 0;
+	
 	faintCnt = 0;
 	addCnt = { 0,0 };
 	oppFlag = false;
@@ -257,23 +258,12 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			_updater = &Enemy::Track;
 			break;
 		default:
-			_updater = &Enemy::Move;
+			_updater = &Enemy::Serch;
 			break;
 		}
 		(this->*_updater)(controller);
 	}
-	switch (dir)
-	{
-	case DIR_RIGHT:
-		SetAnim("ãxåe1");
-		break;
-	case DIR_LEFT:
-		SetAnim("ãxåe2");
-		break;
-	default:
-		break;
-	}
-	if (timeCnt == 0)
+	if (behaviorCnt == 0)
 	{
 		SetAnim("ãxåe2");
 	}
@@ -286,8 +276,8 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 bool Enemy::initAnim(void)
 {
 	int num = static_cast<int>(name) * 2;
-	AddAnim("ãxåe1", num, 0, 3, 10, true);
-	AddAnim("ãxåe2", num + 1, 0, 3, 10, true);
+	AddAnim("ãxåe1", num, 0, 3, 10, true);			// âE
+	AddAnim("ãxåe2", num + 1, 0, 3, 10, true);		// ç∂
 	return true;
 }
 
@@ -305,9 +295,11 @@ void Enemy::Move(const GameCtrl & controller)
 			break;
 		case 1:
 			Enemy::dir = DIR_LEFT;
+			SetAnim("ãxåe2");
 			break;
 		case 2:
 			Enemy::dir = DIR_RIGHT;
+			SetAnim("ãxåe1");
 			break;
 		case 3:
 			Enemy::dir = DIR_UP;
@@ -344,6 +336,17 @@ void Enemy::Move(const GameCtrl & controller)
 	}
 	// à⁄ìÆèàóù-----------------------------
 	(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
+	switch (dir)
+	{
+	case DIR_RIGHT:
+		SetAnim("ãxåe1");
+		break;
+	case DIR_LEFT:
+		SetAnim("ãxåe2");
+		break;
+	default:
+		break;
+	}
 	return;
 }
 
@@ -715,8 +718,9 @@ void Enemy::Escape(const GameCtrl & controller)
 	}
 }
 
-void Enemy::Teleport(const GameCtrl & controller)
+void Enemy::Wait(const GameCtrl & controller)
 {
+	return;
 }
 
 void Enemy::Damage(const GameCtrl & controller)

@@ -88,7 +88,7 @@ private:
 	void SpMove(const GameCtrl & controller);		// w’ès“®
 	void Damage(const GameCtrl & controller);		// ÀŞÒ°¼Ş
 	void Escape(const GameCtrl & controller);		// “¦‚°‚é
-	void Teleport(const GameCtrl & controller);		// ÃÚÎß°Ä
+	void Wait(const GameCtrl & controller);			// ‘Ò‹@Ä
 
 	ENEMY_STATE state;			// ó‘Ô
 	ENEMY name;					// “G‚Ìí—Ş
