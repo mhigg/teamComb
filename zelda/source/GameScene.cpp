@@ -8,6 +8,7 @@
 #include "GameCtrl.h"
 #include "VECTOR2.h"
 #include "ImageMng.h"
+#include "InfoCtrl.h"
 #include "ResultScene.h"
 #include "Player.h"
 
@@ -83,8 +84,8 @@ int GameScene::Init(void)
 	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
-	player = std::make_unique<Player>();
-	return 0;
+	tile = LoadGraph("image/tile.png", true);
+	player = std::make_unique<Player>();	return 0;
 }
 
 void GameScene::Draw(void)
@@ -93,19 +94,22 @@ void GameScene::Draw(void)
 	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj2).GetPos().y; });
 
 	ClsDrawScreen();
-	
+	DrawGraph(0, 0, tile, true);
 	lpMapCtrl.Draw(false);
+	VECTOR2 plPos = lpInfoCtrl.GetPlayerPos(0);
 
-// objListから画面外のｵﾌﾞｼﾞｪｸﾄを除外する
-	//auto tmpList = (*objList);
-	//tmpList.remove_if([&](sharedObj &tmp) {
-	//	if (tmp->GetPos().x < plPos.x - CHIP_SIZE * 21
-	//	 || tmp->GetPos().x > plPos.x + CHIP_SIZE * 21)
-	//	{
-	//		return true;
-	//	}
-	//	return false;
-	//});
+	// objListから画面外のｵﾌﾞｼﾞｪｸﾄを除外する
+	/*auto tmpList = (*objList);
+	tmpList.remove_if([&](sharedObj &tmp) {
+	if (tmp->GetPos().x < plPos.x - CHIP_SIZE * 6
+		|| tmp->GetPos().x > plPos.x + CHIP_SIZE * 6
+		|| tmp->GetPos().y < plPos.y - CHIP_SIZE * 6
+		|| tmp->GetPos().y > plPos.y + CHIP_SIZE * 6)
+	{
+		return true;
+	}
+	return false;
+	});*/
 
 	//int playerNum = GetJoypadNum();
 
