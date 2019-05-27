@@ -15,6 +15,17 @@ enum PL_NUMBER {
 	PL_MAX
 };
 
+enum SCORE_DATA
+{
+	DATA_SCORE,
+	DATA_LIFE,
+	DATA_POWER,
+	DATA_GUARD,
+	DATA_INV,
+	DATA_BONUS,
+	DATA_MAX
+};
+
 struct State {
 	int Power;
 	int Guard;
@@ -24,6 +35,8 @@ struct State {
 constexpr int PL_DEF_SPEED = 2;
 constexpr int PL_DASH_SPEED = 4;
 constexpr unsigned int PL_RESTART_CNT = 120U;
+constexpr int PL_LIFE_MAX = 6;
+
 using UP_TIME = std::array < int, 2 >;
 
 using ACT_ARR = std::array<VECTOR2, DIR_MAX>;
@@ -35,13 +48,16 @@ public:
 	Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset);	// ˆø”•t‚«ºİ½Ä×¸À°
 	Player();
 	~Player();
-	bool initAnim(void);		// ±ÆÒ°¼®İŠÇ—
+	bool initAnim(void);							// ±ÆÒ°¼®İŠÇ—
+	void SetScore(SCORE_DATA data, int val);		// ½º±‰ÁZŒ¸Z—p
+	void StateDraw(void);			// ½Ã°À½‚Ì•`‰æ
 private:
 	void PlInit(void);
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 	bool CheckObjType(OBJ_TYPE type);
 	bool DeathPrc(void);			// ŠÖ”‰»
-	void GetItem(void);			// ±²ÃÑæ“¾
+	void GetItem(void);				// ±²ÃÑæ“¾
+	void Draw(void);
 	VECTOR2 sidePos(				// »²ÄŞ”»’è
 		VECTOR2 pos, 
 		DIR dir, 
@@ -64,8 +80,11 @@ private:
 	int life;
 	int invTime;				// invŒ¸Z—p
 	int damaCnt;				// ÀŞÒ°¼Ş‚ğó‚¯‚Ä‚©‚ç‚Ì¶³İÄ
-	bool damageFlag;		// ÀŞÒ°¼Ş‚ğ‚¤‚¯‚Ä‚¢‚éÌ×¸Ş
-	int deathInv;			// €–S“|‚ê‚½‚Ü‚Ü‚ÌŠÔ
+	bool damageFlag;			// ÀŞÒ°¼Ş‚ğ‚¤‚¯‚Ä‚¢‚éÌ×¸Ş
+	int deathInv;				// €–S“|‚ê‚½‚Ü‚Ü‚ÌŠÔ
+	int bonus;					// ÎŞ°Å½
+	int oldScore;				// ’¼‘O‚Ì½º±
+	int additionTime;			// ‰ÁZ‚·‚é‚Ü‚Å‚ÌŠÔ
 	unsigned int reStartCnt;
 	std::array<int,SCORE_DATA::DATA_MAX> param;
 

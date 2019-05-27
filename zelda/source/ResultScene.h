@@ -3,6 +3,14 @@
 
 constexpr int PLAYER_MAX = 4;
 
+enum SCORE_RUNK{
+	RUNK1,
+	RUNK2,
+	RUNK3,
+	RUNK4,
+	RUNK_MAX
+};
+
 using BONUS_POINT = std::array< int, PLAYER_MAX >;
 using RESULT_SCORE = std::array< int, PLAYER_MAX >;
 

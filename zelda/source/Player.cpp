@@ -4,7 +4,8 @@
 #include "StageMng.h"
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
-
+#include "ImageMng.h"
+#include "BaseScene.h"
 
 Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOffset)
 {
@@ -169,6 +170,9 @@ void Player::PlInit(void)
 	state.Guard = 0;
 	state.Inv = 0;
 	score = 0;
+	bonus = 0;
+	oldScore = 0;
+	additionTime = 8;
 	randomBonus = GetRand(4);
 	damageFlag = false;
 
@@ -231,7 +235,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (upTime[0] / 600 == 1)
 	{
-		lpScoreBoard.SetScore(DATA_POWER, -1);
+		SetScore(DATA_POWER, -1);
 		upTime[0] -= 600;
 	}
 	// ñhå‰
@@ -241,13 +245,13 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (upTime[1] > 600)
 	{
-		lpScoreBoard.SetScore(DATA_GUARD, - state.Guard);
+		SetScore(DATA_GUARD, - state.Guard);
 		upTime[1] -= 600;
 	}
 	// ñ≥ìG
 	if (invTime > 0)
 	{
-		lpScoreBoard.SetScore(DATA_INV, -1);
+		SetScore(DATA_INV, -1);
 	}
 	else
 	{
@@ -292,35 +296,35 @@ void Player::GetItem(void)
 	{
 		case MAP_ID::POTION_1:	// ê‘
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_POWER, 1);
+			SetScore(DATA_POWER, 1);
 			break;
 		case MAP_ID::POTION_2:	// ê¬
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_GUARD, 1);
+			SetScore(DATA_GUARD, 1);
 			break;
 		case MAP_ID::POTION_3:	// óŒ
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_LIFE, 2);
+			SetScore(DATA_LIFE, 2);
 			break;
 		case MAP_ID::POTION_4:	// ì¯
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_INV, 180);
+			SetScore(DATA_INV, 180);
 			break;
 		case MAP_ID::COIN_1:	// ê‘
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 2);
+			SetScore(DATA_SCORE, 2);
 			break;
 		case MAP_ID::COIN_2:	// ê¬
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 3);
+			SetScore(DATA_SCORE, 3);
 			break;
 		case MAP_ID::COIN_3:	// óŒ
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 4);
+			SetScore(DATA_SCORE, 4);
 			break;
 		case MAP_ID::COIN_4:	// â©
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 5);
+			SetScore(DATA_SCORE, 5);
 			break;
 		case MAP_ID::KEY_1:
 			paramUP(NotFlag, num);
@@ -330,55 +334,51 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::MEAT:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_LIFE, 4);
+			SetScore(DATA_LIFE, 4);
 			break;
 		case MAP_ID::SWORD:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 2);
+			SetScore(DATA_SCORE, 2);
 			if (randomBonus == 0)
 			{
-				lpScoreBoard.SetScore(DATA_BONUS, 1);
+				SetScore(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::SHIELD:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 2);
+			SetScore(DATA_SCORE, 2);
 			if (randomBonus == 1)
 			{
-				lpScoreBoard.SetScore(DATA_BONUS, 1);
+				SetScore(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::BOOK:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 2);
+			SetScore(DATA_SCORE, 2);
 			if (randomBonus == 2)
 			{
-				lpScoreBoard.SetScore(DATA_BONUS, 1);
+				SetScore(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::GOLD:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 2);
+			SetScore(DATA_SCORE, 2);
 			if (randomBonus == 3)
 			{
-				lpScoreBoard.SetScore(DATA_BONUS, 1);
+				SetScore(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::DIA:
 			paramUP(NotFlag, num);
-			lpScoreBoard.SetScore(DATA_SCORE, 2);
+			SetScore(DATA_SCORE, 2);
 			if (randomBonus == 4)
 			{
-				lpScoreBoard.SetScore(DATA_BONUS, 1);
+				SetScore(DATA_BONUS, 1);
 			}
 			break;
 	default:
 		break;
 	}
-
-	state.Power = lpScoreBoard.GetScore(DATA_POWER);
-	state.Guard = lpScoreBoard.GetScore(DATA_GUARD);
-	state.Inv = lpScoreBoard.GetScore(DATA_INV);
 }
 
 void Player::Stop(const GameCtrl & controller)
@@ -545,6 +545,91 @@ void Player::Attack(const GameCtrl & controller)
 	_updater = &Player::Move;
 }
 
+void  Player::SetScore(SCORE_DATA data, int val)
+{
+	switch (data)
+	{
+	case DATA_SCORE:
+		score += val;
+		if (score < 0)
+		{
+			score = 0;
+		}
+		if (score >= 10000)
+		{
+			score = 10000;
+		}
+		break;
+	case DATA_LIFE:
+		if (life + val >= PL_LIFE_MAX)
+		{
+			life = PL_LIFE_MAX;
+		}
+		else
+		{
+			life += val;
+		}
+		break;
+	case DATA_POWER:
+		state.Power += val;
+		if (state.Power > 3)
+		{
+			state.Power = 3;
+		}
+		break;
+	case DATA_GUARD:
+		state.Guard += val;
+		if (state.Guard > 3)
+		{
+			state.Guard = 3;
+		}
+		break;
+	case DATA_INV:
+		state.Inv += val;
+		break;
+	case DATA_BONUS:
+		bonus += val;
+		break;
+	}
+}
+void Player::Draw(void) {
+	Obj::Draw();
+	StateDraw();
+}
+
+void Player::StateDraw(void)
+{
+
+	int digit = 0;
+	additionTime--;
+	if (oldScore < score)
+	{
+		if (additionTime <= 0)
+		{
+			oldScore++;
+			additionTime = 8;
+		}
+	}
+	int numTemp = (oldScore * 100);
+	DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
+	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
+	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
+	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", state.Power);
+	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", state.Guard);
+	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", state.Inv);
+	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
+	if (numTemp == 0)
+	{
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 50, 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[0], true);
+	}
+	while (numTemp > 0)
+	{
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 - (digit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[numTemp % 10], true);
+		numTemp /= 10;
+		digit++;
+	}
+}
+
 void Player::Damage(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
@@ -555,16 +640,16 @@ void Player::Damage(const GameCtrl & controller)
 	}
 
 	// éÄñSèàóù
-	if (lpScoreBoard.GetScore(DATA_LIFE) < 1)
+	if (life  < 1)
 	{
 		if (DeathPrc())
 		{
 			// ÿΩŒﬂ∞›èàóù
 			pos = startPos;
-			lpScoreBoard.SetScore(DATA_LIFE, PL_LIFE_MAX);
-			lpScoreBoard.SetScore(DATA_SCORE, - 1);
-			lpScoreBoard.SetScore(DATA_POWER, - (state.Power - 1));
-			lpScoreBoard.SetScore(DATA_GUARD, -(state.Guard - 1));
+			SetScore(DATA_LIFE, PL_LIFE_MAX);
+			SetScore(DATA_SCORE, - 1);
+			SetScore(DATA_POWER, - (state.Power - 1));
+			SetScore(DATA_GUARD, -(state.Guard - 1));
 			InitScroll(static_cast<int>(plNum));
 			PlInit();
 			reStartCnt = PL_RESTART_CNT;
@@ -619,7 +704,7 @@ void Player::Damage(const GameCtrl & controller)
 	}
 	else
 	{
-		lpScoreBoard.SetScore(DATA_LIFE, -1);
+		SetScore(DATA_LIFE, -1);
 		damaCnt++;
 		return;
 	}

@@ -20,9 +20,9 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 
-	bonusPoint[0] = lpScoreBoard.GetScore(DATA_BONUS);
+	/*bonusPoint[0] = lpScoreBoard.GetScore(DATA_BONUS);
 
-	resultScore[0] = lpScoreBoard.GetScore(DATA_SCORE);
+	resultScore[0] = lpScoreBoard.GetScore(DATA_SCORE);*/
 
 	ResultDraw();
 	return move(own);

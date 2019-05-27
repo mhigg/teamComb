@@ -9,6 +9,7 @@
 #include "VECTOR2.h"
 #include "ImageMng.h"
 #include "ResultScene.h"
+#include "Player.h"
 
 GameScene::GameScene()
 {
@@ -35,12 +36,12 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 #ifdef _DEBUG	// ﾃﾞﾊﾞｯｸﾞ時のみ実行
 	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
 	{
-		lpScoreBoard.DataInit();
+		/*lpScoreBoard.DataInit();*/
 		return std::make_unique<EditScene>();
 	}
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
-		lpScoreBoard.DataInit();
+		/*lpScoreBoard.DataInit();*/
 		return std::make_unique<EditScene>();
 	}
 	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
@@ -82,6 +83,7 @@ int GameScene::Init(void)
 	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
+	player = std::make_unique<Player>();
 	return 0;
 }
 
@@ -115,6 +117,9 @@ void GameScene::Draw(void)
 		}
 	}
 
+	// ｽｺｱ表示(仮)
+	//player->StateDraw();
+
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 
@@ -133,8 +138,8 @@ void GameScene::Draw(void)
 
 	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
 
-	// ｽｺｱﾎﾞｰﾄﾞ表示
-	lpScoreBoard.Draw();
+	//// ｽｺｱﾎﾞｰﾄﾞ表示
+	//lpScoreBoard.Draw();
 
 	// 時間表示
 	int gameDigit = 0;
