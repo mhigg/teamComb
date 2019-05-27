@@ -25,22 +25,20 @@ public:
 		static ScoreBoard s_Instance;
 		return s_Instance;
 	}
-	void SetScore(SCORE_DATA data, int val);
-	int GetScore(SCORE_DATA data);
-
-	void DataInit(void);
-
-	void Draw(void);
+	void SetScore(SCORE_DATA data, int val);		// ½º±‰ÁZŒ¸Z—p
+	int GetScore(SCORE_DATA data);					// ½º±æ“¾
+	void DataInit(void);	// ‰Šú‰»
+	void Draw(void);		// •`‰æ
 private:
 	ScoreBoard();
 	~ScoreBoard();
-	int score;  // “¾“_
-	int life;	// ‘Ì—Í
-	int power;	// UŒ‚—Í	
-	int guard;  // –hŒä—Í	
-	int inv;	// –³“G	
-	int bonus;  // ƒ{[ƒiƒX
-	int oldScore;
-	int additionTime;
+	int score;			// “¾“_
+	int life;			// ‘Ì—Í
+	int power;			// UŒ‚—Í	
+	int guard;			// –hŒä—Í	
+	int inv;			// –³“G	
+	int bonus;			// ÎŞ°Å½
+	int oldScore;		// ’¼‘O‚Ì½º±
+	int additionTime;	// ‰ÁZ‚·‚é‚Ü‚Å‚ÌŠÔ
 };
 

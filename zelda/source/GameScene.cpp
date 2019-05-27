@@ -133,15 +133,31 @@ void GameScene::Draw(void)
 
 	// ŽžŠÔ•\Ž¦
 	int gameDigit = 0;
-	int secondNumTemp = gameFrame / 60;
-
+	int minNumTemp = gameFrame / 3600;
+	int secondNumTemp = (gameFrame % 3600) / 60;
+	// •ª
+	while (minNumTemp > 0)
+	{
+		DrawGraph(100, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[minNumTemp % 10], true);
+		minNumTemp /= 10;
+	}
+	// •b‚ª0‚ÌŽž
+	if (secondNumTemp < 10)
+	{
+		DrawGraph(130, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+	}
+	if (secondNumTemp < 1)
+	{
+		DrawGraph(150, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+	}
+	// •b
 	while (secondNumTemp > 0)
 	{
 		DrawGraph(200 - (gameDigit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
 		secondNumTemp /= 10;
 		gameDigit++;
 	}
-	
+
 	DrawString(0, 800, "GameScene", 0x00ff0000);
 	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
 

@@ -30,7 +30,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	// BACK(左SHIFT)でメニューへ戻る
+	// BACK(左SHIFT)でﾒﾆｭｰへ戻る
 	if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))
 	{
 		return std::make_unique<MenuScene>();
@@ -87,7 +87,7 @@ void SelectScene::SelectDraw(void)
 	DrawGraph(20, 500, IMAGE_ID("image/p3.png")[0], true);
 	DrawGraph(820, 500, IMAGE_ID("image/p4.png")[0], true);
 
-	// プレイヤーの数分立ち絵描画
+	// ﾌﾟﾚｲﾔｰの数分立ち絵描画
 	for (int i = 0; i < GetJoypadNum(); i++)
 	{
 		if (selectChara[i] == 0)
