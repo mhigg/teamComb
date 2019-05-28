@@ -106,7 +106,10 @@ private:
 	int speed;							// 敵の移動速度
 	int actNum[3];					// 行動予定のﾙｰﾄ
 	int actRoot;						// 実行するﾙｰﾄ
-	int movePos;						// 移動量		
+	int movePos;						// 移動量	
+	int actCnt;							// 発見時の待ちﾌﾚｰﾑ
+	int deathCnt;						// 点滅用のｶｳﾝﾄ
+	VECTOR2 scr;					// ｵﾌｾｯﾄの管理
 
 	CHECK_ARR comPos;			// 優先度の比較用配列(昇順)
 	CHECK_ARR comNum;		// 優先度の配列
