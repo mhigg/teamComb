@@ -125,7 +125,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	hitRad = VECTOR2(30, 30);
 	behaviorCnt = 0;
 	name = static_cast<ENEMY>(enemyNum);
-	action = ENEM_ACT::MOVE;
+	action = ENEM_ACT::SERCH;
 	Init("image/enemy.png", VECTOR2(480 / 8,400 / 5),VECTOR2(8,5), setUpPos);
 	comPos.resize(12);
 	initAnim();
@@ -201,11 +201,20 @@ VECTOR2 Enemy::Distance(DIR tmpDir,VECTOR2 pos)
 		if (tmpDir == DIR_DOWN || tmpDir == DIR_UP)
 		{
 			pos.y += SpeedTbl[tmpDir][0];
+			if ((*PosTbl[tmpDir][TBL_MAIN]) == plPos[nearP].x)
+			{
+				return pos;
+			}
 		}
 		else
 		{
 			pos.x += SpeedTbl[tmpDir][0];
+			if ((*PosTbl[tmpDir][TBL_MAIN]) == plPos[nearP].y)
+			{
+				return pos;
+			}
 		}
+		
 	}
 	return pos;
 }
@@ -255,26 +264,22 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	// Å‚à‹ß‚¢ÌßÚ²Ô°‚ÌŒŸõ
 	nearP = SerchPlayer();
 	// ÌßÚ²Ô°‚Æ‚Ì‹——£‚ª‰æ–Ê“à‚È‚çˆ—‚ğs‚¤
-	VECTOR2 tmp = VECTOR2(abs(plPos[nearP].x - Enemy::pos.x), abs(plPos[nearP].y - Enemy::pos.y));
-	if (tmp <= VECTOR2(440,280))
+	switch (action)
 	{
-		switch (action)
-		{
-		case ENEM_ACT::SERCH:
-			_updater = &Enemy::Serch;
-			break;
-		case ENEM_ACT::MOVE:
-			_updater = &Enemy::Move;
-			break;
-		case ENEM_ACT::TRA:
-			_updater = &Enemy::Track;
-			break;
-		default:
-			_updater = &Enemy::Serch;
-			break;
-		}
-		(this->*_updater)(controller);
+	case ENEM_ACT::SERCH:
+		_updater = &Enemy::Serch;
+		break;
+	case ENEM_ACT::MOVE:
+		_updater = &Enemy::Move;
+		break;
+	case ENEM_ACT::TRA:
+		_updater = &Enemy::Track;
+		break;
+	default:
+		_updater = &Enemy::Serch;
+		break;
 	}
+	(this->*_updater)(controller);
 	switch (action)
 	{
 	case ENEM_ACT::SERCH:
@@ -316,7 +321,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			break;
 		}
 		break;
-	default:		
+	default:
 		break;
 	}
 	if (behaviorCnt == 0)
@@ -468,11 +473,10 @@ void Enemy::Track(const GameCtrl & controller)
 	}
 }
 
+//-------------Êß½’Tõ(ˆÚ“®Êß½‚ª‚È‚¢‚Ì‚İ)-----------
 void Enemy::Serch(const GameCtrl & controller)
 {
 	auto &chipSize = lpStageMng.GetChipSize().x;
-
-	//-------------Êß½’Tõ(ˆÚ“®Êß½‚ª‚È‚¢‚Ì‚İ)-----------
 	CheckFree();
 	//---------------‘æˆê•ªŠò“_‚Ìİ’è----------------
 	for (DIR tmp = DIR_DOWN; tmp < DIR::DIR_MAX; tmp = static_cast<DIR>(tmp + 1))

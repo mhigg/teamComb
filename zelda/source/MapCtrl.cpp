@@ -245,7 +245,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				{			
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
-						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y)/* + VECTOR2(20, 100)*/, drawOffset + plScrTbl[plCnt])
+						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt])
 					);
 					mapImage[plCnt] = MakeScreen(800, 480, false);
 					lpInfoCtrl.SetPlayerFlag(true, plCnt);

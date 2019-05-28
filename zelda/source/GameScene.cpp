@@ -57,7 +57,18 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	}
 #endif
 
-
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		if (lpInfoCtrl.GetEnemyFlag(i))
+		{
+			int num = GetRand(static_cast<int>(ENEMY_MAX) - 1);
+			// ´ÈÐ°‚Ì²Ý½ÀÝ½
+			/* Ã½Ä*/	auto obj = AddObjList()(objList,
+				std::make_unique<Enemy>
+				(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), drawOffset, enCnt));
+			lpInfoCtrl.SetEnemyFlag(false, enCnt);
+		}
+	}
 	for (auto& obj : (*objList))
 	{
 		obj->UpDate(controller, objList);
