@@ -57,7 +57,7 @@ public:
 	Enemy();
 	Enemy(	
 		int enemyNum, 
-		VECTOR2 setUpPos, 
+		VECTOR2 setUpPos,
 		VECTOR2 drawOffset,
 		int enCnt	);
 	~Enemy();

@@ -639,7 +639,6 @@ void Player::Attack(const GameCtrl & controller)
 	_updater = &Player::Move;
 }
 
-
 void Player::Damage(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
@@ -686,13 +685,13 @@ void Player::Damage(const GameCtrl & controller)
 	{
 		if (damageCnt % 4 == 0)
 		{
-			DIR tmp = static_cast < DIR>(3 - Player::dir);
+			DIR tmp = DirTbl[dir][DIR_TBL_REV];
 			int speed = SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * -3 * (10 - damageCnt / 4);
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, speed,  hitRad.x - 2)))]
-			 && mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, speed, -hitRad.x + 2)))])
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed,  -hitRad.x - 2)))]
+			&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed, hitRad.x + 3)))])
 			{
-				// 移動不可のオブジェクトが隣にない場合
-				(*PosTbl[Player::dir][TBL_MAIN]) -= speed;
+				// 移動不可のオブジェクトが後ろにない場合
+				(*PosTbl[tmp][TBL_MAIN]) += -speed;
 				if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_END_X)))
 				{
 					scrollOffset.x = pos.x - SCROLL_AREA_X;
