@@ -123,6 +123,8 @@ void GameScene::Draw(void)
 
 	// ｽｺｱ表示(仮)
 	//player->StateDraw();
+	//// ｽｺｱﾎﾞｰﾄﾞ表示
+	//lpScoreBoard.Draw();
 
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
@@ -141,9 +143,6 @@ void GameScene::Draw(void)
 	}
 
 	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
-
-	//// ｽｺｱﾎﾞｰﾄﾞ表示
-	//lpScoreBoard.Draw();
 
 	// 時間表示
 	int gameDigit = 0;
