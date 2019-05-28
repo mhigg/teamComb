@@ -1,10 +1,10 @@
 #pragma once
 #include <array>
-#include "VECTOR2.h"
 #include "Obj.h"
-#include "MapCtrl.h"
 #include "ScoreBoard.h"
+#include "MapCtrl.h"
 #include "GameCtrl.h"
+#include "VECTOR2.h"
 
 
 enum PL_NUMBER {

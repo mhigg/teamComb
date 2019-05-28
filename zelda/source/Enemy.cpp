@@ -1,5 +1,5 @@
-#include <algorithm>
 #include <DxLib.h>
+#include <algorithm>
 #include <stdlib.h>
 #include "Enemy.h"
 #include "StageMng.h"
