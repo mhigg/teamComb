@@ -147,6 +147,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	//}
 
 	startPos = pos;
+	score = 0;
+	oldScore = score;
 
 	InitScroll(static_cast<int>(plNum));
 	initAnim();
@@ -176,14 +178,10 @@ void Player::PlInit(void)
 {
 	speed = PL_DEF_SPEED;
 	life = PL_LIFE_MAX;
-
 	state = { 1,0,0 };
 	upTime = { 0,0 };
 	invTime = 0;
-
-	score = 0;
 	bonus = 0;
-	oldScore = 0;
 	additionTime = 8;
 	randomBonus = GetRand(4);
 
@@ -669,10 +667,8 @@ void Player::Damage(const GameCtrl & controller)
 		{
 			// ÿΩŒﬂ∞›èàóù
 			pos = startPos;
-			SetData(DATA_LIFE, PL_LIFE_MAX);
 			SetData(DATA_SCORE, - 1);
-			SetData(DATA_POWER, - (state.Power - 1));
-			SetData(DATA_GUARD, -(state.Guard - 1));
+			oldScore = score;
 			InitScroll(static_cast<int>(plNum));
 			PlInit();
 			reStartCnt = PL_RESTART_CNT;

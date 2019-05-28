@@ -156,7 +156,7 @@ void GameScene::Draw(void)
 	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
 
 	// ŽžŠÔ•\Ž¦
-	int gameDigit = 0;
+	int timeDigit = 0;
 	int minNumTemp = gameFrame / 3600;
 	int secondNumTemp = (gameFrame % 3600) / 60;
 	// •ª
@@ -182,9 +182,9 @@ void GameScene::Draw(void)
 	// •b
 	while (secondNumTemp > 0)
 	{
-		DrawGraph(200 - (gameDigit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
+		DrawGraph(200 - (timeDigit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
 		secondNumTemp /= 10;
-		gameDigit++;
+		timeDigit++;
 	}
 
 	DrawString(0, 800, "GameScene", 0x00ff0000);
