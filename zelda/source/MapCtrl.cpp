@@ -265,6 +265,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				enCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				break;
 			case MAP_ID::POTION_1:
 			case MAP_ID::POTION_2:
