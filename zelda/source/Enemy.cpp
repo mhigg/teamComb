@@ -256,6 +256,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		deathCnt--;
 		if (deathCnt == 0)
 		{
+			lpInfoCtrl.SetEnemyPos(VECTOR2(-1, -1), enCnt);
 			deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
 		}
 		return;
