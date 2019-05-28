@@ -126,7 +126,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	behaviorCnt = 0;
 	name = static_cast<ENEMY>(enemyNum);
 	action = ENEM_ACT::MOVE;
-	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
+	Init("image/enemy.png", VECTOR2(480 / 8,400 / 5),VECTOR2(8,5), setUpPos);
 	comPos.resize(12);
 	initAnim();
 	EnInit();
@@ -137,8 +137,10 @@ void Enemy::EnInit(void)
 {
 	speed = ENEMY_SPEED;
 	// ∂≥›ƒån
+	deathCnt = 60;
+	scr = VECTOR2(0, 0);
 	timeCnt = 0;
-	
+	actCnt = 60;
 	faintCnt = 0;
 	addCnt = { 0,0 };
 	oppFlag = false;
@@ -234,7 +236,22 @@ int Enemy::SerchPlayer(void)
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	// éÄÇÒÇ≈ÇÈÇ©Ç«Ç§Ç©
-	deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
+	if (lpInfoCtrl.GetEnemyFlag(Enemy::enCnt))
+	{
+		Enemy::scrollOffset = scr;
+		// ì_ñ≈ÇÃèàóù
+		if (deathCnt % 5 == 0)
+		{
+			visible = !visible;
+		}
+		deathCnt--;
+		if (deathCnt == 0)
+		{
+			deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
+		}
+		return;
+	}
+	scr = scrollOffset;
 	// ç≈Ç‡ãﬂÇ¢Ãﬂ⁄≤‘∞ÇÃåüçı
 	nearP = SerchPlayer();
 	// Ãﬂ⁄≤‘∞Ç∆ÇÃãóó£Ç™âÊñ ì‡Ç»ÇÁèàóùÇçsÇ§
@@ -258,20 +275,53 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		}
 		(this->*_updater)(controller);
 	}
-	switch (dir)
+	switch (action)
 	{
-	case DIR_RIGHT:
-		SetAnim("ãxåe1");
+	case ENEM_ACT::SERCH:
+		switch (dir)
+		{
+		case DIR_RIGHT:
+			SetAnim("âEî≠å©");
+			break;
+		case DIR_LEFT:
+			SetAnim("ç∂î≠å©");
+			break;
+		default:
+			break;
+		}
 		break;
-	case DIR_LEFT:
-		SetAnim("ãxåe2");
+	case ENEM_ACT::MOVE:
+		switch (dir)
+		{
+		case DIR_RIGHT:
+			SetAnim("âEë“ã@");
+			break;
+		case DIR_LEFT:
+			SetAnim("ç∂ë“ã@");
+			break;
+		default:
+			break;
+		}
 		break;
-	default:
+	case ENEM_ACT::TRA:
+		switch (dir)
+		{
+		case DIR_RIGHT:
+			SetAnim("âEíTçı");
+			break;
+		case DIR_LEFT:
+			SetAnim("ç∂íTçı");
+			break;
+		default:
+			break;
+		}
+		break;
+	default:		
 		break;
 	}
 	if (behaviorCnt == 0)
 	{
-		SetAnim("ãxåe2");
+		SetAnim("ç∂ë“ã@");
 	}
 	scrollOffset = lpInfoCtrl.GetAddScroll(0);
 	lpInfoCtrl.SetEnemyPos(pos, enCnt);
@@ -282,8 +332,12 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 bool Enemy::initAnim(void)
 {
 	int num = static_cast<int>(name) * 2;
-	AddAnim("ãxåe1", num, 0, 3, 10, true);			// âE
-	AddAnim("ãxåe2", num + 1, 0, 3, 10, true);		// ç∂
+	AddAnim("âEë“ã@", num, 0, 2, 10, true);				// âE
+	AddAnim("ç∂ë“ã@", num + 1, 0, 2, 10, true);		// ç∂
+	AddAnim("âEíTçı", num, 2, 2, 10, true);
+	AddAnim("ç∂íTçı", num + 1, 2, 2, 10, true);
+	AddAnim("âEî≠å©", num, 4, 1, 30, false);
+	AddAnim("ç∂î≠å©", num + 1, 4, 1, 30, false);
 	return true;
 }
 
@@ -419,29 +473,25 @@ void Enemy::Serch(const GameCtrl & controller)
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	//------------- ﬂΩíTçı(à⁄ìÆ ﬂΩÇ™Ç»Ç¢éûÇÃÇ›)-----------
-	if (action == ENEM_ACT::SERCH)
+	CheckFree();
+	//---------------ëÊàÍï™äÚì_ÇÃê›íË----------------
+	for (DIR tmp = DIR_DOWN; tmp < DIR::DIR_MAX; tmp = static_cast<DIR>(tmp + 1))
 	{
-		CheckFree();
-		//---------------ëÊàÍï™äÚì_ÇÃê›íË----------------
-		for (DIR tmp = DIR_DOWN; tmp < DIR::DIR_MAX; tmp = static_cast<DIR>(tmp + 1))
+		if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], -hitRad.x)))]
+			&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], hitRad.x - 1)))]
+			&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], 0)))])
 		{
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], -hitRad.x)))]
-				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], hitRad.x - 1)))]
-				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][0], 0)))])
+			VECTOR2 tmpPos = pos;
+			checkPos[static_cast<int>(tmp)] = Distance(tmp, tmpPos);
+			passFlag[static_cast<int>(tmp)] = true;
+			//------------ëÊìÒï™äÚì_ÇÃê›íË---------------
+			for (int opp = 1; opp < 3; opp++)
 			{
-				VECTOR2 tmpPos = pos;
-				checkPos[static_cast<int>(tmp)] = Distance(tmp, tmpPos);
-				passFlag[static_cast<int>(tmp)] = true;
-				//------------ëÊìÒï™äÚì_ÇÃê›íË---------------
-				for (int opp = 1; opp < 3; opp++)
-				{
-					DIR setDir = static_cast<DIR>(tmp + opp * 4);
-					checkPos[static_cast<int>(setDir)] = Distance(dirOpp[tmp][opp], checkPos[static_cast<int>(tmp)]);
-					passFlag[static_cast<int>(setDir)] = true;
-				}
+				DIR setDir = static_cast<DIR>(tmp + opp * 4);
+				checkPos[static_cast<int>(setDir)] = Distance(dirOpp[tmp][opp], checkPos[static_cast<int>(tmp)]);
+				passFlag[static_cast<int>(setDir)] = true;
 			}
 		}
-
 		//---------óDêÊìxÇê›íË-------------
 		for (int e = 0; e < 12; e++)
 		{
@@ -460,201 +510,23 @@ void Enemy::Serch(const GameCtrl & controller)
 				actRoot = e;
 			}
 		}
-		action = ENEM_ACT::TRA;
+		if (actCnt <= 0)
+		{
+			action = ENEM_ACT::TRA;
+			actCnt = 60;
+			return;
+		}
+		actCnt--;
 		return;
 	}
 }
 
 void Enemy::SpMove(const GameCtrl & controller)
 {
-	auto &chipSize = lpStageMng.GetChipSize().x;
-
-	int num = GetRand(10) + 20;
-	if (!(timeCnt % num))
-	{
-		switch (GetRand(4))
-		{
-		case 0:
-			Enemy::dir = DIR_DOWN;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 1:
-			Enemy::dir = DIR_LEFT;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 2:
-			Enemy::dir = DIR_RIGHT;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 3:
-			Enemy::dir = DIR_UP;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 4:
-			action = ENEM_ACT::DO_NOTHING;
-		default:
-			break;
-		}
-		timeCnt = 0;
-	}
-	if (behaviorCnt % 4)
-	{
-		switch (dir)
-		{
-		case DIR_RIGHT:
-			SetAnim("ãxåe1");
-			break;
-		case DIR_LEFT:
-			SetAnim("ãxåe2");
-			break;
-		default:
-			break;
-		}
-		return;
-	}
-	if (!(action == ENEM_ACT::DO_NOTHING))
-	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-			|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], hitRad.x - 1)))])
-		{
-			// à⁄ìÆïsâ¬ÇÃÉIÉuÉWÉFÉNÉgÇ™ó◊Ç…Ç†Ç¡ÇΩèÍçá
-			Enemy::dir = dir;
-			switch (dir)
-			{
-			case DIR_RIGHT:
-				SetAnim("ãxåe1");
-				break;
-			case DIR_LEFT:
-				SetAnim("ãxåe2");
-				break;
-			default:
-				break;
-			}
-			return;
-		}
-		// à⁄ìÆèàóù-----------------------------
-		if (dir == 0 || dir == 3)
-		{
-			addCnt.y += SpeedTbl[Enemy::dir][0];
-		}
-		else
-		{
-			addCnt.x += SpeedTbl[Enemy::dir][0];
-		}
-		// ïœçXÇµÇΩÇ¢ç¿ïWÇÃïœêîÉAÉhÉåÉX += à⁄ìÆó 
-		if ((abs(addCnt.x) > ENEMY_LIM) || (abs(addCnt.y) > ENEMY_LIM))
-		{
-			return;
-		}
-		return;
-	}
-	switch (dir)
-	{
-	case DIR_RIGHT:
-		SetAnim("ãxåe1");
-		break;
-	case DIR_LEFT:
-		SetAnim("ãxåe2");
-		break;
-	default:
-		break;
-	}
 }
 
 void Enemy::Escape(const GameCtrl & controller)
 {
-	auto &chipSize = lpStageMng.GetChipSize().x;
-
-	int num = GetRand(10) + 20;
-	if (!(timeCnt % num))
-	{
-		switch (GetRand(4))
-		{
-		case 0:
-			Enemy::dir = DIR_DOWN;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 1:
-			Enemy::dir = DIR_LEFT;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 2:
-			Enemy::dir = DIR_RIGHT;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 3:
-			Enemy::dir = DIR_UP;
-			action = ENEM_ACT::MOVE;
-			break;
-		case 4:
-			action = ENEM_ACT::DO_NOTHING;
-		default:
-			break;
-		}
-		timeCnt = 0;
-	}
-	if (behaviorCnt % 4)
-	{
-		switch (dir)
-		{
-		case DIR_RIGHT:
-			SetAnim("ãxåe1");
-			break;
-		case DIR_LEFT:
-			SetAnim("ãxåe2");
-			break;
-		default:
-			break;
-		}
-		return;
-	}
-	if (!(action == ENEM_ACT::DO_NOTHING))
-	{
-		if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], -hitRad.x)))]
-			|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], hitRad.x - 1)))])
-		{
-			// à⁄ìÆïsâ¬ÇÃÉIÉuÉWÉFÉNÉgÇ™ó◊Ç…Ç†Ç¡ÇΩèÍçá
-			Enemy::dir = dir;
-			switch (dir)
-			{
-			case DIR_RIGHT:
-				SetAnim("ãxåe1");
-				break;
-			case DIR_LEFT:
-				SetAnim("ãxåe2");
-				break;
-			default:
-				break;
-			}
-			return;
-		}
-		// à⁄ìÆèàóù-----------------------------
-		if (dir == 0 || dir == 3)
-		{
-			addCnt.y += SpeedTbl[Enemy::dir][0];
-		}
-		else
-		{
-			addCnt.x += SpeedTbl[Enemy::dir][0];
-		}
-		// ïœçXÇµÇΩÇ¢ç¿ïWÇÃïœêîÉAÉhÉåÉX += à⁄ìÆó 
-		if ((abs(addCnt.x) > ENEMY_LIM) || (abs(addCnt.y) > ENEMY_LIM))
-		{
-			return;
-		}
-		return;
-	}
-	switch (dir)
-	{
-	case DIR_RIGHT:
-		SetAnim("ãxåe1");
-		break;
-	case DIR_LEFT:
-		SetAnim("ãxåe2");
-		break;
-	default:
-		break;
-	}
 }
 
 void Enemy::Wait(const GameCtrl & controller)
