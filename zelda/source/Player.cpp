@@ -35,14 +35,20 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			   DIR_RIGHT,DIR_LEFT ,DIR_DOWN ,DIR_UP,	// âE(REV:ç∂)(è„ÅEâ∫)
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// è„(REV:â∫)(ç∂ÅEâE)
 			  };
-	param =
-	{
-		 -100
-		,PL_LIFE_MAX
-		,-(state.Power - 1)
-		, -state.Guard
-		, -state.Inv
-	};
+
+	param = { -100,
+			   PL_LIFE_MAX,
+			  -(state.Power - 1),
+			  -state.Guard,
+			  -state.Inv
+			};
+
+	AtkImgTbl = { "image/éaåÇ_DOWN.png",
+				  "image/éaåÇ_Left.png",
+				  "image/éaåÇ_Right.png",
+				  "image/éaåÇ_UP.png"
+				};
+
 	mapMoveTbl = {
 					true,		// NONE
 					false,		// WALL1
@@ -126,15 +132,20 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,		// STONE_4				
 	};
 	actAdd = {
-		VECTOR2(0					,	hitRad.y * 2	),
-		VECTOR2(-hitRad.x * 2	,	0					),		
-		VECTOR2(hitRad.x * 2	,	0					),
-		VECTOR2(0					,	-hitRad.y * 2	)
+		VECTOR2(0, hitRad.y * 2),
+		VECTOR2(-hitRad.x * 2, 0),
+		VECTOR2(hitRad.x * 2, 0),
+		VECTOR2(0, -hitRad.y * 2)
 	};
 
 	this->plNum = plNum;
 
 	Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+	//for (int idx = 0; idx < 4; idx++)
+	//{
+	//	lpImageMng.GetID(AtkImgTbl[idx], VECTOR2(140, 130), VECTOR2(4, 10));
+	//}
+
 	startPos = pos;
 
 	InitScroll(static_cast<int>(plNum));
@@ -166,27 +177,28 @@ void Player::PlInit(void)
 	speed = PL_DEF_SPEED;
 	life = PL_LIFE_MAX;
 
-	state.Power = 1;
-	state.Guard = 0;
-	state.Inv = 0;
+	state = { 1,0,0 };
+	upTime = { 0,0 };
+	invTime = 0;
+
 	score = 0;
 	bonus = 0;
 	oldScore = 0;
 	additionTime = 8;
 	randomBonus = GetRand(4);
-	damageFlag = false;
 
-	upTime = {
-		0,0
-	};
-	invTime = 0;
-	damaCnt = 0;
+	damageFlag = false;
+	damageCnt = 0;
 	deathInv = 0;
 	reStartCnt = 0U;
-	afterKeyFlag = false;
 	visible = true;
+
+	afterKeyFlag = false;
+	atkAnimCnt = 30;
+
 	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 	lpInfoCtrl.SetPlayerPos(pos, static_cast<int>(plNum));
+
 	_updater = &Player::Move;				// èâä˙èÛë‘ÇÕMoveèÛë‘
 }
 
@@ -233,9 +245,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		upTime[0]++;
 	}
-	if (upTime[0] / 600 == 1)
+	if (upTime[0] > 600)
 	{
-		SetScore(DATA_POWER, -1);
+		SetData(DATA_POWER, -1);
 		upTime[0] -= 600;
 	}
 	// ñhå‰
@@ -245,13 +257,13 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (upTime[1] > 600)
 	{
-		SetScore(DATA_GUARD, - state.Guard);
+		SetData(DATA_GUARD, - state.Guard);
 		upTime[1] -= 600;
 	}
 	// ñ≥ìG
 	if (invTime > 0)
 	{
-		SetScore(DATA_INV, -1);
+		SetData(DATA_INV, -1);
 	}
 	else
 	{
@@ -262,20 +274,6 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 bool Player::CheckObjType(OBJ_TYPE type)
 {
 	return (type == OBJ_PLAYER);
-}
-
-bool Player::DeathPrc(void)
-{
-	if (animEndFlag)
-	{
-		if (deathInv >= 80)
-		{
-			return true;
-		}
-	}
-	dir = DIR_DOWN;
-	SetAnim("éÄñS");
-	return false;
 }
 
 void Player::GetItem(void)
@@ -296,35 +294,35 @@ void Player::GetItem(void)
 	{
 		case MAP_ID::POTION_1:	// ê‘
 			paramUP(NotFlag, num);
-			SetScore(DATA_POWER, 1);
+			SetData(DATA_POWER, 1);
 			break;
 		case MAP_ID::POTION_2:	// ê¬
 			paramUP(NotFlag, num);
-			SetScore(DATA_GUARD, 1);
+			SetData(DATA_GUARD, 1);
 			break;
 		case MAP_ID::POTION_3:	// óŒ
 			paramUP(NotFlag, num);
-			SetScore(DATA_LIFE, 2);
+			SetData(DATA_LIFE, 2);
 			break;
 		case MAP_ID::POTION_4:	// ì¯
 			paramUP(NotFlag, num);
-			SetScore(DATA_INV, 180);
+			SetData(DATA_INV, 180);
 			break;
 		case MAP_ID::COIN_1:	// ê‘
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			break;
 		case MAP_ID::COIN_2:	// ê¬
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 3);
+			SetData(DATA_SCORE, 3);
 			break;
 		case MAP_ID::COIN_3:	// óŒ
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 4);
+			SetData(DATA_SCORE, 4);
 			break;
 		case MAP_ID::COIN_4:	// â©
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 5);
+			SetData(DATA_SCORE, 5);
 			break;
 		case MAP_ID::KEY_1:
 			paramUP(NotFlag, num);
@@ -334,50 +332,138 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::MEAT:
 			paramUP(NotFlag, num);
-			SetScore(DATA_LIFE, 4);
+			SetData(DATA_LIFE, 4);
 			break;
 		case MAP_ID::SWORD:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 0)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::SHIELD:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 1)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::BOOK:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 2)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::GOLD:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 3)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::DIA:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 4)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 	default:
 		break;
+	}
+}
+
+void Player::SetData(SCORE_DATA data, int val)
+{
+	switch (data)
+	{
+	case DATA_SCORE:
+		score += val;
+		if (score < 0)
+		{
+			score = 0;
+		}
+		if (score >= 10000)
+		{
+			score = 10000;
+		}
+		break;
+	case DATA_LIFE:
+		life = (life + val >= PL_LIFE_MAX ? PL_LIFE_MAX : life + val);
+		break;
+	case DATA_POWER:
+		state.Power += val;
+		if (state.Power > 3)
+		{
+			state.Power = 3;
+		}
+		break;
+	case DATA_GUARD:
+		state.Guard += val;
+		if (state.Guard > 3)
+		{
+			state.Guard = 3;
+		}
+		break;
+	case DATA_INV:
+		state.Inv += val;
+		break;
+	case DATA_BONUS:
+		bonus += val;
+		break;
+	}
+}
+
+void Player::Draw(void)
+{
+	Obj::Draw();
+	StateDraw();
+
+//	//if (GetAnim() == "çUåÇ")
+	//{
+	//	if (atkAnimCnt < 29)
+	//	{
+	//		atkAnimCnt++;
+	//		DrawGraph(pos.x, pos.y, lpImageMng.GetID(AtkImgTbl[dir])[atkAnimCnt], false);
+	//	}
+	//}
+}
+
+void Player::StateDraw(void)
+{
+	int digit = 0;
+	additionTime--;
+	if (oldScore < score)
+	{
+		if (additionTime <= 0)
+		{
+			oldScore++;
+			additionTime = 8;
+		}
+	}
+	int numTemp = (oldScore * 100);
+	DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
+	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
+	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
+	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", state.Power);
+	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", state.Guard);
+	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", state.Inv);
+	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
+	if (numTemp == 0)
+	{
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 50, 15, lpImageMng.GetID("image/number.png", VECTOR2(40,30), VECTOR2(10,1))[0], true);
+	}
+	while (numTemp > 0)
+	{
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 - (digit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
+		numTemp /= 10;
+		digit++;
 	}
 }
 
@@ -398,6 +484,7 @@ void Player::Stop(const GameCtrl & controller)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
+		atkAnimCnt = 0;
 		_updater = &Player::Attack;
 	}
 }
@@ -425,6 +512,7 @@ void Player::Move(const GameCtrl & controller)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
+		atkAnimCnt = 0;
 		_updater = &Player::Attack;
 		return;
 	}
@@ -465,7 +553,7 @@ void Player::Move(const GameCtrl & controller)
 			Player::dir = DirTbl[dir][id];		// ï˚å¸ÇÃæØƒ
 
 			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -hitRad.x + 2)))]
-				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], hitRad.x - 1 - 2)))])
+			 || !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]],  hitRad.x - 3 /*(ãå:- 1 - 2)*/)))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// à⁄ìÆïsâ¬ÇÃÉIÉuÉWÉFÉNÉgÇ™ó◊Ç…Ç†Ç¡ÇΩèÍçá
@@ -522,6 +610,13 @@ void Player::Move(const GameCtrl & controller)
 
 void Player::Attack(const GameCtrl & controller)
 {
+	reStartCnt -= (reStartCnt > 0);		// ê^ÇÃèÍçáÇÃ1Ç∂≥›ƒÇ©ÇÁå∏ÇÁÇ∑
+	visible = true;
+	if ((reStartCnt / 3) % 2)
+	{
+		visible = false;
+	}
+
 	if (!animEndFlag)
 	{
 		// çUåÇèàóù
@@ -545,94 +640,24 @@ void Player::Attack(const GameCtrl & controller)
 	_updater = &Player::Move;
 }
 
-void  Player::SetScore(SCORE_DATA data, int val)
-{
-	switch (data)
-	{
-	case DATA_SCORE:
-		score += val;
-		if (score < 0)
-		{
-			score = 0;
-		}
-		if (score >= 10000)
-		{
-			score = 10000;
-		}
-		break;
-	case DATA_LIFE:
-		if (life + val >= PL_LIFE_MAX)
-		{
-			life = PL_LIFE_MAX;
-		}
-		else
-		{
-			life += val;
-		}
-		break;
-	case DATA_POWER:
-		state.Power += val;
-		if (state.Power > 3)
-		{
-			state.Power = 3;
-		}
-		break;
-	case DATA_GUARD:
-		state.Guard += val;
-		if (state.Guard > 3)
-		{
-			state.Guard = 3;
-		}
-		break;
-	case DATA_INV:
-		state.Inv += val;
-		break;
-	case DATA_BONUS:
-		bonus += val;
-		break;
-	}
-}
-void Player::Draw(void) {
-	Obj::Draw();
-	StateDraw();
-}
-
-void Player::StateDraw(void)
-{
-
-	int digit = 0;
-	additionTime--;
-	if (oldScore < score)
-	{
-		if (additionTime <= 0)
-		{
-			oldScore++;
-			additionTime = 8;
-		}
-	}
-	int numTemp = (oldScore * 100);
-	DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
-	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
-	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
-	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", state.Power);
-	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", state.Guard);
-	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", state.Inv);
-	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
-	if (numTemp == 0)
-	{
-		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 50, 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[0], true);
-	}
-	while (numTemp > 0)
-	{
-		DrawGraph(GAME_SCREEN_SIZE_X / 2 - (digit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[numTemp % 10], true);
-		numTemp /= 10;
-		digit++;
-	}
-}
 
 void Player::Damage(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+
+	auto DeathPrc = [this]()
+	{
+		if (animEndFlag)
+		{
+			if (deathInv >= 80)
+			{
+				return true;
+			}
+		}
+		dir = DIR_DOWN;
+		SetAnim("éÄñS");
+		return false;
+	};
 
 	if (reStartCnt)
 	{
@@ -646,10 +671,10 @@ void Player::Damage(const GameCtrl & controller)
 		{
 			// ÿΩŒﬂ∞›èàóù
 			pos = startPos;
-			SetScore(DATA_LIFE, PL_LIFE_MAX);
-			SetScore(DATA_SCORE, - 1);
-			SetScore(DATA_POWER, - (state.Power - 1));
-			SetScore(DATA_GUARD, -(state.Guard - 1));
+			SetData(DATA_LIFE, PL_LIFE_MAX);
+			SetData(DATA_SCORE, - 1);
+			SetData(DATA_POWER, - (state.Power - 1));
+			SetData(DATA_GUARD, -(state.Guard - 1));
 			InitScroll(static_cast<int>(plNum));
 			PlInit();
 			reStartCnt = PL_RESTART_CNT;
@@ -658,13 +683,13 @@ void Player::Damage(const GameCtrl & controller)
 		return;
 	}
 
-	if (damaCnt)
+	if (damageCnt)
 	{
-		if (damaCnt % 5 == 0)
+		if (damageCnt % 5 == 0)
 		{
 			DIR tmp = static_cast < DIR>(3 - Player::dir);
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, hitRad.x - 2)))]
-				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, -hitRad.x + 2)))])
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6,  hitRad.x - 2)))]
+			 && mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, -hitRad.x + 2)))])
 			{
 				// à⁄ìÆïsâ¬ÇÃÉIÉuÉWÉFÉNÉgÇ™ó◊Ç…Ç»Ç¢èÍçá
 				(*PosTbl[Player::dir][TBL_MAIN]) -= SpeedTbl[Player::dir][inputTbl[plNum][0]] / 2 * 6;
@@ -680,18 +705,18 @@ void Player::Damage(const GameCtrl & controller)
 				}
 				lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 			}
-			if (damaCnt / 10 % 2 == 0)
+			if (damageCnt / 10 % 2 == 0)
 			{
 				visible = false;
 			}
-			if(damaCnt / 10% 2)
+			if(damageCnt / 10% 2)
 			{
 				visible = true;
 			}
 		}
-		if (damaCnt >= 60)
+		if (damageCnt >= 60)
 		{
-			damaCnt = 0;
+			damageCnt = 0;
 			
 			// ¿ﬁ“∞ºﬁ±∆“∞ºÆ›Ç™èIÇÌÇ¡ÇΩÇÁëJà⁄(ó\íË)
 			damageFlag = false;
@@ -699,13 +724,13 @@ void Player::Damage(const GameCtrl & controller)
 			visible = true;
 			return;
 		}
-		damaCnt++;
+		damageCnt++;
 		return;
 	}
 	else
 	{
-		SetScore(DATA_LIFE, -1);
-		damaCnt++;
+		SetData(DATA_LIFE, -1);
+		damageCnt++;
 		return;
 	}
 }
