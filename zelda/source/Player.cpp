@@ -168,7 +168,7 @@ bool Player::initAnim(void)
 	AddAnim("移動", 0, 1, 6, 8, true);
 	AddAnim("疾走", 4, 1, 6, 6, true);
 	AddAnim("攻撃", 8, 1, 6, 3, false);
-	AddAnim("死亡", 12, 0, 7, 7, false);	// falseでｱﾆﾒｰｼｮﾝをﾙｰﾌﾟさせない
+	AddAnim("死亡", 12, 0, 7, 7, false);
 	return true;
 }
 
@@ -516,7 +516,6 @@ void Player::Move(const GameCtrl & controller)
 		_updater = &Player::Attack;
 		return;
 	}
-
 //--------- 敵に当たった時の処理 ----------
 	if (state.Inv == 0)
 	{
@@ -685,14 +684,15 @@ void Player::Damage(const GameCtrl & controller)
 
 	if (damageCnt)
 	{
-		if (damageCnt % 5 == 0)
+		if (damageCnt % 4 == 0)
 		{
 			DIR tmp = static_cast < DIR>(3 - Player::dir);
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6,  hitRad.x - 2)))]
-			 && mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, -hitRad.x + 2)))])
+			int speed = SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * -3 * (10 - damageCnt / 4);
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, speed,  hitRad.x - 2)))]
+			 && mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, speed, -hitRad.x + 2)))])
 			{
 				// 移動不可のオブジェクトが隣にない場合
-				(*PosTbl[Player::dir][TBL_MAIN]) -= SpeedTbl[Player::dir][inputTbl[plNum][0]] / 2 * 6;
+				(*PosTbl[Player::dir][TBL_MAIN]) -= speed;
 				if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_END_X)))
 				{
 					scrollOffset.x = pos.x - SCROLL_AREA_X;
@@ -705,16 +705,16 @@ void Player::Damage(const GameCtrl & controller)
 				}
 				lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 			}
-			if (damageCnt / 10 % 2 == 0)
+			if (damageCnt / 8 % 2 == 0)
 			{
 				visible = false;
 			}
-			if(damageCnt / 10% 2)
+			if(damageCnt / 8 % 2)
 			{
 				visible = true;
 			}
 		}
-		if (damageCnt >= 60)
+		if (damageCnt >= 40)
 		{
 			damageCnt = 0;
 			
@@ -722,6 +722,7 @@ void Player::Damage(const GameCtrl & controller)
 			damageFlag = false;
 			_updater = &Player::Move;
 			visible = true;
+			state.Inv = 120;
 			return;
 		}
 		damageCnt++;

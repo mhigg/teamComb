@@ -10,7 +10,7 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :Obj(drawOffset)
+Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset,int  enCnt) :Obj(drawOffset)
 {
 	Enemy::enCnt = enCnt;
 	keyIdTbl = {
