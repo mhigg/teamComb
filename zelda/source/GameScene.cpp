@@ -56,8 +56,19 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<GameScene>();
 	}
 #endif
-
-
+	if (gameFrame % 3600 == 0)
+	{
+		int tmp = 0;
+		for (int i = 0; i < ENEMY_MAX; i++)
+		{
+			if (lpInfoCtrl.GetEnemyFlag(i))
+			{
+				VECTOR2 Ipos = lpMapCtrl.GetItenPos(MAP_ID::ENEMY, tmp);
+				lpMapCtrl.SetUpEnemy(objList, i, Ipos.x, Ipos.y);
+				tmp++;
+			}
+		}
+	}
 	for (auto& obj : (*objList))
 	{
 		obj->UpDate(controller, objList);
