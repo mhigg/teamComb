@@ -125,7 +125,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	hitRad = VECTOR2(30, 30);
 	behaviorCnt = 0;
 	name = static_cast<ENEMY>(enemyNum);
-	action = ENEM_ACT::SERCH;
+	action = ENEM_ACT::MOVE;
 	Init("image/enemy.png", VECTOR2(480 / 8,320 / 4),VECTOR2(8,4), setUpPos);
 	comPos.resize(12);
 	initAnim();
@@ -235,12 +235,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	// éÄÇÒÇ≈ÇÈÇ©Ç«Ç§Ç©
 	deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
-	if (deathFlag)
-	{
-		visible = false;
-		return;
-	}
-	// ç≈Ç‡ãﬂÇ¢Ãﬂ⁄≤‘∞ÇÃåüçı	
+	// ç≈Ç‡ãﬂÇ¢Ãﬂ⁄≤‘∞ÇÃåüçı
 	nearP = SerchPlayer();
 	// Ãﬂ⁄≤‘∞Ç∆ÇÃãóó£Ç™âÊñ ì‡Ç»ÇÁèàóùÇçsÇ§
 	VECTOR2 tmp = VECTOR2(abs(plPos[nearP].x - Enemy::pos.x), abs(plPos[nearP].y - Enemy::pos.y));
@@ -262,6 +257,17 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			break;
 		}
 		(this->*_updater)(controller);
+	}
+	switch (dir)
+	{
+	case DIR_RIGHT:
+		SetAnim("ãxåe1");
+		break;
+	case DIR_LEFT:
+		SetAnim("ãxåe2");
+		break;
+	default:
+		break;
 	}
 	if (behaviorCnt == 0)
 	{
@@ -295,11 +301,9 @@ void Enemy::Move(const GameCtrl & controller)
 			break;
 		case 1:
 			Enemy::dir = DIR_LEFT;
-			SetAnim("ãxåe2");
 			break;
 		case 2:
 			Enemy::dir = DIR_RIGHT;
-			SetAnim("ãxåe1");
 			break;
 		case 3:
 			Enemy::dir = DIR_UP;
@@ -317,36 +321,14 @@ void Enemy::Move(const GameCtrl & controller)
 	}
 	if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], -hitRad.x)))]
 		|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], hitRad.x - 1)))]
-		|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0],0)))])
+		|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Enemy::dir, SpeedTbl[Enemy::dir][0], 0)))])
 	{
 		// à⁄ìÆïsâ¬ÇÃÉIÉuÉWÉFÉNÉgÇ™ó◊Ç…Ç†Ç¡ÇΩèÍçá
 		Enemy::dir = dir;
-		switch (dir)
-		{
-		case DIR_RIGHT:
-			SetAnim("ãxåe1");
-			break;
-		case DIR_LEFT:
-			SetAnim("ãxåe2");
-			break;
-		default:
-				break;		
-		}
 		return;
 	}
 	// à⁄ìÆèàóù-----------------------------
 	(*PosTbl[Enemy::dir][TBL_MAIN]) += SpeedTbl[Enemy::dir][0];
-	switch (dir)
-	{
-	case DIR_RIGHT:
-		SetAnim("ãxåe1");
-		break;
-	case DIR_LEFT:
-		SetAnim("ãxåe2");
-		break;
-	default:
-		break;
-	}
 	return;
 }
 
@@ -354,124 +336,81 @@ void Enemy::Track(const GameCtrl & controller)
 {
 	auto &chipSize = lpStageMng.GetChipSize().x;
 	//-----------à⁄ìÆ-------------
-	if (action == ENEM_ACT::TRA)
+
+	int tmpAct = actRoot % 4;
+	movePos = 0;
+	switch (tmpAct)
 	{
-		int tmpAct = actRoot % 4;
-		movePos = 0;
-		switch (tmpAct)
+	case 0:
+	case 3:
+		if ((*PosTbl[tmpAct][TBL_MAIN]) != checkPos[actRoot].y)
 		{
-		case 0:
-		case 3:
-			if ((*PosTbl[tmpAct][TBL_MAIN]) != checkPos[actRoot].y)
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
 			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
-				{
-					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
-					movePos += SpeedTbl[tmpAct][0];
-				}
+				dir = static_cast<DIR>(tmpAct);
+				(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
+				movePos += SpeedTbl[tmpAct][0];
 			}
-			else
-			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], 0)))])
-				{
-					(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
-					movePos += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
-				}
-				if ((*PosTbl[tmpAct][TBL_OPP]) == checkPos[actRoot].x)
-				{
-					action = ENEM_ACT::SERCH;
-					return;
-				}
-			}
-			break;
-		case 1:
-			SetAnim("ãxåe2");
-			if ((*PosTbl[tmpAct][TBL_MAIN]) != plPos[nearP].x)
-			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
-				{
-					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
-					movePos += SpeedTbl[tmpAct][0];
-				}
-				else
-				{
-					movePos += 0;
-				}
-			}
-			else
-			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], 0)))])
-				{
-					(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
-					movePos += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
-				}
-				if ((*PosTbl[tmpAct][TBL_OPP]) == plPos[nearP].y)
-				{
-					action = ENEM_ACT::SERCH;
-					return;
-				}
-			}
-			break;
-		case 2:
-			SetAnim("ãxåe1");
-			if ((*PosTbl[tmpAct][TBL_MAIN]) != plPos[nearP].x)
-			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
-				{
-					(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
-					movePos += SpeedTbl[tmpAct][0];
-				}
-				else
-				{
-					movePos +=0;
-				}
-			}
-			else
-			{
-				if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], -hitRad.x)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], hitRad.x - 1)))]
-					&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], 0)))])
-				{
-					(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
-					movePos += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
-				}
-				if ((*PosTbl[tmpAct][TBL_OPP]) == plPos[nearP].y)
-				{
-					action = ENEM_ACT::SERCH;
-					return;
-				}
-			}
-			break;
-		default :
-			break;
 		}
+		else
+		{
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], -hitRad.x)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], hitRad.x - 1)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], 0)))])
+			{
+				dir = dirOpp[tmpAct][actRoot / 4];
+				(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
+				movePos += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
+			}
+			if ((*PosTbl[tmpAct][TBL_OPP]) == checkPos[actRoot].x)
+			{
+				action = ENEM_ACT::SERCH;
+				return;
+			}
+		}
+		break;
+	case 1:
+	case 2:
+		if ((*PosTbl[tmpAct][TBL_MAIN]) != plPos[nearP].x)
+		{
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], -hitRad.x)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], hitRad.x - 1)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, static_cast<DIR>(tmpAct), SpeedTbl[static_cast<DIR>(tmpAct)][0], 0)))])
+			{
+				dir = static_cast<DIR>(tmpAct);
+				(*PosTbl[tmpAct][TBL_MAIN]) += SpeedTbl[tmpAct][0];
+				movePos += SpeedTbl[tmpAct][0];
+			}
+			else
+			{
+				movePos += 0;
+			}
+		}
+		else
+		{
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], -hitRad.x)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], hitRad.x - 1)))]
+				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, dirOpp[tmpAct][actRoot / 4], SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0], 0)))])
+			{
+				dir = dirOpp[tmpAct][actRoot / 4];
+				(*PosTbl[tmpAct][TBL_OPP]) += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
+				movePos += SpeedTbl[dirOpp[tmpAct][actRoot / 4]][0];
+			}
+			if ((*PosTbl[tmpAct][TBL_OPP]) == plPos[nearP].y)
+			{
+				action = ENEM_ACT::SERCH;
+				return;
+			}
+		}
+		break;
 	}
 	//---------à⁄ìÆÇÇµÇƒÇ¢Ç»Ç©Ç¡ÇΩèÍçáçƒìxï˚å¸ÇåàÇﬂÇÈ-------------
 	if (movePos == 0)
 	{
-		action = ENEM_ACT::MOVE;
+		action = ENEM_ACT::MOVE;	
 		return;
-	}
-	switch (dir)
-	{
-	case DIR_RIGHT:
-		SetAnim("ãxåe1");
-		break;
-	case DIR_LEFT:
-		SetAnim("ãxåe2");
-		break;
-	default:
-		break;
 	}
 }
 
