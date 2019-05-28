@@ -125,7 +125,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :
 	hitRad = VECTOR2(30, 30);
 	behaviorCnt = 0;
 	name = static_cast<ENEMY>(enemyNum);
-	action = ENEM_ACT::SERCH;
+	action = ENEM_ACT::MOVE;
 	Init("image/enemy.png", VECTOR2(480 / 8,400 / 5),VECTOR2(8,5), setUpPos);
 	comPos.resize(12);
 	initAnim();
