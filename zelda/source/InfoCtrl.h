@@ -30,12 +30,6 @@ private:
 	~InfoCtrl();
 
 	void Init(void);
-	//struct Info {
-	//	std::vector<VECTOR2> pos;			// ç¿ïWä«óù
-	//	std::vector<bool> flag;					// ë∂ç›Ç∑ÇÈÇ©Ç«Ç§Ç©
-	//};
-	//Info player;
-	//Info enemy;
 	std::vector<VECTOR2> enPos;			// ç¿ïWä«óù
 	std::vector<bool> enFlag;					// ë∂ç›Ç∑ÇÈÇ©Ç«Ç§Ç©
 	std::vector<VECTOR2>plPos;
