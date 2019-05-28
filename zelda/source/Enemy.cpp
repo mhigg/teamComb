@@ -138,7 +138,6 @@ void Enemy::EnInit(void)
 	speed = ENEMY_SPEED;
 	// ¶³İÄŒn
 	deathCnt = 60;
-	scr = VECTOR2(0, 0);
 	timeCnt = 0;
 	actCnt = 60;
 	faintCnt = 0;
@@ -244,10 +243,11 @@ int Enemy::SerchPlayer(void)
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	scrollOffset = lpInfoCtrl.GetAddScroll(0);
+
 	// €‚ñ‚Å‚é‚©‚Ç‚¤‚©
 	if (lpInfoCtrl.GetEnemyFlag(Enemy::enCnt))
 	{
-		Enemy::scrollOffset = scr;
 		// “_–Å‚Ìˆ—
 		if (deathCnt % 5 == 0)
 		{
@@ -260,7 +260,6 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		}
 		return;
 	}
-	scr = scrollOffset;
 	// Å‚à‹ß‚¢ÌßÚ²Ô°‚ÌŒŸõ
 	nearP = SerchPlayer();
 	// ÌßÚ²Ô°‚Æ‚Ì‹——£‚ª‰æ–Ê“à‚È‚çˆ—‚ğs‚¤
@@ -328,7 +327,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		SetAnim("¶‘Ò‹@");
 	}
-	scrollOffset = lpInfoCtrl.GetAddScroll(0);
+	
 	lpInfoCtrl.SetEnemyPos(pos, enCnt);
 	timeCnt++;
 	behaviorCnt++;
