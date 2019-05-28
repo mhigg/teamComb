@@ -24,7 +24,7 @@ enum DIR {
 enum OBJ_TYPE {
 	OBJ_PLAYER,
 	OBJ_ENEMY,
-	OBJ_BOMB,
+	OBJ_WEAPON,
 	OBJ_EDIT_CURSOR,
 	OBJ_MAX
 };
@@ -48,6 +48,7 @@ enum SIDE_CHECK {
 	IN_SIDE,			// 1
 	SIDE_MAX
 };
+
 
 class GameCtrl;
 

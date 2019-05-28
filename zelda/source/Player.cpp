@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include <math.h>
 #include "Player.h"
+#include "Weapon.h"
 #include "StageMng.h"
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
@@ -42,12 +43,6 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			  -state.Guard,
 			  -state.Inv
 			};
-
-	AtkImgTbl = { "image/aŒ‚_DOWN.png",
-				  "image/aŒ‚_Left.png",
-				  "image/aŒ‚_Right.png",
-				  "image/aŒ‚_UP.png"
-				};
 
 	mapMoveTbl = {
 					true,		// NONE
@@ -141,10 +136,6 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	this->plNum = plNum;
 
 	Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
-	//for (int idx = 0; idx < 4; idx++)
-	//{
-	//	lpImageMng.GetID(AtkImgTbl[idx], VECTOR2(140, 130), VECTOR2(4, 10));
-	//}
 
 	startPos = pos;
 	score = 0;
@@ -192,7 +183,6 @@ void Player::PlInit(void)
 	visible = true;
 
 	afterKeyFlag = false;
-	atkAnimCnt = 30;
 
 	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 	lpInfoCtrl.SetPlayerPos(pos, static_cast<int>(plNum));
@@ -236,6 +226,10 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	(this->*_updater)(controller);
+	if (GetAnim() == "UŒ‚")
+	{
+		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset));
+	}
 
 	// ŠÔŒo‰ß‚É‚æ‚éƒXƒe[ƒ^ƒX•ÏX
 	// UŒ‚
@@ -422,15 +416,6 @@ void Player::Draw(void)
 {
 	Obj::Draw();
 	StateDraw();
-
-//	//if (GetAnim() == "UŒ‚")
-	//{
-	//	if (atkAnimCnt < 29)
-	//	{
-	//		atkAnimCnt++;
-	//		DrawGraph(pos.x, pos.y, lpImageMng.GetID(AtkImgTbl[dir])[atkAnimCnt], false);
-	//	}
-	//}
 }
 
 void Player::StateDraw(void)
@@ -482,7 +467,6 @@ void Player::Stop(const GameCtrl & controller)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("UŒ‚");
-		atkAnimCnt = 0;
 		_updater = &Player::Attack;
 	}
 }
@@ -510,7 +494,6 @@ void Player::Move(const GameCtrl & controller)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("UŒ‚");
-		atkAnimCnt = 0;
 		_updater = &Player::Attack;
 		return;
 	}

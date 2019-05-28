@@ -39,7 +39,6 @@ constexpr int PL_LIFE_MAX = 6;					// ﾌﾟﾚｲﾔｰの体力上限
 
 using UP_TIME = std::array < int, 2 >;
 using ACT_ARR = std::array<VECTOR2, DIR_MAX>;
-using STR_IMG = std::array<std::string, DIR_MAX>;
 
 class Player :
 	public Obj
@@ -87,7 +86,6 @@ private:
 	int oldScore;				// 直前のｽｺｱ
 	int additionTime;			// 加算するまでの時間
 	unsigned int reStartCnt;
-	int atkAnimCnt;				// 攻撃ｱﾆﾒｰｼｮﾝのｶｳﾝﾄ
 	std::array<int,SCORE_DATA::DATA_MAX> param;
 
 // ---------- ﾃｰﾌﾞﾙ配列 ------------
@@ -97,7 +95,6 @@ private:
 	DIR_TBL_A2D SpeedTbl;		// 移動速度
 	DIR_TBL_DIR DirTbl;			// 移動制御
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
-	STR_IMG AtkImgTbl;
 
 	bool afterKeyFlag;			// keyの後入力を優先させるﾌﾗｸﾞ
 	PL_NUMBER plNum;			// 自分が何番目のﾌﾟﾚｲﾔｰかの番号
