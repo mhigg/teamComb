@@ -1,4 +1,3 @@
-#include <memory>
 #include <DxLib.h>
 #include "StageMng.h"
 

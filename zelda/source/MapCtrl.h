@@ -71,7 +71,4 @@ private:
 	VECTOR2 stageSize;		// ╫ц╟╪ч┌ло╫√з░■
 	VECTOR2 chipSize;		// о╫┌л▒Е┌╚┌Ё
 	VECTOR2 drawOffset;		// ∙`┴Ф╣л╬╞д
-	VECTOR2 scrollOffset;	// ╫╦ш╟ы╣л╬╞д
-
-	bool flag;
 };

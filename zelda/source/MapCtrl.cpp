@@ -93,7 +93,6 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 	mapImage.resize(1);
 	scrollTbl.resize(1);
 
-	flag = true;
 	return true;
 }
 
