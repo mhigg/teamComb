@@ -1,5 +1,5 @@
 #pragma once
-#include<array>
+#include <array>
 #include <vector>
 #include "Obj.h"
 #include "MAP_ID.h"
@@ -59,7 +59,8 @@ public:
 		int enemyNum, 
 		VECTOR2 setUpPos,
 		VECTOR2 drawOffset,
-		int enCnt	);
+		int enCnt
+	);
 	~Enemy();
 
 	bool CheckDeath(void);					// Ž€–S”»’è,Ž€‚ñ‚Å‚¢‚È‚¯‚ê‚Îfalse‚ð•Ô‚·

@@ -8,8 +8,6 @@ constexpr int GAME_SCREEN_Y = 0;
 constexpr int GAME_SCREEN_SIZE_X = 1600;	// ¹Þ°Ñ´Ø±‚Ì‰æ–Ê‰ð‘œ“x
 constexpr int GAME_SCREEN_SIZE_Y = 960;
 
-constexpr int CHIP_SIZE = 40;				// 1Ï½‚Ì’·‚³
-
 class BaseScene;
 
 using uniqueBase = std::unique_ptr<BaseScene>;

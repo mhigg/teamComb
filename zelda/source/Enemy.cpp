@@ -4,13 +4,14 @@
 #include "Enemy.h"
 #include "StageMng.h"
 #include "GameCtrl.h"
+#include "MapCtrl.h"
 #include "InfoCtrl.h"
 
 Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset,int  enCnt) :Obj(drawOffset)
+Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset, int enCnt) :Obj(drawOffset)
 {
 	Enemy::enCnt = enCnt;
 	keyIdTbl = {
