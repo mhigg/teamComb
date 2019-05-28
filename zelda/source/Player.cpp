@@ -687,8 +687,8 @@ void Player::Damage(const GameCtrl & controller)
 		{
 			DIR tmp = DirTbl[dir][DIR_TBL_REV];
 			int speed = SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * -3 * (10 - damageCnt / 4);
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed,  -hitRad.x - 2)))]
-			&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed, hitRad.x + 3)))])
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed,  -hitRad.x + 1)))]
+			&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed, hitRad.x - 2)))])
 			{
 				// 移動不可のオブジェクトが後ろにない場合
 				(*PosTbl[tmp][TBL_MAIN]) += -speed;
