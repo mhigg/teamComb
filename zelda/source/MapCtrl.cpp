@@ -29,9 +29,6 @@ struct DataHeader
 MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
-	chipSize = lpStageMng.GetChipSize();
-	stageSize = lpStageMng.GetStageSize() / chipSize;
-	drawOffset = lpSceneMng.GetDrawOffset();
 }
 
 
@@ -59,6 +56,7 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 
 	MapCtrl::chipSize = chipSize;
 	MapCtrl::drawOffset = drawOffset;
+	stageSize = lpStageMng.GetStageSize() / chipSize;
 
 	auto CreateMap = [=](auto& base, auto& front, auto initNum) {
 		base.resize(stageSize.x * stageSize.y);
@@ -93,7 +91,6 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 	mapImage.resize(1);
 	scrollTbl.resize(1);
 
-	flag = true;
 	return true;
 }
 
@@ -115,6 +112,30 @@ MAP_ID MapCtrl::GetMapData(const VECTOR2& pos)
 MAP_ID MapCtrl::GetItemData(const VECTOR2 & pos)
 {
 	return GetData(itemData, pos, MAP_ID::NONE);
+}
+
+VECTOR2 MapCtrl::GetItemPos(MAP_ID id,int num)
+{
+	int tmp = 0;
+	for (int y = 0; y < stageSize.y; y++)
+	{
+		for (int x = 0; x < stageSize.x; x++)
+		{
+			if (itemData[y][x] == id)
+			{
+				if (tmp == num)
+				{
+					return VECTOR2(x, y);
+				}
+				tmp++;
+			}
+		}
+	}
+}
+
+VECTOR2 MapCtrl::GetScreenPos(int plNum)
+{
+	return plScrTbl[plNum];
 }
 
 template<typename mapType, typename idType>
@@ -204,7 +225,7 @@ bool MapCtrl::MapLoad(sharedListObj objList, bool editFlag)
 	}
 	if (flag)
 	{
-		lpMapCtrl.SetUpGameObj(objList, editFlag);
+		SetUpGameObj(objList, editFlag);
 	}
 	return flag;
 
@@ -245,7 +266,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				{			
 					auto obj = AddObjList()(objList, 
 						std::make_unique<Player>
-						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y)/* + VECTOR2(20, 100)*/, drawOffset + plScrTbl[plCnt])
+						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt])
 					);
 					mapImage[plCnt] = MakeScreen(800, 480, false);
 					lpInfoCtrl.SetPlayerFlag(true, plCnt);
@@ -256,13 +277,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::ENEMY:
 				if (enCnt < ENEMY_MAX)
 				{
-					int num = GetRand(static_cast<int>(ENEMY::ENEMY_MAX) - 1);
-				// ´ÈÐ°‚Ì²Ý½ÀÝ½
-				/* Ã½Ä*/	auto obj = AddObjList()(objList,
-						std::make_unique<Enemy>
-						(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), drawOffset,enCnt));
-				lpInfoCtrl.SetEnemyFlag(false, enCnt);
-				enCnt++;
+					SetUpEnemy(objList, enCnt, x, y);
+					enCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
@@ -355,6 +371,17 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			}
 		}
 	}
+	return true;
+}
+
+bool MapCtrl::SetUpEnemy(sharedListObj objList, int enemyNum, int x, int y)
+{
+	int num = GetRand(static_cast<int>(ENEMY::ENEMY_MAX) - 1);
+	// ´ÈÐ°‚Ì²Ý½ÀÝ½
+	/* Ã½Ä*/	auto obj = AddObjList()(objList,
+		std::make_unique<Enemy>
+		(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), drawOffset, enemyNum));
+	lpInfoCtrl.SetEnemyFlag(false, enemyNum);
 	return true;
 }
 

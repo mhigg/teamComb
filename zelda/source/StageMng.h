@@ -3,8 +3,6 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "MapCtrl.h"
-#include "MAP_ID.h"
 #include "VECTOR2.h"
 
 #define lpStageMng StageMng::GetInstance()
@@ -19,6 +17,8 @@ constexpr int SCROLL_END_Y = GAME_AREA_SIZE_Y - 280;		// ½¸Û°ÙI—¹“_Y
 constexpr int SCROLL_AREA_SIZE_X = SCROLL_END_X - SCROLL_AREA_X;		// ½¸Û°Ù”ÍˆÍX
 constexpr int SCROLL_AREA_SIZE_Y = SCROLL_END_Y - SCROLL_AREA_Y;		// ½¸Û°Ù”ÍˆÍY
 
+constexpr int CHIP_SIZE = 40;				// 1Ï½‚Ì’·‚³
+
 
 class StageMng
 {
@@ -31,8 +31,6 @@ public:
 
 	const VECTOR2& GetChipSize(void);		// ChipSize‚Ìæ“¾
 	const VECTOR2& GetStageSize(void);		// StageSize‚Ìæ“¾
-	const VECTOR2& GetDrawOffset(void);	// drawOffset‚Ìæ“¾
-
 
 private:
 	StageMng();
@@ -40,9 +38,7 @@ private:
 
 	bool Init(void);
 
-	VECTOR2 stageSize;	// ½Ã°¼Ş»²½Ş
-	VECTOR2 mapSize;	// Ï½‚Ì”
+	VECTOR2 stageSize;		// ½Ã°¼Ş»²½Ş
 	VECTOR2 chipSize;		// 1Ï½‚Ì»²½Ş
-	VECTOR2 drawOffset;
 };
 

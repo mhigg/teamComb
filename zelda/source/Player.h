@@ -1,10 +1,10 @@
 #pragma once
 #include <array>
-#include "VECTOR2.h"
 #include "Obj.h"
-#include "MapCtrl.h"
 #include "ScoreBoard.h"
+#include "MapCtrl.h"
 #include "GameCtrl.h"
+#include "VECTOR2.h"
 
 
 enum PL_NUMBER {
@@ -27,19 +27,19 @@ enum SCORE_DATA
 };
 
 struct State {
-	int Power;
-	int Guard;
-	int Inv;
+	int Power;	// 攻撃力
+	int Guard;	// 防御力
+	int Inv;	// 無敵時間
 };
 
-constexpr int PL_DEF_SPEED = 2;
-constexpr int PL_DASH_SPEED = 4;
-constexpr unsigned int PL_RESTART_CNT = 120U;
-constexpr int PL_LIFE_MAX = 6;
+constexpr int PL_DEF_SPEED = 2;					// 歩いているときの移動速度
+constexpr int PL_DASH_SPEED = 4;				// 走っているときの移動速度
+constexpr unsigned int PL_RESTART_CNT = 120U;	// ﾘｽﾎﾟｰﾝまでの時間
+constexpr int PL_LIFE_MAX = 6;					// ﾌﾟﾚｲﾔｰの体力上限
 
 using UP_TIME = std::array < int, 2 >;
-
 using ACT_ARR = std::array<VECTOR2, DIR_MAX>;
+
 
 class Player :
 	public Obj
@@ -48,21 +48,22 @@ public:
 	Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset);	// 引数付きｺﾝｽﾄﾗｸﾀｰ
 	Player();
 	~Player();
-	bool initAnim(void);							// ｱﾆﾒｰｼｮﾝ管理
-	void SetScore(SCORE_DATA data, int val);		// ｽｺｱ加算減算用
-	void StateDraw(void);			// ｽﾃｰﾀｽの描画
+	bool initAnim(void);						// ｱﾆﾒｰｼｮﾝ管理
+	void SetData(SCORE_DATA data, int val);		// ﾌﾟﾚｲﾔｰの持つﾃﾞｰﾀの集計
+	void StateDraw(void);						// ｽﾃｰﾀｽの描画
 private:
-	void PlInit(void);
+	void PlInit(void);		// ﾘｽﾎﾟｰﾝの際にも必要な初期化処理まとめ
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 	bool CheckObjType(OBJ_TYPE type);
-	bool DeathPrc(void);			// 関数化
-	void GetItem(void);				// ｱｲﾃﾑ取得
+	void GetItem(void);		// ｱｲﾃﾑ取得
 	void Draw(void);
-	VECTOR2 sidePos(				// ｻｲﾄﾞ判定
-		VECTOR2 pos, 
-		DIR dir, 
-		int speed, 
-		int sideNum);
+	VECTOR2 sidePos			// ｻｲﾄﾞ判定
+	(
+		VECTOR2 pos,		// 現在位置座標
+		DIR dir,			// 向いている方向
+		int speed,			// 移動ｽﾋﾟｰﾄﾞ
+		int sideNum
+	);
 
 // ---------- ﾌﾟﾚｲﾔｰの状態関数 ------------
 	void Stop(const GameCtrl & controller);			// 停止状態
@@ -71,15 +72,15 @@ private:
 	void Damage(const GameCtrl & controller);		// ﾀﾞﾒｰｼﾞ時
 
 	int speed;
-	VECTOR2 startPos;				// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
-	ACT_ARR actAdd;
-	unsigned int NotFlag;
-	State state;
+	VECTOR2 startPos;			// ｽﾀｰﾄ地点(ﾘｽﾎﾟｰﾝ用)
+	ACT_ARR actAdd;				// 当たり判定分の加算座標ﾃｰﾌﾞﾙ
+	unsigned int NotFlag;		// 使い道不明
+	State state;				// ﾌﾟﾚｲﾔｰの攻撃力/防御力/無敵時間
 
-	int score;
-	int life;
+	int score;					// 所持ｽｺｱ
+	int life;					// ﾌﾟﾚｲﾔｰの体力
 	int invTime;				// inv減算用
-	int damaCnt;				// ﾀﾞﾒｰｼﾞを受けてからのｶｳﾝﾄ
+	int damageCnt;				// ﾀﾞﾒｰｼﾞを受けてからのｶｳﾝﾄ
 	bool damageFlag;			// ﾀﾞﾒｰｼﾞをうけているﾌﾗｸﾞ
 	int deathInv;				// 死亡時倒れたままの時間
 	int bonus;					// ﾎﾞｰﾅｽ
@@ -97,8 +98,10 @@ private:
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
 
 	bool afterKeyFlag;			// keyの後入力を優先させるﾌﾗｸﾞ
-	PL_NUMBER plNum;
+	PL_NUMBER plNum;			// 自分が何番目のﾌﾟﾚｲﾔｰかの番号
 	int randomBonus;			// ランダムにボーナスアイテムを決める
+	int numTemp;
+	int digit;
 
 	void (Player::*_updater)(const GameCtrl & controller);		// 状態関数ﾎﾟｲﾝﾀ
 };

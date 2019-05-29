@@ -1,5 +1,5 @@
 #pragma once
-#include<array>
+#include <array>
 #include <vector>
 #include "Obj.h"
 #include "MAP_ID.h"
@@ -57,12 +57,13 @@ public:
 	Enemy();
 	Enemy(	
 		int enemyNum, 
-		VECTOR2 setUpPos, 
+		VECTOR2 setUpPos,
 		VECTOR2 drawOffset,
-		int enCnt	);
+		int enCnt
+	);
 	~Enemy();
 
-	bool CheckDeath(void);							// 死亡判定,死んでいなければfalseを返す
+	bool CheckDeath(void);					// 死亡判定,死んでいなければfalseを返す
 	bool CheckObjType(OBJ_TYPE type);		// 指定した値と同じ型が来たらtrueを返す
 	const OBJ_TYPE& GetObjType(void)const;
 	void SetDeathFlag(bool deathFlag);
@@ -83,8 +84,8 @@ private:
 
 	// ---------- ｴﾈﾐｰの状態関数 ------------
 	void Move(const GameCtrl & controller);			// ﾗﾝﾀﾞﾑ
-	void Track(const GameCtrl & controller);			// 追跡
-	void Serch(const GameCtrl & controller);			// 探索
+	void Track(const GameCtrl & controller);		// 追跡
+	void Serch(const GameCtrl & controller);		// 探索
 	void SpMove(const GameCtrl & controller);		// 指定行動
 	void Damage(const GameCtrl & controller);		// ﾀﾞﾒｰｼﾞ時
 	void Escape(const GameCtrl & controller);		// 逃げる
@@ -92,37 +93,36 @@ private:
 
 	ENEMY_STATE state;			// 状態
 	ENEMY name;					// 敵の種類
-	ENEM_ACT action;				// 敵の行動
+	ENEM_ACT action;			// 敵の行動
 	// ------------------近いﾌﾟﾚｲﾔｰの検索用--------------------------
-	OBJ_POS plPos;					// ﾌﾟﾚｲﾔｰの座標
-	OBJ_INT enPos;					// 敵の座標
-	int nearP;							// 近いﾌﾟﾚｲﾔｰ
+	OBJ_POS plPos;				// ﾌﾟﾚｲﾔｰの座標
+	OBJ_INT enPos;				// 敵の座標
+	int nearP;					// 近いﾌﾟﾚｲﾔｰ
 
-	int faintCnt;						// 怯みｶｳﾝﾄ
-	int timeCnt;						// 経過時間のｶｳﾝﾄ
-	bool oppFlag;						// 移動反転ﾌﾗｸﾞ
-	int behaviorCnt;					// 行動時のｶｳﾝﾄ
-	int enCnt;							// 自分自身のﾅﾝﾊﾞｰ
-	int speed;							// 敵の移動速度
-	int actNum[3];					// 行動予定のﾙｰﾄ
-	int actRoot;						// 実行するﾙｰﾄ
-	int movePos;						// 移動量	
-	int actCnt;							// 発見時の待ちﾌﾚｰﾑ
-	int deathCnt;						// 点滅用のｶｳﾝﾄ
-	VECTOR2 scr;					// ｵﾌｾｯﾄの管理
+	int faintCnt;				// 怯みｶｳﾝﾄ
+	int timeCnt;				// 経過時間のｶｳﾝﾄ
+	bool oppFlag;				// 移動反転ﾌﾗｸﾞ
+	int behaviorCnt;			// 行動時のｶｳﾝﾄ
+	int enCnt;					// 自分自身のﾅﾝﾊﾞｰ
+	int speed;					// 敵の移動速度
+	int actNum[3];				// 行動予定のﾙｰﾄ
+	int actRoot;				// 実行するﾙｰﾄ
+	int movePos;				// 移動量	
+	int actCnt;					// 発見時の待ちﾌﾚｰﾑ
+	int deathCnt;				// 点滅用のｶｳﾝﾄ
 
-	CHECK_ARR comPos;			// 優先度の比較用配列(昇順)
+	CHECK_ARR comPos;		// 優先度の比較用配列(昇順)
 	CHECK_ARR comNum;		// 優先度の配列
-	VECTOR2 addCnt;				// 敵の移動量管理
-	DIR dir;								// 敵の向き
-	PASS_FLAG passFlag;			// 移動できるﾊﾟｽ
-	int comFlag;						// 優先配列に格納されている数
+	VECTOR2 addCnt;			// 敵の移動量管理
+	DIR dir;				// 敵の向き
+	PASS_FLAG passFlag;		// 移動できるﾊﾟｽ
+	int comFlag;			// 優先配列に格納されている数
 	PASS_ARR_ALL checkPos;	// 分岐点
-	DIR_PASS dirOpp;				// 垂直方向
+	DIR_PASS dirOpp;		// 垂直方向
 
-	DIR_TBL_ARY keyIdTbl;				// 移動方向
-	DIR_TBL_PTR PosTbl;					// ﾎﾟｲﾝﾀを直接格納
-	DIR_TBL_A2D SpeedTbl;			// 移動速度
+	DIR_TBL_ARY keyIdTbl;		// 移動方向
+	DIR_TBL_PTR PosTbl;			// ﾎﾟｲﾝﾀを直接格納
+	DIR_TBL_A2D SpeedTbl;		// 移動速度
 	MAP_MOVE_TBL mapMoveTbl;	// 移動制御,移動可能ｵﾌﾞｼﾞｪｸﾄならtrueを返す←ｱｲﾃﾑや障害物を追加したときに使う
 	void (Enemy::*_updater)(const GameCtrl & controller);		// 状態関数ﾎﾟｲﾝﾀ
 protected:

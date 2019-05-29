@@ -2,15 +2,14 @@
 #include <memory>
 #include "GameScene.h"
 #include "EditScene.h"
-#include "SceneMng.h"
-#include "StageMng.h"
-#include "ScoreBoard.h"
-#include "GameCtrl.h"
-#include "VECTOR2.h"
-#include "ImageMng.h"
-#include "InfoCtrl.h"
 #include "ResultScene.h"
+#include "SceneMng.h"
+#include "ImageMng.h"
+#include "StageMng.h"
+#include "GameCtrl.h"
+#include "InfoCtrl.h"
 #include "Player.h"
+#include "VECTOR2.h"
 
 GameScene::GameScene()
 {
@@ -37,12 +36,10 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 #ifdef _DEBUG	// ﾃﾞﾊﾞｯｸﾞ時のみ実行
 	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
 	{
-		/*lpScoreBoard.DataInit();*/
 		return std::make_unique<EditScene>();
 	}
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
-		/*lpScoreBoard.DataInit();*/
 		return std::make_unique<EditScene>();
 	}
 	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
@@ -56,8 +53,19 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<GameScene>();
 	}
 #endif
-
-
+	if (gameFrame % 1800 == 0)
+	{
+		int tmp = 0;
+		for (int i = 0; i < ENEMY_MAX; i++)
+		{
+			if (lpInfoCtrl.GetEnemyFlag(i))
+			{
+				VECTOR2 Ipos = lpMapCtrl.GetItemPos(MAP_ID::ENEMY, tmp);
+				lpMapCtrl.SetUpEnemy(objList, i, Ipos.x, Ipos.y);
+				tmp++;
+			}
+		}
+	}
 	for (auto& obj : (*objList))
 	{
 		obj->UpDate(controller, objList);
@@ -81,11 +89,12 @@ int GameScene::Init(void)
 	objList->clear();
 
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
-	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
+	lpMapCtrl.SetUp(lpStageMng.GetChipSize(), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
 	tile = LoadGraph("image/tile.png", true);
-	player = std::make_unique<Player>();	return 0;
+	player = std::make_unique<Player>();
+	return 0;
 }
 
 void GameScene::Draw(void)
@@ -121,9 +130,6 @@ void GameScene::Draw(void)
 		}
 	}
 
-	// ｽｺｱ表示(仮)
-	//player->StateDraw();
-
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 
@@ -142,11 +148,8 @@ void GameScene::Draw(void)
 
 	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
 
-	//// ｽｺｱﾎﾞｰﾄﾞ表示
-	//lpScoreBoard.Draw();
-
 	// 時間表示
-	int gameDigit = 0;
+	int timeDigit = 0;
 	int minNumTemp = gameFrame / 3600;
 	int secondNumTemp = (gameFrame % 3600) / 60;
 	// 分
@@ -172,9 +175,9 @@ void GameScene::Draw(void)
 	// 秒
 	while (secondNumTemp > 0)
 	{
-		DrawGraph(200 - (gameDigit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
+		DrawGraph(200 - (timeDigit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
 		secondNumTemp /= 10;
-		gameDigit++;
+		timeDigit++;
 	}
 
 	DrawString(0, 800, "GameScene", 0x00ff0000);

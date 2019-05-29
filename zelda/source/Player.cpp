@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include <math.h>
 #include "Player.h"
+#include "Weapon.h"
 #include "StageMng.h"
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
@@ -35,14 +36,14 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 			   DIR_RIGHT,DIR_LEFT ,DIR_DOWN ,DIR_UP,	// 右(REV:左)(上・下)
 			   DIR_UP   ,DIR_DOWN ,DIR_LEFT ,DIR_RIGHT	// 上(REV:下)(左・右)
 			  };
-	param =
-	{
-		 -100
-		,PL_LIFE_MAX
-		,-(state.Power - 1)
-		, -state.Guard
-		, -state.Inv
-	};
+
+	param = { -100,
+			   PL_LIFE_MAX,
+			  -(state.Power - 1),
+			  -state.Guard,
+			  -state.Inv
+			};
+
 	mapMoveTbl = {
 					true,		// NONE
 					false,		// WALL1
@@ -126,16 +127,19 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,		// STONE_4				
 	};
 	actAdd = {
-		VECTOR2(0					,	hitRad.y * 2	),
-		VECTOR2(-hitRad.x * 2	,	0					),		
-		VECTOR2(hitRad.x * 2	,	0					),
-		VECTOR2(0					,	-hitRad.y * 2	)
+		VECTOR2(0, hitRad.y * 2),
+		VECTOR2(-hitRad.x * 2, 0),
+		VECTOR2(hitRad.x * 2, 0),
+		VECTOR2(0, -hitRad.y * 2)
 	};
 
 	this->plNum = plNum;
 
 	Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+
 	startPos = pos;
+	score = 0;
+	oldScore = score;
 
 	InitScroll(static_cast<int>(plNum));
 	initAnim();
@@ -157,7 +161,7 @@ bool Player::initAnim(void)
 	AddAnim("移動", 0, 1, 6, 8, true);
 	AddAnim("疾走", 4, 1, 6, 6, true);
 	AddAnim("攻撃", 8, 1, 6, 3, false);
-	AddAnim("死亡", 12, 0, 7, 7, false);	// falseでｱﾆﾒｰｼｮﾝをﾙｰﾌﾟさせない
+	AddAnim("死亡", 12, 0, 7, 7, false);
 	return true;
 }
 
@@ -165,28 +169,24 @@ void Player::PlInit(void)
 {
 	speed = PL_DEF_SPEED;
 	life = PL_LIFE_MAX;
-
-	state.Power = 1;
-	state.Guard = 0;
-	state.Inv = 0;
-	score = 0;
+	state = { 1,0,0 };
+	upTime = { 0,0 };
+	invTime = 0;
 	bonus = 0;
-	oldScore = 0;
 	additionTime = 8;
 	randomBonus = GetRand(4);
-	damageFlag = false;
 
-	upTime = {
-		0,0
-	};
-	invTime = 0;
-	damaCnt = 0;
+	damageFlag = false;
+	damageCnt = 0;
 	deathInv = 0;
 	reStartCnt = 0U;
-	afterKeyFlag = false;
 	visible = true;
+
+	afterKeyFlag = false;
+
 	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 	lpInfoCtrl.SetPlayerPos(pos, static_cast<int>(plNum));
+
 	_updater = &Player::Move;				// 初期状態はMove状態
 }
 
@@ -226,6 +226,10 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
 	(this->*_updater)(controller);
+	if (GetAnim() == "攻撃")
+	{
+		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
+	}
 
 	// 時間経過によるステータス変更
 	// 攻撃
@@ -233,9 +237,9 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	{
 		upTime[0]++;
 	}
-	if (upTime[0] / 600 == 1)
+	if (upTime[0] > 600)
 	{
-		SetScore(DATA_POWER, -1);
+		SetData(DATA_POWER, -1);
 		upTime[0] -= 600;
 	}
 	// 防御
@@ -245,13 +249,13 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	}
 	if (upTime[1] > 600)
 	{
-		SetScore(DATA_GUARD, - state.Guard);
+		SetData(DATA_GUARD, - state.Guard);
 		upTime[1] -= 600;
 	}
 	// 無敵
 	if (invTime > 0)
 	{
-		SetScore(DATA_INV, -1);
+		SetData(DATA_INV, -1);
 	}
 	else
 	{
@@ -262,20 +266,6 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 bool Player::CheckObjType(OBJ_TYPE type)
 {
 	return (type == OBJ_PLAYER);
-}
-
-bool Player::DeathPrc(void)
-{
-	if (animEndFlag)
-	{
-		if (deathInv >= 80)
-		{
-			return true;
-		}
-	}
-	dir = DIR_DOWN;
-	SetAnim("死亡");
-	return false;
 }
 
 void Player::GetItem(void)
@@ -296,35 +286,35 @@ void Player::GetItem(void)
 	{
 		case MAP_ID::POTION_1:	// 赤
 			paramUP(NotFlag, num);
-			SetScore(DATA_POWER, 1);
+			SetData(DATA_POWER, 1);
 			break;
 		case MAP_ID::POTION_2:	// 青
 			paramUP(NotFlag, num);
-			SetScore(DATA_GUARD, 1);
+			SetData(DATA_GUARD, 1);
 			break;
 		case MAP_ID::POTION_3:	// 緑
 			paramUP(NotFlag, num);
-			SetScore(DATA_LIFE, 2);
+			SetData(DATA_LIFE, 2);
 			break;
 		case MAP_ID::POTION_4:	// 虹
 			paramUP(NotFlag, num);
-			SetScore(DATA_INV, 180);
+			SetData(DATA_INV, 180);
 			break;
 		case MAP_ID::COIN_1:	// 赤
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			break;
 		case MAP_ID::COIN_2:	// 青
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 3);
+			SetData(DATA_SCORE, 3);
 			break;
 		case MAP_ID::COIN_3:	// 緑
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 4);
+			SetData(DATA_SCORE, 4);
 			break;
 		case MAP_ID::COIN_4:	// 黄
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 5);
+			SetData(DATA_SCORE, 5);
 			break;
 		case MAP_ID::KEY_1:
 			paramUP(NotFlag, num);
@@ -334,50 +324,130 @@ void Player::GetItem(void)
 			break;
 		case MAP_ID::MEAT:
 			paramUP(NotFlag, num);
-			SetScore(DATA_LIFE, 4);
+			SetData(DATA_LIFE, 4);
 			break;
 		case MAP_ID::SWORD:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 0)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::SHIELD:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 1)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::BOOK:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 2)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::GOLD:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 3)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 		case MAP_ID::DIA:
 			paramUP(NotFlag, num);
-			SetScore(DATA_SCORE, 2);
+			SetData(DATA_SCORE, 2);
 			if (randomBonus == 4)
 			{
-				SetScore(DATA_BONUS, 1);
+				SetData(DATA_BONUS, 1);
 			}
 			break;
 	default:
 		break;
+	}
+}
+
+void Player::SetData(SCORE_DATA data, int val)
+{
+	switch (data)
+	{
+	case DATA_SCORE:
+		score += val;
+		if (score < 0)
+		{
+			score = 0;
+		}
+		if (score >= 10000)
+		{
+			score = 10000;
+		}
+		break;
+	case DATA_LIFE:
+		life = (life + val >= PL_LIFE_MAX ? PL_LIFE_MAX : life + val);
+		break;
+	case DATA_POWER:
+		state.Power += val;
+		if (state.Power > 3)
+		{
+			state.Power = 3;
+		}
+		break;
+	case DATA_GUARD:
+		state.Guard += val;
+		if (state.Guard > 3)
+		{
+			state.Guard = 3;
+		}
+		break;
+	case DATA_INV:
+		state.Inv += val;
+		break;
+	case DATA_BONUS:
+		bonus += val;
+		break;
+	}
+}
+
+void Player::Draw(void)
+{
+	Obj::Draw();
+	StateDraw();
+}
+
+void Player::StateDraw(void)
+{
+	additionTime--;
+	if (oldScore < score)
+	{
+		if (additionTime <= 0)
+		{
+			oldScore++;
+			additionTime = 8;
+		}
+	}
+	/*DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);*/
+	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
+	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
+	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", state.Power);
+	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", state.Guard);
+	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", state.Inv);
+	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
+
+	digit = 0;
+	numTemp = (oldScore * 10);
+	if (numTemp == 0)
+	{
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 50) * (plNum + 1), 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+	}
+	while (numTemp > 0)
+	{
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 35) * (plNum % 2 + 1) - (digit + 1) * 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
+		numTemp /= 10;
+		digit++;
 	}
 }
 
@@ -428,7 +498,6 @@ void Player::Move(const GameCtrl & controller)
 		_updater = &Player::Attack;
 		return;
 	}
-
 //--------- 敵に当たった時の処理 ----------
 	if (state.Inv == 0)
 	{
@@ -465,7 +534,7 @@ void Player::Move(const GameCtrl & controller)
 			Player::dir = DirTbl[dir][id];		// 方向のｾｯﾄ
 
 			if (!mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], -hitRad.x + 2)))]
-				|| !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]], hitRad.x - 1 - 2)))])
+			 || !mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, Player::dir, SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]],  hitRad.x - 3 /*(旧:- 1 - 2)*/)))])
 			{
 				Player::dir = DirTbl[dir][id];
 				// 移動不可のオブジェクトが隣にあった場合
@@ -522,6 +591,13 @@ void Player::Move(const GameCtrl & controller)
 
 void Player::Attack(const GameCtrl & controller)
 {
+	reStartCnt -= (reStartCnt > 0);		// 真の場合の1をｶｳﾝﾄから減らす
+	visible = true;
+	if ((reStartCnt / 3) % 2)
+	{
+		visible = false;
+	}
+
 	if (!animEndFlag)
 	{
 		// 攻撃処理
@@ -545,94 +621,23 @@ void Player::Attack(const GameCtrl & controller)
 	_updater = &Player::Move;
 }
 
-void  Player::SetScore(SCORE_DATA data, int val)
-{
-	switch (data)
-	{
-	case DATA_SCORE:
-		score += val;
-		if (score < 0)
-		{
-			score = 0;
-		}
-		if (score >= 10000)
-		{
-			score = 10000;
-		}
-		break;
-	case DATA_LIFE:
-		if (life + val >= PL_LIFE_MAX)
-		{
-			life = PL_LIFE_MAX;
-		}
-		else
-		{
-			life += val;
-		}
-		break;
-	case DATA_POWER:
-		state.Power += val;
-		if (state.Power > 3)
-		{
-			state.Power = 3;
-		}
-		break;
-	case DATA_GUARD:
-		state.Guard += val;
-		if (state.Guard > 3)
-		{
-			state.Guard = 3;
-		}
-		break;
-	case DATA_INV:
-		state.Inv += val;
-		break;
-	case DATA_BONUS:
-		bonus += val;
-		break;
-	}
-}
-void Player::Draw(void) {
-	Obj::Draw();
-	StateDraw();
-}
-
-void Player::StateDraw(void)
-{
-
-	int digit = 0;
-	additionTime--;
-	if (oldScore < score)
-	{
-		if (additionTime <= 0)
-		{
-			oldScore++;
-			additionTime = 8;
-		}
-	}
-	int numTemp = (oldScore * 100);
-	DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
-	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
-	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
-	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", state.Power);
-	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", state.Guard);
-	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", state.Inv);
-	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
-	if (numTemp == 0)
-	{
-		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 50, 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[0], true);
-	}
-	while (numTemp > 0)
-	{
-		DrawGraph(GAME_SCREEN_SIZE_X / 2 - (digit + 1) * 20 - (30), 15, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[numTemp % 10], true);
-		numTemp /= 10;
-		digit++;
-	}
-}
-
 void Player::Damage(const GameCtrl & controller)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
+
+	auto DeathPrc = [this]()
+	{
+		if (animEndFlag)
+		{
+			if (deathInv >= 80)
+			{
+				return true;
+			}
+		}
+		dir = DIR_DOWN;
+		SetAnim("死亡");
+		return false;
+	};
 
 	if (reStartCnt)
 	{
@@ -646,10 +651,8 @@ void Player::Damage(const GameCtrl & controller)
 		{
 			// ﾘｽﾎﾟｰﾝ処理
 			pos = startPos;
-			SetScore(DATA_LIFE, PL_LIFE_MAX);
-			SetScore(DATA_SCORE, - 1);
-			SetScore(DATA_POWER, - (state.Power - 1));
-			SetScore(DATA_GUARD, -(state.Guard - 1));
+			SetData(DATA_SCORE, - 1);
+			oldScore = score;
 			InitScroll(static_cast<int>(plNum));
 			PlInit();
 			reStartCnt = PL_RESTART_CNT;
@@ -658,16 +661,17 @@ void Player::Damage(const GameCtrl & controller)
 		return;
 	}
 
-	if (damaCnt)
+	if (damageCnt)
 	{
-		if (damaCnt % 5 == 0)
+		if (damageCnt % 4 == 0)
 		{
-			DIR tmp = static_cast < DIR>(3 - Player::dir);
-			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, hitRad.x - 2)))]
-				&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * 6, -hitRad.x + 2)))])
+			DIR tmp = DirTbl[dir][DIR_TBL_REV];
+			int speed = SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * -3 * (10 - damageCnt / 4);
+			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed,  -hitRad.x + 1)))]
+			&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed, hitRad.x - 2)))])
 			{
-				// 移動不可のオブジェクトが隣にない場合
-				(*PosTbl[Player::dir][TBL_MAIN]) -= SpeedTbl[Player::dir][inputTbl[plNum][0]] / 2 * 6;
+				// 移動不可のオブジェクトが後ろにない場合
+				(*PosTbl[tmp][TBL_MAIN]) += -speed;
 				if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_END_X)))
 				{
 					scrollOffset.x = pos.x - SCROLL_AREA_X;
@@ -680,32 +684,33 @@ void Player::Damage(const GameCtrl & controller)
 				}
 				lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 			}
-			if (damaCnt / 10 % 2 == 0)
+			if (damageCnt / 8 % 2 == 0)
 			{
 				visible = false;
 			}
-			if(damaCnt / 10% 2)
+			if(damageCnt / 8 % 2)
 			{
 				visible = true;
 			}
 		}
-		if (damaCnt >= 60)
+		if (damageCnt >= 40)
 		{
-			damaCnt = 0;
+			damageCnt = 0;
 			
 			// ﾀﾞﾒｰｼﾞｱﾆﾒｰｼｮﾝが終わったら遷移(予定)
 			damageFlag = false;
 			_updater = &Player::Move;
 			visible = true;
+			state.Inv = 120;
 			return;
 		}
-		damaCnt++;
+		damageCnt++;
 		return;
 	}
 	else
 	{
-		SetScore(DATA_LIFE, -1);
-		damaCnt++;
+		SetData(DATA_LIFE, -1);
+		damageCnt++;
 		return;
 	}
 }

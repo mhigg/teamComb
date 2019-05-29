@@ -1,16 +1,17 @@
-#include <algorithm>
 #include <DxLib.h>
+#include <algorithm>
 #include <stdlib.h>
 #include "Enemy.h"
 #include "StageMng.h"
 #include "GameCtrl.h"
+#include "MapCtrl.h"
 #include "InfoCtrl.h"
 
 Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffsetint,int  enCnt) :Obj(drawOffset)
+Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset, int enCnt) :Obj(drawOffset)
 {
 	Enemy::enCnt = enCnt;
 	keyIdTbl = {
@@ -138,7 +139,6 @@ void Enemy::EnInit(void)
 	speed = ENEMY_SPEED;
 	// ¶³İÄŒn
 	deathCnt = 60;
-	scr = VECTOR2(0, 0);
 	timeCnt = 0;
 	actCnt = 60;
 	faintCnt = 0;
@@ -201,11 +201,20 @@ VECTOR2 Enemy::Distance(DIR tmpDir,VECTOR2 pos)
 		if (tmpDir == DIR_DOWN || tmpDir == DIR_UP)
 		{
 			pos.y += SpeedTbl[tmpDir][0];
+			if ((*PosTbl[tmpDir][TBL_MAIN]) == plPos[nearP].x)
+			{
+				return pos;
+			}
 		}
 		else
 		{
 			pos.x += SpeedTbl[tmpDir][0];
+			if ((*PosTbl[tmpDir][TBL_MAIN]) == plPos[nearP].y)
+			{
+				return pos;
+			}
 		}
+		
 	}
 	return pos;
 }
@@ -235,10 +244,11 @@ int Enemy::SerchPlayer(void)
 
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
+	scrollOffset = lpInfoCtrl.GetAddScroll(0);
+
 	// €‚ñ‚Å‚é‚©‚Ç‚¤‚©
 	if (lpInfoCtrl.GetEnemyFlag(Enemy::enCnt))
 	{
-		Enemy::scrollOffset = scr;
 		// “_–Å‚Ìˆ—
 		if (deathCnt % 5 == 0)
 		{
@@ -247,34 +257,30 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		deathCnt--;
 		if (deathCnt == 0)
 		{
+			lpInfoCtrl.SetEnemyPos(VECTOR2(-1, -1), enCnt);
 			deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
 		}
 		return;
 	}
-	scr = scrollOffset;
 	// Å‚à‹ß‚¢ÌßÚ²Ô°‚ÌŒŸõ
 	nearP = SerchPlayer();
 	// ÌßÚ²Ô°‚Æ‚Ì‹——£‚ª‰æ–Ê“à‚È‚çˆ—‚ğs‚¤
-	VECTOR2 tmp = VECTOR2(abs(plPos[nearP].x - Enemy::pos.x), abs(plPos[nearP].y - Enemy::pos.y));
-	if (tmp <= VECTOR2(440,280))
+	switch (action)
 	{
-		switch (action)
-		{
-		case ENEM_ACT::SERCH:
-			_updater = &Enemy::Serch;
-			break;
-		case ENEM_ACT::MOVE:
-			_updater = &Enemy::Move;
-			break;
-		case ENEM_ACT::TRA:
-			_updater = &Enemy::Track;
-			break;
-		default:
-			_updater = &Enemy::Serch;
-			break;
-		}
-		(this->*_updater)(controller);
+	case ENEM_ACT::SERCH:
+		_updater = &Enemy::Serch;
+		break;
+	case ENEM_ACT::MOVE:
+		_updater = &Enemy::Move;
+		break;
+	case ENEM_ACT::TRA:
+		_updater = &Enemy::Track;
+		break;
+	default:
+		_updater = &Enemy::Serch;
+		break;
 	}
+	(this->*_updater)(controller);
 	switch (action)
 	{
 	case ENEM_ACT::SERCH:
@@ -316,14 +322,14 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 			break;
 		}
 		break;
-	default:		
+	default:
 		break;
 	}
 	if (behaviorCnt == 0)
 	{
 		SetAnim("¶‘Ò‹@");
 	}
-	scrollOffset = lpInfoCtrl.GetAddScroll(0);
+	
 	lpInfoCtrl.SetEnemyPos(pos, enCnt);
 	timeCnt++;
 	behaviorCnt++;
@@ -468,11 +474,10 @@ void Enemy::Track(const GameCtrl & controller)
 	}
 }
 
+//-------------Êß½’Tõ(ˆÚ“®Êß½‚ª‚È‚¢‚Ì‚İ)-----------
 void Enemy::Serch(const GameCtrl & controller)
 {
 	auto &chipSize = lpStageMng.GetChipSize().x;
-
-	//-------------Êß½’Tõ(ˆÚ“®Êß½‚ª‚È‚¢‚Ì‚İ)-----------
 	CheckFree();
 	//---------------‘æˆê•ªŠò“_‚Ìİ’è----------------
 	for (DIR tmp = DIR_DOWN; tmp < DIR::DIR_MAX; tmp = static_cast<DIR>(tmp + 1))

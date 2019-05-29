@@ -82,10 +82,23 @@ void SelectScene::SelectDraw(void)
 		DrawLine(tmp1, tmp2, 0x00ffffff, true);
 	}
 	DrawString(0, 0, "SelectScene", 0x00ff0000);
-	DrawGraph(20, 20, IMAGE_ID("image/p1.png")[0], true);
-	DrawGraph(820, 20, IMAGE_ID("image/p2.png")[0], true);
-	DrawGraph(20, 500, IMAGE_ID("image/p3.png")[0], true);
-	DrawGraph(820, 500, IMAGE_ID("image/p4.png")[0], true);
+
+	if (GetJoypadNum() > 0)
+	{
+		DrawGraph(20, 20, IMAGE_ID("image/p1.png")[0], true);
+	}
+	if (GetJoypadNum() > 1)
+	{
+		DrawGraph(820, 20, IMAGE_ID("image/p2.png")[0], true);
+	}
+	if (GetJoypadNum() > 2)
+	{
+		DrawGraph(20, 500, IMAGE_ID("image/p3.png")[0], true);
+	}
+	if (GetJoypadNum() > 3)
+	{
+		DrawGraph(820, 500, IMAGE_ID("image/p4.png")[0], true);
+	}
 
 	// ÌßÚ²Ô°‚Ì”•ª—§‚¿ŠG•`‰æ
 	for (int i = 0; i < GetJoypadNum(); i++)

@@ -42,6 +42,7 @@
     <ClCompile Include="source\StageMng.cpp" />
     <ClCompile Include="source\TitleScene.cpp" />
     <ClCompile Include="source\VECTOR2.cpp" />
+    <ClCompile Include="source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\InfoCtrl.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="source\StageMng.h" />
     <ClInclude Include="source\TitleScene.h" />
     <ClInclude Include="source\VECTOR2.h" />
+    <ClInclude Include="source\Weapon.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

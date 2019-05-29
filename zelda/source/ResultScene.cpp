@@ -31,10 +31,11 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void ResultScene::ResultDraw(void)
 {
 	ClsDrawScreen();
-	DrawGraph(220, 100, IMAGE_ID("image/p1.png")[0], true);
-	DrawGraph(570, 100, IMAGE_ID("image/p2.png")[0], true);
-	DrawGraph(920, 100, IMAGE_ID("image/p3.png")[0], true);
-	DrawGraph(1270, 100, IMAGE_ID("image/p4.png")[0], true);
+	DrawGraph(220, 200, IMAGE_ID("image/p1.png")[0], true);
+	DrawGraph(570, 200, IMAGE_ID("image/p2.png")[0], true);
+	DrawGraph(920, 200, IMAGE_ID("image/p3.png")[0], true);
+	DrawGraph(1270, 200, IMAGE_ID("image/p4.png")[0], true);
+	DrawGraph(525, 50, IMAGE_ID("image/result.png")[0], true);
 	DrawString(0, 0, "ResultScene", 0x00ff0000);
 
 	int digit = 0;

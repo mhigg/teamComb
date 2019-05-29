@@ -22,6 +22,8 @@ public:
 
 	MAP_ID GetMapData(const VECTOR2 & pos);
 	MAP_ID GetItemData(const VECTOR2 & pos);
+	VECTOR2 GetItemPos(MAP_ID id,int num);
+	VECTOR2 GetScreenPos(int plNum);		// ÌßÚ²Ô°‚²‚Æ‚Ì‰æ–Ê¶ãÀ•Wæ“¾
 
 	// Ï¯ÌßÃŞ°À‚ÌØ»²½ŞE‰Šú‰»
 	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);
@@ -32,9 +34,10 @@ public:
 	// Ï¯ÌßÛ°ÄŞ
 	bool MapLoad(sharedListObj objList, bool editFlag);
 
-	// GameMode‚Ì‚İAÌßÚ²Ô°‚ğ²İ½Àİ½‚·‚éŠÖ” 1‘Ì²İ½Àİ½‚µ‚½‚ç2‘Ì–ÚˆÈ~‚Í²İ½Àİ½‚³‚ê‚È‚¢
 	// modeFlag:true¨EditMode false¨GameMode
 	bool SetUpGameObj(sharedListObj objList, bool modeFlag);
+
+	bool SetUpEnemy(sharedListObj objList, int enemyNum,int x,int y);
 
 	// Ï¯Ìß•`‰æ
 	void Draw(bool flag);
@@ -70,7 +73,4 @@ private:
 	VECTOR2 stageSize;		// ½Ã°¼Ş‚ÌÏ½–Ú”
 	VECTOR2 chipSize;		// Ï½‚Ì‘å‚«‚³
 	VECTOR2 drawOffset;		// •`‰æµÌ¾¯Ä
-	VECTOR2 scrollOffset;	// ½¸Û°ÙµÌ¾¯Ä
-
-	bool flag;
 };
