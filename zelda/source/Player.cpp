@@ -410,6 +410,7 @@ void Player::SetData(SCORE_DATA data, int val)
 		bonus += val;
 		break;
 	}
+	lpInfoCtrl.SetScore(score, static_cast<int>(plNum));
 }
 
 void Player::Draw(void)
@@ -441,11 +442,11 @@ void Player::StateDraw(void)
 	numTemp = (oldScore * 10);
 	if (numTemp == 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 50) * (plNum + 1), 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
 	}
 	while (numTemp > 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 35) * (plNum % 2 + 1) - (digit + 1) * 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - (digit + 1) * 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
 		numTemp /= 10;
 		digit++;
 	}

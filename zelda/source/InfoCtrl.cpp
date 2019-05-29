@@ -46,6 +46,17 @@ bool InfoCtrl::SetAddScroll(const VECTOR2 & offset, int num)
 	return true;
 }
 
+bool InfoCtrl::SetScore(int val, int num)
+{
+	if (num > 4)
+	{
+		return false;
+	}
+	plScore[num] = val;
+	return true;
+}
+
+
 VECTOR2 InfoCtrl::GetPlayerPos(int num)
 {
 	if (plFlag[num])
@@ -76,6 +87,11 @@ VECTOR2 InfoCtrl::GetAddScroll(int num)
 	return scrNum[num];
 }
 
+int InfoCtrl::GetScore(int num)
+{
+	return plScore[num];
+}
+
 InfoCtrl::InfoCtrl()
 {
 	Init();
@@ -91,6 +107,7 @@ void InfoCtrl::Init(void)
 	plPos.resize(4);
 	plFlag.resize(4);
 	scrNum.resize(4);
+	plScore.resize(4);
 	enPos.resize(ENEMY_MAX);
 	enFlag.resize(ENEMY_MAX);	
 
@@ -106,5 +123,6 @@ void InfoCtrl::Init(void)
 		plPos[j]		= { 0,0 };
 		plFlag[j]	= false;
 		scrNum[j]	= { 0,0 };
+		plScore[j] = 0;
 	}
 }
