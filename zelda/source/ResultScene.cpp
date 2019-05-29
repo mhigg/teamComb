@@ -3,6 +3,7 @@
 #include "ImageMng.h"
 #include "GameScene.h"
 #include "ScoreBoard.h"
+#include "InfoCtrl.h"
 
 ResultScene::ResultScene()
 {
@@ -20,9 +21,12 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 
-	/*bonusPoint[0] = lpScoreBoard.GetScore(DATA_BONUS);
+	/*bonusPoint[0] = GetScore(DATA_BONUS);*/
 
-	resultScore[0] = lpScoreBoard.GetScore(DATA_SCORE);*/
+	//for (int i = 0; i < GetJoypadNum(); i++)
+	//{
+	//	resultScore[i] = lpInfoCtrl.GetScore(i);
+	//}
 
 	ResultDraw();
 	return move(own);
@@ -39,14 +43,14 @@ void ResultScene::ResultDraw(void)
 	DrawString(0, 0, "ResultScene", 0x00ff0000);
 
 	int digit = 0;
-	int numTemp = resultScore[0] * 100;
+	int numTemp = resultScore[0] * 10;
 	if (numTemp == 0)
 	{
-		DrawGraph(300 - 50, 500, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[0], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (GetJoypadNum() % 2 + 1) - 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
 	}
 	while (numTemp > 0)
 	{
-		DrawGraph(300 - (digit + 1) * 20 - (30), 500, lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 })[numTemp % 10], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (GetJoypadNum() % 2 + 1) - (digit + 1) * 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
 		numTemp /= 10;
 		digit++;
 	}

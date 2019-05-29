@@ -6,7 +6,6 @@
 #include "GameCtrl.h"
 #include "VECTOR2.h"
 
-
 enum PL_NUMBER {
 	PL_1,
 	PL_2,

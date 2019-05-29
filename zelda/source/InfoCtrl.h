@@ -25,6 +25,7 @@ public:
 	bool GetPlayerFlag(int num);
 	bool GetEnemyFlag(int num);
 	VECTOR2 GetAddScroll(int num);
+	int SetScore(int val,int num);				// ½º±Žæ“¾(Ø»ÞÙÄ—p)
 private:
 	InfoCtrl();
 	~InfoCtrl();
@@ -35,5 +36,6 @@ private:
 	std::vector<VECTOR2>plPos;
 	std::vector<bool> plFlag;
 	std::vector<VECTOR2> scrNum;
+	std::vector<int> plScore;
 };
 

@@ -76,6 +76,11 @@ VECTOR2 InfoCtrl::GetAddScroll(int num)
 	return scrNum[num];
 }
 
+int InfoCtrl::SetScore(int val,int num)
+{
+	return plScore[num];
+}
+
 InfoCtrl::InfoCtrl()
 {
 	Init();
@@ -91,6 +96,7 @@ void InfoCtrl::Init(void)
 	plPos.resize(4);
 	plFlag.resize(4);
 	scrNum.resize(4);
+	plScore.resize(4);
 	enPos.resize(ENEMY_MAX);
 	enFlag.resize(ENEMY_MAX);	
 
@@ -106,5 +112,6 @@ void InfoCtrl::Init(void)
 		plPos[j]		= { 0,0 };
 		plFlag[j]	= false;
 		scrNum[j]	= { 0,0 };
+		plScore[j] = 0;
 	}
 }
