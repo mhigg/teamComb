@@ -1,10 +1,10 @@
 #pragma once
-#include "BaseScene.h"
 #include <array>
+#include "BaseScene.h"
+#include "ClassObj.h"
 
 constexpr auto CHARA_NUM = 4;
 
-using SELECT_CHARA = std::array< int, CHARA_NUM >;
 using SELECT_POS = std::array< VECTOR2, CHARA_NUM >;
 
 class SelectScene :
@@ -21,9 +21,10 @@ private:
 	void SelectDraw(void);		// •`‰æ
 	int Init(void);				// ‰Šú‰»
 
-	SELECT_CHARA selectChara;	// ÌßÚ²Ô°–ˆ‚Ì¡‘I‘ğ‚µ‚Ä‚¢‚é·¬×
 	SELECT_POS selectPos;		// ÌßÚ²Ô°–ˆ‚Ì—§‚¿ŠGˆÊ’u
 	int selectMode;				// ‘I‚ñ‚¾Ó°ÄŞ
 	int backChange;				// ”wŒiØ‚è‘Ö‚¦‚ÌŠÔ
+
+	sharedListObj objList;
 };
 

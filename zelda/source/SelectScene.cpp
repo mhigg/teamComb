@@ -1,8 +1,11 @@
+#include <DxLib.h>
 #include "SelectScene.h"
 #include "GameScene.h"
-#include "ImageMng.h"
 #include "EditScene.h"
 #include "MenuScene.h"
+#include "SceneMng.h"
+#include "ImageMng.h"
+#include "Selector.h"
 #include "GameCtrl.h"
 
 SelectScene::SelectScene()
@@ -40,23 +43,11 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<MenuScene>();
 	}
 
-	// ëIë
-	for (int i = 0; i < GetJoypadNum(); i++)
+	for (auto& itr : (*objList))
 	{
-	if (inputState[i][XINPUT_RIGHT] & !inputStateOld[i][XINPUT_RIGHT])
-		{
-			if (selectChara[i] < CHARA_NUM - 1)
-			{
-				selectChara[i] += 1;
-			}
-		}
-	if (inputState[i][XINPUT_LEFT] & !inputStateOld[i][XINPUT_LEFT])		{
-			if (selectChara[i] > 0)
-			{
-				selectChara[i] -= 1;
-			}
-		}
+		itr->UpDate(controller, objList);
 	}
+
 	SelectDraw();
 	return std::move(own);
 }
@@ -101,35 +92,32 @@ void SelectScene::SelectDraw(void)
 	}
 
 	// Ãﬂ⁄≤‘∞ÇÃêîï™óßÇøäGï`âÊ
-	for (int i = 0; i < GetJoypadNum(); i++)
+	for (auto& itr : (*objList))
 	{
-		if (selectChara[i] == 0)
-		{
-			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand.png")[0], true);
-		}
-		if (selectChara[i] == 1)
-		{
-			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand2.png")[0], true);
-		}
-		if (selectChara[i] == 2)
-		{
-			DrawGraph(selectPos[i].x, selectPos[i].y, IMAGE_ID("image/stand3.png")[0], true);
-		}
+		itr->Draw();
 	}
+	
 	ScreenFlip();
 }
 
 int SelectScene::Init(void)
 {
-	selectChara = {
-		0,0,0,0,
-	};
+	if (!objList)
+	{
+		objList = std::make_shared<sharedList>();
+	}
+	objList->clear();
+	
 	selectPos = {
 		VECTOR2(100,100),
 		VECTOR2(900,100),
 		VECTOR2(100,580),
 		VECTOR2(900,580),
 	};
+	for (int pIdx = 0; pIdx < GetJoypadNum(); pIdx++)
+	{
+		AddObjList()(objList, std::make_unique<Selector>(static_cast<PL_NUMBER>(pIdx), selectPos[pIdx], lpSceneMng.GetDrawOffset()));
+	}
 	backChange = 0;
 	return 0;
 }

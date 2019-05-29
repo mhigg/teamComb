@@ -38,6 +38,7 @@
     <ClCompile Include="source\Player.cpp" />
     <ClCompile Include="source\ResultScene.cpp" />
     <ClCompile Include="source\SceneMng.cpp" />
+    <ClCompile Include="source\Selector.cpp" />
     <ClCompile Include="source\SelectScene.cpp" />
     <ClCompile Include="source\StageMng.cpp" />
     <ClCompile Include="source\TitleScene.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="source\Player.h" />
     <ClInclude Include="source\ResultScene.h" />
     <ClInclude Include="source\SceneMng.h" />
+    <ClInclude Include="source\Selector.h" />
     <ClInclude Include="source\SelectScene.h" />
     <ClInclude Include="source\StageMng.h" />
     <ClInclude Include="source\TitleScene.h" />

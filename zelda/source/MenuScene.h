@@ -1,16 +1,16 @@
 #pragma once
-#include "BaseScene.h"
 #include <array>
+#include "BaseScene.h"
 
 constexpr auto MENU_NUM		= 3;
 constexpr auto BOX_SIZE_X	= 460;
-constexpr auto SIZE_Y			= 90;			// •Ï‚¦‚È‚­‚Ä‚¢‚¢‚©‚à
-constexpr auto PUSH_SIZE		= 40;			// ‘I‘ð’†‚ÌÒÆ­°ÊÞ°‚ÌµÌ¾¯Ä
+constexpr auto SIZE_Y		= 90;			// •Ï‚¦‚È‚­‚Ä‚¢‚¢‚©‚à
+constexpr auto PUSH_SIZE	= 40;			// ‘I‘ð’†‚ÌÒÆ­°ÊÞ°‚ÌµÌ¾¯Ä
 
 
-using BOX_ARRAY = std::array< VECTOR2 , MENU_NUM >;
-using MOVE_FLAG = std::array<   bool  , MENU_NUM >;
-using SELECT_POINT = std::array<   int, MENU_NUM >;
+using BOX_ARRAY = std::array< VECTOR2, MENU_NUM >;
+using MOVE_FLAG = std::array< bool, MENU_NUM >;
+using SELECT_POINT = std::array< int, MENU_NUM >;
 
 class MenuScene :
 	public BaseScene

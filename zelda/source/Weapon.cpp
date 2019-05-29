@@ -8,15 +8,15 @@ Weapon::Weapon()
 
 Weapon::Weapon(WEP_TYPE weapon, DIR dir, VECTOR2 setUpPos, VECTOR2 scrollOffset, VECTOR2 drawOffset) :Obj(drawOffset)
 {
-	AtkImgTbl = { "image/ŽaŒ‚_DOWN.png",
-				  "image/ŽaŒ‚_Left.png",
-				  "image/ŽaŒ‚_Right.png",
-				  "image/ŽaŒ‚_UP.png"
-				};
+	AtkImgTbl = { "image/ŽaŒ‚_DOWN.png",	"image/ŽaŒ‚_DOWN.png",
+				  "image/ŽaŒ‚_Left.png",	"image/ŽaŒ‚_Left.png",
+				  "image/ŽaŒ‚_Right.png",	"image/ŽaŒ‚_Right.png",
+				  "image/ŽaŒ‚_UP.png",		"image/ŽaŒ‚_UP.png"
+	};
 
 	this->scrollOffset = scrollOffset;
 	this->weapon = weapon;
-	Init(AtkImgTbl[dir], VECTOR2(140, 130), VECTOR2(4, 10), setUpPos);
+	Init(AtkImgTbl[dir][weapon], VECTOR2(140, 130), VECTOR2(4, 10), setUpPos);
 	initAnim();
 	SetAnim("ŽaŒ‚");
 }
@@ -24,6 +24,11 @@ Weapon::Weapon(WEP_TYPE weapon, DIR dir, VECTOR2 setUpPos, VECTOR2 scrollOffset,
 
 Weapon::~Weapon()
 {
+}
+
+int Weapon::WeaponInit(WEP_TYPE weapon)
+{
+	return 0;
 }
 
 bool Weapon::initAnim(void)
