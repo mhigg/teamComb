@@ -3,7 +3,6 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "MAP_ID.h"
 #include "VECTOR2.h"
 
 #define lpStageMng StageMng::GetInstance()

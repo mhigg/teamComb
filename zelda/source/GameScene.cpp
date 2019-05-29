@@ -2,15 +2,14 @@
 #include <memory>
 #include "GameScene.h"
 #include "EditScene.h"
-#include "SceneMng.h"
-#include "StageMng.h"
-#include "ScoreBoard.h"
-#include "GameCtrl.h"
-#include "VECTOR2.h"
-#include "ImageMng.h"
-#include "InfoCtrl.h"
 #include "ResultScene.h"
+#include "SceneMng.h"
+#include "ImageMng.h"
+#include "StageMng.h"
+#include "GameCtrl.h"
+#include "InfoCtrl.h"
 #include "Player.h"
+#include "VECTOR2.h"
 
 GameScene::GameScene()
 {
@@ -37,12 +36,10 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 #ifdef _DEBUG	// √ﬁ ﬁØ∏ﬁéûÇÃÇ›é¿çs
 	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
 	{
-		/*lpScoreBoard.DataInit();*/
 		return std::make_unique<EditScene>();
 	}
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
-		/*lpScoreBoard.DataInit();*/
 		return std::make_unique<EditScene>();
 	}
 	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
@@ -63,7 +60,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		{
 			if (lpInfoCtrl.GetEnemyFlag(i))
 			{
-				VECTOR2 Ipos = lpMapCtrl.GetItenPos(MAP_ID::ENEMY, tmp);
+				VECTOR2 Ipos = lpMapCtrl.GetItemPos(MAP_ID::ENEMY, tmp);
 				lpMapCtrl.SetUpEnemy(objList, i, Ipos.x, Ipos.y);
 				tmp++;
 			}
@@ -92,11 +89,12 @@ int GameScene::Init(void)
 	objList->clear();
 
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
-	lpMapCtrl.SetUp(VECTOR2(CHIP_SIZE, CHIP_SIZE), lpSceneMng.GetDrawOffset());
+	lpMapCtrl.SetUp(lpStageMng.GetChipSize(), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
 	tile = LoadGraph("image/tile.png", true);
-	player = std::make_unique<Player>();	return 0;
+	player = std::make_unique<Player>();
+	return 0;
 }
 
 void GameScene::Draw(void)
@@ -131,11 +129,6 @@ void GameScene::Draw(void)
 			obj->Draw();
 		}
 	}
-
-	// Ω∫±ï\é¶(âº)
-	//player->StateDraw();
-	//// Ω∫±Œﬁ∞ƒﬁï\é¶
-	//lpScoreBoard.Draw();
 
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);

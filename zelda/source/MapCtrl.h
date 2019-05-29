@@ -22,7 +22,7 @@ public:
 
 	MAP_ID GetMapData(const VECTOR2 & pos);
 	MAP_ID GetItemData(const VECTOR2 & pos);
-	VECTOR2 GetItenPos(MAP_ID id,int num);
+	VECTOR2 GetItemPos(MAP_ID id,int num);
 
 	// Ï¯ÌßÃŞ°À‚ÌØ»²½ŞE‰Šú‰»
 	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);
@@ -35,6 +35,7 @@ public:
 
 	// modeFlag:true¨EditMode false¨GameMode
 	bool SetUpGameObj(sharedListObj objList, bool modeFlag);
+
 	bool SetUpEnemy(sharedListObj objList, int enemyNum,int x,int y);
 
 	// Ï¯Ìß•`‰æ

@@ -29,9 +29,6 @@ struct DataHeader
 MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
-	chipSize = lpStageMng.GetChipSize();
-	stageSize = lpStageMng.GetStageSize() / chipSize;
-	drawOffset = lpSceneMng.GetDrawOffset();
 }
 
 
@@ -59,6 +56,7 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 
 	MapCtrl::chipSize = chipSize;
 	MapCtrl::drawOffset = drawOffset;
+	stageSize = lpStageMng.GetStageSize() / chipSize;
 
 	auto CreateMap = [=](auto& base, auto& front, auto initNum) {
 		base.resize(stageSize.x * stageSize.y);
@@ -116,7 +114,7 @@ MAP_ID MapCtrl::GetItemData(const VECTOR2 & pos)
 	return GetData(itemData, pos, MAP_ID::NONE);
 }
 
-VECTOR2 MapCtrl::GetItenPos(MAP_ID id,int num)
+VECTOR2 MapCtrl::GetItemPos(MAP_ID id,int num)
 {
 	int tmp = 0;
 	for (int y = 0; y < stageSize.y; y++)
