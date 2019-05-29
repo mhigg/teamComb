@@ -376,7 +376,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 
 bool MapCtrl::SetUpEnemy(sharedListObj objList, int enemyNum, int x, int y)
 {
-	int num = GetRand(static_cast<int>(ENEMY::ENEMY_MAX) - 1);
+	int num = GetRand(static_cast<int>(ENEMY::ENEMY_MAX) - 2);
 	// ´ÈÐ°‚Ì²Ý½ÀÝ½
 	/* Ã½Ä*/	auto obj = AddObjList()(objList,
 		std::make_unique<Enemy>
