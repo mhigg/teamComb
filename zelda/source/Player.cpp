@@ -373,7 +373,6 @@ void Player::GetItem(void)
 
 void Player::SetData(SCORE_DATA data, int val)
 {
-	lpInfoCtrl.SetScore(score, static_cast<int>(plNum));
 	switch (data)
 	{
 	case DATA_SCORE:
@@ -411,6 +410,7 @@ void Player::SetData(SCORE_DATA data, int val)
 		bonus += val;
 		break;
 	}
+	lpInfoCtrl.SetScore(score, static_cast<int>(plNum));
 }
 
 void Player::Draw(void)

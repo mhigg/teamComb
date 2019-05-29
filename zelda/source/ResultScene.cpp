@@ -23,10 +23,10 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 
 	/*bonusPoint[0] = GetScore(DATA_BONUS);*/
 
-	//for (int i = 0; i < GetJoypadNum(); i++)
-	//{
-	//	resultScore[i] = lpInfoCtrl.GetScore(i);
-	//}
+	for (int i = 0; i < GetJoypadNum(); i++)
+	{
+		resultScore[i] = lpInfoCtrl.GetScore(i);
+	}
 
 	ResultDraw();
 	return move(own);
