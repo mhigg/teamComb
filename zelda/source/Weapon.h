@@ -16,7 +16,7 @@ class Weapon :
 {
 public:
 	Weapon();
-	Weapon(WEP_TYPE weapon, DIR dir, VECTOR2 setUpPos, VECTOR2 drawOffset);
+	Weapon(WEP_TYPE weapon, DIR dir, VECTOR2 setUpPos, VECTOR2 scrollOffset, VECTOR2 drawOffset);
 	~Weapon();
 
 	bool initAnim(void);

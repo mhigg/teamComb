@@ -228,7 +228,7 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	(this->*_updater)(controller);
 	if (GetAnim() == "攻撃")
 	{
-		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset));
+		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
 	}
 
 	// 時間経過によるステータス変更
