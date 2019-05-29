@@ -2,7 +2,6 @@
 #include "ResultScene.h"
 #include "ImageMng.h"
 #include "GameScene.h"
-#include "ScoreBoard.h"
 #include "InfoCtrl.h"
 
 ResultScene::ResultScene()

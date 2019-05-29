@@ -8,7 +8,6 @@
 #include "Enemy.h"
 #include "SceneMng.h"
 #include "StageMng.h"
-#include "ScoreBoard.h"
 #include "ClassObj.h"
 
 struct DataHeader
@@ -29,6 +28,15 @@ struct DataHeader
 MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
+
+	VECTOR2 plScrSize = lpSceneMng.GetPlayScreen();
+
+	plScrTbl = {
+		VECTOR2(0,0),
+		VECTOR2(plScrSize.x, 0),
+		VECTOR2(0, plScrSize.y),
+		plScrSize
+	};
 }
 
 
@@ -79,15 +87,6 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
 	CreateMap(itemData_Base, itemData, MAP_ID::NONE);
 	
-	VECTOR2 plScrSize = lpSceneMng.GetPlayScreen();
-
-	plScrTbl = {
-		VECTOR2(0,0),
-		VECTOR2(plScrSize.x, 0),
-		VECTOR2(0, plScrSize.y),
-		plScrSize
-	};
-
 	mapImage.resize(1);
 	scrollTbl.resize(1);
 

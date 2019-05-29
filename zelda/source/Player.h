@@ -1,7 +1,6 @@
 #pragma once
 #include <array>
 #include "Obj.h"
-#include "ScoreBoard.h"
 #include "MapCtrl.h"
 #include "GameCtrl.h"
 #include "VECTOR2.h"
