@@ -429,37 +429,25 @@ void Player::StateDraw(void)
 			additionTime = 8;
 		}
 	}
-	DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
+	/*DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);*/
 	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
 	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
 	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", state.Power);
 	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", state.Guard);
 	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", state.Inv);
 	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
-	for (int i = 0; i < GetJoypadNum(); i++)
+
+	digit = 0;
+	numTemp = (oldScore * 10);
+	if (numTemp == 0)
 	{
-		digit[i] = 0;
-		numTemp[i] = (oldScore * 10);
-		if (numTemp[0] == 0)
-		{
-			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 50, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
-		}
-		while (numTemp[0] > 0)
-		{
-			DrawGraph(GAME_SCREEN_SIZE_X / 2 - (digit[0] + 1) * 20 - (30), 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp[0] % 10], true);
-			numTemp[0] /= 10;
-			digit[0]++;
-		}
-		if (numTemp[1] == 0)
-		{
-			DrawGraph(GAME_SCREEN_SIZE_X  - 50, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
-		}
-		while (numTemp[1] > 0)
-		{
-			DrawGraph(GAME_SCREEN_SIZE_X  - (digit[1] + 1) * 20 - (30), 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp[1] % 10], true);
-			numTemp[1] /= 10;
-			digit[1]++;
-		}
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 50) * (plNum + 1), 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+	}
+	while (numTemp > 0)
+	{
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 35) * (plNum % 2 + 1) - (digit + 1) * 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
+		numTemp /= 10;
+		digit++;
 	}
 }
 
