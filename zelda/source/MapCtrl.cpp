@@ -133,6 +133,11 @@ VECTOR2 MapCtrl::GetItemPos(MAP_ID id,int num)
 	}
 }
 
+VECTOR2 MapCtrl::GetScreenPos(int plNum)
+{
+	return plScrTbl[plNum];
+}
+
 template<typename mapType, typename idType>
 bool MapCtrl::SetData(mapType maps, const VECTOR2 & pos, idType id)
 {

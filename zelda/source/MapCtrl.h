@@ -23,6 +23,7 @@ public:
 	MAP_ID GetMapData(const VECTOR2 & pos);
 	MAP_ID GetItemData(const VECTOR2 & pos);
 	VECTOR2 GetItemPos(MAP_ID id,int num);
+	VECTOR2 GetScreenPos(int plNum);		// ÌßÚ²Ô°‚²‚Æ‚Ì‰æ–Ê¶ãÀ•Wæ“¾
 
 	// Ï¯ÌßÃŞ°À‚ÌØ»²½ŞE‰Šú‰»
 	bool SetUp(VECTOR2 chipSize, VECTOR2 drawOffset);
