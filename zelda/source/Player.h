@@ -40,6 +40,7 @@ constexpr int PL_LIFE_MAX = 6;					// ﾌﾟﾚｲﾔｰの体力上限
 using UP_TIME = std::array < int, 2 >;
 using ACT_ARR = std::array<VECTOR2, DIR_MAX>;
 
+
 class Player :
 	public Obj
 {
@@ -99,6 +100,8 @@ private:
 	bool afterKeyFlag;			// keyの後入力を優先させるﾌﾗｸﾞ
 	PL_NUMBER plNum;			// 自分が何番目のﾌﾟﾚｲﾔｰかの番号
 	int randomBonus;			// ランダムにボーナスアイテムを決める
+	int numTemp[3];
+	int digit[3];
 
 	void (Player::*_updater)(const GameCtrl & controller);		// 状態関数ﾎﾟｲﾝﾀ
 };
