@@ -1,18 +1,19 @@
 #include "Effect.h"
 #include "EffekseerForDXLib.h"
 #include "EffectMng.h"
+#include "InfoCtrl.h"
 
 
 Effect::Effect()
 {
 }
 
-Effect::Effect(VECTOR2 setUpPos, int lastingTime, VECTOR2 scrollOffset, VECTOR2 drawOffset) :Obj(drawOffset)
+Effect::Effect(std::string efkName, VECTOR2 setUpPos, int lastingTime, VECTOR2 scrollOffset, VECTOR2 drawOffset) :Obj(drawOffset)
 {
 	SetPos(setUpPos);
 	this->scrollOffset = scrollOffset;
 	this->lastingTime = lastingTime;
-	efkImg = lpEffectMng.GetID("image/aura_RED6.efk", 5.0f)[0];
+	efkImg = lpEffectMng.GetID(efkName, 15.0f)[0];
 }
 
 
@@ -37,17 +38,13 @@ void Effect::Draw(void)
 
 void Effect::SetMove(const GameCtrl & controller, weakListObj objList)
 {
-//	int playingEffectHandle = -1;
+	scrollOffset = lpInfoCtrl.GetAddScroll(0);
+	pos = lpInfoCtrl.GetPlayerPos(0);
 
-	//if (time % 60 == 0)
-	//{
-		// エフェクトを再生する。
-		int playingEffectHandle = PlayEffekseer2DEffect(efkImg);
-	//}
+	// エフェクトを再生する。
+	int playingEffectHandle = PlayEffekseer2DEffect(efkImg);
 
 	SetPosPlayingEffekseer2DEffect(playingEffectHandle, pos.x + drawOffset.x - scrollOffset.x, pos.y + drawOffset.y - scrollOffset.y, 0);
-
-	
 
 	UpdateEffekseer2D();
 

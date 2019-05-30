@@ -284,7 +284,7 @@ void Player::GetItem(weakListObj objList)
 		case MAP_ID::POTION_1:	// ê‘
 			paramUP(NotFlag, num);
 			SetData(DATA_POWER, 1); 
-			AddObjList()(objList,std::make_unique<Effect>(pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
+			AddObjList()(objList,std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_2:	// ê¬
 			paramUP(NotFlag, num);
@@ -469,7 +469,8 @@ void Player::Stop(const GameCtrl & controller, weakListObj objList)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
-		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
+//		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
+		AddObjList()(objList, std::make_unique<Effect>("image/éaåÇ_1.efk", pos + VECTOR2(0, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 	}
 }
@@ -497,7 +498,8 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
-		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
+//		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
+		AddObjList()(objList, std::make_unique<Effect>("image/éaåÇ_1.efk", pos + VECTOR2(0, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 		return;
 	}

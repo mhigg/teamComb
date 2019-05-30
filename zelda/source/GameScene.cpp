@@ -146,7 +146,7 @@ void GameScene::Draw(void)
 		DrawLine(tmp1, tmp2, 0x00ffffff, true);
 	}
 
-	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
+//	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
 
 	// ŽžŠÔ•\Ž¦
 	int timeDigit = 0;
