@@ -56,6 +56,15 @@ bool InfoCtrl::SetScore(int val, int num)
 	return true;
 }
 
+bool InfoCtrl::SetBonus(int val, int num)
+{
+	if (num > 4)
+	{
+		return false;
+	}
+	plBonus[num] = val;
+	return true;
+}
 
 VECTOR2 InfoCtrl::GetPlayerPos(int num)
 {
@@ -92,6 +101,11 @@ int InfoCtrl::GetScore(int num)
 	return plScore[num];
 }
 
+int InfoCtrl::GetBonus(int num)
+{
+	return plBonus[num];
+}
+
 InfoCtrl::InfoCtrl()
 {
 	Init();
@@ -107,7 +121,6 @@ void InfoCtrl::Init(void)
 	plPos.resize(4);
 	plFlag.resize(4);
 	scrNum.resize(4);
-	plScore.resize(4);
 	enPos.resize(ENEMY_MAX);
 	enFlag.resize(ENEMY_MAX);	
 
@@ -124,5 +137,6 @@ void InfoCtrl::Init(void)
 		plFlag[j]	= false;
 		scrNum[j]	= { 0,0 };
 		plScore[j] = 0;
+		plBonus[j] = 0;
 	}
 }

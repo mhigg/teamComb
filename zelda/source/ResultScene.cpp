@@ -19,12 +19,12 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
+	plNumber = GetJoypadNum();
 
-	/*bonusPoint[0] = GetScore(DATA_BONUS);*/
-
-	for (int i = 0; i < GetJoypadNum(); i++)
+	for (int i = 0; i < plNumber; i++)
 	{
 		resultScore[i] = lpInfoCtrl.GetScore(i);
+		bonusPoint[i] = lpInfoCtrl.GetBonus(i);
 	}
 
 	ResultDraw();
@@ -34,24 +34,40 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void ResultScene::ResultDraw(void)
 {
 	ClsDrawScreen();
-	DrawGraph(220, 200, IMAGE_ID("image/p1.png")[0], true);
-	DrawGraph(570, 200, IMAGE_ID("image/p2.png")[0], true);
-	DrawGraph(920, 200, IMAGE_ID("image/p3.png")[0], true);
-	DrawGraph(1270, 200, IMAGE_ID("image/p4.png")[0], true);
+	if (plNumber > 0)
+	{
+		DrawGraph(220, 200, IMAGE_ID("image/p1.png")[0], true);
+	}
+	if (plNumber > 1)
+	{
+		DrawGraph(570, 200, IMAGE_ID("image/p2.png")[0], true);
+	}
+	if (plNumber > 2)
+	{
+		DrawGraph(920, 200, IMAGE_ID("image/p3.png")[0], true);
+	}
+	if (plNumber > 3)
+	{
+		DrawGraph(1270, 200, IMAGE_ID("image/p4.png")[0], true);
+	}
 	DrawGraph(525, 50, IMAGE_ID("image/result.png")[0], true);
 	DrawString(0, 0, "ResultScene", 0x00ff0000);
 
 	int digit = 0;
-	int numTemp = resultScore[0] * 10;
-	if (numTemp == 0)
+
+	for (int i = 0; i < plNumber; i++)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (GetJoypadNum() % 2 + 1) - 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
-	}
-	while (numTemp > 0)
-	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (GetJoypadNum() % 2 + 1) - (digit + 1) * 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
-		numTemp /= 10;
-		digit++;
+		resultTemp = resultScore[i] * 10;
+		if (resultTemp == 0)
+		{
+			DrawGraph((1 + i) * 280, 700, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+		}
+		while (resultTemp > 0)
+		{
+			DrawGraph((0 + i) - (digit + 1) * 20 + (300), 700, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[resultTemp % 10], true);
+			resultTemp /= 10;
+			digit++;
+		}
 	}
 	ScreenFlip();
 }
@@ -64,5 +80,7 @@ int ResultScene::Init(void)
 	resultScore = {
 		0,0,0,0
 	};
+	plNumber = 0;
+	resultTemp = 0;
 	return 0;
 }
