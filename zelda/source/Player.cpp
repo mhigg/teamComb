@@ -411,6 +411,7 @@ void Player::SetData(SCORE_DATA data, int val)
 		break;
 	}
 	lpInfoCtrl.SetScore(score, static_cast<int>(plNum));
+	lpInfoCtrl.SetBonus(bonus, static_cast<int>(plNum));
 }
 
 void Player::Draw(void)
@@ -430,23 +431,24 @@ void Player::StateDraw(void)
 			additionTime = 8;
 		}
 	}
-	/*DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);*/
-	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");
-	DrawFormatString(650, 50, GetColor(0, 0, 0), "LIFE  : %d", life);
-	DrawFormatString(650, 100, GetColor(0, 0, 0), "POWER  : %d", state.Power);
-	DrawFormatString(650, 120, GetColor(0, 0, 0), "GUARD  : %d", state.Guard);
-	DrawFormatString(650, 140, GetColor(0, 0, 0), "INV  : %d", state.Inv);
-	DrawFormatString(650, 160, GetColor(0, 0, 0), "BONUS  : %d", bonus);
+	/*DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
+	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");*/
+	DrawGraph(645, 20, IMAGE_ID("image/score.png")[0], true);
+	DrawFormatString(650, 150, GetColor(255, 255, 0), "LIFE  : %d", life);
+	DrawFormatString(650, 200, GetColor(255, 255, 0), "POWER  : %d", state.Power);
+	DrawFormatString(650, 220, GetColor(255, 255, 0), "GUARD  : %d", state.Guard);
+	DrawFormatString(650, 240, GetColor(255, 255, 0), "INV  : %d", state.Inv);
+	DrawFormatString(650, 260, GetColor(255, 255, 0), "BONUS  : %d", bonus);
 
 	digit = 0;
 	numTemp = (oldScore * 10);
 	if (numTemp == 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - 22, 60, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
 	}
 	while (numTemp > 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - (digit + 1) * 20, 15, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - (digit + 1) * 22, 60, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
 		numTemp /= 10;
 		digit++;
 	}

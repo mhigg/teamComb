@@ -30,5 +30,7 @@ private:
 
 	BONUS_POINT bonusPoint;		// ÌßÚ²Ô°–ˆ‚ÌÎŞ°Å½Šl“¾”
 	RESULT_SCORE resultScore;	// ÎŞ°Å½‰ÁZŒã‚ÌÅI½º±
+	int plNumber;				// ÌßÚ²Ô°”
+	int resultTemp;				// ½º±(•`‰æ—p)
 };
 
