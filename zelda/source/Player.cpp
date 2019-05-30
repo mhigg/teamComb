@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Player.h"
 #include "Weapon.h"
+#include "Effect.h"
 #include "StageMng.h"
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
@@ -219,17 +220,13 @@ void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 	lpInfoCtrl.SetPlayerPos(pos,static_cast<int>(plNum));
 	if (!damageFlag)
 	{
-		GetItem();
+		GetItem(objList);
 	}
 	invTime = state.Inv;
 
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
-	(this->*_updater)(controller);
-	if (GetAnim() == "攻撃")
-	{
-		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
-	}
+	(this->*_updater)(controller, objList);
 
 	// 時間経過によるステータス変更
 	// 攻撃
@@ -268,7 +265,7 @@ bool Player::CheckObjType(OBJ_TYPE type)
 	return (type == OBJ_PLAYER);
 }
 
-void Player::GetItem(void)
+void Player::GetItem(weakListObj objList)
 {
 	auto ItemID = [=] {
 		auto id = lpMapCtrl.GetItemData(pos);
@@ -287,6 +284,7 @@ void Player::GetItem(void)
 		case MAP_ID::POTION_1:	// 赤
 			paramUP(NotFlag, num);
 			SetData(DATA_POWER, 1);
+			AddObjList()(objList,std::make_unique<Effect>(pos, 600, scrollOffset, drawOffset));
 			break;
 		case MAP_ID::POTION_2:	// 青
 			paramUP(NotFlag, num);
@@ -454,7 +452,7 @@ void Player::StateDraw(void)
 	}
 }
 
-void Player::Stop(const GameCtrl & controller)
+void Player::Stop(const GameCtrl & controller, weakListObj objList)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
@@ -471,11 +469,12 @@ void Player::Stop(const GameCtrl & controller)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("攻撃");
+		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
 		_updater = &Player::Attack;
 	}
 }
 
-void Player::Move(const GameCtrl & controller)
+void Player::Move(const GameCtrl & controller, weakListObj objList)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputTblOld = controller.GetInputState(KEY_TYPE_OLD);
@@ -498,6 +497,7 @@ void Player::Move(const GameCtrl & controller)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("攻撃");
+		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
 		_updater = &Player::Attack;
 		return;
 	}
@@ -592,7 +592,7 @@ void Player::Move(const GameCtrl & controller)
 	SetAnim("移動");
 }
 
-void Player::Attack(const GameCtrl & controller)
+void Player::Attack(const GameCtrl & controller, weakListObj objList)
 {
 	reStartCnt -= (reStartCnt > 0);		// 真の場合の1をｶｳﾝﾄから減らす
 	visible = true;
@@ -624,7 +624,7 @@ void Player::Attack(const GameCtrl & controller)
 	_updater = &Player::Move;
 }
 
-void Player::Damage(const GameCtrl & controller)
+void Player::Damage(const GameCtrl & controller, weakListObj objList)
 {
 	auto &inputTbl = controller.GetInputState(KEY_TYPE_NOW);
 

@@ -5,6 +5,12 @@
 #include "BaseScene.h"
 #include "VECTOR2.h"
 
+constexpr int SCREEN_SIZE_X = 1600;
+constexpr int SCREEN_SIZE_Y = 960;
+
+constexpr int PL_SCREEN_SIZE_X = 800;
+constexpr int PL_SCREEN_SIZE_Y = 480;
+
 #define lpSceneMng SceneMng::GetInstance()
 
 class GameCtrl;

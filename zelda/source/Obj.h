@@ -25,6 +25,7 @@ enum OBJ_TYPE {
 	OBJ_PLAYER,
 	OBJ_ENEMY,
 	OBJ_WEAPON,
+	OBJ_EFFECT,
 	OBJ_EDIT_CURSOR,
 	OBJ_SELECTOR,
 	OBJ_MAX
@@ -46,7 +47,7 @@ enum DIR_TBL_ID {
 
 enum SIDE_CHECK {
 	OUT_SIDE,		// 0
-	IN_SIDE,			// 1
+	IN_SIDE,		// 1
 	SIDE_MAX
 };
 
@@ -114,12 +115,12 @@ private:
 	std::map<std::string,int[ANIM_TBL_MAX]> animTable;	// ｱﾆﾒｰｼｮﾝの設定を保存する配列
 
 protected:
-	void SetPos(VECTOR2 pos);	// 座標を設定
+	void SetPos(VECTOR2 pos);		// 座標を設定
 	void InitScroll(int plNum);		// ｽｸﾛｰﾙｵﾌｾｯﾄを初期化する
 
-	VECTOR2 pos;						// 表示する座標
-	VECTOR2 scrollOffset;				// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
-	const VECTOR2 drawOffset;	// 描画ｵﾌｾｯﾄ
+	VECTOR2 pos;					// 表示する座標
+	VECTOR2 scrollOffset;			// ｽｸﾛｰﾙによるｵﾌｾｯﾄ
+	const VECTOR2 drawOffset;		// 描画ｵﾌｾｯﾄ
 	VECTOR2 hitRad;					// ｵﾌﾞｼﾞｪｸﾄの当たり判定のｻｲｽﾞ
 	VECTOR2 actOff;					// ｵﾌﾞｼﾞｪｸﾄの(当たり判定の)中心座標までのｽﾞﾚ
 
@@ -129,10 +130,10 @@ protected:
 
 	OBJ_TYPE objType;				// ｵﾌﾞｼﾞｪｸﾄの種類
 
-	DIR dir;									// ｵﾌﾞｼﾞｪｸﾄの向いている方向
+	DIR dir;						// ｵﾌﾞｼﾞｪｸﾄの向いている方向
 
-	unsigned int animCnt;				// ｱﾆﾒｰｼｮﾝのｶｳﾝﾄ
-	bool animEndFlag;					// ｱﾆﾒｰｼｮﾝの最終ｺﾏ到達ﾌﾗｸﾞ
+	unsigned int animCnt;			// ｱﾆﾒｰｼｮﾝのｶｳﾝﾄ
+	bool animEndFlag;				// ｱﾆﾒｰｼｮﾝの最終ｺﾏ到達ﾌﾗｸﾞ
 
-	bool visible;							// 点滅ﾌﾗｸﾞ
+	bool visible;					// 点滅ﾌﾗｸﾞ
 };

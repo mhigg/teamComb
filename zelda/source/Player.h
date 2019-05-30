@@ -53,7 +53,7 @@ private:
 	void PlInit(void);		// Ø½Îß°İ‚ÌÛ‚É‚à•K—v‚È‰Šú‰»ˆ—‚Ü‚Æ‚ß
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 	bool CheckObjType(OBJ_TYPE type);
-	void GetItem(void);		// ±²ÃÑæ“¾
+	void GetItem(weakListObj objList);		// ±²ÃÑæ“¾
 	void Draw(void);
 	VECTOR2 sidePos			// »²ÄŞ”»’è
 	(
@@ -64,10 +64,10 @@ private:
 	);
 
 // ---------- ÌßÚ²Ô°‚Ìó‘ÔŠÖ” ------------
-	void Stop(const GameCtrl & controller);			// ’â~ó‘Ô
-	void Move(const GameCtrl & controller);			// •à‚«^‘–‚èó‘Ô
-	void Attack(const GameCtrl & controller);		// UŒ‚
-	void Damage(const GameCtrl & controller);		// ÀŞÒ°¼Ş
+	void Stop(const GameCtrl & controller, weakListObj objList);		// ’â~ó‘Ô
+	void Move(const GameCtrl & controller, weakListObj objList);		// •à‚«^‘–‚èó‘Ô
+	void Attack(const GameCtrl & controller, weakListObj objList);		// UŒ‚
+	void Damage(const GameCtrl & controller, weakListObj objList);		// ÀŞÒ°¼Ş
 
 	int speed;
 	VECTOR2 startPos;			// ½À°Ä’n“_(Ø½Îß°İ—p)
@@ -101,6 +101,6 @@ private:
 	int numTemp;
 	int digit;
 
-	void (Player::*_updater)(const GameCtrl & controller);		// ó‘ÔŠÖ”Îß²İÀ
+	void (Player::*_updater)(const GameCtrl & controller, weakListObj objList);		// ó‘ÔŠÖ”Îß²İÀ
 };
 

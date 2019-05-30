@@ -33,7 +33,7 @@ int Weapon::WeaponInit(WEP_TYPE weapon)
 
 bool Weapon::initAnim(void)
 {
-	AddAnim("ŽaŒ‚", 0, 0, 40, 1, false);
+	AddAnim("ŽaŒ‚", 0, 0, 40, 3, false);
 	return true;
 }
 

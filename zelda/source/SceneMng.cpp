@@ -1,17 +1,12 @@
 #include <DxLib.h>
 #include <memory>
 #include "SceneMng.h"
+#include "EffectMng.h"
 #include "GameScene.h"
 #include "GameCtrl.h"
 #include "TitleScene.h"
 #include "EditScene.h"
 #include "MenuScene.h"
-
-constexpr int SCREEN_SIZE_X = 1600;
-constexpr int SCREEN_SIZE_Y = 960;
-
-constexpr int PL_SCREEN_SIZE_X = 800;
-constexpr int PL_SCREEN_SIZE_Y = 480;
 
 SceneMng::SceneMng()
 {
@@ -61,9 +56,12 @@ bool SceneMng::Init(void)
 	ChangeWindowMode(true);				// true:windowÅ@false:ÃŸΩ∏ÿ∞›
 	SetWindowText("ZELDA");
 	if (DxLib_Init() == -1) return false;
+
+	lpEffectMng.SetUp();
+
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	gameCtrl = std::make_unique<GameCtrl>();	//’∆∞∏Œﬂ≤›¿
+	gameCtrl = std::make_unique<GameCtrl>();
 
 	return true;
 }
