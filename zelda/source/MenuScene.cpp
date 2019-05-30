@@ -22,6 +22,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	
+	// 選択しているﾓｰﾄﾞ画像押し出し
 	for (int i = 0; i < MENU_NUM; i++)
 	{
 		add = -1.25 * ((count - (i * 1)*(i * 1) - 75)*(count - (i * 1)*(i * 1) - 75)) + 68;
@@ -101,7 +102,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void MenuScene::MenuDraw(void)
 {
 	ClsDrawScreen();
-	// ﾒﾆｭｰ画像表示(操作説明選択で説明画像表示)
+	// ﾒﾆｭｰ画像表示
 	if(!descriptionFlag)
 	{
 		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
@@ -119,6 +120,7 @@ void MenuScene::MenuDraw(void)
 		DrawGraph(0,GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/idou.png")[0], true);
 		DrawGraph(180, GAME_SCREEN_SIZE_Y - 60, IMAGE_ID("image/kettei.png")[0], true);
 	}
+	// 操作説明選択で説明画像表示
 	else
 	{
 		SetDrawBright(128, 128, 128);
@@ -153,5 +155,3 @@ int MenuScene::Init(void)
 	pushFlag = false;
 	return 0;
 }
-
-

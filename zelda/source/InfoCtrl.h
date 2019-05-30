@@ -4,6 +4,7 @@
 #include "VECTOR2.h"
 #include "MAP_ID.h"
 #include "ClassObj.h"
+#include "Selector.h"
 
 #define lpInfoCtrl InfoCtrl::GetInstance()
 constexpr auto ENEMY_MAX = 4;
@@ -23,6 +24,7 @@ public:
 	bool SetAddScroll(const VECTOR2 & offset, int num);					// ﾌﾟﾚｲﾔｰのみが呼ぶ
 	bool SetScore(int val, int num);									// ｽｺｱｾｯﾄ(ﾘｻﾞﾙﾄ用)
 	bool SetBonus(int val, int num);									// ﾎﾞｰﾅｽｾｯﾄ(ﾘｻﾞﾙﾄ用)
+	bool SetSelectChara(CHARA_TYPE val, int num);								// 選んでいるｷｬﾗｾｯﾄ
 	VECTOR2 GetPlayerPos(int num);
 	VECTOR2 GetEnemyPos(int num);
 	bool GetPlayerFlag(int num);
@@ -30,17 +32,19 @@ public:
 	VECTOR2 GetAddScroll(int num);							
 	int GetScore(int num);												// ｽｺｱ取得(ﾘｻﾞﾙﾄ用)
 	int GetBonus(int num);												// ﾎﾞｰﾅｽ取得(ﾘｻﾞﾙﾄ用)
+	CHARA_TYPE GetSelectChara(int num);										// 選んでいるｷｬﾗ取得
 private:
 	InfoCtrl();
 	~InfoCtrl();
 
 	void Init(void);
 	std::vector<VECTOR2> enPos;			// 座標管理
-	std::vector<bool> enFlag;					// 存在するかどうか
+	std::vector<bool> enFlag;			// 存在するかどうか
 	std::vector<VECTOR2>plPos;
 	std::vector<bool> plFlag;
 	std::vector<VECTOR2> scrNum;
-	std::array<int, 4> plScore;
-	std::array< int, 4 > plBonus;
+	std::array<int,4> plScore;			// 最大ﾌﾟﾚｲﾔｰ数のｽｺｱ
+	std::array<int,4> plBonus;			// 最大ﾌﾟﾚｲﾔｰ数のﾎﾞｰﾅｽ
+	std::array<CHARA_TYPE,4> selectChara;		// 最大ﾌﾟﾚｲﾔｰ数の選んだｷｬﾗ
 };
 

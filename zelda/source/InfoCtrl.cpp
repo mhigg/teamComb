@@ -66,6 +66,16 @@ bool InfoCtrl::SetBonus(int val, int num)
 	return true;
 }
 
+bool InfoCtrl::SetSelectChara(CHARA_TYPE val, int num)
+{
+	if (num > 4)
+	{
+		return false;
+	}
+	selectChara[num] = val;
+	return true;
+}
+
 VECTOR2 InfoCtrl::GetPlayerPos(int num)
 {
 	if (plFlag[num])
@@ -106,6 +116,11 @@ int InfoCtrl::GetBonus(int num)
 	return plBonus[num];
 }
 
+CHARA_TYPE InfoCtrl::GetSelectChara(int num)
+{
+	return selectChara[num];
+}
+
 InfoCtrl::InfoCtrl()
 {
 	Init();
@@ -138,5 +153,6 @@ void InfoCtrl::Init(void)
 		scrNum[j]	= { 0,0 };
 		plScore[j] = 0;
 		plBonus[j] = 0;
+		selectChara[j] = CHARA_MAX;
 	}
 }
