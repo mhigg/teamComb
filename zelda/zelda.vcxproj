@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Effect.cpp" />
     <ClCompile Include="source\InfoCtrl.cpp" />
     <ClCompile Include="source\BaseScene.cpp" />
     <ClCompile Include="source\EditCursor.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="source\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Effect.h" />
     <ClInclude Include="source\InfoCtrl.h" />
     <ClInclude Include="source\BaseScene.h" />
     <ClInclude Include="source\ClassObj.h" />

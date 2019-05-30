@@ -111,6 +111,9 @@
     <ClCompile Include="source\Selector.cpp">
       <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
+    <ClCompile Include="source\Effect.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\GameCtrl.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="source\Selector.h">
       <Filter>ヘッダー ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Effect.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
