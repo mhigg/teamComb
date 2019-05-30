@@ -283,8 +283,8 @@ void Player::GetItem(weakListObj objList)
 	{
 		case MAP_ID::POTION_1:	// ê‘
 			paramUP(NotFlag, num);
-			SetData(DATA_POWER, 1);
-			AddObjList()(objList,std::make_unique<Effect>(pos, 600, scrollOffset, drawOffset));
+			SetData(DATA_POWER, 1); 
+			AddObjList()(objList,std::make_unique<Effect>(pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_2:	// ê¬
 			paramUP(NotFlag, num);
@@ -497,7 +497,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
-		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
+		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
 		_updater = &Player::Attack;
 		return;
 	}
