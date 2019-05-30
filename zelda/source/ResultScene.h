@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseScene.h"
+#include "Selector.h"
 
 constexpr int PLAYER_MAX = 4;
 
@@ -30,7 +31,10 @@ private:
 
 	BONUS_POINT bonusPoint;		// ﾌﾟﾚｲﾔｰ毎のﾎﾞｰﾅｽ獲得数
 	RESULT_SCORE resultScore;	// ﾎﾞｰﾅｽ加算後の最終ｽｺｱ
+	int beforeScore;			// 演出用の最終決定前ｽｺｱ
 	int plNumber;				// ﾌﾟﾚｲﾔｰ数
+	std::array<CHARA_TYPE,4> plSelChara;		// ﾌﾟﾚｲﾔｰの選んだｷｬﾗ
 	int resultTemp;				// ｽｺｱ(描画用)
+	int waitTime;				// 加算待ち時間
 };
 

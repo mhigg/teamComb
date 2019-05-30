@@ -2,7 +2,7 @@
 #include "Selector.h"
 #include "ImageMng.h"
 #include "GameCtrl.h"
-
+#include "InfoCtrl.h"
 
 Selector::Selector()
 {
@@ -71,4 +71,5 @@ void Selector::SetMove(const GameCtrl & controller, weakListObj objList)
 			selectChara = static_cast<CHARA_TYPE>(static_cast<int>(selectChara) - 1);
 		}
 	}
+	lpInfoCtrl.SetSelectChara(selectChara, static_cast<int>(plNum));
 }
