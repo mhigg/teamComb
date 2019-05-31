@@ -29,16 +29,15 @@ MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
 
-	VECTOR2 plScrSize = lpSceneMng.GetPlayScreen();
+	VECTOR2 playScreen = lpSceneMng.GetPlayScreen(false);
 
 	plScrTbl = {
 		VECTOR2(0,0),
-		VECTOR2(plScrSize.x, 0),
-		VECTOR2(0, plScrSize.y),
-		plScrSize
+		VECTOR2(playScreen.x, 0),
+		VECTOR2(0, playScreen.y),
+		playScreen
 	};
 }
-
 
 MapCtrl::~MapCtrl()
 {
@@ -57,6 +56,19 @@ struct CheckSize
 	}
 };
 
+void MapCtrl::SetMode(bool singleFlag)
+{
+	this->singleFlag = singleFlag;
+
+	VECTOR2 playScreen = lpSceneMng.GetPlayScreen(singleFlag);
+
+	plScrTbl = {
+		VECTOR2(0,0),
+		VECTOR2(playScreen.x, 0),
+		VECTOR2(0, playScreen.y),
+		playScreen
+	};
+}
 
 bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 {
@@ -267,7 +279,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 						std::make_unique<Player>
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt])
 					);
-					mapImage[plCnt] = MakeScreen(800, 480, false);
+					VECTOR2 playScrSize = lpSceneMng.GetPlayScreen(singleFlag);	// 1画面のｻｲｽﾞ
+					mapImage[plCnt] = MakeScreen(playScrSize.x, playScrSize.y, false);
 					lpInfoCtrl.SetPlayerFlag(true, plCnt);
 					plCnt++;
 				}				
@@ -392,7 +405,7 @@ void MapCtrl::Draw(bool flag)
 
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
-		VECTOR2 plScrSize(flag ? stageSize : (lpSceneMng.GetPlayScreen() / chipSize));		// 分割1画面のｻｲｽﾞ
+		VECTOR2 plScrSize(flag ? stageSize : (lpSceneMng.GetPlayScreen(singleFlag) / chipSize));		// 分割1画面のｻｲｽﾞ
 
 		VECTOR2 XYoffset;	// forﾙｰﾌﾟのx,yの開始点ｵﾌｾｯﾄ
 		XYoffset = (flag ? VECTOR2(0,0) : VECTOR2(scrollTbl[pIdx] / chipSize));		// ｽｸﾛｰﾙしたﾏｽ分開始点をずらす

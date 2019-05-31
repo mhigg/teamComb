@@ -4,6 +4,7 @@
 #include "EditScene.h"
 #include "ImageMng.h"
 #include "SelectScene.h"
+#include "MapCtrl.h"
 
 MenuScene::MenuScene()
 {
@@ -23,7 +24,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	
 	// 選択しているﾓｰﾄﾞ画像押し出し
-	for (int i = 0; i < MENU_NUM; i++)
+	for (int i = 0; i < MODE_MAX; i++)
 	{
 		add = -1.25 * ((count - (i * 1)*(i * 1) - 75)*(count - (i * 1)*(i * 1) - 75)) + 68;
 		add >= -20 ? movePos[i].x += static_cast<int>(add) : movePos[i].x;
@@ -41,37 +42,38 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		// 選択
 		if (inputState[0][XINPUT_DOWN] & !inputStateOld[0][XINPUT_DOWN])
 		{
-			if (nowSelect < MENU_NUM - 1)
+			if (nowMode < MODE_MAX - 1)
 			{
-				selectPoint[nowSelect] = 0;
-				selectPoint[nowSelect + 1] = PUSH_SIZE;
-				nowSelect += 1;
-
+				selectPoint[nowMode] = 0;
+				selectPoint[nowMode + 1] = PUSH_SIZE;
+				nowMode = static_cast<MODE>(static_cast<int>(nowMode) + 1);
 			}
 		}
 		else if (inputState[0][XINPUT_UP] & !inputStateOld[0][XINPUT_UP])
 		{
-			if (nowSelect > 0)
+			if (nowMode > 0)
 			{
-				selectPoint[nowSelect] = 0;
-				selectPoint[nowSelect - 1] = PUSH_SIZE;
-				nowSelect -= 1;
+				selectPoint[nowMode] = 0;
+				selectPoint[nowMode - 1] = PUSH_SIZE;
+				nowMode = static_cast<MODE>(static_cast<int>(nowMode) - 1);
 			}
 		}
 
 		// ｼｰﾝ移行
-		if ((nowSelect == 0)||(nowSelect == 1))
+		if (nowMode < MODE_HOWTO)
 		{
 			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 			{
+//				lpMapCtrl.SetMode(nowMode);
 				return std::make_unique<SelectScene>();
 			}
 			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 			{
+//				lpMapCtrl.SetMode(nowMode);
 				return std::make_unique<SelectScene>();
 			}
 		}
-		else if(nowSelect == 2)
+		else if(nowMode == MODE_HOWTO)
 		{
 			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 			{
@@ -88,9 +90,9 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		{
 			if (inputState[0][XINPUT_PAUSE] & !inputStateOld[0][XINPUT_PAUSE])
 			{
-				selectPoint[nowSelect] = 0;
-				nowSelect = 0;
-				selectPoint[nowSelect] = 20;
+				selectPoint[nowMode] = 0;
+				nowMode = MODE_MALTI;
+				selectPoint[nowMode] = 20;
 				descriptionFlag = false;
 			}
 		}
@@ -106,7 +108,7 @@ void MenuScene::MenuDraw(void)
 	if(!descriptionFlag)
 	{
 		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
-		for (int i = 0; i < MENU_NUM; i++)
+		for (int i = 0; i < MODE_MAX; i++)
 		{
 			DrawGraph(movePos[i].x - size.x + selectPoint[i], movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", { 460,180 }, { 1,3 })[i], true);
 		}
@@ -148,9 +150,9 @@ int MenuScene::Init(void)
 		0,0,0
 	};
 	count = 0;
-	size = { BOX_SIZE_X,SIZE_Y };
+	size = { BOX_SIZE_X,BOX_SIZE_Y };
 	add = 0;
-	nowSelect = 0;
+	nowMode = MODE_MALTI;
 	descriptionFlag = false;
 	pushFlag = false;
 	return 0;

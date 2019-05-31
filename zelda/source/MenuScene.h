@@ -2,15 +2,20 @@
 #include <array>
 #include "BaseScene.h"
 
-constexpr auto MENU_NUM		= 3;
-constexpr auto BOX_SIZE_X	= 460;
-constexpr auto SIZE_Y		= 90;			// 変えなくていいかも
-constexpr auto PUSH_SIZE	= 40;			// 選択中のﾒﾆｭｰﾊﾞｰのｵﾌｾｯﾄ
+constexpr int BOX_SIZE_X	= 460;
+constexpr int BOX_SIZE_Y	= 90;			// 変えなくていいかも
+constexpr int PUSH_SIZE		= 40;			// 選択中のﾒﾆｭｰﾊﾞｰのｵﾌｾｯﾄ
 
+enum MODE {
+	MODE_MALTI,
+	MODE_SINGLE,
+	MODE_HOWTO,
+	MODE_MAX
+};
 
-using BOX_ARRAY = std::array< VECTOR2, MENU_NUM >;
-using MOVE_FLAG = std::array< bool, MENU_NUM >;
-using SELECT_POINT = std::array< int, MENU_NUM >;
+using BOX_ARRAY = std::array< VECTOR2, MODE_MAX >;
+using MOVE_FLAG = std::array< bool, MODE_MAX >;
+using SELECT_POINT = std::array< int, MODE_MAX >;
 
 class MenuScene :
 	public BaseScene
@@ -25,11 +30,10 @@ public:
 private:
 	void MenuDraw(void);		// 描画
 	int Init(void);				// 初期化
-
 	BOX_ARRAY movePos;			// Boxの座標を持つ配列
 	MOVE_FLAG moveFlag;			// Boxの移動制御用配列
 	SELECT_POINT selectPoint;	// 選んでいる奴の加算値
-	int nowSelect;				// どのﾓｰﾄﾞを選択しているか
+	MODE nowMode;				// どのﾓｰﾄﾞを選択しているか
 	bool descriptionFlag;	    // 説明
 	bool pushFlag;
 

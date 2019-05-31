@@ -35,9 +35,9 @@ void SceneMng::SetDrawOffset(VECTOR2 drawOffset)
 	this->drawOffset = drawOffset;
 }
 
-VECTOR2 SceneMng::GetPlayScreen(void)
+VECTOR2 SceneMng::GetPlayScreen(bool singleFlag)
 {
-	return VECTOR2(PL_SCREEN_SIZE_X, PL_SCREEN_SIZE_Y);
+	return (singleFlag ? VECTOR2(SCREEN_SIZE_X, SCREEN_SIZE_Y) : VECTOR2(PL_SCREEN_SIZE_X, PL_SCREEN_SIZE_Y));
 }
 
 int SceneMng::GetFram(void)

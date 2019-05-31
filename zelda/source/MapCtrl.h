@@ -17,6 +17,7 @@ public:
 		static MapCtrl s_Instance;
 		return s_Instance;
 	}
+	void SetMode(bool singleFlag);		// ‘I‘ğ‚µ‚½Ó°ÄŞ‚Ìİ’è
 	bool SetMapData(const VECTOR2 & pos, MAP_ID id);
 	bool SetItemData(const VECTOR2 & pos, MAP_ID id);
 
@@ -58,6 +59,7 @@ private:
 	idType GetData(mapType maps, const VECTOR2 & pos, idType defID);
 
 	int lineColor;		// ×²İ¶×°
+	bool singleFlag;	// ¼İ¸ŞÙÓ°ÄŞ‚È‚çtrue ÏÙÁÓ°ÄŞ‚È‚çfalse
 
 	std::vector<MAP_ID*>	mapData;			// Ï¯Ìß—p‚Ì“ñŸŒ³ÃŞ°À
 	std::vector<MAP_ID>		mapData_Base;		// Ï¯Ìß—p‚ÌÃŞ°À
