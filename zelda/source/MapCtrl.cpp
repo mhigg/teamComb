@@ -98,6 +98,7 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 
 	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
 	CreateMap(itemData_Base, itemData, MAP_ID::NONE);
+	CreateMap(itemFlag_Base, itemFlag, false);
 	
 	mapImage.resize(1);
 	scrollTbl.resize(1);
@@ -113,6 +114,28 @@ bool MapCtrl::SetMapData(const VECTOR2 & pos, MAP_ID id)
 bool MapCtrl::SetItemData(const VECTOR2 & pos, MAP_ID id)
 {
 	return SetData(itemData, pos, id);
+}
+
+bool MapCtrl::SetItemFlag(const VECTOR2 & pos, bool flag)
+{
+	VECTOR2 selPos(pos / chipSize);
+	itemFlag[selPos.y][selPos.x] = flag;
+	return true;
+}
+
+void MapCtrl::SetItemFlagAll(void)
+{
+	for (int y = 0; y < stageSize.y; y++)
+		{
+			for (int x = 0; x < stageSize.x; x++)
+			{
+				if (GetItemData(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)) != MAP_ID::NONE
+					&& !GetItemFlag(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)))
+				{
+					SetItemFlag(VECTOR2(x * CHIP_SIZE,y * CHIP_SIZE), true);
+				}
+			}
+		}
 }
 
 MAP_ID MapCtrl::GetMapData(const VECTOR2& pos)
@@ -142,6 +165,12 @@ VECTOR2 MapCtrl::GetItemPos(MAP_ID id,int num)
 			}
 		}
 	}
+}
+
+bool MapCtrl::GetItemFlag(const VECTOR2 & pos)
+{
+	VECTOR2 selPos(pos / chipSize);
+	return itemFlag[selPos.y][selPos.x];
 }
 
 VECTOR2 MapCtrl::GetScreenPos(int plNum)
@@ -313,6 +342,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::DIA:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetItemFlag(VECTOR2(x * chipSize.x, y * chipSize.y), true);
 				break;
 			case MAP_ID::NONE:
 			case MAP_ID::WALL1:
@@ -516,22 +546,6 @@ void MapCtrl::Draw(bool flag)
 				case MAP_ID::STONE_2:
 				case MAP_ID::STONE_3:
 				case MAP_ID::STONE_4:
-				case MAP_ID::POTION_1:
-				case MAP_ID::POTION_2:
-				case MAP_ID::POTION_3:
-				case MAP_ID::POTION_4:
-				case MAP_ID::COIN_1:
-				case MAP_ID::COIN_2:
-				case MAP_ID::COIN_3:
-				case MAP_ID::COIN_4:
-				case MAP_ID::KEY_1:
-				case MAP_ID::KEY_2:
-				case MAP_ID::MEAT:
-				case MAP_ID::SWORD:
-				case MAP_ID::SHIELD:
-				case MAP_ID::BOOK:
-				case MAP_ID::GOLD:
-				case MAP_ID::DIA:
 					DrawGraph(
 						tmpPos.x + offset.x - scrollTbl[pIdx].x,
 						tmpPos.y + offset.y - scrollTbl[pIdx].y,
@@ -577,7 +591,6 @@ void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pI
 		for (int x = XYoffset.x; x < XYoffset.x + scrSize.x; x++)
 		{
 			MAP_ID id = itemData[y][x];
-
 			tmpPos = { (x * chipSize.x),(y * chipSize.y) };
 			switch (id)
 			{
@@ -597,12 +610,15 @@ void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pI
 			case MAP_ID::BOOK:
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
-				DrawGraph(
-					tmpPos.x + offset.x - scrollTbl[pIdx].x,
-					tmpPos.y + offset.y - scrollTbl[pIdx].y,
-					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-					true
-				);
+				if (itemFlag[y][x])
+				{
+					DrawGraph(
+						tmpPos.x + offset.x - scrollTbl[pIdx].x,
+						tmpPos.y + offset.y - scrollTbl[pIdx].y,
+						IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+						true
+					);
+				}
 				break;
 			default:
 				break;
