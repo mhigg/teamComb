@@ -287,21 +287,32 @@ void Player::GetItem(weakListObj objList)
 	switch (ItemID())
 	{
 		case MAP_ID::POTION_1:	// ê‘
+			if (state.Power > 1)
+			{
+				break;
+			}
 			paramUP(NotFlag, num);
 			SetData(DATA_POWER, 1); 
 			AddObjList()(objList,std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_2:	// ê¬
+			if (state.Guard > 1)
+			{
+				break;
+			}
 			paramUP(NotFlag, num);
 			SetData(DATA_GUARD, 1);
+			AddObjList()(objList, std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_3:	// óŒ
 			paramUP(NotFlag, num);
 			SetData(DATA_LIFE, 2);
+			AddObjList()(objList, std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 180, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_4:	// ì¯
 			paramUP(NotFlag, num);
 			SetData(DATA_INV, 180);
+			AddObjList()(objList, std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 180, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::COIN_1:	// ê‘
 			paramUP(NotFlag, num);

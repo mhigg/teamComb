@@ -23,17 +23,12 @@ GameScene::~GameScene()
 
 uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 {
-#ifdef _DEBUG	// √ﬁ ﬁØ∏ﬁéûÇÃÇ›éÊìæ
 	auto ctrl = controller.GetCtrl(KEY_TYPE_NOW);
 	auto ctrlOld = controller.GetCtrl(KEY_TYPE_OLD);
-	auto pad = controller.GetInputState(KEY_TYPE_NOW);
-	auto padOld = controller.GetInputState(KEY_TYPE_OLD);
-#else
-#endif
+
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	
-#ifdef _DEBUG	// √ﬁ ﬁØ∏ﬁéûÇÃÇ›é¿çs
 	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
 	{
 		return std::make_unique<EditScene>();
@@ -42,17 +37,16 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
+
+#ifdef DEBUG
+
 	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
 	{
 		return std::make_unique<ResultScene>();
 	}
-#else
-	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
-	{
-		lpScoreBoard.DataInit();
-		return std::make_unique<GameScene>();
-	}
-#endif
+
+#endif // DEBUG
+
 	for (auto& obj : (*objList))
 	{
 		obj->UpDate(controller, objList);
@@ -132,6 +126,8 @@ void GameScene::Draw(void)
 		}
 	}
 
+#ifdef DEBUG
+
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 
@@ -147,6 +143,13 @@ void GameScene::Draw(void)
 		tmp2.y = tmp1.y;
 		DrawLine(tmp1, tmp2, 0x00ffffff, true);
 	}
+
+	DrawString(0, 800, "GameScene", 0x00ff0000);
+	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
+
+#else
+#endif // DEBUG
+
 
 //	DrawBox(640, 300, 960, 640, 0x00ffffff, true);
 
@@ -183,8 +186,6 @@ void GameScene::Draw(void)
 	}
 	DrawGraph(130, 21, IMAGE_ID("image/jikan.png")[0], true);
 
-	DrawString(0, 800, "GameScene", 0x00ff0000);
-	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
 
 	ScreenFlip();
 }

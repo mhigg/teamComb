@@ -2,7 +2,6 @@
 #include "EditCursor.h"
 #include "SceneMng.h"
 #include "StageMng.h"
-#include "EditScene.h"
 #include "GameCtrl.h"
 #include "MapCtrl.h"
 //#include "InfoCtrl.h"
