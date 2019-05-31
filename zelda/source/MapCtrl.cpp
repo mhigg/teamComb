@@ -323,7 +323,25 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::ENEMY:
 				if (enCnt < ENEMY_MAX)
 				{
-					SetUpEnemy(objList, enCnt, x, y);
+					SetUpEnemy(objList, enCnt, x, y,0);
+					enCnt++;
+				}
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
+				break;
+			case MAP_ID::ENEMY_2:
+				if (enCnt < ENEMY_MAX)
+				{
+					SetUpEnemy(objList, enCnt, x, y,1);
+					enCnt++;
+				}
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
+				break;
+			case MAP_ID::ENEMY_3:
+				if (enCnt < ENEMY_MAX)
+				{
+					SetUpEnemy(objList, enCnt, x, y,2);
 					enCnt++;
 				}
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
@@ -393,8 +411,6 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::DOOR2:
 			case MAP_ID::DOOR3:
 			case MAP_ID::DOOR4:
-			case MAP_ID::BOX_1:
-			case MAP_ID::BOX_2:
 			case MAP_ID::MOTH_1:
 			case MAP_ID::MOTH_2:
 			case MAP_ID::MOTH_3:
@@ -421,14 +437,14 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 	return true;
 }
 
-bool MapCtrl::SetUpEnemy(sharedListObj objList, int enemyNum, int x, int y)
+bool MapCtrl::SetUpEnemy(sharedListObj objList, int enemyNum, int x, int y,int name)
 {
-	int num = GetRand(static_cast<int>(ENEMY::ENEMY_MAX) - 2);
 	// ´ÈÐ°‚Ì²Ý½ÀÝ½
 	/* Ã½Ä*/	auto obj = AddObjList()(objList,
 		std::make_unique<Enemy>
-		(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), MapCtrl::drawOffset, enemyNum));
+		(name, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), MapCtrl::drawOffset, enemyNum));
 	lpInfoCtrl.SetEnemyFlag(false, enemyNum);
+	lpInfoCtrl.SetEnemyName(enemyNum, name);
 	return true;
 }
 
@@ -534,8 +550,8 @@ void MapCtrl::Draw(bool flag)
 				case MAP_ID::DOOR2:
 				case MAP_ID::DOOR3:
 				case MAP_ID::DOOR4:
-				case MAP_ID::BOX_1:
-				case MAP_ID::BOX_2:
+				case MAP_ID::ENEMY_2:
+				case MAP_ID::ENEMY_3:
 				case MAP_ID::MOTH_1:
 				case MAP_ID::MOTH_2:
 				case MAP_ID::MOTH_3:
