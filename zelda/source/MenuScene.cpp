@@ -5,6 +5,7 @@
 #include "ImageMng.h"
 #include "SelectScene.h"
 #include "MapCtrl.h"
+#include "SoundMng.h"
 
 MenuScene::MenuScene()
 {
@@ -65,11 +66,13 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 			{
 				lpMapCtrl.SetMode(nowMode);
+				PlaySoundMem(lpSoundMng.GetID("sound/Œˆ’è‰¹.wav"), DX_PLAYTYPE_NORMAL);
 				return std::make_unique<SelectScene>();
 			}
 			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 			{
 				lpMapCtrl.SetMode(nowMode);
+				PlaySoundMem(lpSoundMng.GetID("sound/Œˆ’è‰¹.wav"), DX_PLAYTYPE_NORMAL);
 				return std::make_unique<SelectScene>();
 			}
 		}
@@ -77,10 +80,12 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		{
 			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 			{
+				PlaySoundMem(lpSoundMng.GetID("sound/Œˆ’è‰¹.wav"), DX_PLAYTYPE_NORMAL);
 				descriptionFlag = true;
 			}
 			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 			{
+				PlaySoundMem(lpSoundMng.GetID("sound/Œˆ’è‰¹.wav"), DX_PLAYTYPE_NORMAL);
 				descriptionFlag = true;
 			}
 		}
@@ -94,6 +99,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 				nowMode = MODE_MALTI;
 				selectPoint[nowMode] = 20;
 				descriptionFlag = false;
+				PlaySoundMem(lpSoundMng.GetID("sound/ƒLƒƒƒ“ƒZƒ‹.wav"), DX_PLAYTYPE_NORMAL);
 			}
 		}
 	}

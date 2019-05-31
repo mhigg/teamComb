@@ -44,6 +44,7 @@ void TitleScene::TitleDraw(void)
 {
 	ClsDrawScreen();
 	DrawGraph(0, 0, IMAGE_ID("image/title.png")[0], true);
+	DrawGraph(1200, 700, IMAGE_ID("image/ÉRÉAÇÃÇ›.png")[0], true);
 	if (cnt / 20 % 3)
 	{
 
