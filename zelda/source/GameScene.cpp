@@ -10,6 +10,7 @@
 #include "InfoCtrl.h"
 #include "Player.h"
 #include "VECTOR2.h"
+#include "SoundMng.h"
 
 GameScene::GameScene()
 {
@@ -89,6 +90,7 @@ int GameScene::Init(void)
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
 	tile = LoadGraph("image/tile.png", true);
+	PlaySoundMem(lpSoundMng.GetID("sound/naked.wav"), DX_PLAYTYPE_LOOP);
 	player = std::make_unique<Player>();
 	return 0;
 }
