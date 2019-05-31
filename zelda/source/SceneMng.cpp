@@ -7,6 +7,7 @@
 #include "TitleScene.h"
 #include "EditScene.h"
 #include "MenuScene.h"
+#include "ResultScene.h"
 
 SceneMng::SceneMng()
 {
