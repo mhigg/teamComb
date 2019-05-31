@@ -56,20 +56,6 @@ struct CheckSize
 	}
 };
 
-void MapCtrl::SetMode(bool singleFlag)
-{
-	this->singleFlag = singleFlag;
-
-	VECTOR2 playScreen = lpSceneMng.GetPlayScreen(singleFlag);
-
-	plScrTbl = {
-		VECTOR2(0,0),
-		VECTOR2(playScreen.x, 0),
-		VECTOR2(0, playScreen.y),
-		playScreen
-	};
-}
-
 bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 {
 	lpImageMng.GetID("image/mapImage.png", VECTOR2(40, 40), VECTOR2(8, 10));
@@ -106,6 +92,20 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 	return true;
 }
 
+void MapCtrl::SetMode(bool singleFlag)
+{
+	this->singleFlag = singleFlag;
+
+	VECTOR2 playScreen = lpSceneMng.GetPlayScreen(singleFlag);
+
+	plScrTbl = {
+		VECTOR2(0,0),
+		VECTOR2(playScreen.x, 0),
+		VECTOR2(0, playScreen.y),
+		playScreen
+	};
+}
+
 bool MapCtrl::SetMapData(const VECTOR2 & pos, MAP_ID id)
 {
 	return SetData(mapData, pos, id);
@@ -126,16 +126,21 @@ bool MapCtrl::SetItemFlag(const VECTOR2 & pos, bool flag)
 void MapCtrl::SetItemFlagAll(void)
 {
 	for (int y = 0; y < stageSize.y; y++)
+	{
+		for (int x = 0; x < stageSize.x; x++)
 		{
-			for (int x = 0; x < stageSize.x; x++)
+			if (GetItemData(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)) != MAP_ID::NONE
+				&& !GetItemFlag(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)))
 			{
-				if (GetItemData(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)) != MAP_ID::NONE
-					&& !GetItemFlag(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)))
-				{
-					SetItemFlag(VECTOR2(x * CHIP_SIZE,y * CHIP_SIZE), true);
-				}
+				SetItemFlag(VECTOR2(x * CHIP_SIZE,y * CHIP_SIZE), true);
 			}
 		}
+	}
+}
+
+bool MapCtrl::GetMode(void)
+{
+	return singleFlag;
 }
 
 MAP_ID MapCtrl::GetMapData(const VECTOR2& pos)
@@ -432,6 +437,7 @@ void MapCtrl::Draw(bool flag)
 	// ﾏｯﾌﾟ描画
 	VECTOR2 offset(lpSceneMng.GetDrawOffset());
 	VECTOR2 tmpPos;
+	VECTOR2 scrollAreaSize = lpStageMng.GetScrollValue(VALUE_AREA, singleFlag);
 
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
@@ -441,21 +447,21 @@ void MapCtrl::Draw(bool flag)
 		XYoffset = (flag ? VECTOR2(0,0) : VECTOR2(scrollTbl[pIdx] / chipSize));		// ｽｸﾛｰﾙしたﾏｽ分開始点をずらす
 
 // --------------------- ｹﾞｰﾑﾓｰﾄﾞ時に少しでもｽｸﾛｰﾙしたら分割ｽｸﾘｰﾝの終点をずらす ---------------------------
-		if (!flag && scrollTbl[pIdx].x > 0 && scrollTbl[pIdx].x < SCROLL_AREA_SIZE_X)
+		if (!flag && scrollTbl[pIdx].x > 0 && scrollTbl[pIdx].x < scrollAreaSize.x)
 		{
 			plScrSize.x = plScrSize.x + 2;
 		}
-		if (!flag && scrollTbl[pIdx].y > 0 && scrollTbl[pIdx].y < SCROLL_AREA_SIZE_Y)
+		if (!flag && scrollTbl[pIdx].y > 0 && scrollTbl[pIdx].y < scrollAreaSize.y)
 		{
 			plScrSize.y = plScrSize.y + 2;
 		}
 
 // --------------------- ｹﾞｰﾑﾓｰﾄﾞ時に1ﾏｽ分ｽｸﾛｰﾙするごとに分割ｽｸﾘｰﾝの始点をずらす ---------------------------
-		if (!flag && XYoffset.x > 0 && XYoffset.x < (SCROLL_AREA_SIZE_X / chipSize.x))
+		if (!flag && XYoffset.x > 0 && XYoffset.x < (scrollAreaSize.x / chipSize.x))
 		{
 			XYoffset.x = XYoffset.x - 1;
 		}
-		if (!flag && XYoffset.y > 0 && XYoffset.y < (SCROLL_AREA_SIZE_Y / chipSize.y))
+		if (!flag && XYoffset.y > 0 && XYoffset.y < (scrollAreaSize.y / chipSize.y))
 		{
 			XYoffset.y = XYoffset.y - 1;
 		}

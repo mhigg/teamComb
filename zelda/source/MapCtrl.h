@@ -41,6 +41,7 @@ public:
 
 	// modeFlag:true¨EditMode false¨GameMode
 	bool SetUpGameObj(sharedListObj objList, bool modeFlag);
+
 	// Enemy‚Ì¶¬
 	bool SetUpEnemy(sharedListObj objList, int enemyNum,int x,int y);
 
@@ -65,20 +66,21 @@ private:
 	int lineColor;		// ×²İ¶×°
 	bool singleFlag;	// ¼İ¸ŞÙÓ°ÄŞ‚È‚çtrue ÏÙÁÓ°ÄŞ‚È‚çfalse
 
-	std::vector<MAP_ID*>	mapData;				// Ï¯Ìß—p‚Ì“ñŸŒ³ÃŞ°À
-	std::vector<MAP_ID>		mapData_Base;		// Ï¯Ìß—p‚ÌÃŞ°À
-	std::vector<MAP_ID*>	itemData;				// Ï¯Ìß‚ÌÊßÈÙ‚Ì“ñŸŒ³ÃŞ°À
-	std::vector<MAP_ID>		itemData_Base;		// Ï¯Ìß‚ÌÊßÈÙÃŞ°À
-	std::vector<int*>			itemFlag;				// Ï¯Ìßã‚Ì±²ÃÑ‚ÌÌ×¸Ş
-	std::vector<int>			itemFlag_Base;		// Ï¯Ìßã‚Ì±²ÃÑ‚ÌÌ×¸Ş
+// ---------- Ï¯Ìßã‚ÌÃŞ°À”z—ñ ----------
+	std::vector<MAP_ID*> mapData;			// Ï¯Ìß—p‚Ì“ñŸŒ³ÃŞ°À
+	std::vector<MAP_ID>	 mapData_Base;		// Ï¯Ìß—p‚ÌÃŞ°À
+	std::vector<MAP_ID*> itemData;			// Ï¯Ìß‚ÌÊßÈÙ‚Ì“ñŸŒ³ÃŞ°À
+	std::vector<MAP_ID>	 itemData_Base;		// Ï¯Ìß‚ÌÊßÈÙÃŞ°À
+	std::vector<int*>	 itemFlag;			// Ï¯Ìßã‚Ì±²ÃÑ‚ÌÌ×¸Ş
+	std::vector<int>	 itemFlag_Base;		// Ï¯Ìßã‚Ì±²ÃÑ‚ÌÌ×¸Ş
 
-	std::vector<VECTOR2> scrollTbl;				// ÌßÚ²Ô°‚²‚Æ‚Ì½¸Û°ÙµÌ¾¯Ä‚ğŠi”[
-	std::array<VECTOR2, 4> plScrTbl;				// •ªŠ„‚ÌŠe‰æ–Ê‚Ì¶ã
+	std::vector<VECTOR2> scrollTbl;			// ÌßÚ²Ô°‚²‚Æ‚Ì½¸Û°ÙµÌ¾¯Ä‚ğŠi”[
+	std::array<VECTOR2, 4> plScrTbl;		// •ªŠ„‚ÌŠe‰æ–Ê‚Ì¶ã
 
-	std::vector<int> mapImage;						// ÌßÚ²Ô°‚²‚Æ‚Ì— •`‰æ½¸Ø°İÊİÄŞÙ
-	int drawHandle;											// 4l•ª‚ÌÏ¯Ìß•`‰æÊİÄŞÙ
+	std::vector<int> mapImage;				// ÌßÚ²Ô°‚²‚Æ‚Ì— •`‰æ½¸Ø°İÊİÄŞÙ
+	int drawHandle;							// 4l•ª‚ÌÏ¯Ìß•`‰æÊİÄŞÙ
 
 	VECTOR2 stageSize;		// ½Ã°¼Ş‚ÌÏ½–Ú”
-	VECTOR2 chipSize;			// Ï½‚Ì‘å‚«‚³
+	VECTOR2 chipSize;		// Ï½‚Ì‘å‚«‚³
 	VECTOR2 drawOffset;		// •`‰æµÌ¾¯Ä
 };
