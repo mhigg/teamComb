@@ -69,6 +69,11 @@ void TitleScene::TitleDraw(void)
 		DrawGraph(1200, 700, IMAGE_ID("image/ƒRƒA‚Ì‚Ý.png")[0], true);
 	}
 	
+	if (cnt / 30 % 3)
+	{
+		DrawGraph(400, 750, IMAGE_ID("image/psk.png")[0], true);
+	}
+
 	// Ìª°ÄÞ²Ý—p
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, cnt * 3);
@@ -77,7 +82,6 @@ void TitleScene::TitleDraw(void)
 	FadeOut();
 
 	ScreenFlip();
-
 }
 
 bool TitleScene::FadeOut(void)

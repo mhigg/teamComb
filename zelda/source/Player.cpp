@@ -290,27 +290,27 @@ void Player::GetItem(weakListObj objList)
 	switch (ItemID())
 	{
 		case MAP_ID::POTION_1:	// ê‘
-			if (state.Power > 1)
+			paramUP(NotFlag, num);
+			SetData(DATA_POWER, 1); 
+			if (state.Power > 2)
 			{
 				break;
 			}
-			paramUP(NotFlag, num);
-			SetData(DATA_POWER, 1); 
 			AddObjList()(objList,std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_2:	// ê¬
+			paramUP(NotFlag, num);
+			SetData(DATA_GUARD, 1);
 			if (state.Guard > 1)
 			{
 				break;
 			}
-			paramUP(NotFlag, num);
-			SetData(DATA_GUARD, 1);
-			AddObjList()(objList, std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
+			AddObjList()(objList, std::make_unique<Effect>("image/aura_BLUE.efk", pos + VECTOR2(0, 40), 600, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_3:	// óŒ
 			paramUP(NotFlag, num);
 			SetData(DATA_LIFE, 2);
-			AddObjList()(objList, std::make_unique<Effect>("image/aura_RED6.efk", pos + VECTOR2(0, 40), 180, scrollOffset, drawOffset + VECTOR2(0, -20)));
+			AddObjList()(objList, std::make_unique<Effect>("image/aura_GREEN.efk", pos + VECTOR2(0, 40), 180, scrollOffset, drawOffset + VECTOR2(0, -20)));
 			break;
 		case MAP_ID::POTION_4:	// ì¯
 			paramUP(NotFlag, num);
@@ -457,24 +457,18 @@ void Player::StateDraw(void)
 			additionTime = 8;
 		}
 	}
-	/*DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
-	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");*/
-	DrawGraph(820, 5, IMAGE_ID("image/score.png")[0], true);
-	DrawFormatString(650, 150, GetColor(255, 255, 0), "LIFE  : %d", life);
-	DrawFormatString(650, 200, GetColor(255, 255, 0), "POWER  : %d", state.Power);
-	DrawFormatString(650, 220, GetColor(255, 255, 0), "GUARD  : %d", state.Guard);
-	DrawFormatString(650, 240, GetColor(255, 255, 0), "INV  : %d", state.Inv);
-	DrawFormatString(650, 260, GetColor(255, 255, 0), "BONUS  : %d", bonus);
+
+	DrawGraph(1450, 45, IMAGE_ID("image/score.png")[0], true);
 
 	digit = 0;
 	numTemp = (oldScore * 10);
 	if (numTemp == 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 + 145) * (plNum % 2 + 1) - 22, 40, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+		DrawGraph((GAME_SCREEN_SIZE_X - 10) * (plNum % 2 + 1) - 22, 80, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
 	}
 	while (numTemp > 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 + 145) * (plNum % 2 + 1) - (digit + 1) * 22, 40, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
+		DrawGraph((GAME_SCREEN_SIZE_X - 10) * (plNum % 2 + 1) - (digit + 1) * 22, 80, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
 		numTemp /= 10;
 		digit++;
 	}
@@ -525,7 +519,7 @@ void Player::Stop(const GameCtrl & controller, weakListObj objList)
 	{
 		SetAnim("çUåÇ");
 //		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
-		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
+//		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 	}
 }
@@ -554,7 +548,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 	{
 		SetAnim("çUåÇ");
 //		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
-		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
+//		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 		return;
 	}
