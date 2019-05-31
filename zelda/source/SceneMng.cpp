@@ -52,7 +52,7 @@ bool SceneMng::Init(void)
 	// ¼½ÃÑˆ—
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, 16);		// 65536FÓ°ÄŞ‚Éİ’è
 	ChangeWindowMode(true);				// true:window@false:ÌÙ½¸Ø°İ
-	SetWindowText("ZELDA");
+	SetWindowText("TREASURE HUNTER");
 	if (DxLib_Init() == -1) return false;
 
 	lpEffectMng.SetUp();

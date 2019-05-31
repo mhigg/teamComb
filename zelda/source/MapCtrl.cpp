@@ -28,15 +28,6 @@ struct DataHeader
 MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
-
-	VECTOR2 playScreen = lpSceneMng.GetPlayScreen(false);
-
-	plScrTbl = {
-		VECTOR2(0,0),
-		VECTOR2(playScreen.x, 0),
-		VECTOR2(0, playScreen.y),
-		playScreen
-	};
 }
 
 MapCtrl::~MapCtrl()
