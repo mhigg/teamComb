@@ -269,12 +269,16 @@ void Player::GetItem(weakListObj objList)
 {
 	auto ItemID = [=] {
 		auto id = lpMapCtrl.GetItemData(pos);
-		return (id == MAP_ID::MAX ? static_cast<MAP_ID>(ITEM_ID_START): id);
+		if (lpMapCtrl.GetItemFlag(pos))
+		{
+			return (id == MAP_ID::MAX ? static_cast<MAP_ID>(ITEM_ID_START) : id);
+		}
+		return MAP_ID::NONE;
 	};
 
 	auto paramUP = [=](auto& paramFlag, auto limNum) {
 		paramFlag += (paramFlag < limNum);
-		lpMapCtrl.SetItemData(pos, MAP_ID::NONE);
+		lpMapCtrl.SetItemFlag(pos, false);
 	};
 
 	unsigned int num = 1;

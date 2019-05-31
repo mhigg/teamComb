@@ -53,6 +53,15 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<GameScene>();
 	}
 #endif
+	for (auto& obj : (*objList))
+	{
+		obj->UpDate(controller, objList);
+	}
+	objList->remove_if([](sharedObj &obj) { return obj->CheckDeath(); });
+
+	// c‚èŠÔŒ¸­
+	gameFrame--;
+
 	if (gameFrame % 1800 == 0)
 	{
 		int tmp = 0;
@@ -65,15 +74,8 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 				tmp++;
 			}
 		}
+		lpMapCtrl.SetItemFlagAll();
 	}
-	for (auto& obj : (*objList))
-	{
-		obj->UpDate(controller, objList);
-	}
-	objList->remove_if([](sharedObj &obj) { return obj->CheckDeath(); });
-
-	// c‚èŠÔŒ¸­
-	gameFrame--;
 
 	Draw();
 
