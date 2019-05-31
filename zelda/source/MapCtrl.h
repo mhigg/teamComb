@@ -23,6 +23,7 @@ public:
 	bool SetItemFlag(const VECTOR2 & pos, bool flag);
 	void SetItemFlagAll(void);
 
+	bool GetMode(void);
 	MAP_ID GetMapData(const VECTOR2 & pos);
 	MAP_ID GetItemData(const VECTOR2 & pos);
 	VECTOR2 GetItemPos(MAP_ID id,int num);

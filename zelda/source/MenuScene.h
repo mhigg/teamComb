@@ -7,9 +7,9 @@ constexpr int BOX_SIZE_Y	= 90;			// •Ï‚¦‚È‚­‚Ä‚¢‚¢‚©‚à
 constexpr int PUSH_SIZE		= 40;			// ‘I‘ð’†‚ÌÒÆ­°ÊÞ°‚ÌµÌ¾¯Ä
 
 enum MODE {
-	MODE_MALTI,
-	MODE_SINGLE,
-	MODE_HOWTO,
+	MODE_MALTI,		// ÏÙÁÓ°ÄÞ
+	MODE_SINGLE,	// ¼Ý¸ÞÙÓ°ÄÞ
+	MODE_HOWTO,		// ‘€ì•û–@‰æ–Ê
 	MODE_MAX
 };
 

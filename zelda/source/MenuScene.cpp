@@ -64,12 +64,12 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		{
 			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 			{
-//				lpMapCtrl.SetMode(nowMode);
+				lpMapCtrl.SetMode(nowMode);
 				return std::make_unique<SelectScene>();
 			}
 			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 			{
-//				lpMapCtrl.SetMode(nowMode);
+				lpMapCtrl.SetMode(nowMode);
 				return std::make_unique<SelectScene>();
 			}
 		}
