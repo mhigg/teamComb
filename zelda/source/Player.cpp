@@ -143,6 +143,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	startPos = pos;
 	score = 0;
 	oldScore = score;
+	acquisitionScore = 0;
 	InitScroll(static_cast<int>(plNum));
 	initAnim();
 	PlInit();
@@ -177,6 +178,8 @@ void Player::PlInit(void)
 	bonus = 0;
 	additionTime = 8;
 	randomBonus = GetRand(4);
+	acquisitionflag = false;
+	displayTime = 0;
 
 	damageFlag = false;
 	damageCnt = 0;
@@ -317,18 +320,22 @@ void Player::GetItem(weakListObj objList)
 		case MAP_ID::COIN_1:	// Ô
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 2);
+			acquisitionScore = 2;
 			break;
 		case MAP_ID::COIN_2:	// Â
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 3);
+			acquisitionScore = 3;
 			break;
 		case MAP_ID::COIN_3:	// —Î
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 4);
+			acquisitionScore = 4;
 			break;
 		case MAP_ID::COIN_4:	// ‰©
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 5);
+			acquisitionScore = 5;
 			break;
 		case MAP_ID::KEY_1:
 			paramUP(NotFlag, num);
@@ -343,6 +350,7 @@ void Player::GetItem(weakListObj objList)
 		case MAP_ID::SWORD:
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 2);
+			acquisitionScore = 2;
 			if (randomBonus == 0)
 			{
 				SetData(DATA_BONUS, 1);
@@ -351,6 +359,7 @@ void Player::GetItem(weakListObj objList)
 		case MAP_ID::SHIELD:
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 2);
+			acquisitionScore = 2;
 			if (randomBonus == 1)
 			{
 				SetData(DATA_BONUS, 1);
@@ -359,6 +368,7 @@ void Player::GetItem(weakListObj objList)
 		case MAP_ID::BOOK:
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 2);
+			acquisitionScore = 2;
 			if (randomBonus == 2)
 			{
 				SetData(DATA_BONUS, 1);
@@ -367,6 +377,7 @@ void Player::GetItem(weakListObj objList)
 		case MAP_ID::GOLD:
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 2);
+			acquisitionScore = 2;
 			if (randomBonus == 3)
 			{
 				SetData(DATA_BONUS, 1);
@@ -375,6 +386,7 @@ void Player::GetItem(weakListObj objList)
 		case MAP_ID::DIA:
 			paramUP(NotFlag, num);
 			SetData(DATA_SCORE, 2);
+			acquisitionScore = 2;
 			if (randomBonus == 4)
 			{
 				SetData(DATA_BONUS, 1);
@@ -447,7 +459,7 @@ void Player::StateDraw(void)
 	}
 	/*DrawBox(640, 0, 800, 300, GetColor(255, 255, 0), true);
 	DrawFormatString(650, 0, GetColor(0, 0, 0), "SCORE");*/
-	DrawGraph(645, 20, IMAGE_ID("image/score.png")[0], true);
+	DrawGraph(820, 5, IMAGE_ID("image/score.png")[0], true);
 	DrawFormatString(650, 150, GetColor(255, 255, 0), "LIFE  : %d", life);
 	DrawFormatString(650, 200, GetColor(255, 255, 0), "POWER  : %d", state.Power);
 	DrawFormatString(650, 220, GetColor(255, 255, 0), "GUARD  : %d", state.Guard);
@@ -458,13 +470,40 @@ void Player::StateDraw(void)
 	numTemp = (oldScore * 10);
 	if (numTemp == 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - 22, 60, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 + 145) * (plNum % 2 + 1) - 22, 40, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
 	}
 	while (numTemp > 0)
 	{
-		DrawGraph((GAME_SCREEN_SIZE_X / 2 - 30) * (plNum % 2 + 1) - (digit + 1) * 22, 60, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
+		DrawGraph((GAME_SCREEN_SIZE_X / 2 + 145) * (plNum % 2 + 1) - (digit + 1) * 22, 40, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
 		numTemp /= 10;
 		digit++;
+	}
+	// ÌßÚ²Ô°ã‚Ì‰ÁŽZ‚³‚ê‚½½º±
+	int acTemp = acquisitionScore * 10;		// ‰ÁŽZ‚µ‚½½º±
+	int adigit = 0;							// Œ…”
+	if (acquisitionflag == true)
+	{
+		displayTime++;
+	}
+	if (acquisitionScore > 0)
+	{
+		acquisitionflag = true;
+		if (displayTime < 60)
+		{
+			DrawGraph(pos.x - scrollOffset.x - 40, pos.y - scrollOffset.y - 130, lpImageMng.GetID("image/+-.png", VECTOR2(40, 30), VECTOR2(2, 1))[0], true);
+			while (acTemp > 0)
+			{
+				DrawGraph((pos.x - scrollOffset.x + 30) - (adigit + 1) * 22, pos.y - scrollOffset.y - 130, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[acTemp % 10], true);
+				acTemp /= 10;
+				adigit++;
+			}
+		}
+		else
+		{
+			displayTime = 0;
+			acquisitionScore = 0;
+			acquisitionflag = false;
+		}
 	}
 }
 

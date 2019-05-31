@@ -84,6 +84,9 @@ private:
 	int bonus;					// ÎÞ°Å½
 	int oldScore;				// ’¼‘O‚Ì½º±
 	int additionTime;			// ‰ÁŽZ‚·‚é‚Ü‚Å‚ÌŽžŠÔ
+	int acquisitionScore;		// ‰ÁŽZŒ¸ŽZ‚³‚ê‚½½º±
+	bool acquisitionflag;		// •\Ž¦Ì×¸Þ
+	int displayTime;			// •\Ž¦‚·‚éŽžŠÔ
 	unsigned int reStartCnt;
 	std::array<int,SCORE_DATA::DATA_MAX> param;
 
