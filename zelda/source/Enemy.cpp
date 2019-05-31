@@ -108,8 +108,8 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset, int enCnt) :Obj
 					true,	// BOOK
 					true,	// GOLD
 					true,	// DIA
-					false,	// BOX_1	// 宝箱
-					false,	// BOX_2	// 空いている宝箱
+					true,	// BOX_1	// 宝箱
+					true,	// BOX_2	// 空いている宝箱
 					true,	// MOTH_1	// ﾂﾎﾞ
 					false,	// MOTH_2	// 壊れたﾂﾎﾞ
 					true,	// MOTH_3	// 樽
@@ -330,10 +330,10 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		switch (dir)
 		{
 		case DIR_RIGHT:
-			SetAnim("右探索");
+			SetAnim("右待機");
 			break;
 		case DIR_LEFT:
-			SetAnim("左探索");
+			SetAnim("左待機");
 			break;
 		default:
 			break;
@@ -343,17 +343,14 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		switch (dir)
 		{
 		case DIR_RIGHT:
-			SetAnim("右発見");
+			SetAnim("右待機");
 			break;
 		case DIR_LEFT:
-			SetAnim("左発見");
+			SetAnim("左待機");
 			break;
 		default:
 			break;
 		}
-		break;
-	default:
-		break;
 	}
 	if (behaviorCnt == 0)
 	{

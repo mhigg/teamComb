@@ -23,6 +23,7 @@ public:
 
 	bool SetEnemyPos(const VECTOR2 & pos, int num);
 	bool SetEnemyFlag(bool flag, int num);
+	bool SetEnemyName(int num,int name);
 	bool SetEnemyHit(int num, bool flag);
 
 	bool SetScore(int val, int num);									// ½º±¾¯Ä(Ø»ŞÙÄ—p)
@@ -31,6 +32,7 @@ public:
 
 	VECTOR2 GetPlayerPos(int num);
 	bool GetPlayerFlag(int num);
+	int GetEnemyName(int num);
 	bool GetEnemyHit(int num);
 
 	VECTOR2 GetEnemyPos(int num);
@@ -48,6 +50,7 @@ private:
 	std::vector<VECTOR2> enPos;			// À•WŠÇ—
 	std::vector<bool> enFlag;					// ‘¶İ‚·‚é‚©‚Ç‚¤‚©
 	std::vector<bool> enHit;					// “–‚½‚è”»’è’†‚©
+	std::vector<int> enName;					// “G‚Ì–¼‘O
 	std::vector<VECTOR2>plPos;
 	std::vector<bool> plFlag;
 	std::vector<VECTOR2> scrNum;

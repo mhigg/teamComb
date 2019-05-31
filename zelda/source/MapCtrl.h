@@ -43,7 +43,7 @@ public:
 	bool SetUpGameObj(sharedListObj objList, bool modeFlag);
 
 	// Enemy‚Ì¶¬
-	bool SetUpEnemy(sharedListObj objList, int enemyNum,int x,int y);
+	bool SetUpEnemy(sharedListObj objList, int enemyNum,int x,int y,int name);
 
 	// Ï¯Ìß•`‰æ
 	void Draw(bool flag);

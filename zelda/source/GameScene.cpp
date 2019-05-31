@@ -67,7 +67,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			if (lpInfoCtrl.GetEnemyFlag(i))
 			{
 				VECTOR2 Ipos = lpMapCtrl.GetItemPos(MAP_ID::ENEMY, tmp);
-				lpMapCtrl.SetUpEnemy(objList, i, Ipos.x, Ipos.y);
+				lpMapCtrl.SetUpEnemy(objList, i, Ipos.x, Ipos.y,lpInfoCtrl.GetEnemyName(i));
 				tmp++;
 			}
 		}

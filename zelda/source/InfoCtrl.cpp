@@ -36,6 +36,12 @@ bool InfoCtrl::SetEnemyFlag(bool flag, int num)
 	return true;
 }
 
+bool InfoCtrl::SetEnemyName(int num,int name)
+{
+	enName[num] = name;
+	return true;
+}
+
 bool InfoCtrl::SetEnemyHit(int num,bool flag)
 {
 	enHit[num] = flag;
@@ -103,6 +109,10 @@ bool InfoCtrl::GetPlayerFlag(int num)
 {
 	return plFlag[num];
 }
+int InfoCtrl::GetEnemyName(int num)
+{
+	return enName[num];
+}
 bool InfoCtrl::GetEnemyHit(int num)
 {
 	return enHit[num];
@@ -150,6 +160,7 @@ void InfoCtrl::Init(void)
 	enPos.resize(ENEMY_MAX);
 	enFlag.resize(ENEMY_MAX);	
 	enHit.resize(ENEMY_MAX);
+	enName.resize(ENEMY_MAX);
 
 	// ‘S‘Ì‚ÉNON‚ ‚é‚¢‚Í0(¾ÞÛ)‚ð“ü‚ê‚é
 	for (int j = 0; j < ENEMY_MAX; j++)
@@ -157,6 +168,7 @@ void InfoCtrl::Init(void)
 		enPos[j]		= { 0,0 };
 		enFlag[j]	= false;
 		enHit[j]		= false;
+		enName[j] = 0;
 	}
 	for (int j = 0; j < 4; j++)
 	{
