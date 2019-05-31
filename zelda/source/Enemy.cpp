@@ -422,6 +422,19 @@ void Enemy::Undette(void)
 
 void Enemy::Zombie(void)
 {
+	switch (action)
+	{
+	case ENEM_ACT::MOVE:
+		_updater = &Enemy::Move;
+		break;
+	case ENEM_ACT::TRA:
+		_updater = &Enemy::Track;
+		break;
+	default:
+		action = ENEM_ACT::MOVE;
+		_updater = &Enemy::Move;
+		break;
+	}
 }
 
 void Enemy::ConstMove(const GameCtrl & controller)
