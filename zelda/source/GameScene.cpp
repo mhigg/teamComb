@@ -62,6 +62,8 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	// écÇËéûä‘å∏è≠
 	gameFrame--;
 
+	Draw();
+
 	if (gameFrame % 1800 == 0)
 	{
 		int tmp = 0;
@@ -76,8 +78,6 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		}
 		lpMapCtrl.SetItemFlagAll();
 	}
-
-	Draw();
 
 	return move(own);
 }
