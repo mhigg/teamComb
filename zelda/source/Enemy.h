@@ -14,25 +14,16 @@ enum class ENEMY
 	ENEMY_MAX
 };
 
-// enemy‚Ìó‘Ô
-enum class ENEMY_STATE
-{
-	NORMAL,		// ’Êí
-	TRA,				// ’ÇÕ
-	RETREAT,		// ‹¯‚İ
-	DEATH,			// €–S
-	MAX
-};
-
 // enemy‚Ìs“®
 enum class ENEM_ACT
 {
-	WAIT,	// ‰½‚à‚µ‚È‚¢
+	WAIT,				// ‰½‚à‚µ‚È‚¢
 	MOVE,				// ˆÚ“®
 	TRA,					// ’ÇÕ
 	SERCH,				// ’Tõ
 	CONST_MOVE,	// ˆê’è‚ÌêŠ‚ğœpœj
 	BACK,				// ‚¿ê‚É–ß‚é
+	DAMAGE,			//	ÀŞÒ°¼Ş
 	MAX
 };
 
@@ -44,7 +35,6 @@ constexpr auto PLAYER_DIS_Y = 5;
 constexpr auto SERCH_LIM = 400;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
-using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
 using PASS_FLAG = std::array<bool, DIR_MAX * 3>;
 using PASS_ARR_ALL = std::array<VECTOR2, DIR_MAX * 3>;
 using DIR_PASS = std::array<DIR[3], DIR_MAX>;
@@ -100,7 +90,6 @@ private:
 	void Undette(void);			// ±İÃŞ¯Ä
 	void Zombie(void);				// ¿ŞİËŞ
 
-	ENEMY_STATE state;			// ó‘Ô
 	ENEMY name;					// “G‚Ìí—Ş
 	ENEM_ACT action;				// “G‚Ìs“®
 	int life;								// Še·¬×‚Ì×²Ì

@@ -277,24 +277,7 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 	// ¿ﬁ“∞ºﬁÇÇ§ÇØÇƒÇÈÇ©ÇÈÇ©Ç«Ç§Ç©
 	if (lpInfoCtrl.GetEnemyHit(Enemy::enCnt))
 	{
-		// ì_ñ≈ÇÃèàóù
-		if (deathCnt % 5 == 0)
-		{
-			visible = !visible;
-		}
-		deathCnt--;
-		if (deathCnt == 0)
-		{
-			life--;
-			deathCnt = 60;
-			if (life == -1)
-			{			
-				deathFlag = true;
-				lpInfoCtrl.SetEnemyFlag(true, enCnt);
-			}
-			lpInfoCtrl.SetEnemyHit(Enemy::enCnt, false);
-		}
-		return;
+		action = ENEM_ACT::DAMAGE;
 	}
 	// ç≈Ç‡ãﬂÇ¢Ãﬂ⁄≤‘∞ÇÃåüçı
 	nearP = SerchPlayer(true);
@@ -405,6 +388,9 @@ void Enemy::GateKeeper(void)
 	case ENEM_ACT::SERCH:
 		_updater = &Enemy::Serch;
 		break;
+	case ENEM_ACT::DAMAGE:
+		_updater = &Enemy::Damage;
+		return;
 	default:
 		action = ENEM_ACT::WAIT;
 		_updater = &Enemy::Wait;
@@ -417,12 +403,22 @@ void Enemy::Undette(void)
 {
 	switch (action)
 	{
+	case ENEM_ACT::WAIT:
+		if (GetRand(60) % 30 == 0)
+		{
+			action = ENEM_ACT::MOVE;
+		}
+		_updater = &Enemy::Wait;
+		break;
 	case ENEM_ACT::MOVE:
 		_updater = &Enemy::Move;
 		break;
 	case ENEM_ACT::TRA:
 		_updater = &Enemy::Track;
 		break;
+	case ENEM_ACT::DAMAGE:
+		_updater = &Enemy::Damage;
+		return;
 	default:
 		action = ENEM_ACT::MOVE;
 		_updater = &Enemy::Move;
@@ -434,12 +430,22 @@ void Enemy::Zombie(void)
 {
 	switch (action)
 	{
+	case ENEM_ACT::WAIT:
+		if (GetRand(60) % 30 == 0)
+		{
+			action = ENEM_ACT::MOVE;
+		}
+		_updater = &Enemy::Wait;
+		break;
 	case ENEM_ACT::MOVE:
 		_updater = &Enemy::Move;
 		break;
 	case ENEM_ACT::TRA:
 		_updater = &Enemy::Track;
 		break;
+	case ENEM_ACT::DAMAGE:
+		_updater = &Enemy::Damage;
+		return;
 	default:
 		action = ENEM_ACT::MOVE;
 		_updater = &Enemy::Move;
@@ -743,7 +749,24 @@ void Enemy::Back(const GameCtrl & controller)
 
 void Enemy::Damage(const GameCtrl & controller)
 {
-	 
+	// ì_ñ≈ÇÃèàóù
+	if (deathCnt % 5 == 0)
+	{
+		visible = !visible;
+	}
+	deathCnt--;
+	if (deathCnt == 0)
+	{
+		action = ENEM_ACT::WAIT;
+		life--;
+		deathCnt = 60;
+		if (life == -1)
+		{
+			deathFlag = true;
+			lpInfoCtrl.SetEnemyFlag(true, enCnt);
+		}
+		lpInfoCtrl.SetEnemyHit(Enemy::enCnt, false);
+	}
 }
 
 bool Enemy::CheckDeath(void)
