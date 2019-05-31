@@ -29,16 +29,15 @@ MapCtrl::MapCtrl()
 {
 	lineColor = RGB(255, 255, 255);
 
-	VECTOR2 plScrSize = lpSceneMng.GetPlayScreen();
+	VECTOR2 playScreen = lpSceneMng.GetPlayScreen(false);
 
 	plScrTbl = {
 		VECTOR2(0,0),
-		VECTOR2(plScrSize.x, 0),
-		VECTOR2(0, plScrSize.y),
-		plScrSize
+		VECTOR2(playScreen.x, 0),
+		VECTOR2(0, playScreen.y),
+		playScreen
 	};
 }
-
 
 MapCtrl::~MapCtrl()
 {
@@ -56,7 +55,6 @@ struct CheckSize
 		return true;
 	}
 };
-
 
 bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 {
@@ -86,11 +84,26 @@ bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 
 	CreateMap(mapData_Base, mapData, MAP_ID::NONE);
 	CreateMap(itemData_Base, itemData, MAP_ID::NONE);
+	CreateMap(itemFlag_Base, itemFlag, false);
 	
 	mapImage.resize(1);
 	scrollTbl.resize(1);
 
 	return true;
+}
+
+void MapCtrl::SetMode(bool singleFlag)
+{
+	this->singleFlag = singleFlag;
+
+	VECTOR2 playScreen = lpSceneMng.GetPlayScreen(singleFlag);
+
+	plScrTbl = {
+		VECTOR2(0,0),
+		VECTOR2(playScreen.x, 0),
+		VECTOR2(0, playScreen.y),
+		playScreen
+	};
 }
 
 bool MapCtrl::SetMapData(const VECTOR2 & pos, MAP_ID id)
@@ -101,6 +114,33 @@ bool MapCtrl::SetMapData(const VECTOR2 & pos, MAP_ID id)
 bool MapCtrl::SetItemData(const VECTOR2 & pos, MAP_ID id)
 {
 	return SetData(itemData, pos, id);
+}
+
+bool MapCtrl::SetItemFlag(const VECTOR2 & pos, bool flag)
+{
+	VECTOR2 selPos(pos / chipSize);
+	itemFlag[selPos.y][selPos.x] = flag;
+	return true;
+}
+
+void MapCtrl::SetItemFlagAll(void)
+{
+	for (int y = 0; y < stageSize.y; y++)
+	{
+		for (int x = 0; x < stageSize.x; x++)
+		{
+			if (GetItemData(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)) != MAP_ID::NONE
+				&& !GetItemFlag(VECTOR2(x * CHIP_SIZE, y * CHIP_SIZE)))
+			{
+				SetItemFlag(VECTOR2(x * CHIP_SIZE,y * CHIP_SIZE), true);
+			}
+		}
+	}
+}
+
+bool MapCtrl::GetMode(void)
+{
+	return singleFlag;
 }
 
 MAP_ID MapCtrl::GetMapData(const VECTOR2& pos)
@@ -130,6 +170,12 @@ VECTOR2 MapCtrl::GetItemPos(MAP_ID id,int num)
 			}
 		}
 	}
+}
+
+bool MapCtrl::GetItemFlag(const VECTOR2 & pos)
+{
+	VECTOR2 selPos(pos / chipSize);
+	return itemFlag[selPos.y][selPos.x];
 }
 
 VECTOR2 MapCtrl::GetScreenPos(int plNum)
@@ -267,7 +313,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 						std::make_unique<Player>
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt])
 					);
-					mapImage[plCnt] = MakeScreen(800, 480, false);
+					VECTOR2 playScrSize = lpSceneMng.GetPlayScreen(singleFlag);	// 1画面のｻｲｽﾞ
+					mapImage[plCnt] = MakeScreen(playScrSize.x, playScrSize.y, false);
 					lpInfoCtrl.SetPlayerFlag(true, plCnt);
 					plCnt++;
 				}				
@@ -300,6 +347,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::DIA:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetItemFlag(VECTOR2(x * chipSize.x, y * chipSize.y), true);
 				break;
 			case MAP_ID::NONE:
 			case MAP_ID::WALL1:
@@ -389,30 +437,31 @@ void MapCtrl::Draw(bool flag)
 	// ﾏｯﾌﾟ描画
 	VECTOR2 offset(lpSceneMng.GetDrawOffset());
 	VECTOR2 tmpPos;
+	VECTOR2 scrollAreaSize = lpStageMng.GetScrollValue(VALUE_AREA, singleFlag);
 
 	for (int pIdx = 0; pIdx < scrollTbl.size(); pIdx++)
 	{
-		VECTOR2 plScrSize(flag ? stageSize : (lpSceneMng.GetPlayScreen() / chipSize));		// 分割1画面のｻｲｽﾞ
+		VECTOR2 plScrSize(flag ? stageSize : (lpSceneMng.GetPlayScreen(singleFlag) / chipSize));		// 分割1画面のｻｲｽﾞ
 
 		VECTOR2 XYoffset;	// forﾙｰﾌﾟのx,yの開始点ｵﾌｾｯﾄ
 		XYoffset = (flag ? VECTOR2(0,0) : VECTOR2(scrollTbl[pIdx] / chipSize));		// ｽｸﾛｰﾙしたﾏｽ分開始点をずらす
 
 // --------------------- ｹﾞｰﾑﾓｰﾄﾞ時に少しでもｽｸﾛｰﾙしたら分割ｽｸﾘｰﾝの終点をずらす ---------------------------
-		if (!flag && scrollTbl[pIdx].x > 0 && scrollTbl[pIdx].x < SCROLL_AREA_SIZE_X)
+		if (!flag && scrollTbl[pIdx].x > 0 && scrollTbl[pIdx].x < scrollAreaSize.x)
 		{
 			plScrSize.x = plScrSize.x + 2;
 		}
-		if (!flag && scrollTbl[pIdx].y > 0 && scrollTbl[pIdx].y < SCROLL_AREA_SIZE_Y)
+		if (!flag && scrollTbl[pIdx].y > 0 && scrollTbl[pIdx].y < scrollAreaSize.y)
 		{
 			plScrSize.y = plScrSize.y + 2;
 		}
 
 // --------------------- ｹﾞｰﾑﾓｰﾄﾞ時に1ﾏｽ分ｽｸﾛｰﾙするごとに分割ｽｸﾘｰﾝの始点をずらす ---------------------------
-		if (!flag && XYoffset.x > 0 && XYoffset.x < (SCROLL_AREA_SIZE_X / chipSize.x))
+		if (!flag && XYoffset.x > 0 && XYoffset.x < (scrollAreaSize.x / chipSize.x))
 		{
 			XYoffset.x = XYoffset.x - 1;
 		}
-		if (!flag && XYoffset.y > 0 && XYoffset.y < (SCROLL_AREA_SIZE_Y / chipSize.y))
+		if (!flag && XYoffset.y > 0 && XYoffset.y < (scrollAreaSize.y / chipSize.y))
 		{
 			XYoffset.y = XYoffset.y - 1;
 		}
@@ -503,22 +552,6 @@ void MapCtrl::Draw(bool flag)
 				case MAP_ID::STONE_2:
 				case MAP_ID::STONE_3:
 				case MAP_ID::STONE_4:
-				case MAP_ID::POTION_1:
-				case MAP_ID::POTION_2:
-				case MAP_ID::POTION_3:
-				case MAP_ID::POTION_4:
-				case MAP_ID::COIN_1:
-				case MAP_ID::COIN_2:
-				case MAP_ID::COIN_3:
-				case MAP_ID::COIN_4:
-				case MAP_ID::KEY_1:
-				case MAP_ID::KEY_2:
-				case MAP_ID::MEAT:
-				case MAP_ID::SWORD:
-				case MAP_ID::SHIELD:
-				case MAP_ID::BOOK:
-				case MAP_ID::GOLD:
-				case MAP_ID::DIA:
 					DrawGraph(
 						tmpPos.x + offset.x - scrollTbl[pIdx].x,
 						tmpPos.y + offset.y - scrollTbl[pIdx].y,
@@ -564,7 +597,6 @@ void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pI
 		for (int x = XYoffset.x; x < XYoffset.x + scrSize.x; x++)
 		{
 			MAP_ID id = itemData[y][x];
-
 			tmpPos = { (x * chipSize.x),(y * chipSize.y) };
 			switch (id)
 			{
@@ -584,12 +616,15 @@ void MapCtrl::ItemDraw(VECTOR2 offset, VECTOR2 scrSize, VECTOR2 XYoffset, int pI
 			case MAP_ID::BOOK:
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
-				DrawGraph(
-					tmpPos.x + offset.x - scrollTbl[pIdx].x,
-					tmpPos.y + offset.y - scrollTbl[pIdx].y,
-					IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
-					true
-				);
+				if (itemFlag[y][x])
+				{
+					DrawGraph(
+						tmpPos.x + offset.x - scrollTbl[pIdx].x,
+						tmpPos.y + offset.y - scrollTbl[pIdx].y,
+						IMAGE_ID("image/mapImage.png")[static_cast<const unsigned int>(id)],
+						true
+					);
+				}
 				break;
 			default:
 				break;

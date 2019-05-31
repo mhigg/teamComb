@@ -270,12 +270,16 @@ void Player::GetItem(weakListObj objList)
 {
 	auto ItemID = [=] {
 		auto id = lpMapCtrl.GetItemData(pos);
-		return (id == MAP_ID::MAX ? static_cast<MAP_ID>(ITEM_ID_START): id);
+		if (lpMapCtrl.GetItemFlag(pos))
+		{
+			return (id == MAP_ID::MAX ? static_cast<MAP_ID>(ITEM_ID_START) : id);
+		}
+		return MAP_ID::NONE;
 	};
 
 	auto paramUP = [=](auto& paramFlag, auto limNum) {
 		paramFlag += (paramFlag < limNum);
-		lpMapCtrl.SetItemData(pos, MAP_ID::NONE);
+		lpMapCtrl.SetItemFlag(pos, false);
 	};
 
 	unsigned int num = 1;
@@ -534,6 +538,9 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 	}
 // ----------------------------------------
 
+	VECTOR2 scrollStart = lpStageMng.GetScrollValue(VALUE_UPPER_L, lpMapCtrl.GetMode());
+	VECTOR2 scrollEnd = lpStageMng.GetScrollValue(VALUE_LOWER_R, lpMapCtrl.GetMode());
+
 	auto Move = [&, dir = Player::dir](DIR_TBL_ID id){
 		if (inputTbl[plNum][keyIdTbl[DirTbl[dir][id]]])
 		{
@@ -550,15 +557,15 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 			// 移動処理-----------------------------
 			// 変更したい座標の変数アドレス += 移動量
 			(*PosTbl[Player::dir][TBL_MAIN]) += SpeedTbl[Player::dir][inputTbl[plNum][XINPUT_RUN_RB]];
-
-			if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_END_X)))
+			
+			if ((pos.x >= scrollStart.x) && (pos.x <= (scrollEnd.x)))
 			{
-				scrollOffset.x = pos.x - SCROLL_AREA_X;
+				scrollOffset.x = pos.x - scrollStart.x;
 				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 			}
-			if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_END_Y)))
+			if ((pos.y >= scrollStart.y) && (pos.y <= (scrollEnd.y)))
 			{
-				scrollOffset.y = pos.y - SCROLL_AREA_Y;
+				scrollOffset.y = pos.y - scrollStart.y;
 				lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 			}
 			lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
@@ -673,19 +680,23 @@ void Player::Damage(const GameCtrl & controller, weakListObj objList)
 		{
 			DIR tmp = DirTbl[dir][DIR_TBL_REV];
 			int speed = SpeedTbl[tmp][inputTbl[plNum][0]] / 2 * -3 * (10 - damageCnt / 4);
+
 			if (mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed,  -hitRad.x + 1)))]
 			&& mapMoveTbl[static_cast<int>(lpMapCtrl.GetMapData(sidePos(pos, tmp, -speed, hitRad.x - 2)))])
 			{
+				VECTOR2 scrollStart = lpStageMng.GetScrollValue(VALUE_UPPER_L, lpMapCtrl.GetMode());
+				VECTOR2 scrollEnd = lpStageMng.GetScrollValue(VALUE_LOWER_R, lpMapCtrl.GetMode());
+
 				// 移動不可のオブジェクトが後ろにない場合
 				(*PosTbl[tmp][TBL_MAIN]) += -speed;
-				if ((pos.x >= SCROLL_AREA_X) && (pos.x <= (SCROLL_END_X)))
+				if ((pos.x >= scrollStart.x) && (pos.x <= (scrollEnd.x)))
 				{
-					scrollOffset.x = pos.x - SCROLL_AREA_X;
+					scrollOffset.x = pos.x - scrollStart.x;
 					lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 				}
-				if ((pos.y >= SCROLL_AREA_Y) && (pos.y <= (SCROLL_END_Y)))
+				if ((pos.y >= scrollStart.y) && (pos.y <= (scrollEnd.y)))
 				{
-					scrollOffset.y = pos.y - SCROLL_AREA_Y;
+					scrollOffset.y = pos.y - scrollStart.y;
 					lpMapCtrl.AddScroll(scrollOffset, static_cast<int>(plNum));
 				}
 				lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));

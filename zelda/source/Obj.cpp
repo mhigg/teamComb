@@ -123,22 +123,25 @@ void Obj::SetPos(VECTOR2 pos)
 
 void Obj::InitScroll(int plNum)
 {
+	VECTOR2 scrollStart = lpStageMng.GetScrollValue(VALUE_UPPER_L, lpMapCtrl.GetMode());
+	VECTOR2 scrollEnd = lpStageMng.GetScrollValue(VALUE_LOWER_R, lpMapCtrl.GetMode());
+
 	scrollOffset = { 0,0 };
 
-	if (pos.x >= SCROLL_AREA_X)
+	if (pos.x >= scrollStart.x)
 	{
-		scrollOffset.x = pos.x - SCROLL_AREA_X;
-		if (pos.x >= SCROLL_END_X)
+		scrollOffset.x = pos.x - scrollStart.x;
+		if (pos.x >= scrollEnd.x)
 		{
-			scrollOffset.x = SCROLL_END_X;
+			scrollOffset.x = scrollEnd.x;
 		}
 	}
-	if (pos.y >= SCROLL_AREA_Y)
+	if (pos.y >= scrollStart.y)
 	{
-		scrollOffset.y = pos.y - SCROLL_AREA_Y;
-		if (pos.y >= SCROLL_END_Y)
+		scrollOffset.y = pos.y - scrollStart.y;
+		if (pos.y >= scrollEnd.y)
 		{
-			scrollOffset.y = SCROLL_END_Y;
+			scrollOffset.y = scrollEnd.y;
 		}
 	}
 

@@ -27,7 +27,7 @@ public:
 	void Run(void);								// ¹Ş°ÑÙ°Ìß
 	VECTOR2 GetDrawOffset(void);				// •`‰æµÌ¾¯Ä‚ğæ“¾
 	void SetDrawOffset(VECTOR2 drawOffset);
-	VECTOR2 GetPlayScreen(void);				// 4•ªŠ„‚Ì1‰æ–Ê‚Ì»²½Ş‚ğæ“¾
+	VECTOR2 GetPlayScreen(bool singleFlag);		// 4•ªŠ„‚Ì1‰æ–Ê‚Ì»²½Ş‚ğæ“¾ true:¼İ¸ŞÙ false:ÏÙÁ
 	int GetFram(void);							// ¹Ş°Ñ‹N“®‚©‚ç‚ÌÌÚ°Ñ”‚ğæ“¾
 
 private:
