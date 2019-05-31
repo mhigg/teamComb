@@ -45,9 +45,9 @@ void TitleScene::TitleDraw(void)
 	ClsDrawScreen();
 	DrawGraph(0, 0, IMAGE_ID("image/title.png")[0], true);
 	DrawGraph(1200, 700, IMAGE_ID("image/ÉRÉAÇÃÇ›.png")[0], true);
-	if (cnt / 20 % 3)
+	if (cnt / 30 % 3)
 	{
-
+		DrawGraph(400, 750, IMAGE_ID("image/psk.png")[0], true);
 	}
 	ScreenFlip();
 }
