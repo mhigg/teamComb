@@ -28,7 +28,7 @@ public:
 
 	bool SetScore(int val, int num);									// ｽｺｱｾｯﾄ(ﾘｻﾞﾙﾄ用)
 	bool SetBonus(int val, int num);									// ﾎﾞｰﾅｽｾｯﾄ(ﾘｻﾞﾙﾄ用)
-	bool SetSelectChara(CHARA_TYPE val, int num);								// 選んでいるｷｬﾗｾｯﾄ
+	bool SetSelectChara(CHARA_TYPE val, int num);						// 選んでいるｷｬﾗｾｯﾄ
 
 	VECTOR2 GetPlayerPos(int num);
 	bool GetPlayerFlag(int num);
@@ -41,21 +41,21 @@ public:
 	VECTOR2 GetAddScroll(int num);							
 	int GetScore(int num);												// ｽｺｱ取得(ﾘｻﾞﾙﾄ用)
 	int GetBonus(int num);												// ﾎﾞｰﾅｽ取得(ﾘｻﾞﾙﾄ用)
-	CHARA_TYPE GetSelectChara(int num);										// 選んでいるｷｬﾗ取得
+	CHARA_TYPE GetSelectChara(int num);									// 選んでいるｷｬﾗ取得
 private:
 	InfoCtrl();
 	~InfoCtrl();
 
 	void Init(void);
-	std::vector<VECTOR2> enPos;			// 座標管理
+	std::vector<VECTOR2> enPos;					// 座標管理
 	std::vector<bool> enFlag;					// 存在するかどうか
 	std::vector<bool> enHit;					// 当たり判定中か
 	std::vector<int> enName;					// 敵の名前
 	std::vector<VECTOR2>plPos;
 	std::vector<bool> plFlag;
 	std::vector<VECTOR2> scrNum;
-	std::array<int,4> plScore;			// 最大ﾌﾟﾚｲﾔｰ数のｽｺｱ
-	std::array<int,4> plBonus;			// 最大ﾌﾟﾚｲﾔｰ数のﾎﾞｰﾅｽ
+	std::array<int,4> plScore;					// 最大ﾌﾟﾚｲﾔｰ数のｽｺｱ
+	std::array<int,4> plBonus;					// 最大ﾌﾟﾚｲﾔｰ数のﾎﾞｰﾅｽ
 	std::array<CHARA_TYPE,4> selectChara;		// 最大ﾌﾟﾚｲﾔｰ数の選んだｷｬﾗ
 };
 

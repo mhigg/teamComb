@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <fstream>
 #include "ImageMng.h"
 #include "GameScene.h"
 #include "ResultScene.h"
@@ -39,6 +40,15 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<TitleScene>();
 	}
 
+	if (resultTemp == 0)
+	{
+		ScoreLoad();
+		if (fileData.hiScore < resultScore[0])
+		{
+			fileData.hiScore = resultScore[0];
+			ScoreSave();
+		}
+	}
 	ResultDraw();
 	return move(own);
 }
@@ -141,4 +151,37 @@ int ResultScene::Init(void)
 	plNumber = 0;
 	resultTemp = 0;
 	return 0;
+}
+
+bool ResultScene::ScoreLoad(void)
+{
+	FILE *fp;
+	fopen_s(&fp, "data/scoredata.score", "rb");
+	if (fp == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		fread(&fileData, sizeof(fileData), 1, fp);
+		fclose(fp);
+		return true;
+	}
+	return false;
+}
+
+bool ResultScene::ScoreSave(void)
+{
+	FILE *fp;
+	fopen_s(&fp, "data/scoredata.score", "wb");
+	if (fp == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		fwrite(&fileData, sizeof(fileData), 1, fp);
+		fclose(fp);
+		return true;
+	}
 }

@@ -13,6 +13,6 @@ public:
 private:
 	void TitleDraw(void);	// •`‰æ
 	int Init(void);			// ‰Šú‰»
-	int cnt;						// “_–Å¶³İÄ
+	int cnt;				// “_–Å¶³İÄ
 };
 

@@ -12,6 +12,10 @@ enum SCORE_RUNK{
 	RUNK_MAX
 };
 
+struct FILE_DATA {
+	int hiScore;
+};
+
 using BONUS_POINT = std::array< int, PLAYER_MAX >;
 using RESULT_SCORE = std::array< int, PLAYER_MAX >;
 
@@ -28,6 +32,8 @@ public:
 private:
 	void ResultDraw(void);		// •`‰æ
 	int Init(void);				// ‰Šú‰» 
+	bool ScoreLoad(void);		// Ì§²Ù‚©‚ç½º±“Ç‚İ‚İ
+	bool ScoreSave(void);		// Ì§²Ù‚Ö½º±¾°ÌŞ
 
 	int plNumber;								// ÌßÚ²Ô°”
 	std::array<CHARA_TYPE, 4> plSelChara;		// ÌßÚ²Ô°‚Ì‘I‚ñ‚¾·¬×
@@ -36,5 +42,6 @@ private:
 	SCORE_RUNK scoreRunk;						// ÌßÚ²Ô°‡ˆÊ
 	int resultTemp;								// ½º±(•`‰æ—p)
 	int waitFlag;								// ‘Ò‚¿Ì×¸Ş
+	FILE_DATA fileData;							// Ì§²Ù“à‚ÌÊ²½º±ÃŞ°À
 };
 

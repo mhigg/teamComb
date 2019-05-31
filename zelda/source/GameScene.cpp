@@ -34,16 +34,16 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	
+	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
+	{
+		return std::make_unique<ResultScene>();
+	}
 #ifdef DEBUG
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
 		return std::make_unique<EditScene>();
 	}
-	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
-	{
-		return std::make_unique<ResultScene>();
-	}
+	
 #endif // DEBUG
 
 	for (auto& obj : (*objList))
