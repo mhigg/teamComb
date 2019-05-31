@@ -8,7 +8,7 @@ constexpr int PUSH_SIZE		= 40;			// ▒I▒П▓├┌лрф╜╟йч╟┌л╣л╬╞д
 
 enum MODE {
 	MODE_MALTI,		// оыас╟дч
-	MODE_SINGLE,	// ╪щ╦чыс╟дч
+	MODE_SINGLE,		// ╪щ╦чыс╟дч
 	MODE_HOWTO,		// ▒─█Л∙Ш√@┴Ф√й
 	MODE_MAX
 };

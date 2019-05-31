@@ -31,7 +31,7 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	}
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
-		return std::make_unique<EditScene>();
+		return std::make_unique<GameScene>();
 	}
 	// BACK(ç∂SHIFT)Ç≈“∆≠∞Ç÷ñﬂÇÈ
 	if ((cnt[KEY_INPUT_LSHIFT]) & (!cntOld[KEY_INPUT_LSHIFT]))

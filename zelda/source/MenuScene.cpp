@@ -61,42 +61,43 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		}
 
 		// º∞›à⁄çs
-		if (nowMode < MODE_HOWTO)
+		if (!descriptionFlag)
 		{
-			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+			if (nowMode < MODE_HOWTO)
 			{
-				lpMapCtrl.SetMode(nowMode);
-				PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
-				return std::make_unique<SelectScene>();
+				if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+				{
+					lpMapCtrl.SetMode(nowMode);
+					PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
+					return std::make_unique<SelectScene>();
+				}
+				if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
+				{
+					lpMapCtrl.SetMode(nowMode);
+					PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
+					return std::make_unique<SelectScene>();
+				}
 			}
-			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
+			else if (nowMode == MODE_HOWTO)
 			{
-				lpMapCtrl.SetMode(nowMode);
-				PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
-				return std::make_unique<SelectScene>();
+				if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
+				{
+					PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
+					descriptionFlag = true;
+				}
+				if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
+				{
+					PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
+					descriptionFlag = true;
+				}
 			}
 		}
-		else if(nowMode == MODE_HOWTO)
-		{
-			if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
-			{
-				PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
-				descriptionFlag = true;
-			}
-			if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
-			{
-				PlaySoundMem(lpSoundMng.GetID("sound/åàíËâπ.wav"), DX_PLAYTYPE_NORMAL);
-				descriptionFlag = true;
-			}
-		}
-		
 		// BACKÇ≈“∆≠∞âÊñ Ç÷ñﬂÇÈ
-		if (descriptionFlag)
+		else
 		{
 			if (inputState[0][XINPUT_PAUSE] & !inputStateOld[0][XINPUT_PAUSE])
 			{
-				selectPoint[nowMode] = 0;
-				nowMode = MODE_MALTI;
+				nowMode = MODE_HOWTO;
 				selectPoint[nowMode] = 20;
 				descriptionFlag = false;
 				PlaySoundMem(lpSoundMng.GetID("sound/ÉLÉÉÉìÉZÉã.wav"), DX_PLAYTYPE_NORMAL);
