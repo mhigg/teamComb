@@ -7,7 +7,7 @@
 #include "Selector.h"
 
 #define lpInfoCtrl InfoCtrl::GetInstance()
-constexpr auto ENEMY_MAX = 4;
+constexpr auto ENEMY_MAX = 20;
 
 class InfoCtrl
 {
