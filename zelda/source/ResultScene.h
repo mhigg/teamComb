@@ -29,12 +29,12 @@ private:
 	void ResultDraw(void);		// 描画
 	int Init(void);				// 初期化 
 
-	BONUS_POINT bonusPoint;		// ﾌﾟﾚｲﾔｰ毎のﾎﾞｰﾅｽ獲得数
-	RESULT_SCORE resultScore;	// ﾎﾞｰﾅｽ加算後の最終ｽｺｱ
-	int beforeScore;			// 演出用の最終決定前ｽｺｱ
-	int plNumber;				// ﾌﾟﾚｲﾔｰ数
-	std::array<CHARA_TYPE,4> plSelChara;		// ﾌﾟﾚｲﾔｰの選んだｷｬﾗ
-	int resultTemp;				// ｽｺｱ(描画用)
-	int waitTime;				// 加算待ち時間
+	int plNumber;								// ﾌﾟﾚｲﾔｰ数
+	std::array<CHARA_TYPE, 4> plSelChara;		// ﾌﾟﾚｲﾔｰの選んだｷｬﾗ
+	BONUS_POINT bonusPoint;						// ﾌﾟﾚｲﾔｰ毎のﾎﾞｰﾅｽ獲得数
+	RESULT_SCORE resultScore;					// ﾎﾞｰﾅｽ加算後の最終ｽｺｱ
+	SCORE_RUNK scoreRunk;						// ﾌﾟﾚｲﾔｰ順位
+	int resultTemp;								// ｽｺｱ(描画用)
+	int waitFlag;								// 待ちﾌﾗｸﾞ
 };
 
