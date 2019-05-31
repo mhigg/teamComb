@@ -25,11 +25,13 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
 	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 	{
+		PlaySoundMem(lpSoundMng.GetID("sound/Œˆ’è‰¹.wav"), DX_PLAYTYPE_NORMAL);
 		StopSoundMem(lpSoundMng.GetID("sound/TitleBGM.mp3"));
 		return std::make_unique<MenuScene>();
 	}
 	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
 	{
+		PlaySoundMem(lpSoundMng.GetID("sound/Œˆ’è‰¹.wav"), DX_PLAYTYPE_NORMAL);
 		StopSoundMem(lpSoundMng.GetID("sound/TitleBGM.mp3"));
 		return std::make_unique<MenuScene>();
 	}
