@@ -31,6 +31,7 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 		return std::make_unique<MenuScene>();
 	}
 	TitleDraw();
+	TitleScene:: cnt++;
 	return std::move(own);
 }
 
@@ -38,11 +39,15 @@ void TitleScene::TitleDraw(void)
 {
 	ClsDrawScreen();
 	DrawGraph(0, 0, IMAGE_ID("image/title.png")[0], true);
-	DrawString(0, 0, "TitleScene", 0x0000ff00);
+	if (cnt / 20 % 3)
+	{
+
+	}
 	ScreenFlip();
 }
 
 int TitleScene::Init(void)
 {
+	cnt = 0;
 	return 0;
 }
