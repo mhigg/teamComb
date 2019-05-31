@@ -162,33 +162,32 @@ void GameScene::Draw(void)
 	// •ª‚ª0‚ÌŽž
 	if (minNumTemp < 1)
 	{
-		DrawGraph(95, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+		DrawGraph(GAME_SCREEN_SIZE_X - 105, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
 	}
 	// •ª
 	while (minNumTemp > 0)
 	{
-		DrawGraph(95, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[minNumTemp % 10], true);
+		DrawGraph(GAME_SCREEN_SIZE_X - 105, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[minNumTemp % 10], true);
 		minNumTemp /= 10;
 	}
 	// •b‚ª0‚ÌŽž
 	if (secondNumTemp < 10)
 	{
-		DrawGraph(135, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+		DrawGraph(GAME_SCREEN_SIZE_X - 65, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
 	}
 	if (secondNumTemp < 1)
 	{
-		DrawGraph(155, 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+		DrawGraph(GAME_SCREEN_SIZE_X - 45, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
 	}
 	// •b
 	while (secondNumTemp > 0)
 	{
-		DrawGraph(200 - (timeDigit + 1) * 20 - (25), 15, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
+		DrawGraph(GAME_SCREEN_SIZE_X - (timeDigit + 1) * 20 - (25), 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[secondNumTemp % 10], true);
 		secondNumTemp /= 10;
 		timeDigit++;
 	}
-	DrawGraph(130, 21, IMAGE_ID("image/jikan.png")[0], true);
-
-
+	DrawGraph(GAME_SCREEN_SIZE_X - 70, 16, IMAGE_ID("image/jikan.png")[0], true);
+	DrawGraph(GAME_SCREEN_SIZE_X - 135, 5, IMAGE_ID("image/sunatokei.png")[0], true);
 	ScreenFlip();
 }
 
