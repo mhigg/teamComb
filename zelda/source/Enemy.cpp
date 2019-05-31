@@ -132,6 +132,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset, int enCnt) :Obj
 	hitRad = VECTOR2(30, 30);
 	behaviorCnt = 0;
 	name = static_cast<ENEMY>(enemyNum);
+	life = enemyNum;
 	action = ENEM_ACT::MOVE;
 	Init("image/enemy.png", VECTOR2(480 / 8,400 / 5),VECTOR2(8,5), setUpPos);
 	comPos.resize(12);
@@ -174,6 +175,7 @@ void Enemy::CheckFree(void)
 
 bool Enemy::initAnim(void)
 {
+	visible = true;
 	int num = static_cast<int>(name) * 2;
 	AddAnim("右待機", num, 0, 2, 10, true);				// 右
 	AddAnim("左待機", num + 1, 0, 2, 10, true);		// 左
@@ -271,8 +273,9 @@ int Enemy::SerchPlayer(bool flag)
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	scrollOffset = lpInfoCtrl.GetAddScroll(0);
-	// 死んでるかどうか
-	if (lpInfoCtrl.GetEnemyFlag(Enemy::enCnt))
+
+	// ﾀﾞﾒｰｼﾞをうけてるかるかどうか
+	if (lpInfoCtrl.GetEnemyHit(Enemy::enCnt))
 	{
 		// 点滅の処理
 		if (deathCnt % 5 == 0)
@@ -282,7 +285,14 @@ void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 		deathCnt--;
 		if (deathCnt == 0)
 		{
-			deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
+			life--;
+			deathCnt = 60;
+			if (life == -1)
+			{			
+				deathFlag = true;
+				lpInfoCtrl.SetEnemyFlag(true, enCnt);
+			}
+			lpInfoCtrl.SetEnemyHit(Enemy::enCnt, false);
 		}
 		return;
 	}

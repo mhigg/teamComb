@@ -623,7 +623,7 @@ void Player::Attack(const GameCtrl & controller, weakListObj objList)
 				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 40)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
-					lpInfoCtrl.SetEnemyFlag(true, i);
+					lpInfoCtrl.SetEnemyHit(i,true);
 				}
 			}
 		}

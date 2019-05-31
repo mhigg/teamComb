@@ -103,6 +103,7 @@ private:
 	ENEMY_STATE state;			// 状態
 	ENEMY name;					// 敵の種類
 	ENEM_ACT action;				// 敵の行動
+	int life;								// 各ｷｬﾗのﾗｲﾌ
 	// ------------------近いﾌﾟﾚｲﾔｰの検索用--------------------------
 	OBJ_POS plPos;				// ﾌﾟﾚｲﾔｰの座標
 	OBJ_INT enPos;				// 敵の座標
