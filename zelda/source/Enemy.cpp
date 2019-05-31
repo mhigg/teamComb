@@ -132,6 +132,7 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset, int enCnt) :Obj
 	hitRad = VECTOR2(30, 30);
 	behaviorCnt = 0;
 	name = static_cast<ENEMY>(enemyNum);
+	life = enemyNum;
 	action = ENEM_ACT::MOVE;
 	Init("image/enemy.png", VECTOR2(480 / 8,400 / 5),VECTOR2(8,5), setUpPos);
 	comPos.resize(12);
@@ -174,6 +175,7 @@ void Enemy::CheckFree(void)
 
 bool Enemy::initAnim(void)
 {
+	visible = true;
 	int num = static_cast<int>(name) * 2;
 	AddAnim("右待機", num, 0, 2, 10, true);				// 右
 	AddAnim("左待機", num + 1, 0, 2, 10, true);		// 左
@@ -271,20 +273,11 @@ int Enemy::SerchPlayer(bool flag)
 void Enemy::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	scrollOffset = lpInfoCtrl.GetAddScroll(0);
-	// 死んでるかどうか
-	if (lpInfoCtrl.GetEnemyFlag(Enemy::enCnt))
+
+	// ﾀﾞﾒｰｼﾞをうけてるかるかどうか
+	if (lpInfoCtrl.GetEnemyHit(Enemy::enCnt))
 	{
-		// 点滅の処理
-		if (deathCnt % 5 == 0)
-		{
-			visible = !visible;
-		}
-		deathCnt--;
-		if (deathCnt == 0)
-		{
-			deathFlag = lpInfoCtrl.GetEnemyFlag(Enemy::enCnt);
-		}
-		return;
+		action = ENEM_ACT::DAMAGE;
 	}
 	// 最も近いﾌﾟﾚｲﾔｰの検索
 	nearP = SerchPlayer(true);
@@ -395,6 +388,9 @@ void Enemy::GateKeeper(void)
 	case ENEM_ACT::SERCH:
 		_updater = &Enemy::Serch;
 		break;
+	case ENEM_ACT::DAMAGE:
+		_updater = &Enemy::Damage;
+		return;
 	default:
 		action = ENEM_ACT::WAIT;
 		_updater = &Enemy::Wait;
@@ -407,12 +403,22 @@ void Enemy::Undette(void)
 {
 	switch (action)
 	{
+	case ENEM_ACT::WAIT:
+		if (GetRand(60) % 30 == 0)
+		{
+			action = ENEM_ACT::MOVE;
+		}
+		_updater = &Enemy::Wait;
+		break;
 	case ENEM_ACT::MOVE:
 		_updater = &Enemy::Move;
 		break;
 	case ENEM_ACT::TRA:
 		_updater = &Enemy::Track;
 		break;
+	case ENEM_ACT::DAMAGE:
+		_updater = &Enemy::Damage;
+		return;
 	default:
 		action = ENEM_ACT::MOVE;
 		_updater = &Enemy::Move;
@@ -424,12 +430,22 @@ void Enemy::Zombie(void)
 {
 	switch (action)
 	{
+	case ENEM_ACT::WAIT:
+		if (GetRand(60) % 30 == 0)
+		{
+			action = ENEM_ACT::MOVE;
+		}
+		_updater = &Enemy::Wait;
+		break;
 	case ENEM_ACT::MOVE:
 		_updater = &Enemy::Move;
 		break;
 	case ENEM_ACT::TRA:
 		_updater = &Enemy::Track;
 		break;
+	case ENEM_ACT::DAMAGE:
+		_updater = &Enemy::Damage;
+		return;
 	default:
 		action = ENEM_ACT::MOVE;
 		_updater = &Enemy::Move;
@@ -733,7 +749,24 @@ void Enemy::Back(const GameCtrl & controller)
 
 void Enemy::Damage(const GameCtrl & controller)
 {
-	 
+	// 点滅の処理
+	if (deathCnt % 5 == 0)
+	{
+		visible = !visible;
+	}
+	deathCnt--;
+	if (deathCnt == 0)
+	{
+		action = ENEM_ACT::WAIT;
+		life--;
+		deathCnt = 60;
+		if (life == -1)
+		{
+			deathFlag = true;
+			lpInfoCtrl.SetEnemyFlag(true, enCnt);
+		}
+		lpInfoCtrl.SetEnemyHit(Enemy::enCnt, false);
+	}
 }
 
 bool Enemy::CheckDeath(void)

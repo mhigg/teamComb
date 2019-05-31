@@ -36,6 +36,12 @@ bool InfoCtrl::SetEnemyFlag(bool flag, int num)
 	return true;
 }
 
+bool InfoCtrl::SetEnemyHit(int num,bool flag)
+{
+	enHit[num] = flag;
+	return false;
+}
+
 bool InfoCtrl::SetAddScroll(const VECTOR2 & offset, int num)
 {
 	if (num > 4)
@@ -87,7 +93,7 @@ VECTOR2 InfoCtrl::GetPlayerPos(int num)
 
 VECTOR2 InfoCtrl::GetEnemyPos(int num)
 {
-	if (!enFlag[num])
+	if (!enFlag[num] && !enHit[num])
 	{
 		return enPos[num];
 	}
@@ -97,6 +103,11 @@ bool InfoCtrl::GetPlayerFlag(int num)
 {
 	return plFlag[num];
 }
+bool InfoCtrl::GetEnemyHit(int num)
+{
+	return enHit[num];
+}
+
 bool InfoCtrl::GetEnemyFlag(int num)
 {
 	return enFlag[num];
@@ -138,13 +149,14 @@ void InfoCtrl::Init(void)
 	scrNum.resize(4);
 	enPos.resize(ENEMY_MAX);
 	enFlag.resize(ENEMY_MAX);	
+	enHit.resize(ENEMY_MAX);
 
 	// ‘S‘Ì‚ÉNON‚ ‚é‚¢‚Í0(¾ÞÛ)‚ð“ü‚ê‚é
 	for (int j = 0; j < ENEMY_MAX; j++)
 	{	
 		enPos[j]		= { 0,0 };
 		enFlag[j]	= false;
-		
+		enHit[j]		= false;
 	}
 	for (int j = 0; j < 4; j++)
 	{

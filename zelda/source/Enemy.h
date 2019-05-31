@@ -14,25 +14,16 @@ enum class ENEMY
 	ENEMY_MAX
 };
 
-// enemyの状態
-enum class ENEMY_STATE
-{
-	NORMAL,		// 通常
-	TRA,				// 追跡
-	RETREAT,		// 怯み
-	DEATH,			// 死亡
-	MAX
-};
-
 // enemyの行動
 enum class ENEM_ACT
 {
-	WAIT,	// 何もしない
+	WAIT,				// 何もしない
 	MOVE,				// 移動
 	TRA,					// 追跡
 	SERCH,				// 探索
 	CONST_MOVE,	// 一定の場所を徘徊
 	BACK,				// 持ち場に戻る
+	DAMAGE,			//	ﾀﾞﾒｰｼﾞ
 	MAX
 };
 
@@ -44,7 +35,6 @@ constexpr auto PLAYER_DIS_Y = 5;
 constexpr auto SERCH_LIM = 400;
 
 using PRIORITY_ARRAY = std::array<int, static_cast<int>(ENEM_ACT::MAX)>;
-using PRIORITY_TBL_ARRAY = std::array<PRIORITY_ARRAY, static_cast<int>(ENEMY_STATE::MAX)>;
 using PASS_FLAG = std::array<bool, DIR_MAX * 3>;
 using PASS_ARR_ALL = std::array<VECTOR2, DIR_MAX * 3>;
 using DIR_PASS = std::array<DIR[3], DIR_MAX>;
@@ -100,9 +90,9 @@ private:
 	void Undette(void);			// ｱﾝﾃﾞｯﾄ
 	void Zombie(void);				// ｿﾞﾝﾋﾞ
 
-	ENEMY_STATE state;			// 状態
 	ENEMY name;					// 敵の種類
 	ENEM_ACT action;				// 敵の行動
+	int life;								// 各ｷｬﾗのﾗｲﾌ
 	// ------------------近いﾌﾟﾚｲﾔｰの検索用--------------------------
 	OBJ_POS plPos;				// ﾌﾟﾚｲﾔｰの座標
 	OBJ_INT enPos;				// 敵の座標

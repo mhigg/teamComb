@@ -427,7 +427,7 @@ bool MapCtrl::SetUpEnemy(sharedListObj objList, int enemyNum, int x, int y)
 	// ´ÈÐ°‚Ì²Ý½ÀÝ½
 	/* Ã½Ä*/	auto obj = AddObjList()(objList,
 		std::make_unique<Enemy>
-		(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), drawOffset, enemyNum));
+		(num, chipSize * VECTOR2(x, y) + VECTOR2(30, 40), MapCtrl::drawOffset, enemyNum));
 	lpInfoCtrl.SetEnemyFlag(false, enemyNum);
 	return true;
 }
