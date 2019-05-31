@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include <math.h>
+#include "EffekseerForDXLib.h"
 #include "Player.h"
 #include "Weapon.h"
 #include "Effect.h"
@@ -7,6 +8,7 @@
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
 #include "ImageMng.h"
+#include "EffectMng.h"
 #include "BaseScene.h"
 
 Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOffset)
@@ -141,7 +143,6 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	startPos = pos;
 	score = 0;
 	oldScore = score;
-
 	InitScroll(static_cast<int>(plNum));
 	initAnim();
 	PlInit();
@@ -470,7 +471,7 @@ void Player::Stop(const GameCtrl & controller, weakListObj objList)
 	{
 		SetAnim("çUåÇ");
 //		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
-		AddObjList()(objList, std::make_unique<Effect>("image/éaåÇ_1.efk", pos + VECTOR2(0, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
+		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 	}
 }
@@ -499,7 +500,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 	{
 		SetAnim("çUåÇ");
 //		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
-		AddObjList()(objList, std::make_unique<Effect>("image/éaåÇ_1.efk", pos + VECTOR2(0, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
+		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 		return;
 	}

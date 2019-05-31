@@ -13,7 +13,7 @@ Effect::Effect(std::string efkName, VECTOR2 setUpPos, int lastingTime, VECTOR2 s
 	SetPos(setUpPos);
 	this->scrollOffset = scrollOffset;
 	this->lastingTime = lastingTime;
-	efkImg = lpEffectMng.GetID(efkName, 15.0f)[0];
+	efkImg = lpEffectMng.GetID(efkName, 5.0f)[0];
 }
 
 
