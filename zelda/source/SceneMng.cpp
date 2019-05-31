@@ -2,12 +2,9 @@
 #include <memory>
 #include "SceneMng.h"
 #include "EffectMng.h"
-#include "GameScene.h"
-#include "GameCtrl.h"
 #include "TitleScene.h"
-#include "EditScene.h"
-#include "MenuScene.h"
-#include "ResultScene.h"
+#include "GameCtrl.h"
+
 
 SceneMng::SceneMng()
 {

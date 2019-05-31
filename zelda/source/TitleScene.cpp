@@ -3,7 +3,8 @@
 #include "ImageMng.h"
 #include "GameScene.h"
 #include "MenuScene.h"
-#include"GameCtrl.h"
+#include "GameCtrl.h"
+#include "SoundMng.h"
 
 
 TitleScene::TitleScene()
@@ -24,10 +25,12 @@ uniqueBase TitleScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto cntOld = controller.GetCtrl(KEY_TYPE_OLD);
 	if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 	{
+		StopSoundMem(lpSoundMng.GetID("sound/TitleBGM.mp3"));
 		return std::make_unique<MenuScene>();
 	}
 	if (inputState[0][static_cast<int>(INPUT_ID::START)] & !inputStateOld[0][static_cast<int>(INPUT_ID::START)])
 	{
+		StopSoundMem(lpSoundMng.GetID("sound/TitleBGM.mp3"));
 		return std::make_unique<MenuScene>();
 	}
 	TitleDraw();
@@ -49,5 +52,6 @@ void TitleScene::TitleDraw(void)
 int TitleScene::Init(void)
 {
 	cnt = 0;
+	PlaySoundMem(lpSoundMng.GetID("sound/TitleBGM.mp3"), DX_PLAYTYPE_LOOP);
 	return 0;
 }
