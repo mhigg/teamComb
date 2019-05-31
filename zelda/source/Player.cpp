@@ -555,7 +555,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 //--------- “G‚É“–‚½‚Á‚½‚Ìˆ— ----------
 	if (state.Inv == 0)
 	{
-		for (int i = 0; (i < ENEMY_MAX) && (damageFlag == false); i++)
+		for (int i = 0; (i < GENERATE_MAX) && (damageFlag == false); i++)
 		{
 			VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
 			if (ePos != VECTOR2(-1, -1))
@@ -659,7 +659,7 @@ void Player::Attack(const GameCtrl & controller, weakListObj objList)
 	{
 		// UŒ‚ˆ—
 		VECTOR2 actPos = pos + actAdd[Player::dir];
-		for (int i = 0; i < ENEMY_MAX; i++)
+		for (int i = 0; i < GENERATE_MAX; i++)
 		{
 			VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
 			if (ePos != VECTOR2(-1, -1))

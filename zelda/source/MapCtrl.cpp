@@ -312,7 +312,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
 				break;
 			case MAP_ID::ENEMY:
-				if (enCnt < ENEMY_MAX)
+				if (enCnt < GENERATE_MAX)
 				{
 					SetUpEnemy(objList, enCnt, x, y,0);
 					enCnt++;
@@ -321,7 +321,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				break;
 			case MAP_ID::ENEMY_2:
-				if (enCnt < ENEMY_MAX)
+				if (enCnt < GENERATE_MAX)
 				{
 					SetUpEnemy(objList, enCnt, x, y,1);
 					enCnt++;
@@ -330,7 +330,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				break;
 			case MAP_ID::ENEMY_3:
-				if (enCnt < ENEMY_MAX)
+				if (enCnt < GENERATE_MAX)
 				{
 					SetUpEnemy(objList, enCnt, x, y,2);
 					enCnt++;

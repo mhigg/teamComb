@@ -18,5 +18,6 @@ private:
 
 	int fadeOutCnt;			// Ìª°ÄŞ±³Ä—p¶³İÄ
 	int scenecnt;			// ¼°İØ‚è‘Ö‚¦—p¶³İÄ
-	bool sceneflag;			// ¼°İ‚ªØ‚è‘Ö‚í‚éÌ×¸Ş};
+	bool sceneflag;			// ¼°İ‚ªØ‚è‘Ö‚í‚éÌ×¸Ş
+};
 

@@ -22,7 +22,7 @@ bool InfoCtrl::SetPlayerFlag(bool flag, int num)
 
 bool InfoCtrl::SetEnemyPos(const VECTOR2 & pos, int num)
 {
-	if (num > ENEMY_MAX)
+	if (num > GENERATE_MAX)
 	{
 		return false;
 	}
@@ -157,13 +157,13 @@ void InfoCtrl::Init(void)
 	plPos.resize(4);
 	plFlag.resize(4);
 	scrNum.resize(4);
-	enPos.resize(ENEMY_MAX);
-	enFlag.resize(ENEMY_MAX);	
-	enHit.resize(ENEMY_MAX);
-	enName.resize(ENEMY_MAX);
+	enPos.resize(GENERATE_MAX);
+	enFlag.resize(GENERATE_MAX);	
+	enHit.resize(GENERATE_MAX);
+	enName.resize(GENERATE_MAX);
 
 	// ‘S‘Ì‚ÉNON‚ ‚é‚¢‚Í0(¾ÞÛ)‚ð“ü‚ê‚é
-	for (int j = 0; j < ENEMY_MAX; j++)
+	for (int j = 0; j < GENERATE_MAX; j++)
 	{	
 		enPos[j]		= { 0,0 };
 		enFlag[j]	= false;

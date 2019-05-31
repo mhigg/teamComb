@@ -60,7 +60,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	if (gameFrame % 1800 == 0)
 	{
 		int tmp = 0;
-		for (int i = 0; i < ENEMY_MAX; i++)
+		for (int i = 0; i < GENERATE_MAX; i++)
 		{
 			if (lpInfoCtrl.GetEnemyFlag(i))
 			{
