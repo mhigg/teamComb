@@ -519,7 +519,7 @@ void Player::Stop(const GameCtrl & controller, weakListObj objList)
 	{
 		SetAnim("çUåÇ");
 //		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
-//		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
+		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 	}
 }
@@ -548,7 +548,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 	{
 		SetAnim("çUåÇ");
 //		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
-//		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
+		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 		return;
 	}

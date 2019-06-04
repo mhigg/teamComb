@@ -14,7 +14,7 @@ EffectMng::~EffectMng()
 
 bool EffectMng::SetUp(void)
 {
-	int playingEffectHandle = -1;
+	//int playingEffectHandle = -1;
 	SetUseZBuffer3D(TRUE);
 	SetWriteZBuffer3D(TRUE);
 

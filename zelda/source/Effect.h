@@ -19,5 +19,7 @@ private:
 
 	int efkImg;			// ´Ìª¸ÄÃŞ°À–¼:efkÌ§²Ù
 	int lastingTime;	// ´Ìª¸Ä‚Ì‘±ŠÔ
+
+	int time;
 };
 

@@ -14,6 +14,7 @@ Effect::Effect(std::string efkName, VECTOR2 setUpPos, int lastingTime, VECTOR2 s
 	this->scrollOffset = scrollOffset;
 	this->lastingTime = lastingTime;
 	efkImg = lpEffectMng.GetID(efkName, 5.0f)[0];
+	time = 0;
 }
 
 
@@ -40,13 +41,20 @@ void Effect::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	scrollOffset = lpInfoCtrl.GetAddScroll(0);
 	pos = lpInfoCtrl.GetPlayerPos(0);
-
+	int playingEffectHandle = -1;
 	// エフェクトを再生する。
-	int playingEffectHandle = PlayEffekseer2DEffect(efkImg);
+	if (time % 60 == 0)
+	{
+		playingEffectHandle = PlayEffekseer2DEffect(efkImg);
+	}
 
 	SetPosPlayingEffekseer2DEffect(playingEffectHandle, pos.x + drawOffset.x - scrollOffset.x, pos.y + drawOffset.y - scrollOffset.y, 0);
 
 	UpdateEffekseer2D();
+	
+
+	// 時間を経過させる。
+	time++;
 
 	lastingTime--;
 }
