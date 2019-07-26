@@ -38,7 +38,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<ResultScene>();
 	}
-#ifdef DEBUG
+#ifdef _DEBUG
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
 		return std::make_unique<EditScene>();
