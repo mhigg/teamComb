@@ -11,6 +11,8 @@ enum CHARA_TYPE {
 	CHARA_MAX
 };
 
+#define lpSelector Selector::GetInstance()
+
 using STR_CHR_IMG = std::array<std::string, CHARA_MAX>;
 
 class Selector :

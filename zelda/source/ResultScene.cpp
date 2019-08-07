@@ -25,6 +25,8 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	plNumber = GetJoypadNum();
 
+	lpImageMng.GetID("image/number.png", VECTOR2(30, 30), VECTOR2(10, 1));
+
 	for (int i = 0; i < plNumber; i++)
 	{
 		resultScore[i] = lpInfoCtrl.GetScore(i);
@@ -56,22 +58,33 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void ResultScene::ResultDraw(void)
 {
 	ClsDrawScreen();
-	DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
+	DrawGraph(0, 0, IMAGE_ID("image/result_2.png")[0], true);
 	int digit = 0;
 	// 1lÌßÚ²‚ÌŽž
 	if (plNumber == 1)
 	{
-		resultTemp = resultScore[0] * 10;
+		resultTemp = resultScore[0] * 100;
 		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 36, 200, IMAGE_ID("image/p1.png")[0], true);
 		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 66, 680, IMAGE_ID("image/score.png")[0], true);
-		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand.png")[0], true);
+		if (lpInfoCtrl.GetSelectChara(0) == CHARA_MAFIA)
+		{
+			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand.png")[0], true);
+		}
+		if (lpInfoCtrl.GetSelectChara(0) == CHARA_GIRL)
+		{
+			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand2.png")[0], true);
+		}
+		if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER || lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER2)
+		{
+			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand3.png")[0], true);
+		}
 		if (resultTemp == 0)
 		{
-			DrawGraph(GAME_SCREEN_SIZE_X / 2 + 35, 720, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
+			DrawGraph(GAME_SCREEN_SIZE_X / 2 + 35, 720, IMAGE_ID("image/number.png")[0], true);
 		}
 		while (resultTemp > 0)
 		{
-			DrawGraph(- (digit + 1) * 20 + (GAME_SCREEN_SIZE_X / 2 + 55), 720, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[resultTemp % 10], true);
+			DrawGraph(- (digit + 1) * 30 + (GAME_SCREEN_SIZE_X / 2 + 55), 720, IMAGE_ID("image/number.png")[resultTemp % 10], true);
 			resultTemp /= 10;
 			digit++;
 		}

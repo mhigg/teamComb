@@ -3,6 +3,7 @@
 #include <string>
 #include "EffekseerForDXLib.h"
 #include "Player.h"
+#include "Selector.h"
 #include "Weapon.h"
 #include "Effect.h"
 #include "StageMng.h"
@@ -139,8 +140,23 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	this->plNum = plNum;
 
-	Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
-
+	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_MAFIA )
+	{
+		Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+	}
+	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_GIRL)
+	{
+		Init("image/playerAll2.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+	}
+	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_OTHER)
+	{
+		Init("image/playerAll3.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+	}
+	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_OTHER2)
+	{
+		Init("image/playerAll3.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+	}
+		
 	lpImageMng.GetID("image/num.png", { 30,30 }, { 10,1 });
 
 	startPos = pos;
@@ -149,6 +165,13 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	acquisitionScore = 0;
 	InitScroll(static_cast<int>(plNum));
 	initAnim();
+
+	scorePosTbl = {
+		{ 700,30 },
+		{ 1500,30 },
+		{ 700,510 },
+		{ 1500,510 },
+	};
 	PlInit();
 }
 
@@ -456,7 +479,9 @@ void Player::StateDraw(void)
 		drawID = charaCode - '0';
 		if (drawID != -1)
 		{
-			DrawGraph((startPos.x + 500) + (30 * drawPos), startPos.y - 150, IMAGE_ID("image/num.png")[drawID], true);
+			{
+				DrawGraph(scorePosTbl[plNum].x + (30 * drawPos), scorePosTbl[plNum].y, IMAGE_ID("image/num.png")[drawID], true);
+			}
 		}
 		drawPos++;
 	}
