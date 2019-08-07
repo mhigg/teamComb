@@ -51,6 +51,11 @@ void Selector::Draw(void)
 	DrawGraph(pos.x, pos.y, IMAGE_ID(standImgTbl[selectChara])[0], true);
 }
 
+CHARA_TYPE Selector::GetSelChara(void)
+{
+	return selectChara;
+}
+
 void Selector::SetMove(const GameCtrl & controller, weakListObj objList)
 {
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
@@ -63,12 +68,20 @@ void Selector::SetMove(const GameCtrl & controller, weakListObj objList)
 		{
 			selectChara = static_cast<CHARA_TYPE>(static_cast<int>(selectChara) + 1);
 		}
+		else
+		{
+			selectChara = static_cast<CHARA_TYPE>(static_cast<int>(0));
+		}
 	}
 	if (inputState[plNum][XINPUT_LEFT] & !inputStateOld[plNum][XINPUT_LEFT])
 	{
 		if (selectChara > 0)
 		{
 			selectChara = static_cast<CHARA_TYPE>(static_cast<int>(selectChara) - 1);
+		}
+		else
+		{
+			selectChara = static_cast<CHARA_TYPE>(static_cast<int>(3));
 		}
 	}
 	lpInfoCtrl.SetSelectChara(selectChara, static_cast<int>(plNum));

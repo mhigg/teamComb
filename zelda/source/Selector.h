@@ -24,6 +24,7 @@ public:
 	bool CheckObjType(OBJ_TYPE type);
 	void Draw(void);
 
+	CHARA_TYPE GetSelChara(void);	
 private:
 	void SetMove(const GameCtrl &controller, weakListObj objList);
 
