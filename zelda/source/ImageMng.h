@@ -2,8 +2,8 @@
 #include <mutex>
 #include <vector>
 #include <map>
+#include "VECTOR2.h"
 
-class VECTOR2;
 using VEC_INT = std::vector<int>;
 
 //’Zk’è‹`

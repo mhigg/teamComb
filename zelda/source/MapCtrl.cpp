@@ -165,7 +165,8 @@ VECTOR2 MapCtrl::GetItemPos(MAP_ID id,int num)
 
 bool MapCtrl::GetItemFlag(const VECTOR2 & pos)
 {
-	VECTOR2 selPos(pos / chipSize);
+	VECTOR2 tmp = pos;
+	VECTOR2 selPos = tmp / chipSize;
 	return itemFlag[selPos.y][selPos.x];
 }
 

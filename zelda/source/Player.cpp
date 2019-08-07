@@ -141,7 +141,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
 
-	lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 });
+	lpImageMng.GetID("image/num.png", { 30,30 }, { 10,1 });
 
 	startPos = pos;
 	score = 0;
@@ -456,7 +456,7 @@ void Player::StateDraw(void)
 		drawID = charaCode - '0';
 		if (drawID != -1)
 		{
-			DrawGraph((startPos.x + 100) + (20 * drawPos), startPos.y - 200, IMAGE_ID("image/number.png")[drawID], true);
+			DrawGraph((startPos.x + 500) + (30 * drawPos), startPos.y - 150, IMAGE_ID("image/num.png")[drawID], true);
 		}
 		drawPos++;
 	}
@@ -619,13 +619,14 @@ void Player::Attack(const GameCtrl & controller, weakListObj objList)
 	if (!animEndFlag)
 	{
 		// çUåÇèàóù
-		VECTOR2 actPos = pos + actAdd[Player::dir];
+		VECTOR2f actPos = pos + actAdd[Player::dir];
 		for (int i = 0; i < GENERATE_MAX; i++)
 		{
-			VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
-			if (ePos != VECTOR2(-1, -1))
+			auto tmp = lpInfoCtrl.GetEnemyPos(i);
+			VECTOR2f ePos = VECTOR2f(tmp.x, tmp.y);
+			if (tmp != VECTOR2(-1, -1))
 			{
-				VECTOR2 tmp = { ePos - actPos };
+				VECTOR2f act = { ePos - actPos };
 				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 40)
 				{
 					// ìñÇΩÇ¡ÇƒÇÈÇ∆Ç´
