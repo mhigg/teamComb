@@ -95,7 +95,7 @@ int GameScene::Init(void)
 		ghGameScreen[p] = MakeScreen(size.x, size.y, false);
 	}
 	PlaySoundMem(lpSoundMng.GetID("sound/naked.wav"), DX_PLAYTYPE_LOOP);
-	player = std::make_unique<Player>();
+	player = std::make_shared<Player>();
 	return 0;
 }
 

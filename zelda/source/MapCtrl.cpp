@@ -301,7 +301,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 				else
 				{			
 					auto obj = AddObjList()(objList, 
-						std::make_unique<Player>
+						std::make_shared<Player>
 						(static_cast<PL_NUMBER>(plCnt), chipSize * VECTOR2(x, y), drawOffset + plScrTbl[plCnt])
 					);
 					VECTOR2 playScrSize = lpSceneMng.GetPlayScreen(singleFlag);	// 1‰æ–Ê‚Ì»²½Þ

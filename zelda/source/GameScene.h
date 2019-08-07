@@ -22,7 +22,7 @@ private:
 	int gameFrame;				// ¹Þ°Ñ’†‚ÌŒo‰ßŽžŠÔ
 	int tile;
 	int ghGameScreen[4];
-	std::unique_ptr<Player> player;
+	std::shared_ptr<Player> player;
 };
 
 int DrawLine(VECTOR2 vec1, VECTOR2 vec2, unsigned int Color, int Thickness);
