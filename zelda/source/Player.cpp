@@ -456,7 +456,7 @@ void Player::StateDraw(void)
 		drawID = charaCode - '0';
 		if (drawID != -1)
 		{
-			DrawGraph((startPos.x + 500) + (30 * drawPos), startPos.y - 2150, IMAGE_ID("image/num.png")[drawID], true);
+			DrawGraph((startPos.x + 500) + (30 * drawPos), startPos.y - 150, IMAGE_ID("image/num.png")[drawID], true);
 		}
 		drawPos++;
 	}
