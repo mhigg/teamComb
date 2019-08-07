@@ -88,6 +88,12 @@ int GameScene::Init(void)
 	lpMapCtrl.MapLoad(objList, false);
 	gameFrame = 10800;
 	tile = LoadGraph("image/tile.png", true);
+	bool single = false/*(GetJoypadNum() == 1)*/;
+	VECTOR2 size = lpSceneMng.GetPlayScreen(single);
+	for (int p = 0; p < GetJoypadNum(); p++)
+	{
+		ghGameScreen[p] = MakeScreen(size.x, size.y, false);
+	}
 	PlaySoundMem(lpSoundMng.GetID("sound/naked.wav"), DX_PLAYTYPE_LOOP);
 	player = std::make_unique<Player>();
 	return 0;
@@ -98,7 +104,14 @@ void GameScene::Draw(void)
 // ¦ •`‰æ‚Ì¿°Äˆ—
 	(*objList).sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj2).GetPos().y; });
 
+	//for (int p = 0; p < 4; p++)
+	//{
+	//	SetDrawScreen(ghGameScreen[p]);
+	//	ClsDrawScreen();
+	//}
+
 	ClsDrawScreen();
+
 	DrawGraph(0, 0, tile, true);
 	lpMapCtrl.Draw(false);
 	VECTOR2 plPos = lpInfoCtrl.GetPlayerPos(0);
@@ -116,9 +129,9 @@ void GameScene::Draw(void)
 	return false;
 	});*/
 
-	//int playerNum = GetJoypadNum();
+	int playerNum = 4;
 
-	//for (int plCnt = 0; plCnt < playerNum; plCnt++)
+	for (int plCnt = 0; plCnt < playerNum; plCnt++)
 	{
 		for (auto& obj : (*objList))
 		{
@@ -126,7 +139,7 @@ void GameScene::Draw(void)
 		}
 	}
 
-#ifdef DEBUG
+#ifdef _DEBUG
 
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);

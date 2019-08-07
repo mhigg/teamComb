@@ -21,6 +21,7 @@ private:
 	sharedListObj objList;		// ¼ª±ÄÞÎß²ÝÀ°
 	int gameFrame;				// ¹Þ°Ñ’†‚ÌŒo‰ßŽžŠÔ
 	int tile;
+	int ghGameScreen[4];
 	std::unique_ptr<Player> player;
 };
 
