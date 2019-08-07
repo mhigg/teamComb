@@ -243,13 +243,17 @@ VECTOR2 Player::sidePos(VECTOR2 pos, DIR dir, int speed, int sideNum)
 
 void Player::SetMove(const GameCtrl & controller, weakListObj objList)
 {
-	lpInfoCtrl.SetPlayerFlag(true, static_cast<int>(plNum));
+	//lpInfoCtrl.SetPlayerFlag(true, static_cast<int>(plNum));
 	lpInfoCtrl.SetPlayerPos(pos,static_cast<int>(plNum));
+	damageFlag = lpInfoCtrl.GetDamageFlag(plNum);
 	if (!damageFlag)
 	{
 		GetItem(objList);
 	}
 	invTime = state.Inv;
+	if (!lpInfoCtrl.GetPlayerFlag(plNum)) {
+		visible = false;
+	}
 
 	auto &chipSize = lpStageMng.GetChipSize().x;
 
@@ -550,7 +554,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 				if (tmp.x * tmp.x + tmp.y * tmp.y <= 2500)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
-					damageFlag = true;
+					lpInfoCtrl.SetDamageFlag(true, i);
 				}
 			}
 		}
@@ -652,10 +656,23 @@ void Player::Attack(const GameCtrl & controller, weakListObj objList)
 			if (tmp != VECTOR2(-1, -1))
 			{
 				VECTOR2f act = { ePos - actPos };
-				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 40)
+				if (sqrt(act.x * act.x) + sqrt(act.y * act.y) <= 40)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
 					lpInfoCtrl.SetEnemyHit(i,true);
+				}
+			}
+		}
+		for (int i = 0; i < 4; i++) {
+			auto tmp = lpInfoCtrl.GetPlayerPos(i);
+			VECTOR2f pPos = VECTOR2f(tmp.x, tmp.y);
+			if (tmp != VECTOR2(-1, -1) && i != plNum)
+			{
+				VECTOR2f act = { pPos - actPos };
+				if (sqrt(act.x * act.x) + sqrt(act.y * act.y) <= 40)
+				{
+					// “–‚½‚Á‚Ä‚é‚Æ‚«
+					lpInfoCtrl.SetDamageFlag(true, i);
 				}
 			}
 		}
@@ -746,7 +763,7 @@ void Player::Damage(const GameCtrl & controller, weakListObj objList)
 			damageCnt = 0;
 			
 			// ÀÞÒ°¼Þ±ÆÒ°¼®Ý‚ªI‚í‚Á‚½‚ç‘JˆÚ(—\’è)
-			damageFlag = false;
+			lpInfoCtrl.SetDamageFlag(false, plNum);
 			_updater = &Player::Move;
 			visible = true;
 			state.Inv = 120;

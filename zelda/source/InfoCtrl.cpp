@@ -20,6 +20,25 @@ bool InfoCtrl::SetPlayerFlag(bool flag, int num)
 	return true;
 }
 
+void InfoCtrl::SetDamageFlag(bool flag, int num)
+{
+	if (num > 4)
+	{
+		return;
+	}
+	damaged[num] = flag;
+	return;
+}
+
+bool InfoCtrl::GetDamageFlag(int num)
+{
+	if (num > 4)
+	{
+		return false;
+	}
+	return damaged[num];
+}
+
 bool InfoCtrl::SetEnemyPos(const VECTOR2 & pos, int num)
 {
 	if (num > GENERATE_MAX)
@@ -156,6 +175,7 @@ void InfoCtrl::Init(void)
 {
 	plPos.resize(4);
 	plFlag.resize(4);
+	damaged.resize(4);
 	scrNum.resize(4);
 	enPos.resize(GENERATE_MAX);
 	enFlag.resize(GENERATE_MAX);	
@@ -174,6 +194,7 @@ void InfoCtrl::Init(void)
 	{
 		plPos[j]		= { 0,0 };
 		plFlag[j]	= false;
+		damaged[j] = false;
 		scrNum[j]	= { 0,0 };
 		plScore[j] = 0;
 		plBonus[j] = 0;

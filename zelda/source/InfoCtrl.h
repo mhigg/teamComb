@@ -19,6 +19,8 @@ public:
 	}
 	bool SetPlayerPos(const VECTOR2 & pos, int num);
 	bool SetPlayerFlag(bool flag, int num);
+	void SetDamageFlag(bool flag, int num);
+	bool GetDamageFlag(int num);
 	bool SetAddScroll(const VECTOR2 & offset, int num);					// ÌßÚ²Ô°‚Ì‚İ‚ªŒÄ‚Ô
 
 	bool SetEnemyPos(const VECTOR2 & pos, int num);
@@ -53,6 +55,7 @@ private:
 	std::vector<int> enName;					// “G‚Ì–¼‘O
 	std::vector<VECTOR2>plPos;
 	std::vector<bool> plFlag;
+	std::vector<bool> damaged;
 	std::vector<VECTOR2> scrNum;
 	std::array<int,4> plScore;					// Å‘åÌßÚ²Ô°”‚Ì½º±
 	std::array<int,4> plBonus;					// Å‘åÌßÚ²Ô°”‚ÌÎŞ°Å½
