@@ -521,7 +521,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 			VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
 			if (ePos != VECTOR2(-1, -1))
 			{
-				VECTOR2 tmp = { ePos - pos };
+				VECTOR2f tmp = { ePos - pos };
 				if (tmp.x * tmp.x + tmp.y * tmp.y <= 2500)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
