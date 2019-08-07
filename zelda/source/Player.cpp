@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include <math.h>
+#include <string>
 #include "EffekseerForDXLib.h"
 #include "Player.h"
 #include "Weapon.h"
@@ -140,6 +141,8 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 
 	Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
 
+	lpImageMng.GetID("image/number.png", { 40,30 }, { 10,1 });
+
 	startPos = pos;
 	score = 0;
 	oldScore = score;
@@ -176,10 +179,7 @@ void Player::PlInit(void)
 	upTime = { 0,0 };
 	invTime = 0;
 	bonus = 0;
-	additionTime = 8;
 	randomBonus = GetRand(4);
-	acquisitionflag = false;
-	displayTime = 0;
 
 	damageFlag = false;
 	damageCnt = 0;
@@ -448,56 +448,17 @@ void Player::Draw(void)
 
 void Player::StateDraw(void)
 {
-	additionTime--;
-	if (oldScore < score)
+	int drawID;
+	int drawPos = 0;
+	auto DrawScore = score * 100;
+	for (auto charaCode : std::string{ std::to_string(DrawScore) })
 	{
-		if (additionTime <= 0)
+		drawID = charaCode - '0';
+		if (drawID != -1)
 		{
-			oldScore++;
-			additionTime = 8;
+			DrawGraph((startPos.x + 100) + (20 * drawPos), startPos.y - 200, IMAGE_ID("image/number.png")[drawID], true);
 		}
-	}
-
-	DrawGraph(1450, 45, IMAGE_ID("image/score.png")[0], true);
-
-	digit = 0;
-	numTemp = (oldScore * 10);
-	if (numTemp == 0)
-	{
-		DrawGraph((GAME_SCREEN_SIZE_X - 10) * (plNum % 2 + 1) - 22, 80, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[0], true);
-	}
-	while (numTemp > 0)
-	{
-		DrawGraph((GAME_SCREEN_SIZE_X - 10) * (plNum % 2 + 1) - (digit + 1) * 22, 80, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[numTemp % 10], true);
-		numTemp /= 10;
-		digit++;
-	}
-	// ÌßÚ²Ô°ã‚Ì‰ÁŽZ‚³‚ê‚½½º±
-	int acTemp = acquisitionScore * 10;		// ‰ÁŽZ‚µ‚½½º±
-	int adigit = 0;							// Œ…”
-	if (acquisitionflag == true)
-	{
-		displayTime++;
-	}
-	if (acquisitionScore > 0)
-	{
-		acquisitionflag = true;
-		if (displayTime < 60)
-		{
-			DrawGraph(pos.x - scrollOffset.x - 40, pos.y - scrollOffset.y - 130, lpImageMng.GetID("image/+-.png", VECTOR2(40, 30), VECTOR2(2, 1))[0], true);
-			while (acTemp > 0)
-			{
-				DrawGraph((pos.x - scrollOffset.x + 30) - (adigit + 1) * 22, pos.y - scrollOffset.y - 130, lpImageMng.GetID("image/number.png", VECTOR2(40, 30), VECTOR2(10, 1))[acTemp % 10], true);
-				acTemp /= 10;
-				adigit++;
-			}
-		}
-		else
-		{
-			displayTime = 0;
-			acquisitionScore = 0;
-			acquisitionflag = false;
-		}
+		drawPos++;
 	}
 }
 
