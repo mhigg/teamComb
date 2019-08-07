@@ -76,16 +76,16 @@ private:
 	State state;				// ÌßÚ²Ô°‚ÌUŒ‚—Í/–hŒä—Í/–³“GŠÔ
 
 	int score;					// Š½º±
-	int life;					// ÌßÚ²Ô°‚Ì‘Ì—Í
+	int life;						// ÌßÚ²Ô°‚Ì‘Ì—Í
 	int invTime;				// invŒ¸Z—p
-	int damageCnt;				// ÀŞÒ°¼Ş‚ğó‚¯‚Ä‚©‚ç‚Ì¶³İÄ
-	bool damageFlag;			// ÀŞÒ°¼Ş‚ğ‚¤‚¯‚Ä‚¢‚éÌ×¸Ş
+	int damageCnt;			// ÀŞÒ°¼Ş‚ğó‚¯‚Ä‚©‚ç‚Ì¶³İÄ
+	bool damageFlag;		// ÀŞÒ°¼Ş‚ğ‚¤‚¯‚Ä‚¢‚éÌ×¸Ş
 	int deathInv;				// €–S“|‚ê‚½‚Ü‚Ü‚ÌŠÔ
 	int bonus;					// ÎŞ°Å½
 	int oldScore;				// ’¼‘O‚Ì½º±
-	int additionTime;			// ‰ÁZ‚·‚é‚Ü‚Å‚ÌŠÔ
-	int acquisitionScore;		// ‰ÁZŒ¸Z‚³‚ê‚½½º±
-	bool acquisitionflag;		// •\¦Ì×¸Ş
+	int additionTime;		// ‰ÁZ‚·‚é‚Ü‚Å‚ÌŠÔ
+	int acquisitionScore;	// ‰ÁZŒ¸Z‚³‚ê‚½½º±
+	bool acquisitionflag;	// •\¦Ì×¸Ş
 	int displayTime;			// •\¦‚·‚éŠÔ
 	unsigned int reStartCnt;
 	std::array<int,SCORE_DATA::DATA_MAX> param;
