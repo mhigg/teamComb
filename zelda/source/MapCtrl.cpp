@@ -277,7 +277,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 	}
 	// GameMode‚È‚ç‚±‚±‚©‚çæ‚Ö
 
-	int playerNum = 4/*GetJoypadNum()*/;		// Ú‘±‚µ‚Ä‚éÌßÚ²Ô°‚Ì”
+	int playerNum = GetJoypadNum();		// Ú‘±‚µ‚Ä‚éÌßÚ²Ô°‚Ì”
 	scrollTbl.resize(playerNum);
 	mapImage.resize(playerNum);
 
