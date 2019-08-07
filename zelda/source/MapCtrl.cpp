@@ -277,7 +277,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 	}
 	// GameMode‚È‚ç‚±‚±‚©‚çæ‚Ö
 
-	int playerNum = GetJoypadNum();		// Ú‘±‚µ‚Ä‚éÌßÚ²Ô°‚Ì”
+	int playerNum = 4/*GetJoypadNum()*/;		// Ú‘±‚µ‚Ä‚éÌßÚ²Ô°‚Ì”
 	scrollTbl.resize(playerNum);
 	mapImage.resize(playerNum);
 
@@ -293,7 +293,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			switch (id)
 			{
 			case MAP_ID::PLAYER:
-				if ((plCnt >= playerNum) || (playerNum >= 4))
+				if ((plCnt >= playerNum) || (playerNum > 4))
 				{
 					break;
 				}

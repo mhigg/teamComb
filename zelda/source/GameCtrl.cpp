@@ -11,7 +11,7 @@ GameCtrl::GameCtrl()
 		DX_INPUT_PAD4
 	};
 
-	int j_Num = GetJoypadNum();
+	int j_Num = 4/*GetJoypadNum()*/;
 	if (j_Num <= 0) j_Num = 1;
 	inputState.resize(j_Num);
 	inputStateOld.resize(j_Num);
