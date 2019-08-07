@@ -619,13 +619,14 @@ void Player::Attack(const GameCtrl & controller, weakListObj objList)
 	if (!animEndFlag)
 	{
 		// UŒ‚ˆ—
-		VECTOR2 actPos = pos + actAdd[Player::dir];
+		VECTOR2f actPos = pos + actAdd[Player::dir];
 		for (int i = 0; i < GENERATE_MAX; i++)
 		{
-			VECTOR2 ePos = lpInfoCtrl.GetEnemyPos(i);
-			if (ePos != VECTOR2(-1, -1))
+			auto tmp = lpInfoCtrl.GetEnemyPos(i);
+			VECTOR2f ePos = VECTOR2f(tmp.x, tmp.y);
+			if (tmp != VECTOR2(-1, -1))
 			{
-				VECTOR2 tmp = { ePos - actPos };
+				VECTOR2f act = { ePos - actPos };
 				if (sqrt(tmp.x * tmp.x) + sqrt(tmp.y * tmp.y) <= 40)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
