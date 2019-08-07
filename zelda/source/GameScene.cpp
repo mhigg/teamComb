@@ -86,6 +86,7 @@ int GameScene::Init(void)
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
 	lpMapCtrl.SetUp(lpStageMng.GetChipSize(), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
+	lpSoundMng.GetID("sound/naked.wav");
 	gameFrame = 10800;
 	tile = LoadGraph("image/tile.png", true);
 	bool single = (GetJoypadNum() == 1);

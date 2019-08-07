@@ -68,13 +68,13 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 				if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 				{
 					lpMapCtrl.SetMode(nowMode);
-					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_NORMAL);
+					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_BACK);
 					return std::make_unique<SelectScene>();
 				}
 				if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 				{
 					lpMapCtrl.SetMode(nowMode);
-					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_NORMAL);
+//					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_NORMAL);
 					return std::make_unique<SelectScene>();
 				}
 			}
@@ -82,12 +82,12 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 			{
 				if ((cnt[KEY_INPUT_F1]) & (!cntOld[KEY_INPUT_F1]))
 				{
-					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_NORMAL);
+					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_BACK);
 					descriptionFlag = true;
 				}
 				if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 				{
-					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_NORMAL);
+					PlaySoundMem(lpSoundMng.GetID("sound/決定音.wav"), DX_PLAYTYPE_BACK);
 					descriptionFlag = true;
 				}
 			}
@@ -100,7 +100,7 @@ uniqueBase MenuScene::UpDate(uniqueBase own, const GameCtrl & controller)
 				nowMode = MODE_HOWTO;
 				selectPoint[nowMode] = 20;
 				descriptionFlag = false;
-				PlaySoundMem(lpSoundMng.GetID("sound/キャンセル.wav"), DX_PLAYTYPE_NORMAL);
+				PlaySoundMem(lpSoundMng.GetID("sound/キャンセル.wav"), DX_PLAYTYPE_BACK);
 			}
 		}
 	}
@@ -145,6 +145,8 @@ void MenuScene::MenuDraw(void)
 
 int MenuScene::Init(void)
 {
+	lpSoundMng.Load("sound/決定音.wav");
+	lpSoundMng.Load("sound/キャンセル.wav");
 	movePos = {
 		VECTOR2(0,130),
 		VECTOR2(0,290),

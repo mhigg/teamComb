@@ -96,7 +96,6 @@ bool TitleScene::FadeOut(void)
 		{
 			fadeOutCnt = 0;
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-
 		}
 	}
 	return true;

@@ -28,7 +28,7 @@ public:
 
 	bool SetScore(int val, int num);									// ｽｺｱｾｯﾄ(ﾘｻﾞﾙﾄ用)
 	bool SetBonus(int val, int num);									// ﾎﾞｰﾅｽｾｯﾄ(ﾘｻﾞﾙﾄ用)
-	bool SetSelectChara(CHARA_TYPE val, int num);						// 選んでいるｷｬﾗｾｯﾄ
+	bool SetSelectChara(CHARA_TYPE val, int num);			// 選んでいるｷｬﾗｾｯﾄ
 
 	VECTOR2 GetPlayerPos(int num);
 	bool GetPlayerFlag(int num);

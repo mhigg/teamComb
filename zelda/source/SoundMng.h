@@ -13,11 +13,10 @@ public:
 	}
 
 	const int& GetID(std::string f_name);
-
+	void Load(std::string f_name);
 private:
 	SoundMng();
 	~SoundMng();
 
 	std::map<std::string, int> soundId;
 };
-
