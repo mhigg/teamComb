@@ -554,7 +554,7 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 				if (tmp.x * tmp.x + tmp.y * tmp.y <= 2500)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
-					lpInfoCtrl.SetDamageFlag(true, i);
+					lpInfoCtrl.SetDamageFlag(true, plNum);
 				}
 			}
 		}
