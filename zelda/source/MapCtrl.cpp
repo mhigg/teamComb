@@ -49,7 +49,7 @@ struct CheckSize
 
 bool MapCtrl::SetUp(VECTOR2 chipSize, VECTOR2 drawOffset)
 {
-	lpImageMng.GetID("image/mapImage.png", VECTOR2(40, 40), VECTOR2(8, 10));
+	lpImageMng.GetID("image/mapImage.png", VECTOR2(40, 40), VECTOR2(8, 12));
 
 	MapCtrl::chipSize = chipSize;
 	MapCtrl::drawOffset = drawOffset;
