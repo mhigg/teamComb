@@ -34,7 +34,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	{
 		return std::make_unique<EditScene>();
 	}
-	if (ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
+	if (gameFrame < 0 || ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
 	{
 		return std::make_unique<ResultScene>();
 	}
@@ -139,29 +139,29 @@ void GameScene::Draw(void)
 			}
 		}
 
-	#ifdef _DEBUG
+	//#ifdef _DEBUG
 
-		VECTOR2 tmp1(0, 0);
-		VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
+	//	VECTOR2 tmp1(0, 0);
+	//	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 
-		for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += 800)
-		{
-			tmp2.x = tmp1.x;
-			DrawLine(tmp1, tmp2, 0x00ffffff, true);
-		}
-		tmp1 = VECTOR2(0, 0);
-		tmp2.x = GAME_SCREEN_SIZE_X;
-		for (; tmp1.y <= GAME_SCREEN_SIZE_Y; tmp1.y += 480)
-		{
-			tmp2.y = tmp1.y;
-			DrawLine(tmp1, tmp2, 0x00ffffff, true);
-		}
+	//	for (; tmp1.x <= GAME_SCREEN_SIZE_X; tmp1.x += 800)
+	//	{
+	//		tmp2.x = tmp1.x;
+	//		DrawLine(tmp1, tmp2, 0x00ffffff, true);
+	//	}
+	//	tmp1 = VECTOR2(0, 0);
+	//	tmp2.x = GAME_SCREEN_SIZE_X;
+	//	for (; tmp1.y <= GAME_SCREEN_SIZE_Y; tmp1.y += 480)
+	//	{
+	//		tmp2.y = tmp1.y;
+	//		DrawLine(tmp1, tmp2, 0x00ffffff, true);
+	//	}
 
-		DrawString(0, 800, "GameScene", 0x00ff0000);
-		DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
+	//	DrawString(0, 800, "GameScene", 0x00ff0000);
+	//	DrawFormatString(1400, 930, 0xff, "frame / 60:%d", lpSceneMng.GetFram() / 60);
 
-	#else
-	#endif // DEBUG
+	//#else
+	//#endif // DEBUG
 
 
 		//	DrawBox(640, 300, 960, 640, 0x00ffffff, true);

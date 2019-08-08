@@ -152,7 +152,7 @@ void ResultScene::ResultDraw(void)
 	}
 	if (updateFlag)
 	{
-		DrawGraph(500,720, IMAGE_ID("image/hiscore_.png")[0],true);
+		DrawGraph(620,760, IMAGE_ID("image/hiscore_.png")[0],true);
 	}
 	ScreenFlip();
 }

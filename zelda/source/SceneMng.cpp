@@ -51,6 +51,7 @@ bool SceneMng::Init(void)
 {
 	// ¼½ÃÑˆ—
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, 16);		// 65536FÓ°ÄŞ‚Éİ’è
+	SetWindowSize(1500, 800);
 	ChangeWindowMode(true);				// true:window@false:ÌÙ½¸Ø°İ
 	SetWindowText("TREASURE HUNTER");
 	if (DxLib_Init() == -1) return false;

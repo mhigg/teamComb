@@ -66,7 +66,7 @@ void TitleScene::TitleDraw(void)
 	if (cnt > 1)
 	{
 		DrawGraph(0, 0, IMAGE_ID("image/TitleD.png")[0], true);
-		DrawGraph(1200, 700, IMAGE_ID("image/コアのみ.png")[0], true);
+		//DrawGraph(1200, 700, IMAGE_ID("image/コアのみ.png")[0], true);
 	}
 	
 	if (cnt / 30 % 3)
