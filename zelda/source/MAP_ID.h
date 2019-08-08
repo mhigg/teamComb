@@ -88,6 +88,7 @@ enum class MAP_ID
 	STONE_2,
 	STONE_3,
 	STONE_4,
+	// êXópè∞
 	falest,
 	falest2,
 	falest3,

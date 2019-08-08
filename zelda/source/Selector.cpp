@@ -17,11 +17,6 @@ Selector::Selector(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset) :Obj(d
 		"image/stand2.png",
 		"image/stand3.png",
 		"image/yukari_stand.png",
-<<<<<<< .mine
-		"image/yukari_stand.png",
-=======
-		"image/yukari_stand.png"
->>>>>>> .theirs
 	};
 
 	pNumImgTbl = {
