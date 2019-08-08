@@ -129,7 +129,23 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 					false,		// STONE_1	// Šâ
 					false,		// STONE_2
 					false,		// STONE_3
-					false,		// STONE_4				
+					false,		// STONE_4
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true
 	};
 	actAdd = {
 		VECTOR2(0, hitRad.y * 2),
@@ -159,6 +175,10 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 		
 	lpImageMng.GetID("image/num.png", { 30,30 }, { 10,1 });
 
+	lpImageMng.GetID("image/number.png", VECTOR2(30, 30), VECTOR2(10, 1));
+
+
+
 	startPos = pos;
 	score = 0;
 	oldScore = score;
@@ -171,6 +191,12 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 		{ 1500,30 },
 		{ 700,510 },
 		{ 1500,510 },
+	};
+	scorePosTbl = {
+		{ 700,230 },
+		{ 1500,230 },
+		{ 700,710 },
+		{ 1500,710 },
 	};
 	PlInit();
 }
@@ -478,6 +504,18 @@ void Player::StateDraw(void)
 	int drawID;
 	int drawPos = 0;
 	auto DrawScore = score * 100;
+	if (DrawScore > 100 && DrawScore < 1000)
+	{
+
+	}
+	if (DrawScore > 1000 && DrawScore < 10000)
+	{
+
+	}
+	if (DrawScore > 10000 && DrawScore < 100000)
+	{
+
+	}
 	for (auto charaCode : std::string{ std::to_string(DrawScore) })
 	{
 		drawID = charaCode - '0';
@@ -489,6 +527,16 @@ void Player::StateDraw(void)
 		}
 		drawPos++;
 	}
+	/*for (auto charaCode : std::string{ std::to_string(life) })
+	{
+		drawID = charaCode - '0';
+		if (drawID != -1)
+		{
+			{
+				DrawGraph(hpPosTbl[plNum].x, hpPosTbl[plNum].y, IMAGE_ID("image/num.png")[drawID], true);
+			}
+		}
+	}*/
 }
 
 void Player::Stop(const GameCtrl & controller, weakListObj objList)

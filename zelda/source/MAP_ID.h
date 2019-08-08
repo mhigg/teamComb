@@ -88,6 +88,22 @@ enum class MAP_ID
 	STONE_2,
 	STONE_3,
 	STONE_4,
+	falest,
+	falest2,
+	falest3,
+	falest4,
+	falest5,
+	falest6,
+	falest7,
+	falest8,
+	falest9,
+	falest10,
+	falest11,
+	falest12,
+	falest13,
+	falest14,
+	falest15,
+	falest16,
 	MAX
 };
 

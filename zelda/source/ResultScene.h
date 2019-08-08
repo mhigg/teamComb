@@ -43,5 +43,6 @@ private:
 	int resultTemp;								// ½º±(•`‰æ—p)
 	int waitFlag;								// ‘Ò‚¿Ì×¸Þ
 	FILE_DATA fileData;							// Ì§²Ù“à‚ÌÊ²½º±ÃÞ°À
+	bool updateFlag;
 };
 

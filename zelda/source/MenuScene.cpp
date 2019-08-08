@@ -114,7 +114,7 @@ void MenuScene::MenuDraw(void)
 	// ÒÆ­°‰æ‘œ•\Ž¦
 	if(!descriptionFlag)
 	{
-		DrawGraph(0, 0, IMAGE_ID("image/menu1.png")[0], true);
+		DrawGraph(0, 0, IMAGE_ID("image/menu_.png")[0], true);
 		for (int i = 0; i < MODE_MAX; i++)
 		{
 			DrawGraph(movePos[i].x - size.x + selectPoint[i], movePos[i].y + (i * size.y), lpImageMng.GetID("image/menu2.png", { 460,180 }, { 1,3 })[i], true);
