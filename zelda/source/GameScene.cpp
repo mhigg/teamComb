@@ -114,7 +114,7 @@ void GameScene::Draw(void)
 
 		// objList‚©‚ç‰æ–ÊŠO‚ÌµÌÞ¼Þª¸Ä‚ðœŠO‚·‚é
 		//auto tmpList = (*objList);
-		//tmpList.erase(tmpList.remove_if([&](sharedObj &tmp) {
+		//tmpList.remove_if([&](sharedObj &tmp) {
 		//	if (tmp->GetPos().x < plPos.x - CHIP_SIZE * 6
 		//		|| tmp->GetPos().x > plPos.x + CHIP_SIZE * 6
 		//		|| tmp->GetPos().y < plPos.y - CHIP_SIZE * 6
@@ -123,7 +123,7 @@ void GameScene::Draw(void)
 		//		return true;
 		//	}
 		//	return false;
-		//}));
+		//});
 
 		// ¦ •`‰æ‚Ì¿°Äˆ—
 		//tmpList.sort([](sharedObj& obj1, sharedObj& obj2) { return (*obj1).GetPos().y < (*obj2).GetPos().y; });

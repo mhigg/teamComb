@@ -719,7 +719,10 @@ void Player::Attack(const GameCtrl & controller, weakListObj objList)
 				if (sqrt(act.x * act.x) + sqrt(act.y * act.y) <= 40)
 				{
 					// “–‚½‚Á‚Ä‚é‚Æ‚«
-					lpInfoCtrl.SetEnemyHit(i,true);
+					lpInfoCtrl.SetEnemyHit(i,true);	
+					int score = 3;
+					SetData(DATA_SCORE, score);
+					acquisitionScore = score;
 				}
 			}
 		}
