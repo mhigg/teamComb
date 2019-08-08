@@ -170,7 +170,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	}
 	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_OTHER2)
 	{
-		Init("image/playerAll3.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+		Init("image/yukariAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
 	}
 		
 	lpImageMng.GetID("image/num.png", { 30,30 }, { 10,1 });
