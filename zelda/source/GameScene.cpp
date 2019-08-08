@@ -32,6 +32,7 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	
 	if (gameFrame <= 0 || ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
 	{
+		StopSoundMem(lpSoundMng.GetID("sound/naked.wav"));
 		return std::make_unique<ResultScene>();
 	}
 #ifdef _DEBUG
