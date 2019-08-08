@@ -45,10 +45,14 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	if (resultTemp == 0)
 	{
 		ScoreLoad();
-		if (fileData.hiScore < resultScore[0])
+		if (plNumber == 1)
 		{
-			fileData.hiScore = resultScore[0];
-			ScoreSave();
+			if (fileData.hiScore < resultScore[0])
+			{
+				fileData.hiScore = resultScore[0];
+				updateFlag = true;
+				ScoreSave();
+			}
 		}
 	}
 	ResultDraw();
@@ -146,6 +150,10 @@ void ResultScene::ResultDraw(void)
 			}
 		}
 	}
+	if (updateFlag)
+	{
+		DrawGraph(500,720, IMAGE_ID("image/hiscore_.png")[0],true);
+	}
 	ScreenFlip();
 }
 
@@ -163,6 +171,7 @@ int ResultScene::Init(void)
 
 	plNumber = 0;
 	resultTemp = 0;
+	updateFlag = false;
 	return 0;
 }
 

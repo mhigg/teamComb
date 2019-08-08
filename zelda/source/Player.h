@@ -98,6 +98,7 @@ private:
 	DIR_TBL_DIR DirTbl;			// ˆÚ“®§Œä
 	MAP_MOVE_TBL mapMoveTbl;	// ˆÚ“®§Œä,ˆÚ“®‰Â”\µÌŞ¼Şª¸Ä‚È‚çtrue‚ğ•Ô‚·©±²ÃÑ‚âáŠQ•¨‚ğ’Ç‰Á‚µ‚½‚Æ‚«‚Ég‚¤
 	std::vector<VECTOR2> scorePosTbl;
+	std::vector<VECTOR2> hpPosTbl;
 
 	bool afterKeyFlag;			// key‚ÌŒã“ü—Í‚ğ—Dæ‚³‚¹‚éÌ×¸Ş
 	PL_NUMBER plNum;			// ©•ª‚ª‰½”Ô–Ú‚ÌÌßÚ²Ô°‚©‚Ì”Ô†

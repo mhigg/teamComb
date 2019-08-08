@@ -125,7 +125,23 @@ Enemy::Enemy(int enemyNum, VECTOR2 setUpPos, VECTOR2 drawOffset, int enCnt) :Obj
 					false,	// STONE_1	// Šâ
 					false,	// STONE_2
 					false,	// STONE_3
-					false,	// STONE_4					
+					false,	// STONE_4	
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true,
+					true
 	};
 	this->objType = OBJ_ENEMY;
 	actOff = VECTOR2(30, 40);

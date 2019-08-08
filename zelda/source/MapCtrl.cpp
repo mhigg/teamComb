@@ -419,6 +419,22 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::STONE_2:
 			case MAP_ID::STONE_3:
 			case MAP_ID::STONE_4:
+			case MAP_ID::falest:
+			case MAP_ID::falest2:
+			case MAP_ID::falest3:
+			case MAP_ID::falest4:
+			case MAP_ID::falest5:
+			case MAP_ID::falest6:
+			case MAP_ID::falest7:
+			case MAP_ID::falest8:
+			case MAP_ID::falest9:
+			case MAP_ID::falest10:
+			case MAP_ID::falest11:
+			case MAP_ID::falest12:
+			case MAP_ID::falest13:
+			case MAP_ID::falest14:
+			case MAP_ID::falest15:
+			case MAP_ID::falest16:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::NONE);
 				break;
 			default:
@@ -560,6 +576,22 @@ void MapCtrl::Draw(bool flag)
 				case MAP_ID::STONE_2:
 				case MAP_ID::STONE_3:
 				case MAP_ID::STONE_4:
+				case MAP_ID::falest:
+				case MAP_ID::falest2:
+				case MAP_ID::falest3:
+				case MAP_ID::falest4:
+				case MAP_ID::falest5:
+				case MAP_ID::falest6:
+				case MAP_ID::falest7:
+				case MAP_ID::falest8:
+				case MAP_ID::falest9:
+				case MAP_ID::falest10:
+				case MAP_ID::falest11:
+				case MAP_ID::falest12:
+				case MAP_ID::falest13:
+				case MAP_ID::falest14:
+				case MAP_ID::falest15:
+				case MAP_ID::falest16:
 					DrawGraph(
 						tmpPos.x + offset.x - scrollTbl[pIdx].x,
 						tmpPos.y + offset.y - scrollTbl[pIdx].y,

@@ -94,6 +94,7 @@ void Obj::Draw(void)
 //	DrawFormatString(pos.x - scrollOffset.x +drawOffset.x , pos.y - scrollOffset.y +drawOffset.y,0x00ffffff, "scrX:%d\nscrY:%d", pos.x, pos.y);
 //	DrawCircle(pos.x - scrollOffset.x +drawOffset.x, pos.y - scrollOffset.y +drawOffset.y, hitRad.x, 0x00ffffff, false);
 }
+
 void Obj::Draw(unsigned int id)
 {
 	if (id < IMAGE_ID(imageName).size())
