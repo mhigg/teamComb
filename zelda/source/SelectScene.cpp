@@ -55,20 +55,29 @@ uniqueBase SelectScene::UpDate(uniqueBase own, const GameCtrl & controller)
 void SelectScene::SelectDraw(void)
 {
 	ClsDrawScreen();
-	DrawGraph(0, 0, IMAGE_ID("image/select.png")[0], true);
-	if (GetJoypadNum() >= 2)
+	if (lpMapCtrl.GetMode())
 	{
+		DrawGraph(0, 0, IMAGE_ID("image/select.png")[0], true);
 		DrawGraph(800, 0, IMAGE_ID("image/select.png")[0], true);
-	}
-	if (GetJoypadNum() >= 3)
-	{
 		DrawGraph(0, 480, IMAGE_ID("image/select.png")[0], true);
-	}
-	if (GetJoypadNum() == 4)
-	{
 		DrawGraph(800, 480, IMAGE_ID("image/select.png")[0], true);
 	}
-
+	else
+	{
+		DrawGraph(0, 0, IMAGE_ID("image/select.png")[0], true);
+		if (GetJoypadNum() >= 2)
+		{
+			DrawGraph(800, 0, IMAGE_ID("image/select.png")[0], true);
+		}
+		if (GetJoypadNum() >= 3)
+		{
+			DrawGraph(0, 480, IMAGE_ID("image/select.png")[0], true);
+		}
+		if (GetJoypadNum() == 4)
+		{
+			DrawGraph(800, 480, IMAGE_ID("image/select.png")[0], true);
+		}
+	}
 	VECTOR2 tmp1(0, 0);
 	VECTOR2 tmp2(0, GAME_SCREEN_SIZE_Y);
 

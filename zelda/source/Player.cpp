@@ -7,6 +7,7 @@
 #include "Weapon.h"
 #include "Effect.h"
 #include "StageMng.h"
+#include "SoundMng.h"
 #include "InfoCtrl.h"
 #include "MapCtrl.h"
 #include "ImageMng.h"
@@ -565,7 +566,8 @@ void Player::Stop(const GameCtrl & controller, weakListObj objList)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
-//		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
+		PlaySoundMem(lpSoundMng.GetID("sound/çUåÇâπ.mp3"), DX_PLAYTYPE_BACK);
+		//		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset));
 		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 	}
@@ -594,7 +596,8 @@ void Player::Move(const GameCtrl & controller, weakListObj objList)
 	if (inputTbl[plNum][XINPUT_ATT] & (!inputTblOld[plNum][XINPUT_ATT]))
 	{
 		SetAnim("çUåÇ");
-//		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
+		PlaySoundMem(lpSoundMng.GetID("sound/çUåÇâπ.mp3"), DX_PLAYTYPE_BACK);
+		//		AddObjList()(objList, std::make_unique<Weapon>(WEP_KNIFE, dir, pos, scrollOffset, drawOffset - VECTOR2()));
 		AddObjList()(objList, std::make_unique<Effect>("image/laser.efk", pos + VECTOR2(50, 40), 33, scrollOffset, drawOffset + VECTOR2(0, -20)));
 		_updater = &Player::Attack;
 		return;
