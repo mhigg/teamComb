@@ -84,7 +84,7 @@ void SelectScene::SelectDraw(void)
 		tmp2.y = tmp1.y;
 		DrawLine(tmp1, tmp2, 0x00ffffff, true);
 	}
-	DrawString(0, 0, "SelectScene", 0x00ff0000);
+	// DrawString(0, 0, "SelectScene", 0x00ff0000);
 
 	// ÌßÚ²Ô°‚Ì”•ª—§‚¿ŠG•`‰æ
 	for (auto& itr : (*objList))

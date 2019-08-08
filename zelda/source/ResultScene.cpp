@@ -116,7 +116,7 @@ void ResultScene::ResultDraw(void)
 		DrawGraph(1245, 680, IMAGE_ID("image/score.png")[0], true);
 	}
 	DrawGraph(525, 50, IMAGE_ID("image/result.png")[0], true);
-	DrawString(0, 0, "ResultScene", 0x00ff0000);
+	// DrawString(0, 0, "ResultScene", 0x00ff0000);
 
 	for (int i = 0; i < plNumber; i++)
 	{
@@ -124,21 +124,21 @@ void ResultScene::ResultDraw(void)
 		if (plNumber > 1)
 		{
 			plSelChara[i] = lpInfoCtrl.GetSelectChara(i);
-			if (plSelChara[i] == CHARA_MAFIA)
+			if (lpInfoCtrl.GetSelectChara(0) == CHARA_MAFIA)
 			{
 				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/stand.png")[0], true);
 			}
-			if (plSelChara[i] == CHARA_GIRL)
+			if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER)
 			{
 				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/stand2.png")[0], true);
 			}
-			if (plSelChara[i] == CHARA_OTHER)
+			if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER2)
 			{
 				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/stand3.png")[0], true);
 			}
-			if (plSelChara[i] == CHARA_OTHER2)
+			if (lpInfoCtrl.GetSelectChara(0) == CHARA_GIRL)
 			{
-				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/stand3.png")[0], true);
+				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/yukari_stand.png")[0], true);
 			}
 			// ½º±•\Ž¦
 			resultTemp = resultScore[i] * 10;
