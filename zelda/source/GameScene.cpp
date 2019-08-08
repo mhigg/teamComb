@@ -86,9 +86,10 @@ int GameScene::Init(void)
 	lpSoundMng.GetID("sound/naked.wav");
 	gameFrame = 10800;
 	tile = LoadGraph("image/tile.png", true);
-	bool single = (GetJoypadNum() == 1);
+	bool single = lpMapCtrl.GetMode();
 	VECTOR2 size = lpSceneMng.GetPlayScreen(single);
-	for (int p = 0; p < GetJoypadNum(); p++)
+	int pMax = (single ? 1 : GetJoypadNum());
+	for (int p = 0; p < pMax; p++)
 	{
 		ghGameScreen[p] = MakeScreen(size.x, size.y, false);
 	}

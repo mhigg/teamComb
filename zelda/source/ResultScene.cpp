@@ -80,7 +80,7 @@ void ResultScene::ResultDraw(void)
 		}
 		if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER2)
 		{
-			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/yukari_stand.png")[0], true);
+			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand3.png")[0], true);
 		}
 		if (lpInfoCtrl.GetSelectChara(0) == CHARA_GIRL)
 		{

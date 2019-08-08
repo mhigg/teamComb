@@ -118,7 +118,8 @@ int SelectScene::Init(void)
 		VECTOR2(100,580),
 		VECTOR2(900,580),
 	};
-	for (int pIdx = 0; pIdx < GetJoypadNum(); pIdx++)
+	int pMax = (lpMapCtrl.GetMode() ? 1 : GetJoypadNum());
+	for (int pIdx = 0; pIdx < pMax; pIdx++)
 	{
 		AddObjList()(objList, std::make_unique<Selector>(static_cast<PL_NUMBER>(pIdx), selectPos[pIdx], lpSceneMng.GetDrawOffset()));
 	}
