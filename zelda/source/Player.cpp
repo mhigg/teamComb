@@ -174,6 +174,7 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	}
 		
 	lpImageMng.GetID("image/num.png", { 30,30 }, { 10,1 });
+	lpImageMng.GetID("image/hpnum.png", { 30,30 }, { 10,1 });
 
 	lpImageMng.GetID("image/number.png", VECTOR2(30, 30), VECTOR2(10, 1));
 
@@ -187,16 +188,16 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	initAnim();
 
 	scorePosTbl = {
-		{ 700,30 },
-		{ 1500,30 },
-		{ 700,510 },
-		{ 1500,510 },
+		{ 750,100 },
+		{ 1550,100 },
+		{ 750,550 },
+		{ 1550,550 },
 	};
-	scorePosTbl = {
-		{ 700,230 },
-		{ 1500,230 },
-		{ 700,710 },
-		{ 1500,710 },
+	hpPosTbl = {
+		{ 750,180 },
+		{ 1550,180 },
+		{ 750,630 },
+		{ 1550,630 },
 	};
 	PlInit();
 }
@@ -504,39 +505,47 @@ void Player::StateDraw(void)
 	int drawID;
 	int drawPos = 0;
 	auto DrawScore = score * 100;
+	VECTOR2 scorePos = scorePosTbl[plNum];
 	if (DrawScore > 100 && DrawScore < 1000)
 	{
-
+		scorePos.x = scorePosTbl[plNum].x - 60;
 	}
 	if (DrawScore > 1000 && DrawScore < 10000)
 	{
-
+		scorePos.x = scorePosTbl[plNum].x - 90;
 	}
 	if (DrawScore > 10000 && DrawScore < 100000)
 	{
-
+		scorePos.x = scorePosTbl[plNum].x - 120;
 	}
+	if (GetJoypadNum() == 1)
+	{
+		scorePosTbl[0] = scorePosTbl[1];
+		hpPosTbl[0] = hpPosTbl[1];
+	}
+	DrawGraph(scorePosTbl[plNum].x - 100, scorePosTbl[plNum].y - 45, IMAGE_ID("image/score_.png")[0], true);
+	DrawGraph(hpPosTbl[plNum].x - 100, hpPosTbl[plNum].y - 45, IMAGE_ID("image/hp_.png")[0], true);
 	for (auto charaCode : std::string{ std::to_string(DrawScore) })
 	{
 		drawID = charaCode - '0';
 		if (drawID != -1)
 		{
 			{
-				DrawGraph(scorePosTbl[plNum].x + (30 * drawPos), scorePosTbl[plNum].y, IMAGE_ID("image/num.png")[drawID], true);
+				DrawGraph(scorePos.x + (30 * drawPos), scorePosTbl[plNum].y, IMAGE_ID("image/num.png")[drawID], true);
 			}
 		}
 		drawPos++;
 	}
-	/*for (auto charaCode : std::string{ std::to_string(life) })
+	for (auto charaCode : std::string{ std::to_string(life) })
 	{
 		drawID = charaCode - '0';
 		if (drawID != -1)
 		{
 			{
-				DrawGraph(hpPosTbl[plNum].x, hpPosTbl[plNum].y, IMAGE_ID("image/num.png")[drawID], true);
+				DrawGraph(hpPosTbl[plNum].x, hpPosTbl[plNum].y, IMAGE_ID("image/hpnum.png")[drawID], true);
 			}
 		}
-	}*/
+	}
 }
 
 void Player::Stop(const GameCtrl & controller, weakListObj objList)
@@ -760,7 +769,7 @@ void Player::Damage(const GameCtrl & controller, weakListObj objList)
 		{
 			// Ø½Îß°Ýˆ—
 			pos = startPos;
-			SetData(DATA_SCORE, - 1);
+			SetData(DATA_SCORE, - 5);
 			oldScore = score;
 			InitScroll(static_cast<int>(plNum));
 			PlInit();

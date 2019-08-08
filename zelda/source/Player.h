@@ -33,7 +33,7 @@ struct State {
 constexpr int PL_DEF_SPEED = 2;					// •à‚¢‚Ä‚¢‚é‚Æ‚«‚ÌˆÚ“®‘¬“x
 constexpr int PL_DASH_SPEED = 4;				// ‘–‚Á‚Ä‚¢‚é‚Æ‚«‚ÌˆÚ“®‘¬“x
 constexpr unsigned int PL_RESTART_CNT = 120U;	// Ø½Îß°İ‚Ü‚Å‚ÌŠÔ
-constexpr int PL_LIFE_MAX = 6;					// ÌßÚ²Ô°‚Ì‘Ì—ÍãŒÀ
+constexpr int PL_LIFE_MAX = 3;					// ÌßÚ²Ô°‚Ì‘Ì—ÍãŒÀ
 
 using UP_TIME = std::array < int, 2 >;
 using ACT_ARR = std::array<VECTOR2, DIR_MAX>;
