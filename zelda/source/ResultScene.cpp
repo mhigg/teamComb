@@ -74,13 +74,17 @@ void ResultScene::ResultDraw(void)
 		{
 			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand.png")[0], true);
 		}
-		if (lpInfoCtrl.GetSelectChara(0) == CHARA_GIRL)
+		if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER)
 		{
 			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand2.png")[0], true);
 		}
-		if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER || lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER2)
+		if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER2)
 		{
 			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/stand3.png")[0], true);
+		}
+		if (lpInfoCtrl.GetSelectChara(0) == CHARA_GIRL)
+		{
+			DrawGraph(GAME_SCREEN_SIZE_X / 2 - 120, 290, IMAGE_ID("image/yukari_stand.png")[0], true);
 		}
 		if (resultTemp == 0)
 		{

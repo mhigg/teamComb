@@ -30,16 +30,12 @@ uniqueBase GameScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
 	
-	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
-	{
-		return std::make_unique<EditScene>();
-	}
-	if (gameFrame < 0 || ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
+	if (gameFrame <= 0 || ctrl[KEY_INPUT_F2] & ~ctrlOld[KEY_INPUT_F2])
 	{
 		return std::make_unique<ResultScene>();
 	}
 #ifdef _DEBUG
-	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
+	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
 	{
 		return std::make_unique<EditScene>();
 	}
@@ -190,11 +186,11 @@ void GameScene::Draw(void)
 	// •b‚ª0‚ÌŽž
 	if (secondNumTemp < 10)
 	{
-		DrawGraph(GAME_SCREEN_SIZE_X / 2, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 - 10, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
 	}
 	if (secondNumTemp < 1)
 	{
-		DrawGraph(GAME_SCREEN_SIZE_X / 2, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
+		DrawGraph(GAME_SCREEN_SIZE_X / 2 + 10, 10, lpImageMng.GetID("image/number2.png", { 40,30 }, { 10,1 })[0], true);
 	}
 	// •b
 	while (secondNumTemp > 0)

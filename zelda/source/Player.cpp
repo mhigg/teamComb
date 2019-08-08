@@ -160,15 +160,15 @@ Player::Player(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset):Obj(drawOf
 	{
 		Init("image/playerAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
 	}
-	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_GIRL)
-	{
-		Init("image/playerAll2.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
-	}
 	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_OTHER)
+	{
+		Init("image/playerAl2.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
+	}
+	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_OTHER2)
 	{
 		Init("image/playerAll3.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
 	}
-	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_OTHER2)
+	if (lpInfoCtrl.GetSelectChara(plNum) == CHARA_GIRL)
 	{
 		Init("image/yukariAll.png", VECTOR2(1040 / 13, 840 / 7), VECTOR2(13, 7), setUpPos);
 	}
@@ -831,7 +831,7 @@ void Player::Damage(const GameCtrl & controller, weakListObj objList)
 	}
 	else
 	{
-		SetData(DATA_LIFE, -1);
+		SetData(DATA_LIFE, state.Guard-1);
 		damageCnt++;
 		return;
 	}

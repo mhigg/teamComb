@@ -16,7 +16,7 @@ Selector::Selector(PL_NUMBER plNum, VECTOR2 setUpPos, VECTOR2 drawOffset) :Obj(d
 		"image/stand.png",
 		"image/stand2.png",
 		"image/stand3.png",
-		"image/stand3.png"
+		"image/yukari_stand.png",
 	};
 
 	pNumImgTbl = {
