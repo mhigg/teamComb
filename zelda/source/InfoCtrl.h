@@ -7,7 +7,7 @@
 #include "Selector.h"
 
 #define lpInfoCtrl InfoCtrl::GetInstance()
-constexpr int GENERATE_MAX = 20;
+constexpr int GENERATE_MAX = 50;
 
 class InfoCtrl
 {

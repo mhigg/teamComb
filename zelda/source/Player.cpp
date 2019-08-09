@@ -431,8 +431,8 @@ void Player::GetItem(weakListObj objList)
 			break;
 		case MAP_ID::GOLD:
 			paramUP(NotFlag, num);
-			SetData(DATA_SCORE, 2);
-			acquisitionScore = 2;
+			SetData(DATA_SCORE, 10);
+			acquisitionScore = 10;
 			if (randomBonus == 3)
 			{
 				SetData(DATA_BONUS, 1);
@@ -440,8 +440,8 @@ void Player::GetItem(weakListObj objList)
 			break;
 		case MAP_ID::DIA:
 			paramUP(NotFlag, num);
-			SetData(DATA_SCORE, 2);
-			acquisitionScore = 2;
+			SetData(DATA_SCORE, 7);
+			acquisitionScore = 7;
 			if (randomBonus == 4)
 			{
 				SetData(DATA_BONUS, 1);

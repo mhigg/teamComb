@@ -309,8 +309,8 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					mapImage[plCnt] = MakeScreen(playScrSize.x, playScrSize.y, false);
 					lpInfoCtrl.SetPlayerFlag(true, plCnt);
 					plCnt++;
-				}				
-				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				}
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::falest14);
 				break;
 			case MAP_ID::ENEMY:
 				if (enCnt < GENERATE_MAX)
@@ -318,7 +318,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					SetUpEnemy(objList, enCnt, x, y,0);
 					enCnt++;
 				}
-				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::falest7);
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				break;
 			case MAP_ID::ENEMY_2:
@@ -327,7 +327,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					SetUpEnemy(objList, enCnt, x, y,1);
 					enCnt++;
 				}
-				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::falest7);
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				break;
 			case MAP_ID::ENEMY_3:
@@ -336,17 +336,25 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 					SetUpEnemy(objList, enCnt, x, y,2);
 					enCnt++;
 				}
-				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::falest7);
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
 				break;
 			case MAP_ID::POTION_1:
 			case MAP_ID::POTION_2:
 			case MAP_ID::POTION_3:
 			case MAP_ID::POTION_4:
+				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::falest14);
+				SetItemFlag(VECTOR2(x * chipSize.x, y * chipSize.y), true);
+				break;
 			case MAP_ID::COIN_1:
 			case MAP_ID::COIN_2:
 			case MAP_ID::COIN_3:
 			case MAP_ID::COIN_4:
+				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::falest14);
+				SetItemFlag(VECTOR2(x * chipSize.x, y * chipSize.y), true);
+				break;
 			case MAP_ID::KEY_1:
 			case MAP_ID::KEY_2:
 			case MAP_ID::MEAT:
@@ -356,7 +364,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 			case MAP_ID::GOLD:
 			case MAP_ID::DIA:
 				SetData(itemData, VECTOR2(x * chipSize.x, y * chipSize.y), id);
-				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::WALL39);
+				SetData(mapData, VECTOR2(x * chipSize.x, y * chipSize.y), MAP_ID::falest7);
 				SetItemFlag(VECTOR2(x * chipSize.x, y * chipSize.y), true);
 				break;
 			case MAP_ID::NONE:
