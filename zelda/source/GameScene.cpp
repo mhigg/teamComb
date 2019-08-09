@@ -83,7 +83,7 @@ int GameScene::Init(void)
 	lpSceneMng.SetDrawOffset(VECTOR2(GAME_SCREEN_X, GAME_SCREEN_Y));
 	lpMapCtrl.SetUp(lpStageMng.GetChipSize(), lpSceneMng.GetDrawOffset());
 	lpMapCtrl.MapLoad(objList, false);
-	lpSoundMng.GetID("sound/naked.wav");
+	lpSoundMng.GetID("sound/GameScene03.mp3");
 	gameFrame = 10800;
 	tile = LoadGraph("image/tile.png", true);
 	bool single = lpMapCtrl.GetMode();
@@ -93,7 +93,7 @@ int GameScene::Init(void)
 	{
 		ghGameScreen[p] = MakeScreen(size.x, size.y, false);
 	}
-	PlaySoundMem(lpSoundMng.GetID("sound/naked.wav"), DX_PLAYTYPE_LOOP);
+	PlaySoundMem(lpSoundMng.GetID("sound/GameScene03.mp3"), DX_PLAYTYPE_LOOP);
 	player = std::make_shared<Player>();
 	return 0;
 }

@@ -124,19 +124,19 @@ void ResultScene::ResultDraw(void)
 		if (plNumber > 1)
 		{
 			plSelChara[i] = lpInfoCtrl.GetSelectChara(i);
-			if (lpInfoCtrl.GetSelectChara(0) == CHARA_MAFIA)
+			if (lpInfoCtrl.GetSelectChara(i) == CHARA_MAFIA)
 			{
 				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/stand.png")[0], true);
 			}
-			if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER)
+			if (lpInfoCtrl.GetSelectChara(i) == CHARA_OTHER)
 			{
-				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/yukari_stand.png")[0], true);
+				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/stand2.png")[0], true);
 			}
-			if (lpInfoCtrl.GetSelectChara(0) == CHARA_OTHER2)
+			if (lpInfoCtrl.GetSelectChara(i) == CHARA_OTHER2)
 			{
 				DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/stand3.png")[0], true);
 			}
-			if (lpInfoCtrl.GetSelectChara(0) == CHARA_GIRL)
+			if (lpInfoCtrl.GetSelectChara(i) == CHARA_GIRL)
 			{
 					DrawGraph(140 + (i * 350), 290, IMAGE_ID("image/yukari_stand.png")[0], true);			}
 			// ½º±•\Ž¦
