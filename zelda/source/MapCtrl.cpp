@@ -217,8 +217,9 @@ bool MapCtrl::MapSave(void)
 	}
 	expData.sum = (char)sum;
 
+	auto mapName = (singleFlag ? "data/mapdata_SORO.map" : "data/mapdata_MAL.map");
 	FILE *file;
-	fopen_s(&file, "data/mapdata.map", "wb");
+	fopen_s(&file, mapName, "wb");
 	fwrite(&expData, sizeof(expData), 1, file);
 	fwrite(mapData_Base.data(), sizeof(MAP_ID) * mapData_Base.size(), 1, file);
 	fclose(file);
@@ -227,10 +228,11 @@ bool MapCtrl::MapSave(void)
 
 bool MapCtrl::MapLoad(sharedListObj objList, bool editFlag)
 {
+	auto mapName = (singleFlag ? "data/mapdata_SORO.map" : "data/mapdata_MAL.map");
 	// Ï¯ÌßÃŞ°À‚ÌÛ°ÄŞ
 	FILE *file;
 	DataHeader expData;
-	fopen_s(&file, "data/mapdata.map", "rb");
+	fopen_s(&file, mapName, "rb");
 	fread(&expData, sizeof(expData), 1, file);
 	mapData_Base.resize(expData.sizeX * expData.sizeY);
 	fread(mapData_Base.data(), sizeof(MAP_ID) * mapData_Base.size(), 1, file);
@@ -278,7 +280,7 @@ bool MapCtrl::SetUpGameObj(sharedListObj objList, bool modeFlag)
 	}
 	// GameMode‚È‚ç‚±‚±‚©‚çæ‚Ö
 
-	int playerNum = GetJoypadNum();		// Ú‘±‚µ‚Ä‚éÌßÚ²Ô°‚Ì”
+	int playerNum = (singleFlag ? 1 : GetJoypadNum());		// Ú‘±‚µ‚Ä‚éÌßÚ²Ô°‚Ì”
 	scrollTbl.resize(playerNum);
 	mapImage.resize(playerNum);
 

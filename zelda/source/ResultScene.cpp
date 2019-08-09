@@ -7,6 +7,7 @@
 #include "TitleScene.h"
 #include "GameCtrl.h"
 #include "InfoCtrl.h"
+#include "SoundMng.h"
 
 ResultScene::ResultScene()
 {
@@ -23,7 +24,7 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 	auto ctrlOld = controller.GetCtrl(KEY_TYPE_OLD);
 	auto &inputState = controller.GetInputState(KEY_TYPE_NOW);
 	auto &inputStateOld = controller.GetInputState(KEY_TYPE_OLD);
-	plNumber = GetJoypadNum();
+	plNumber = (lpMapCtrl.GetMode() ? 1 :GetJoypadNum());
 
 	lpImageMng.GetID("image/number.png", VECTOR2(30, 30), VECTOR2(10, 1));
 
@@ -35,11 +36,14 @@ uniqueBase ResultScene::UpDate(uniqueBase own, const GameCtrl & controller)
 
 	if (ctrl[KEY_INPUT_F1] & ~ctrlOld[KEY_INPUT_F1])
 	{
+		StopSoundMem(lpSoundMng.GetID("sound/GameScene03.mp3"));
 		return std::make_unique< TitleScene>();
 	}
 	if (inputState[0][XINPUT_START] & !inputStateOld[0][XINPUT_START])
 	{
+		StopSoundMem(lpSoundMng.GetID("sound/GameScene03.mp3"));
 		return std::make_unique<TitleScene>();
+
 	}
 
 	if (resultTemp == 0)

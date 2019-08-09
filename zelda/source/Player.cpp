@@ -242,6 +242,7 @@ void Player::PlInit(void)
 
 	lpInfoCtrl.SetAddScroll(scrollOffset, static_cast<int>(plNum));
 	lpInfoCtrl.SetPlayerPos(pos, static_cast<int>(plNum));
+	lpInfoCtrl.SetDamageFlag(false,plNum);
 
 	_updater = &Player::Move;				// ‰Šúó‘Ô‚ÍMoveó‘Ô
 }
@@ -774,6 +775,8 @@ void Player::Damage(const GameCtrl & controller, weakListObj objList)
 		if (DeathPrc())
 		{
 			// Ø½Îß°İˆ—
+			lpInfoCtrl.SetDamageFlag(false, plNum);
+			damageFlag = false;
 			pos = startPos;
 			SetData(DATA_SCORE, - 5);
 			oldScore = score;

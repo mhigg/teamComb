@@ -22,6 +22,7 @@ private:
 	int gameFrame;				// ¹Þ°Ñ’†‚ÌŒo‰ßŽžŠÔ
 	int tile;
 	int ghGameScreen[4];
+	int gameScreen;
 	std::shared_ptr<Player> player;
 };
 

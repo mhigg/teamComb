@@ -93,6 +93,7 @@ int GameScene::Init(void)
 	{
 		ghGameScreen[p] = MakeScreen(size.x, size.y, false);
 	}
+	gameScreen = MakeScreen(1600, 800, true);
 	PlaySoundMem(lpSoundMng.GetID("sound/GameScene03.mp3"), DX_PLAYTYPE_LOOP);
 	player = std::make_shared<Player>();
 	return 0;
@@ -105,8 +106,8 @@ void GameScene::Draw(void)
 
 //	for (int p = 0; p < GetJoypadNum(); p++)
 	{
-		//SetDrawScreen(ghGameScreen[p]);
-		//ClsDrawScreen();
+		SetDrawScreen(gameScreen);
+		ClsDrawScreen();
 
 		DrawGraph(0, 0, tile, true);
 		lpMapCtrl.Draw(false);
@@ -169,6 +170,17 @@ void GameScene::Draw(void)
 	//{
 	//	DrawGraph(lpMapCtrl.GetScreenPos(p).x, lpMapCtrl.GetScreenPos(p).y, ghGameScreen[p], true);
 	//}
+
+	SetDrawScreen(DX_SCREEN_BACK);
+
+
+	bool single = lpMapCtrl.GetMode();
+	int pMax = (single ? 1 : GetJoypadNum());
+	for (int p = 0; p < pMax; p++)
+	{
+		auto plScr = lpMapCtrl.GetScreenPos(p);
+		DrawRectGraph(plScr.x, plScr.y, 0, 0, 800, 400, gameScreen, true);
+	}
 
 	// ŽžŠÔ•\Ž¦
 	int timeDigit = 0;
